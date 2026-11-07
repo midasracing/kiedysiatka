@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-07T17:36:59.115380+00:00",
+  "updated_at": "2026-11-07T21:05:14.678594+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -1778,22 +1778,42 @@
       "round": 5,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "live",
+      "status": "finished",
       "home": "Podziemia Kredowe ChKS Chełm",
       "away": "NEONET Norwid Częstochowa",
-      "home_sets": 0,
-      "away_sets": 1,
+      "home_sets": 3,
+      "away_sets": 2,
       "set_scores": [
-        "16:25"
+        "16:25",
+        "25:21",
+        "22:25",
+        "25:18",
+        "15:10"
       ],
       "set_points": [
         {
           "home": 16,
           "away": 25
+        },
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 22,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 18
+        },
+        {
+          "home": 15,
+          "away": 10
         }
       ],
-      "home_points": 16,
-      "away_points": 25,
+      "home_points": 103,
+      "away_points": 99,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104842/nocookies/1.html",
       "home_team_id": "93",
@@ -7128,6 +7148,18 @@
     },
     {
       "rank": 9,
+      "team": "Podziemia Kredowe ChKS Chełm",
+      "points": 5,
+      "played": 4,
+      "wins": 2,
+      "losses": 2,
+      "sets_for": 8,
+      "sets_against": 10,
+      "points_for": 350,
+      "points_against": 384
+    },
+    {
+      "rank": 10,
       "team": "GKS Katowice",
       "points": 5,
       "played": 4,
@@ -7139,7 +7171,7 @@
       "points_against": 326
     },
     {
-      "rank": 10,
+      "rank": 11,
       "team": "Stilon Gorzów",
       "points": 5,
       "played": 5,
@@ -7149,18 +7181,6 @@
       "sets_against": 13,
       "points_for": 455,
       "points_against": 466
-    },
-    {
-      "rank": 11,
-      "team": "Podziemia Kredowe ChKS Chełm",
-      "points": 3,
-      "played": 3,
-      "wins": 1,
-      "losses": 2,
-      "sets_for": 5,
-      "sets_against": 8,
-      "points_for": 247,
-      "points_against": 285
     },
     {
       "rank": 12,
@@ -7177,14 +7197,14 @@
     {
       "rank": 13,
       "team": "NEONET Norwid Częstochowa",
-      "points": 2,
-      "played": 3,
+      "points": 3,
+      "played": 4,
       "wins": 1,
-      "losses": 2,
-      "sets_for": 4,
-      "sets_against": 8,
-      "points_for": 250,
-      "points_against": 273
+      "losses": 3,
+      "sets_for": 6,
+      "sets_against": 11,
+      "points_for": 349,
+      "points_against": 376
     },
     {
       "rank": 14,

@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-07T17:37:08.787963+00:00",
+  "updated_at": "2026-11-07T21:05:20.761486+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -3627,22 +3627,42 @@
       "round": 9,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "live",
+      "status": "finished",
       "home": "PZL LEONARDO Avia Świdnik",
       "away": "Stal Nysa",
-      "home_sets": 0,
-      "away_sets": 1,
+      "home_sets": 2,
+      "away_sets": 3,
       "set_scores": [
-        "23:25"
+        "23:25",
+        "25:23",
+        "21:25",
+        "25:22",
+        "18:20"
       ],
       "set_points": [
         {
           "home": 23,
           "away": 25
+        },
+        {
+          "home": 25,
+          "away": 23
+        },
+        {
+          "home": 21,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 18,
+          "away": 20
         }
       ],
-      "home_points": 23,
-      "away_points": 25,
+      "home_points": 112,
+      "away_points": 115,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105187/nocookies/1.html",
       "home_team_id": "5",
@@ -3668,22 +3688,42 @@
       "round": 9,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "live",
+      "status": "finished",
       "home": "Lechia Tomaszów Mazowiecki",
       "away": "BBTS Bielsko-Biała",
-      "home_sets": 1,
-      "away_sets": 0,
+      "home_sets": 3,
+      "away_sets": 2,
       "set_scores": [
-        "25:23"
+        "25:23",
+        "25:22",
+        "21:25",
+        "20:25",
+        "16:14"
       ],
       "set_points": [
         {
           "home": 25,
           "away": 23
+        },
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 21,
+          "away": 25
+        },
+        {
+          "home": 20,
+          "away": 25
+        },
+        {
+          "home": 16,
+          "away": 14
         }
       ],
-      "home_points": 25,
-      "away_points": 23,
+      "home_points": 107,
+      "away_points": 109,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105191/nocookies/1.html",
       "home_team_id": "41",
@@ -9579,14 +9619,14 @@
     {
       "rank": 2,
       "team": "PZL LEONARDO Avia Świdnik",
-      "points": 18,
-      "played": 8,
+      "points": 19,
+      "played": 9,
       "wins": 7,
-      "losses": 1,
-      "sets_for": 22,
-      "sets_against": 11,
-      "points_for": 754,
-      "points_against": 693
+      "losses": 2,
+      "sets_for": 24,
+      "sets_against": 14,
+      "points_for": 866,
+      "points_against": 808
     },
     {
       "rank": 3,
@@ -9614,6 +9654,18 @@
     },
     {
       "rank": 5,
+      "team": "Stal Nysa",
+      "points": 14,
+      "played": 6,
+      "wins": 5,
+      "losses": 1,
+      "sets_for": 16,
+      "sets_against": 5,
+      "points_for": 519,
+      "points_against": 465
+    },
+    {
+      "rank": 6,
       "team": "KKS MICKIEWICZ Kluczbork",
       "points": 14,
       "played": 8,
@@ -9625,7 +9677,7 @@
       "points_against": 659
     },
     {
-      "rank": 6,
+      "rank": 7,
       "team": "ICT PIERROT Czarni Radom",
       "points": 13,
       "played": 7,
@@ -9637,19 +9689,31 @@
       "points_against": 607
     },
     {
-      "rank": 7,
-      "team": "Stal Nysa",
+      "rank": 8,
+      "team": "Lechia Tomaszów Mazowiecki",
       "points": 12,
-      "played": 5,
+      "played": 9,
       "wins": 4,
-      "losses": 1,
-      "sets_for": 13,
-      "sets_against": 3,
-      "points_for": 404,
-      "points_against": 353
+      "losses": 5,
+      "sets_for": 18,
+      "sets_against": 20,
+      "points_for": 851,
+      "points_against": 835
     },
     {
-      "rank": 8,
+      "rank": 9,
+      "team": "BBTS Bielsko-Biała",
+      "points": 11,
+      "played": 7,
+      "wins": 3,
+      "losses": 4,
+      "sets_for": 13,
+      "sets_against": 12,
+      "points_for": 565,
+      "points_against": 561
+    },
+    {
+      "rank": 10,
       "team": "AVIA Sędziszów Małopolski",
       "points": 10,
       "played": 8,
@@ -9659,30 +9723,6 @@
       "sets_against": 17,
       "points_for": 675,
       "points_against": 722
-    },
-    {
-      "rank": 9,
-      "team": "BBTS Bielsko-Biała",
-      "points": 10,
-      "played": 6,
-      "wins": 3,
-      "losses": 3,
-      "sets_for": 11,
-      "sets_against": 9,
-      "points_for": 456,
-      "points_against": 454
-    },
-    {
-      "rank": 10,
-      "team": "Lechia Tomaszów Mazowiecki",
-      "points": 10,
-      "played": 8,
-      "wins": 3,
-      "losses": 5,
-      "sets_for": 15,
-      "sets_against": 18,
-      "points_for": 744,
-      "points_against": 726
     },
     {
       "rank": 11,
