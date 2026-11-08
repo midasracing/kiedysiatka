@@ -2,7 +2,7 @@
   "league": "italy",
   "competition": "SuperLega Credem Banca",
   "source": "https://ww2.legavolley.it/Calendario.asp",
-  "updated_at": "2026-11-06T12:03:50.811120+00:00",
+  "updated_at": "2026-11-08T20:27:38.194184+00:00",
   "teams": [
     {
       "name": "Acqua Sant'Anna Cuneo",
@@ -68,98 +68,98 @@
   "table": [
     {
       "team": "Sir Susa Scai Perugia",
-      "played": 5,
-      "wins": 5,
+      "played": 6,
+      "wins": 6,
       "losses": 0,
-      "points": 14,
-      "sets_for": 15,
-      "sets_against": 2,
-      "points_for": 418,
-      "points_against": 327,
+      "points": 16,
+      "sets_for": 18,
+      "sets_against": 4,
+      "points_for": 528,
+      "points_against": 418,
       "rank": 1
     },
     {
       "team": "Cucine Lube Civitanova",
-      "played": 4,
-      "wins": 4,
+      "played": 5,
+      "wins": 5,
       "losses": 0,
-      "points": 12,
-      "sets_for": 12,
+      "points": 15,
+      "sets_for": 15,
       "sets_against": 2,
-      "points_for": 361,
-      "points_against": 317,
+      "points_for": 436,
+      "points_against": 368,
       "rank": 2
     },
     {
-      "team": "Itas Trentino",
-      "played": 4,
+      "team": "Gas Sales Bluenergy Piacenza",
+      "played": 5,
       "wins": 4,
-      "losses": 0,
-      "points": 11,
-      "sets_for": 12,
-      "sets_against": 2,
-      "points_for": 331,
-      "points_against": 283,
+      "losses": 1,
+      "points": 13,
+      "sets_for": 14,
+      "sets_against": 4,
+      "points_for": 418,
+      "points_against": 384,
       "rank": 3
     },
     {
-      "team": "Gas Sales Bluenergy Piacenza",
-      "played": 4,
-      "wins": 3,
+      "team": "Itas Trentino",
+      "played": 5,
+      "wins": 4,
       "losses": 1,
-      "points": 10,
-      "sets_for": 11,
-      "sets_against": 4,
-      "points_for": 342,
-      "points_against": 315,
+      "points": 12,
+      "sets_for": 14,
+      "sets_against": 5,
+      "points_for": 422,
+      "points_against": 393,
       "rank": 4
     },
     {
-      "team": "Allianz Milano",
+      "team": "Tinet Prata di Pordenone",
       "played": 4,
       "wins": 2,
       "losses": 2,
       "points": 6,
-      "sets_for": 8,
-      "sets_against": 8,
-      "points_for": 346,
-      "points_against": 352,
+      "sets_for": 6,
+      "sets_against": 7,
+      "points_for": 288,
+      "points_against": 302,
       "rank": 5
     },
     {
-      "team": "Rana Verona",
-      "played": 4,
+      "team": "Allianz Milano",
+      "played": 5,
       "wins": 2,
-      "losses": 2,
-      "points": 5,
-      "sets_for": 7,
-      "sets_against": 9,
-      "points_for": 357,
-      "points_against": 363,
+      "losses": 3,
+      "points": 6,
+      "sets_for": 8,
+      "sets_against": 11,
+      "points_for": 397,
+      "points_against": 427,
       "rank": 6
     },
     {
-      "team": "Cisterna Volley",
-      "played": 4,
-      "wins": 1,
+      "team": "Rana Verona",
+      "played": 5,
+      "wins": 2,
       "losses": 3,
-      "points": 3,
-      "sets_for": 4,
-      "sets_against": 9,
-      "points_for": 288,
-      "points_against": 304,
+      "points": 5,
+      "sets_for": 7,
+      "sets_against": 12,
+      "points_for": 426,
+      "points_against": 439,
       "rank": 7
     },
     {
-      "team": "Tinet Prata di Pordenone",
-      "played": 3,
+      "team": "Cisterna Volley",
+      "played": 5,
       "wins": 1,
-      "losses": 2,
+      "losses": 4,
       "points": 3,
-      "sets_for": 3,
-      "sets_against": 7,
-      "points_for": 210,
-      "points_against": 241,
+      "sets_for": 5,
+      "sets_against": 12,
+      "points_for": 375,
+      "points_against": 399,
       "rank": 8
     },
     {
@@ -175,16 +175,28 @@
       "rank": 9
     },
     {
-      "team": "Acqua Sant'Anna Cuneo",
-      "played": 4,
-      "wins": 0,
+      "team": "Pallavolo Padova",
+      "played": 5,
+      "wins": 1,
       "losses": 4,
       "points": 3,
-      "sets_for": 7,
-      "sets_against": 12,
-      "points_for": 404,
-      "points_against": 438,
+      "sets_for": 3,
+      "sets_against": 13,
+      "points_for": 329,
+      "points_against": 391,
       "rank": 10
+    },
+    {
+      "team": "Acqua Sant'Anna Cuneo",
+      "played": 5,
+      "wins": 0,
+      "losses": 5,
+      "points": 3,
+      "sets_for": 7,
+      "sets_against": 15,
+      "points_for": 465,
+      "points_against": 516,
+      "rank": 11
     },
     {
       "team": "Vero Volley Monza",
@@ -196,18 +208,6 @@
       "sets_against": 11,
       "points_for": 344,
       "points_against": 379,
-      "rank": 11
-    },
-    {
-      "team": "Pallavolo Padova",
-      "played": 4,
-      "wins": 0,
-      "losses": 4,
-      "points": 0,
-      "sets_for": 0,
-      "sets_against": 12,
-      "points_for": 234,
-      "points_against": 304,
       "rank": 12
     }
   ],
@@ -1542,7 +1542,7 @@
       "broadcast": []
     },
     {
-      "id": "it-2026-andata-27",
+      "id": "it-40311",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 5",
       "date": "08.11.2026",
@@ -1551,33 +1551,50 @@
       "away": "Cucine Lube Civitanova",
       "home_team_id": "6858",
       "away_team_id": "6860",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40311",
       "venue": {
         "name": "Allianz Cloud (Palalido)",
-        "city": "Milano (MI)"
+        "city": "Milano"
       },
       "match_number": "27",
-      "status": "scheduled",
+      "status": "finished",
       "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
+      "away_sets": 3,
+      "set_scores": [
+        "18:25",
+        "19:25",
+        "14:25"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-08T20:27:36.958097+00:00",
       "league": "italy",
       "date_iso": "2026-11-08",
       "phase": "Zasadnicza",
       "round": 5,
       "term_number": 5,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 18,
+          "away": 25
+        },
+        {
+          "home": 19,
+          "away": 25
+        },
+        {
+          "home": 14,
+          "away": 25
+        }
+      ],
+      "home_points": 51,
+      "away_points": 75,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_MIL",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_CVA",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
-      "id": "it-2026-andata-25",
+      "id": "it-40309",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 5",
       "date": "08.11.2026",
@@ -1586,33 +1603,60 @@
       "away": "Sir Susa Scai Perugia",
       "home_team_id": "6862",
       "away_team_id": "6865",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40309",
       "venue": {
         "name": "BTS Arena",
-        "city": "Trento (TN)"
+        "city": "Trento"
       },
       "match_number": "25",
-      "status": "scheduled",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
+      "status": "finished",
+      "home_sets": 2,
+      "away_sets": 3,
+      "set_scores": [
+        "25:22",
+        "17:25",
+        "25:23",
+        "16:25",
+        "8:15"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-08T20:27:35.735539+00:00",
       "league": "italy",
       "date_iso": "2026-11-08",
       "phase": "Zasadnicza",
       "round": 5,
       "term_number": 5,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 17,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 23
+        },
+        {
+          "home": 16,
+          "away": 25
+        },
+        {
+          "home": 8,
+          "away": 15
+        }
+      ],
+      "home_points": 91,
+      "away_points": 110,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_TRE",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_PGA",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
-      "id": "it-2026-andata-26",
+      "id": "it-40310",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 5",
       "date": "08.11.2026",
@@ -1621,33 +1665,50 @@
       "away": "Rana Verona",
       "home_team_id": "6861",
       "away_team_id": "6864",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40310",
       "venue": {
         "name": "PalaBancaSport",
-        "city": "Piacenza (PC)"
+        "city": "Piacenza"
       },
       "match_number": "26",
-      "status": "scheduled",
-      "home_sets": 0,
+      "status": "finished",
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
+      "set_scores": [
+        "25:22",
+        "25:23",
+        "26:24"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-08T20:27:36.362041+00:00",
       "league": "italy",
       "date_iso": "2026-11-08",
       "phase": "Zasadnicza",
       "round": 5,
       "term_number": 5,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 25,
+          "away": 23
+        },
+        {
+          "home": 26,
+          "away": 24
+        }
+      ],
+      "home_points": 76,
+      "away_points": 69,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_PIA",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_VER",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
-      "id": "it-2026-andata-29",
+      "id": "it-40313",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 5",
       "date": "08.11.2026",
@@ -1656,33 +1717,55 @@
       "away": "Pallavolo Padova",
       "home_team_id": "6859",
       "away_team_id": "6866",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40313",
       "venue": {
         "name": "Palasport di Cisterna di Latina",
-        "city": "Cisterna di Latina (LT)"
+        "city": "Cisterna di Latina"
       },
       "match_number": "29",
-      "status": "scheduled",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
+      "status": "finished",
+      "home_sets": 1,
+      "away_sets": 3,
+      "set_scores": [
+        "20:25",
+        "20:25",
+        "25:20",
+        "22:25"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-08T20:27:37.449393+00:00",
       "league": "italy",
       "date_iso": "2026-11-08",
       "phase": "Zasadnicza",
       "round": 5,
       "term_number": 5,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 20,
+          "away": 25
+        },
+        {
+          "home": 20,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 20
+        },
+        {
+          "home": 22,
+          "away": 25
+        }
+      ],
+      "home_points": 87,
+      "away_points": 95,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_CIS",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_PAD",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
-      "id": "it-2026-andata-30",
+      "id": "it-40314",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 5",
       "date": "08.11.2026",
@@ -1691,30 +1774,47 @@
       "away": "Acqua Sant'Anna Cuneo",
       "home_team_id": "6897",
       "away_team_id": "6863",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40314",
       "venue": {
         "name": "Palasport \"Crisafulli\"",
-        "city": "Pordenone (PN)"
+        "city": "Pordenone"
       },
       "match_number": "30",
-      "status": "scheduled",
-      "home_sets": 0,
+      "status": "finished",
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
+      "set_scores": [
+        "25:16",
+        "28:26",
+        "25:19"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-08T20:27:37.940935+00:00",
       "league": "italy",
       "date_iso": "2026-11-08",
       "phase": "Zasadnicza",
       "round": 5,
       "term_number": 5,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 16
+        },
+        {
+          "home": 28,
+          "away": 26
+        },
+        {
+          "home": 25,
+          "away": 19
+        }
+      ],
+      "home_points": 78,
+      "away_points": 61,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_PDP",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_CUN",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
       "id": "it-2026-andata-28",
