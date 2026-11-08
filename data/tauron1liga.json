@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-08T13:39:54.752760+00:00",
+  "updated_at": "2026-11-08T17:46:53.861597+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -3749,15 +3749,32 @@
       "round": 9,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "KPS Siedlce",
       "away": "KKS MICKIEWICZ Kluczbork",
-      "home_sets": 0,
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_scores": [
+        "25:21",
+        "25:17",
+        "25:22"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 25,
+          "away": 17
+        },
+        {
+          "home": 25,
+          "away": 22
+        }
+      ],
+      "home_points": 75,
+      "away_points": 60,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105188/nocookies/1.html",
       "home_team_id": "39",
@@ -3783,16 +3800,23 @@
       "round": 9,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "live",
       "home": "AVIA Sędziszów Małopolski",
       "away": "KPS Płock",
-      "home_sets": 0,
+      "home_sets": 1,
       "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
-      "current_points": null,
+      "set_scores": [
+        "25:19"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 19
+        }
+      ],
+      "home_points": 25,
+      "away_points": 19,
+      "current_points": "2:1",
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105189/nocookies/1.html",
       "home_team_id": "95",
       "away_team_id": "94",
@@ -9668,13 +9692,13 @@
       "rank": 6,
       "team": "KKS MICKIEWICZ Kluczbork",
       "points": 14,
-      "played": 8,
+      "played": 9,
       "wins": 4,
-      "losses": 4,
+      "losses": 5,
       "sets_for": 17,
-      "sets_against": 13,
-      "points_for": 692,
-      "points_against": 659
+      "sets_against": 16,
+      "points_for": 752,
+      "points_against": 734
     },
     {
       "rank": 7,
@@ -9738,6 +9762,18 @@
     },
     {
       "rank": 12,
+      "team": "KPS Siedlce",
+      "points": 8,
+      "played": 7,
+      "wins": 3,
+      "losses": 4,
+      "sets_for": 10,
+      "sets_against": 14,
+      "points_for": 553,
+      "points_against": 569
+    },
+    {
+      "rank": 13,
       "team": "MCKiS Jaworzno",
       "points": 8,
       "played": 9,
@@ -9749,7 +9785,7 @@
       "points_against": 830
     },
     {
-      "rank": 13,
+      "rank": 14,
       "team": "KS Sparta Grodzisk Mazowiecki",
       "points": 7,
       "played": 8,
@@ -9759,18 +9795,6 @@
       "sets_against": 19,
       "points_for": 624,
       "points_against": 706
-    },
-    {
-      "rank": 14,
-      "team": "KPS Siedlce",
-      "points": 5,
-      "played": 6,
-      "wins": 2,
-      "losses": 4,
-      "sets_for": 7,
-      "sets_against": 14,
-      "points_for": 478,
-      "points_against": 509
     },
     {
       "rank": 15,

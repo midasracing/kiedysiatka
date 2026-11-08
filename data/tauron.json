@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-08T13:39:48.806057+00:00",
+  "updated_at": "2026-11-08T17:46:45.991150+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -1842,15 +1842,32 @@
       "round": 5,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "Asseco Resovia Rzeszów",
       "away": "Aluron CMC Warta Zawiercie",
       "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "away_sets": 3,
+      "set_scores": [
+        "19:25",
+        "26:28",
+        "18:25"
+      ],
+      "set_points": [
+        {
+          "home": 19,
+          "away": 25
+        },
+        {
+          "home": 26,
+          "away": 28
+        },
+        {
+          "home": 18,
+          "away": 25
+        }
+      ],
+      "home_points": 63,
+      "away_points": 78,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104838/nocookies/1.html",
       "home_team_id": "3",
@@ -1879,15 +1896,22 @@
       "round": 5,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "live",
       "home": "Ślepsk Malow Suwałki",
       "away": "Energa Trefl Gdańsk",
       "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "away_sets": 1,
+      "set_scores": [
+        "24:26"
+      ],
+      "set_points": [
+        {
+          "home": 24,
+          "away": 26
+        }
+      ],
+      "home_points": 24,
+      "away_points": 26,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104840/nocookies/1.html",
       "home_team_id": "56",
@@ -7052,6 +7076,18 @@
   "table": [
     {
       "rank": 1,
+      "team": "Aluron CMC Warta Zawiercie",
+      "points": 15,
+      "played": 6,
+      "wins": 5,
+      "losses": 1,
+      "sets_for": 15,
+      "sets_against": 6,
+      "points_for": 517,
+      "points_against": 452
+    },
+    {
+      "rank": 2,
       "team": "BOGDANKA LUK Lublin",
       "points": 12,
       "played": 4,
@@ -7061,18 +7097,6 @@
       "sets_against": 1,
       "points_for": 327,
       "points_against": 282
-    },
-    {
-      "rank": 2,
-      "team": "Aluron CMC Warta Zawiercie",
-      "points": 12,
-      "played": 5,
-      "wins": 4,
-      "losses": 1,
-      "sets_for": 12,
-      "sets_against": 6,
-      "points_for": 439,
-      "points_against": 389
     },
     {
       "rank": 3,
@@ -7102,13 +7126,13 @@
       "rank": 5,
       "team": "Asseco Resovia Rzeszów",
       "points": 7,
-      "played": 3,
+      "played": 4,
       "wins": 2,
-      "losses": 1,
+      "losses": 2,
       "sets_for": 8,
-      "sets_against": 4,
-      "points_for": 276,
-      "points_against": 240
+      "sets_against": 7,
+      "points_for": 339,
+      "points_against": 318
     },
     {
       "rank": 6,
