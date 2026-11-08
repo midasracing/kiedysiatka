@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-08T17:46:53.861597+00:00",
+  "updated_at": "2026-11-08T21:23:48.562124+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -3800,23 +3800,33 @@
       "round": 9,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "live",
+      "status": "finished",
       "home": "AVIA Sędziszów Małopolski",
       "away": "KPS Płock",
-      "home_sets": 1,
+      "home_sets": 3,
       "away_sets": 0,
       "set_scores": [
-        "25:19"
+        "25:19",
+        "25:23",
+        "25:22"
       ],
       "set_points": [
         {
           "home": 25,
           "away": 19
+        },
+        {
+          "home": 25,
+          "away": 23
+        },
+        {
+          "home": 25,
+          "away": 22
         }
       ],
-      "home_points": 25,
-      "away_points": 19,
-      "current_points": "2:1",
+      "home_points": 75,
+      "away_points": 64,
+      "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105189/nocookies/1.html",
       "home_team_id": "95",
       "away_team_id": "94",
@@ -9702,6 +9712,18 @@
     },
     {
       "rank": 7,
+      "team": "AVIA Sędziszów Małopolski",
+      "points": 13,
+      "played": 9,
+      "wins": 5,
+      "losses": 4,
+      "sets_for": 17,
+      "sets_against": 17,
+      "points_for": 750,
+      "points_against": 786
+    },
+    {
+      "rank": 8,
       "team": "ICT PIERROT Czarni Radom",
       "points": 13,
       "played": 7,
@@ -9713,7 +9735,7 @@
       "points_against": 607
     },
     {
-      "rank": 8,
+      "rank": 9,
       "team": "Lechia Tomaszów Mazowiecki",
       "points": 12,
       "played": 9,
@@ -9725,7 +9747,7 @@
       "points_against": 835
     },
     {
-      "rank": 9,
+      "rank": 10,
       "team": "BBTS Bielsko-Biała",
       "points": 11,
       "played": 7,
@@ -9735,18 +9757,6 @@
       "sets_against": 12,
       "points_for": 565,
       "points_against": 561
-    },
-    {
-      "rank": 10,
-      "team": "AVIA Sędziszów Małopolski",
-      "points": 10,
-      "played": 8,
-      "wins": 4,
-      "losses": 4,
-      "sets_for": 14,
-      "sets_against": 17,
-      "points_for": 675,
-      "points_against": 722
     },
     {
       "rank": 11,
@@ -9812,13 +9822,13 @@
       "rank": 16,
       "team": "KPS Płock",
       "points": 2,
-      "played": 7,
+      "played": 8,
       "wins": 0,
-      "losses": 7,
+      "losses": 8,
       "sets_for": 4,
-      "sets_against": 21,
-      "points_for": 524,
-      "points_against": 598
+      "sets_against": 24,
+      "points_for": 588,
+      "points_against": 673
     }
   ],
   "source": "https://www.tauron1liga.pl",
