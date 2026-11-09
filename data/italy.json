@@ -2,7 +2,7 @@
   "league": "italy",
   "competition": "SuperLega Credem Banca",
   "source": "https://ww2.legavolley.it/Calendario.asp",
-  "updated_at": "2026-11-08T20:27:38.194184+00:00",
+  "updated_at": "2026-11-09T12:47:53.861237+00:00",
   "teams": [
     {
       "name": "Acqua Sant'Anna Cuneo",
@@ -139,6 +139,18 @@
       "rank": 6
     },
     {
+      "team": "Valsa Group Modena",
+      "played": 5,
+      "wins": 2,
+      "losses": 3,
+      "points": 6,
+      "sets_for": 7,
+      "sets_against": 10,
+      "points_for": 408,
+      "points_against": 402,
+      "rank": 7
+    },
+    {
       "team": "Rana Verona",
       "played": 5,
       "wins": 2,
@@ -148,7 +160,7 @@
       "sets_against": 12,
       "points_for": 426,
       "points_against": 439,
-      "rank": 7
+      "rank": 8
     },
     {
       "team": "Cisterna Volley",
@@ -160,18 +172,6 @@
       "sets_against": 12,
       "points_for": 375,
       "points_against": 399,
-      "rank": 8
-    },
-    {
-      "team": "Valsa Group Modena",
-      "played": 4,
-      "wins": 1,
-      "losses": 3,
-      "points": 3,
-      "sets_for": 4,
-      "sets_against": 10,
-      "points_for": 333,
-      "points_against": 345,
       "rank": 9
     },
     {
@@ -200,14 +200,14 @@
     },
     {
       "team": "Vero Volley Monza",
-      "played": 4,
+      "played": 5,
       "wins": 1,
-      "losses": 3,
+      "losses": 4,
       "points": 2,
       "sets_for": 5,
-      "sets_against": 11,
-      "points_for": 344,
-      "points_against": 379,
+      "sets_against": 14,
+      "points_for": 401,
+      "points_against": 454,
       "rank": 12
     }
   ],
@@ -1817,7 +1817,7 @@
       "broadcast": []
     },
     {
-      "id": "it-2026-andata-28",
+      "id": "it-40312",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 5",
       "date": "08.11.2026",
@@ -1826,30 +1826,47 @@
       "away": "Valsa Group Modena",
       "home_team_id": "6868",
       "away_team_id": "6867",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40312",
       "venue": {
         "name": "OpiquadArena",
-        "city": "Monza (MB)"
+        "city": "Monza"
       },
       "match_number": "28",
-      "status": "scheduled",
+      "status": "finished",
       "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
+      "away_sets": 3,
+      "set_scores": [
+        "21:25",
+        "14:25",
+        "22:25"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-09T12:47:53.606066+00:00",
       "league": "italy",
       "date_iso": "2026-11-08",
       "phase": "Zasadnicza",
       "round": 5,
       "term_number": 5,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 21,
+          "away": 25
+        },
+        {
+          "home": 14,
+          "away": 25
+        },
+        {
+          "home": 22,
+          "away": 25
+        }
+      ],
+      "home_points": 57,
+      "away_points": 75,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_MZA",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_MOD",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
       "id": "it-2026-andata-23",
