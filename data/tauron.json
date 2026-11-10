@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-10T04:05:37.722567+00:00",
+  "updated_at": "2026-11-10T15:03:00.686929+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -2611,6 +2611,9 @@
       "away_team_id": "56",
       "home_logo": "https://www.tauronliga.pl/dl/724983/inline/scalecrop=100x100/4ede7c/bogdanka_luk.png",
       "away_logo": "https://www.tauronliga.pl/dl/724992/inline/scalecrop=100x100/a2d2c3/slepsk_malow.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
       "venue": {
         "name": "HSW Globus",
         "address": "Kazimierza Wielkiego 8",
@@ -2625,7 +2628,7 @@
       "league": "men",
       "competition": "TAURON Liga",
       "date": "24.11.2026",
-      "time": null,
+      "time": "17:30",
       "date_iso": "2026-11-24",
       "round": 8,
       "round_source_label": "Kolejka",
@@ -2645,6 +2648,9 @@
       "away_team_id": "71",
       "home_logo": "https://www.tauronliga.pl/dl/724987/inline/scalecrop=100x100/8ed289/energa_trefl_gdansk.png",
       "away_logo": "https://www.tauronliga.pl/dl/724991/inline/scalecrop=100x100/5c2059/steam_hemarpol.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
       "venue": {
         "name": "Ergo Arena",
         "address": "Plac Dwóch Miast 1",
@@ -2659,7 +2665,7 @@
       "league": "men",
       "competition": "TAURON Liga",
       "date": "24.11.2026",
-      "time": null,
+      "time": "20:30",
       "date_iso": "2026-11-24",
       "round": 8,
       "round_source_label": "Kolejka",
@@ -2679,6 +2685,9 @@
       "away_team_id": "8",
       "home_logo": "https://www.tauronliga.pl/dl/724980/inline/scalecrop=100x100/d7e7c0/aluron_cmc.png",
       "away_logo": "https://www.tauronliga.pl/dl/727772/inline/scalecrop=100x100/71cb1c/jastrzebie_barkom.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
       "venue": {
         "name": "HWS w Zawierciu",
         "address": "ul. Blanowska 40",
@@ -2689,45 +2698,11 @@
       "details_checked_at": "2026-11-09T22:05:57.597120+00:00"
     },
     {
-      "id": "1104857",
-      "league": "men",
-      "competition": "TAURON Liga",
-      "date": "25.11.2026",
-      "time": null,
-      "date_iso": "2026-11-25",
-      "round": 8,
-      "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
-      "status": "scheduled",
-      "home": "GKS Katowice",
-      "away": "PGE Projekt Warszawa",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
-      "current_points": null,
-      "source_url": "https://www.tauronliga.pl/games/action/show/id/1104857/nocookies/1.html",
-      "home_team_id": "18",
-      "away_team_id": "62",
-      "home_logo": "https://www.tauronliga.pl/dl/724988/inline/scalecrop=100x100/035f7d/gks_katowice.png",
-      "away_logo": "https://www.tauronliga.pl/dl/728192/inline/scalecrop=100x100/e8bac3/pge_projekt_warszawa-1.png",
-      "venue": {
-        "name": "Arena Katowice",
-        "address": "ul. Nowa Bukowa 1",
-        "city": "Katowice"
-      },
-      "match_number": "050",
-      "term_number": 8,
-      "details_checked_at": "2026-11-09T22:05:57.597120+00:00"
-    },
-    {
       "id": "1104863",
       "league": "men",
       "competition": "TAURON Liga",
       "date": "25.11.2026",
-      "time": null,
+      "time": "17:30",
       "date_iso": "2026-11-25",
       "round": 8,
       "round_source_label": "Kolejka",
@@ -2747,12 +2722,52 @@
       "away_team_id": "3",
       "home_logo": "https://www.tauronliga.pl/dl/724986/inline/scalecrop=100x100/5ae916/energa_indykpol_azsolsztyn.png",
       "away_logo": "https://www.tauronliga.pl/dl/724981/inline/scalecrop=100x100/2806ab/asseco_resovia.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
       "venue": {
         "name": "Hala Urania",
         "address": "Aleja Marszałka Józefa Piłsudskiego 44",
         "city": "Olsztyn"
       },
       "match_number": "056",
+      "term_number": 8,
+      "details_checked_at": "2026-11-09T22:05:57.597120+00:00"
+    },
+    {
+      "id": "1104857",
+      "league": "men",
+      "competition": "TAURON Liga",
+      "date": "25.11.2026",
+      "time": "20:30",
+      "date_iso": "2026-11-25",
+      "round": 8,
+      "round_source_label": "Kolejka",
+      "phase": "Faza Zasadnicza",
+      "status": "scheduled",
+      "home": "GKS Katowice",
+      "away": "PGE Projekt Warszawa",
+      "home_sets": 0,
+      "away_sets": 0,
+      "set_scores": [],
+      "set_points": [],
+      "home_points": 0,
+      "away_points": 0,
+      "current_points": null,
+      "source_url": "https://www.tauronliga.pl/games/action/show/id/1104857/nocookies/1.html",
+      "home_team_id": "18",
+      "away_team_id": "62",
+      "home_logo": "https://www.tauronliga.pl/dl/724988/inline/scalecrop=100x100/035f7d/gks_katowice.png",
+      "away_logo": "https://www.tauronliga.pl/dl/728192/inline/scalecrop=100x100/e8bac3/pge_projekt_warszawa-1.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
+      "venue": {
+        "name": "Arena Katowice",
+        "address": "ul. Nowa Bukowa 1",
+        "city": "Katowice"
+      },
+      "match_number": "050",
       "term_number": 8,
       "details_checked_at": "2026-11-09T22:05:57.597120+00:00"
     },
