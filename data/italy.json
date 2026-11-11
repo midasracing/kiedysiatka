@@ -2,7 +2,7 @@
   "league": "italy",
   "competition": "SuperLega Credem Banca",
   "source": "https://ww2.legavolley.it/Calendario.asp",
-  "updated_at": "2026-11-09T12:47:53.861237+00:00",
+  "updated_at": "2026-11-11T11:50:51.691485+00:00",
   "teams": [
     {
       "name": "Acqua Sant'Anna Cuneo",
@@ -1985,7 +1985,7 @@
       "away_team_id": "6865",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "32",
@@ -2545,7 +2545,7 @@
       "away_team_id": "6868",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "46",
@@ -3070,7 +3070,7 @@
       "away_team_id": "6897",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "65",
@@ -3140,7 +3140,7 @@
       "away_team_id": "6862",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "67",
@@ -3595,7 +3595,7 @@
       "away_team_id": "6860",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "80",
@@ -4050,7 +4050,7 @@
       "away_team_id": "6858",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "93",
@@ -4505,7 +4505,7 @@
       "away_team_id": "6866",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "106",
@@ -4925,7 +4925,7 @@
       "away_team_id": "6859",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "118",
@@ -5030,7 +5030,7 @@
       "away_team_id": "6863",
       "source_url": "https://ww2.legavolley.it/Calendario.asp",
       "venue": {
-        "name": "PalaBancaSport",
+        "name": "PalabancaSport",
         "city": "Piacenza (PC)"
       },
       "match_number": "121",
