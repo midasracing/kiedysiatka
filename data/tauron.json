@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-11T14:34:19.770601+00:00",
+  "updated_at": "2026-11-11T19:23:54.346613+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -1613,15 +1613,37 @@
       "round": 4,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "NEONET Norwid Częstochowa",
       "away": "Jastrzębie Barkom",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 3,
+      "away_sets": 1,
+      "set_scores": [
+        "25:15",
+        "25:17",
+        "22:25",
+        "25:15"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 15
+        },
+        {
+          "home": 25,
+          "away": 17
+        },
+        {
+          "home": 22,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 15
+        }
+      ],
+      "home_points": 97,
+      "away_points": 72,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104830/nocookies/1.html",
       "home_team_id": "71",
@@ -7268,16 +7290,28 @@
       "rank": 8,
       "team": "Jastrzębie Barkom",
       "points": 6,
-      "played": 4,
+      "played": 5,
       "wins": 2,
-      "losses": 2,
-      "sets_for": 9,
-      "sets_against": 8,
-      "points_for": 372,
-      "points_against": 359
+      "losses": 3,
+      "sets_for": 10,
+      "sets_against": 11,
+      "points_for": 444,
+      "points_against": 456
     },
     {
       "rank": 9,
+      "team": "NEONET Norwid Częstochowa",
+      "points": 6,
+      "played": 5,
+      "wins": 2,
+      "losses": 3,
+      "sets_for": 9,
+      "sets_against": 12,
+      "points_for": 446,
+      "points_against": 448
+    },
+    {
+      "rank": 10,
       "team": "GKS Katowice",
       "points": 6,
       "played": 5,
@@ -7289,7 +7323,7 @@
       "points_against": 430
     },
     {
-      "rank": 10,
+      "rank": 11,
       "team": "ZAKSA Kędzierzyn-Koźle",
       "points": 5,
       "played": 4,
@@ -7301,7 +7335,7 @@
       "points_against": 356
     },
     {
-      "rank": 11,
+      "rank": 12,
       "team": "Stilon Gorzów",
       "points": 5,
       "played": 5,
@@ -7311,18 +7345,6 @@
       "sets_against": 13,
       "points_for": 455,
       "points_against": 466
-    },
-    {
-      "rank": 12,
-      "team": "NEONET Norwid Częstochowa",
-      "points": 3,
-      "played": 4,
-      "wins": 1,
-      "losses": 3,
-      "sets_for": 6,
-      "sets_against": 11,
-      "points_for": 349,
-      "points_against": 376
     },
     {
       "rank": 13,
