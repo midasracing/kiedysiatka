@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-12T01:37:39.075218+00:00",
+  "updated_at": "2026-11-12T15:27:17.349885+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -3459,7 +3459,7 @@
       "date_iso": "2026-12-12",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Jastrzębie Barkom",
       "away": "Energa Indykpol AZS Olsztyn",
@@ -3493,7 +3493,7 @@
       "date_iso": "2026-12-12",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Podziemia Kredowe ChKS Chełm",
       "away": "PGE GiEK SKRA Bełchatów",
