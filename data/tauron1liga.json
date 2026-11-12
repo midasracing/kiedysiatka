@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-11T19:24:00.095347+00:00",
+  "updated_at": "2026-11-12T01:37:46.400838+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -5176,7 +5176,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "KPS Płock",
       "away": "KS Sparta Grodzisk Mazowiecki",
@@ -5199,7 +5199,7 @@
       },
       "match_number": "107",
       "term_number": 14,
-      "details_checked_at": "2026-11-06T11:13:08.062250+00:00"
+      "details_checked_at": "2026-11-12T01:37:44.446516+00:00"
     },
     {
       "id": "1105233",
@@ -5210,7 +5210,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "KPS Siedlce",
       "away": "AVIA Sędziszów Małopolski",
@@ -5233,7 +5233,7 @@
       },
       "match_number": "112",
       "term_number": 14,
-      "details_checked_at": "2026-11-06T11:13:08.062250+00:00"
+      "details_checked_at": "2026-11-12T01:37:44.446516+00:00"
     },
     {
       "id": "1105227",
