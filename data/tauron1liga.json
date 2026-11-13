@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-13T14:43:50.728420+00:00",
+  "updated_at": "2026-11-13T19:24:06.366908+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -4054,15 +4054,37 @@
       "round": 10,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "SMS PZPS Spała",
       "away": "BKS Bydgoszcz",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 1,
+      "away_sets": 3,
+      "set_scores": [
+        "22:25",
+        "25:19",
+        "15:25",
+        "18:25"
+      ],
+      "set_points": [
+        {
+          "home": 22,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 19
+        },
+        {
+          "home": 15,
+          "away": 25
+        },
+        {
+          "home": 18,
+          "away": 25
+        }
+      ],
+      "home_points": 80,
+      "away_points": 94,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105196/nocookies/1.html",
       "home_team_id": "66",
@@ -9797,6 +9819,18 @@
     },
     {
       "rank": 9,
+      "team": "BKS Bydgoszcz",
+      "points": 13,
+      "played": 9,
+      "wins": 4,
+      "losses": 5,
+      "sets_for": 18,
+      "sets_against": 19,
+      "points_for": 795,
+      "points_against": 807
+    },
+    {
+      "rank": 10,
       "team": "Lechia Tomaszów Mazowiecki",
       "points": 12,
       "played": 9,
@@ -9808,7 +9842,7 @@
       "points_against": 835
     },
     {
-      "rank": 10,
+      "rank": 11,
       "team": "BBTS Bielsko-Biała",
       "points": 11,
       "played": 8,
@@ -9818,18 +9852,6 @@
       "sets_against": 15,
       "points_for": 654,
       "points_against": 660
-    },
-    {
-      "rank": 11,
-      "team": "BKS Bydgoszcz",
-      "points": 10,
-      "played": 8,
-      "wins": 3,
-      "losses": 5,
-      "sets_for": 15,
-      "sets_against": 18,
-      "points_for": 701,
-      "points_against": 727
     },
     {
       "rank": 12,
@@ -9871,13 +9893,13 @@
       "rank": 15,
       "team": "SMS PZPS Spała",
       "points": 4,
-      "played": 6,
+      "played": 7,
       "wins": 1,
-      "losses": 5,
-      "sets_for": 7,
-      "sets_against": 16,
-      "points_for": 486,
-      "points_against": 531
+      "losses": 6,
+      "sets_for": 8,
+      "sets_against": 19,
+      "points_for": 566,
+      "points_against": 625
     },
     {
       "rank": 16,

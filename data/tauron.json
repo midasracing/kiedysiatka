@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-13T14:43:45.956238+00:00",
+  "updated_at": "2026-11-13T19:24:00.716855+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -2154,15 +2154,37 @@
       "round": 6,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "PGE Projekt Warszawa",
       "away": "Podziemia Kredowe ChKS Chełm",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 3,
+      "away_sets": 1,
+      "set_scores": [
+        "16:25",
+        "31:29",
+        "26:24",
+        "25:17"
+      ],
+      "set_points": [
+        {
+          "home": 16,
+          "away": 25
+        },
+        {
+          "home": 31,
+          "away": 29
+        },
+        {
+          "home": 26,
+          "away": 24
+        },
+        {
+          "home": 25,
+          "away": 17
+        }
+      ],
+      "home_points": 98,
+      "away_points": 95,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104844/nocookies/1.html",
       "home_team_id": "62",
@@ -7256,14 +7278,14 @@
     {
       "rank": 3,
       "team": "PGE Projekt Warszawa",
-      "points": 12,
-      "played": 6,
-      "wins": 4,
+      "points": 15,
+      "played": 7,
+      "wins": 5,
       "losses": 2,
-      "sets_for": 15,
-      "sets_against": 10,
-      "points_for": 566,
-      "points_against": 532
+      "sets_for": 18,
+      "sets_against": 11,
+      "points_for": 664,
+      "points_against": 627
     },
     {
       "rank": 4,
@@ -7305,13 +7327,13 @@
       "rank": 7,
       "team": "Podziemia Kredowe ChKS Chełm",
       "points": 7,
-      "played": 5,
+      "played": 6,
       "wins": 3,
-      "losses": 2,
-      "sets_for": 11,
-      "sets_against": 12,
-      "points_for": 454,
-      "points_against": 486
+      "losses": 3,
+      "sets_for": 12,
+      "sets_against": 15,
+      "points_for": 549,
+      "points_against": 584
     },
     {
       "rank": 8,
