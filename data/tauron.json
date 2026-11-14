@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-13T19:24:00.716855+00:00",
+  "updated_at": "2026-11-14T00:25:50.107214+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -2213,15 +2213,32 @@
       "round": 6,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "GKS Katowice",
       "away": "NEONET Norwid Częstochowa",
-      "home_sets": 0,
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_scores": [
+        "25:20",
+        "25:19",
+        "25:18"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 20
+        },
+        {
+          "home": 25,
+          "away": 19
+        },
+        {
+          "home": 25,
+          "away": 18
+        }
+      ],
+      "home_points": 75,
+      "away_points": 57,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104843/nocookies/1.html",
       "home_team_id": "18",
@@ -3617,7 +3634,7 @@
       "date_iso": "2026-12-14",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Stilon Gorzów",
       "away": "GKS Katowice",
@@ -3640,7 +3657,7 @@
       },
       "match_number": "071",
       "term_number": 11,
-      "details_checked_at": "2026-11-06T11:11:26.011579+00:00"
+      "details_checked_at": "2026-11-14T00:25:47.716012+00:00"
     },
     {
       "id": "1104882",
@@ -3651,7 +3668,7 @@
       "date_iso": "2026-12-14",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "NEONET Norwid Częstochowa",
       "away": "BOGDANKA LUK Lublin",
@@ -3674,7 +3691,7 @@
       },
       "match_number": "075",
       "term_number": 11,
-      "details_checked_at": "2026-11-06T11:11:26.011579+00:00"
+      "details_checked_at": "2026-11-14T00:25:47.716012+00:00"
     },
     {
       "id": "1104886",
@@ -7289,6 +7306,18 @@
     },
     {
       "rank": 4,
+      "team": "GKS Katowice",
+      "points": 9,
+      "played": 6,
+      "wins": 3,
+      "losses": 3,
+      "sets_for": 11,
+      "sets_against": 11,
+      "points_for": 475,
+      "points_against": 487
+    },
+    {
+      "rank": 5,
       "team": "PGE GiEK SKRA Bełchatów",
       "points": 8,
       "played": 5,
@@ -7300,7 +7329,7 @@
       "points_against": 436
     },
     {
-      "rank": 5,
+      "rank": 6,
       "team": "Asseco Resovia Rzeszów",
       "points": 8,
       "played": 5,
@@ -7312,7 +7341,7 @@
       "points_against": 423
     },
     {
-      "rank": 6,
+      "rank": 7,
       "team": "ZAKSA Kędzierzyn-Koźle",
       "points": 7,
       "played": 5,
@@ -7324,7 +7353,7 @@
       "points_against": 463
     },
     {
-      "rank": 7,
+      "rank": 8,
       "team": "Podziemia Kredowe ChKS Chełm",
       "points": 7,
       "played": 6,
@@ -7336,7 +7365,7 @@
       "points_against": 584
     },
     {
-      "rank": 8,
+      "rank": 9,
       "team": "Ślepsk Malow Suwałki",
       "points": 7,
       "played": 5,
@@ -7348,7 +7377,7 @@
       "points_against": 504
     },
     {
-      "rank": 9,
+      "rank": 10,
       "team": "Jastrzębie Barkom",
       "points": 6,
       "played": 5,
@@ -7360,28 +7389,16 @@
       "points_against": 456
     },
     {
-      "rank": 10,
+      "rank": 11,
       "team": "NEONET Norwid Częstochowa",
       "points": 6,
-      "played": 5,
+      "played": 6,
       "wins": 2,
-      "losses": 3,
+      "losses": 4,
       "sets_for": 9,
-      "sets_against": 12,
-      "points_for": 446,
-      "points_against": 448
-    },
-    {
-      "rank": 11,
-      "team": "GKS Katowice",
-      "points": 6,
-      "played": 5,
-      "wins": 2,
-      "losses": 3,
-      "sets_for": 8,
-      "sets_against": 11,
-      "points_for": 400,
-      "points_against": 430
+      "sets_against": 15,
+      "points_for": 503,
+      "points_against": 523
     },
     {
       "rank": 12,

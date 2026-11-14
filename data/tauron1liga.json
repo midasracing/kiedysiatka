@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-13T19:24:06.366908+00:00",
+  "updated_at": "2026-11-14T00:25:58.861205+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -5101,7 +5101,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "MCKiS Jaworzno",
       "away": "BBTS Bielsko-Biała",
@@ -5124,7 +5124,7 @@
       },
       "match_number": "105",
       "term_number": 14,
-      "details_checked_at": "2026-11-11T00:13:20.310994+00:00"
+      "details_checked_at": "2026-11-14T00:25:56.724484+00:00"
     },
     {
       "id": "1105229",
@@ -5135,7 +5135,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "KKS MICKIEWICZ Kluczbork",
       "away": "BKS Bydgoszcz",
@@ -5158,7 +5158,7 @@
       },
       "match_number": "108",
       "term_number": 14,
-      "details_checked_at": "2026-11-11T00:13:20.310994+00:00"
+      "details_checked_at": "2026-11-14T00:25:56.724484+00:00"
     },
     {
       "id": "1105230",
@@ -5169,7 +5169,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Stal Nysa",
       "away": "FORT Poznań",
@@ -5192,7 +5192,7 @@
       },
       "match_number": "109",
       "term_number": 14,
-      "details_checked_at": "2026-11-11T00:13:20.310994+00:00"
+      "details_checked_at": "2026-11-14T00:25:56.724484+00:00"
     },
     {
       "id": "1105231",
@@ -5203,7 +5203,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Nowak-Mosty MKS Będzin",
       "away": "Lechia Tomaszów Mazowiecki",
@@ -5226,7 +5226,7 @@
       },
       "match_number": "110",
       "term_number": 14,
-      "details_checked_at": "2026-11-11T00:13:20.310994+00:00"
+      "details_checked_at": "2026-11-14T00:25:56.724484+00:00"
     },
     {
       "id": "1105228",
