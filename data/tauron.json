@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-14T13:40:29.957749+00:00",
+  "updated_at": "2026-11-14T17:48:02.007398+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -2267,15 +2267,37 @@
       "round": 6,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "PGE GiEK SKRA Bełchatów",
       "away": "Energa Indykpol AZS Olsztyn",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 3,
+      "away_sets": 1,
+      "set_scores": [
+        "25:20",
+        "21:25",
+        "25:18",
+        "25:22"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 20
+        },
+        {
+          "home": 21,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 18
+        },
+        {
+          "home": 25,
+          "away": 22
+        }
+      ],
+      "home_points": 96,
+      "away_points": 85,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104849/nocookies/1.html",
       "home_team_id": "61",
@@ -7306,6 +7328,18 @@
     },
     {
       "rank": 4,
+      "team": "PGE GiEK SKRA Bełchatów",
+      "points": 11,
+      "played": 6,
+      "wins": 4,
+      "losses": 2,
+      "sets_for": 13,
+      "sets_against": 10,
+      "points_for": 523,
+      "points_against": 521
+    },
+    {
+      "rank": 5,
       "team": "GKS Katowice",
       "points": 9,
       "played": 6,
@@ -7315,18 +7349,6 @@
       "sets_against": 11,
       "points_for": 475,
       "points_against": 487
-    },
-    {
-      "rank": 5,
-      "team": "PGE GiEK SKRA Bełchatów",
-      "points": 8,
-      "played": 5,
-      "wins": 3,
-      "losses": 2,
-      "sets_for": 10,
-      "sets_against": 9,
-      "points_for": 427,
-      "points_against": 436
     },
     {
       "rank": 6,
@@ -7428,13 +7450,13 @@
       "rank": 14,
       "team": "Energa Indykpol AZS Olsztyn",
       "points": 3,
-      "played": 5,
+      "played": 6,
       "wins": 1,
-      "losses": 4,
-      "sets_for": 6,
-      "sets_against": 12,
-      "points_for": 385,
-      "points_against": 432
+      "losses": 5,
+      "sets_for": 7,
+      "sets_against": 15,
+      "points_for": 470,
+      "points_against": 528
     }
   ],
   "source": "https://www.tauronliga.pl",
