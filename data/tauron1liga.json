@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-14T17:48:13.677598+00:00",
+  "updated_at": "2026-11-14T21:41:40.137266+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -4110,15 +4110,42 @@
       "round": 10,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "KKS MICKIEWICZ Kluczbork",
       "away": "AVIA Sędziszów Małopolski",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 3,
+      "away_sets": 2,
+      "set_scores": [
+        "23:25",
+        "25:10",
+        "25:20",
+        "32:34",
+        "15:10"
+      ],
+      "set_points": [
+        {
+          "home": 23,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 10
+        },
+        {
+          "home": 25,
+          "away": 20
+        },
+        {
+          "home": 32,
+          "away": 34
+        },
+        {
+          "home": 15,
+          "away": 10
+        }
+      ],
+      "home_points": 120,
+      "away_points": 99,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105199/nocookies/1.html",
       "home_team_id": "37",
@@ -4144,15 +4171,42 @@
       "round": 10,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "Nowak-Mosty MKS Będzin",
       "away": "PZL LEONARDO Avia Świdnik",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 2,
+      "away_sets": 3,
+      "set_scores": [
+        "20:25",
+        "25:17",
+        "21:25",
+        "25:22",
+        "9:15"
+      ],
+      "set_points": [
+        {
+          "home": 20,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 17
+        },
+        {
+          "home": 21,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 9,
+          "away": 15
+        }
+      ],
+      "home_points": 100,
+      "away_points": 104,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105201/nocookies/1.html",
       "home_team_id": "53",
@@ -9723,6 +9777,18 @@
   "table": [
     {
       "rank": 1,
+      "team": "PZL LEONARDO Avia Świdnik",
+      "points": 21,
+      "played": 10,
+      "wins": 8,
+      "losses": 2,
+      "sets_for": 27,
+      "sets_against": 16,
+      "points_for": 970,
+      "points_against": 908
+    },
+    {
+      "rank": 2,
       "team": "CUK Anioły Toruń",
       "points": 21,
       "played": 8,
@@ -9734,28 +9800,16 @@
       "points_against": 661
     },
     {
-      "rank": 2,
-      "team": "Nowak-Mosty MKS Będzin",
-      "points": 20,
-      "played": 9,
-      "wins": 7,
-      "losses": 2,
-      "sets_for": 21,
-      "sets_against": 10,
-      "points_for": 732,
-      "points_against": 644
-    },
-    {
       "rank": 3,
-      "team": "PZL LEONARDO Avia Świdnik",
-      "points": 19,
-      "played": 9,
+      "team": "Nowak-Mosty MKS Będzin",
+      "points": 21,
+      "played": 10,
       "wins": 7,
-      "losses": 2,
-      "sets_for": 24,
-      "sets_against": 14,
-      "points_for": 866,
-      "points_against": 808
+      "losses": 3,
+      "sets_for": 23,
+      "sets_against": 13,
+      "points_for": 832,
+      "points_against": 748
     },
     {
       "rank": 4,
@@ -9784,26 +9838,26 @@
     {
       "rank": 6,
       "team": "KKS MICKIEWICZ Kluczbork",
-      "points": 14,
-      "played": 9,
-      "wins": 4,
+      "points": 16,
+      "played": 10,
+      "wins": 5,
       "losses": 5,
-      "sets_for": 17,
-      "sets_against": 16,
-      "points_for": 752,
-      "points_against": 734
+      "sets_for": 20,
+      "sets_against": 18,
+      "points_for": 872,
+      "points_against": 833
     },
     {
       "rank": 7,
       "team": "AVIA Sędziszów Małopolski",
-      "points": 13,
-      "played": 9,
+      "points": 14,
+      "played": 10,
       "wins": 5,
-      "losses": 4,
-      "sets_for": 17,
-      "sets_against": 17,
-      "points_for": 750,
-      "points_against": 786
+      "losses": 5,
+      "sets_for": 19,
+      "sets_against": 20,
+      "points_for": 849,
+      "points_against": 906
     },
     {
       "rank": 8,
