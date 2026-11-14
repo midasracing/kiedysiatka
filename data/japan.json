@@ -2,7 +2,7 @@
   "league": "japan",
   "competition": "SV.League Men",
   "source": "https://www.svleague.jp/match/sv/men/",
-  "updated_at": "2026-11-13T12:09:37.220605+00:00",
+  "updated_at": "2026-11-14T11:26:42.013281+00:00",
   "teams": [
     {
       "name": "Fragolad Kagoshima",
@@ -69,146 +69,146 @@
     {
       "rank": 1,
       "team": "Osaka Bluteon",
-      "played": 6,
-      "wins": 5,
+      "played": 7,
+      "wins": 6,
       "losses": 1,
-      "points": 16,
-      "sets_for": 17,
+      "points": 19,
+      "sets_for": 20,
       "sets_against": 6,
-      "points_for": 544,
-      "points_against": 480
+      "points_for": 619,
+      "points_against": 539
     },
     {
       "rank": 2,
       "team": "Wolfdogs Nagoya",
-      "played": 6,
-      "wins": 5,
+      "played": 7,
+      "wins": 6,
       "losses": 1,
-      "points": 14,
-      "sets_for": 16,
-      "sets_against": 6,
-      "points_for": 511,
-      "points_against": 472
+      "points": 16,
+      "sets_for": 19,
+      "sets_against": 8,
+      "points_for": 619,
+      "points_against": 572
     },
     {
       "rank": 3,
       "team": "JTEKT Stings Aichi",
-      "played": 6,
+      "played": 7,
       "wins": 4,
-      "losses": 2,
+      "losses": 3,
       "points": 12,
-      "sets_for": 13,
-      "sets_against": 9,
-      "points_for": 528,
-      "points_against": 499
+      "sets_for": 14,
+      "sets_against": 12,
+      "points_for": 611,
+      "points_against": 595
     },
     {
       "rank": 4,
-      "team": "Nippon Steel Sakai Blazers",
-      "played": 6,
-      "wins": 3,
+      "team": "Suntory Sunbirds Osaka",
+      "played": 7,
+      "wins": 4,
       "losses": 3,
-      "points": 10,
-      "sets_for": 13,
-      "sets_against": 11,
-      "points_for": 559,
-      "points_against": 546
+      "points": 12,
+      "sets_for": 16,
+      "sets_against": 14,
+      "points_for": 676,
+      "points_against": 673
     },
     {
       "rank": 5,
-      "team": "Hiroshima Thunders",
-      "played": 6,
+      "team": "Nippon Steel Sakai Blazers",
+      "played": 7,
       "wins": 3,
-      "losses": 3,
-      "points": 10,
-      "sets_for": 14,
-      "sets_against": 13,
-      "points_for": 618,
-      "points_against": 599
+      "losses": 4,
+      "points": 11,
+      "sets_for": 15,
+      "sets_against": 14,
+      "points_for": 659,
+      "points_against": 654
     },
     {
       "rank": 6,
-      "team": "Suntory Sunbirds Osaka",
-      "played": 6,
+      "team": "Hokkaido Yellow Stars",
+      "played": 7,
       "wins": 3,
-      "losses": 3,
-      "points": 9,
-      "sets_for": 13,
+      "losses": 4,
+      "points": 10,
+      "sets_for": 12,
       "sets_against": 13,
-      "points_for": 580,
-      "points_against": 590
+      "points_for": 564,
+      "points_against": 567
     },
     {
       "rank": 7,
-      "team": "Tokyo Great Bears",
-      "played": 6,
+      "team": "Hiroshima Thunders",
+      "played": 7,
       "wins": 3,
-      "losses": 3,
-      "points": 9,
-      "sets_for": 11,
-      "sets_against": 12,
-      "points_for": 495,
-      "points_against": 514
+      "losses": 4,
+      "points": 10,
+      "sets_for": 14,
+      "sets_against": 16,
+      "points_for": 682,
+      "points_against": 674
     },
     {
       "rank": 8,
-      "team": "Voreas Hokkaido",
-      "played": 6,
+      "team": "Tokyo Great Bears",
+      "played": 7,
       "wins": 3,
-      "losses": 3,
-      "points": 8,
-      "sets_for": 12,
-      "sets_against": 12,
-      "points_for": 566,
-      "points_against": 562
+      "losses": 4,
+      "points": 10,
+      "sets_for": 13,
+      "sets_against": 15,
+      "points_for": 591,
+      "points_against": 619
     },
     {
       "rank": 9,
-      "team": "Hokkaido Yellow Stars",
-      "played": 6,
-      "wins": 2,
+      "team": "Voreas Hokkaido",
+      "played": 7,
+      "wins": 3,
       "losses": 4,
-      "points": 7,
-      "sets_for": 9,
-      "sets_against": 13,
-      "points_for": 489,
-      "points_against": 503
+      "points": 8,
+      "sets_for": 13,
+      "sets_against": 15,
+      "points_for": 654,
+      "points_against": 660
     },
     {
       "rank": 10,
       "team": "Shinshu Matsumoto Tridents",
-      "played": 6,
-      "wins": 2,
+      "played": 7,
+      "wins": 3,
       "losses": 4,
-      "points": 6,
-      "sets_for": 12,
-      "sets_against": 16,
-      "points_for": 600,
-      "points_against": 612
+      "points": 8,
+      "sets_for": 15,
+      "sets_against": 18,
+      "points_for": 705,
+      "points_against": 708
     },
     {
       "rank": 11,
       "team": "Toray Arrows Shizuoka",
-      "played": 6,
-      "wins": 2,
+      "played": 7,
+      "wins": 3,
       "losses": 4,
-      "points": 5,
-      "sets_for": 8,
-      "sets_against": 15,
-      "points_for": 485,
-      "points_against": 537
+      "points": 8,
+      "sets_for": 11,
+      "sets_against": 16,
+      "points_for": 583,
+      "points_against": 625
     },
     {
       "rank": 12,
       "team": "Fragolad Kagoshima",
-      "played": 6,
+      "played": 7,
       "wins": 1,
-      "losses": 5,
+      "losses": 6,
       "points": 2,
       "sets_for": 5,
-      "sets_against": 17,
-      "points_for": 484,
-      "points_against": 545
+      "sets_against": 20,
+      "points_for": 543,
+      "points_against": 620
     }
   ],
   "table_source": "https://www.svleague.jp/match/sv/men/standings/",
@@ -2297,78 +2297,6 @@
       "details_checked_at": null
     },
     {
-      "id": "jp-38010",
-      "competition": "SV.League Men",
-      "group": "Kolejka 4 · mecz 1",
-      "date": "14.11.2026",
-      "time": "05:05",
-      "home": "Wolfdogs Nagoya",
-      "away": "Nippon Steel Sakai Blazers",
-      "home_team_id": "wdnagoya",
-      "away_team_id": "sakai",
-      "source_url": "https://www.svleague.jp/match/detail/38010/",
-      "venue": {
-        "name": "HAPPINESS ARENA",
-        "city": "",
-        "address": ""
-      },
-      "match_number": "1",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "status": "scheduled",
-      "current_points": null,
-      "league": "japan",
-      "date_iso": "2026-11-14",
-      "phase": "Zasadnicza",
-      "round": 4,
-      "term_number": 4,
-      "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
-      "home_logo": "https://www.svleague.jp/files/2026-27/team/wdnagoya/emblem.png",
-      "away_logo": "https://www.svleague.jp/files/2026-27/team/sakai/emblem.png",
-      "broadcast": [],
-      "details_checked_at": null
-    },
-    {
-      "id": "jp-38014",
-      "competition": "SV.League Men",
-      "group": "Kolejka 4 · mecz 1",
-      "date": "14.11.2026",
-      "time": "05:05",
-      "home": "Suntory Sunbirds Osaka",
-      "away": "JTEKT Stings Aichi",
-      "home_team_id": "suntory",
-      "away_team_id": "stingsaichi",
-      "source_url": "https://www.svleague.jp/match/detail/38014/",
-      "venue": {
-        "name": "おおきにアリーナ舞洲",
-        "city": "",
-        "address": ""
-      },
-      "match_number": "1",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "status": "scheduled",
-      "current_points": null,
-      "league": "japan",
-      "date_iso": "2026-11-14",
-      "phase": "Zasadnicza",
-      "round": 4,
-      "term_number": 4,
-      "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
-      "home_logo": "https://www.svleague.jp/files/2026-27/team/suntory/emblem.png",
-      "away_logo": "https://www.svleague.jp/files/2026-27/team/stingsaichi/emblem.png",
-      "broadcast": [],
-      "details_checked_at": null
-    },
-    {
       "id": "jp-38004",
       "competition": "SV.League Men",
       "group": "Kolejka 4 · mecz 1",
@@ -2385,10 +2313,14 @@
         "address": ""
       },
       "match_number": "1",
-      "home_sets": 0,
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
-      "status": "scheduled",
+      "set_scores": [
+        "25:21",
+        "25:21",
+        "25:22"
+      ],
+      "status": "finished",
       "current_points": null,
       "league": "japan",
       "date_iso": "2026-11-14",
@@ -2396,9 +2328,22 @@
       "round": 4,
       "term_number": 4,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 25,
+          "away": 22
+        }
+      ],
+      "home_points": 75,
+      "away_points": 64,
       "home_logo": "https://www.svleague.jp/files/2026-27/team/hokkaidoys/emblem.png",
       "away_logo": "https://www.svleague.jp/files/2026-27/team/hiroshima/emblem.png",
       "broadcast": [],
@@ -2421,10 +2366,16 @@
         "address": ""
       },
       "match_number": "1",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "status": "scheduled",
+      "home_sets": 2,
+      "away_sets": 3,
+      "set_scores": [
+        "25:18",
+        "23:25",
+        "25:22",
+        "16:25",
+        "7:15"
+      ],
+      "status": "finished",
       "current_points": null,
       "league": "japan",
       "date_iso": "2026-11-14",
@@ -2432,9 +2383,30 @@
       "round": 4,
       "term_number": 4,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 18
+        },
+        {
+          "home": 23,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 16,
+          "away": 25
+        },
+        {
+          "home": 7,
+          "away": 15
+        }
+      ],
+      "home_points": 96,
+      "away_points": 105,
       "home_logo": "https://www.svleague.jp/files/2026-27/team/tokyogb/emblem.png",
       "away_logo": "https://www.svleague.jp/files/2026-27/team/matsumototd/emblem.png",
       "broadcast": [],
@@ -2457,10 +2429,15 @@
         "address": ""
       },
       "match_number": "1",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "status": "scheduled",
+      "home_sets": 3,
+      "away_sets": 1,
+      "set_scores": [
+        "25:21",
+        "23:25",
+        "25:22",
+        "25:20"
+      ],
+      "status": "finished",
       "current_points": null,
       "league": "japan",
       "date_iso": "2026-11-14",
@@ -2468,11 +2445,91 @@
       "round": 4,
       "term_number": 4,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 23,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 25,
+          "away": 20
+        }
+      ],
+      "home_points": 98,
+      "away_points": 88,
       "home_logo": "https://www.svleague.jp/files/2026-27/team/trshizuoka/emblem.png",
       "away_logo": "https://www.svleague.jp/files/2026-27/team/voreas/emblem.png",
+      "broadcast": [],
+      "details_checked_at": null
+    },
+    {
+      "id": "jp-38010",
+      "competition": "SV.League Men",
+      "group": "Kolejka 4 · mecz 1",
+      "date": "14.11.2026",
+      "time": "05:05",
+      "home": "Wolfdogs Nagoya",
+      "away": "Nippon Steel Sakai Blazers",
+      "home_team_id": "wdnagoya",
+      "away_team_id": "sakai",
+      "source_url": "https://www.svleague.jp/match/detail/38010/",
+      "venue": {
+        "name": "HAPPINESS ARENA",
+        "city": "",
+        "address": ""
+      },
+      "match_number": "1",
+      "home_sets": 3,
+      "away_sets": 2,
+      "set_scores": [
+        "25:22",
+        "25:17",
+        "21:25",
+        "22:25",
+        "15:11"
+      ],
+      "status": "finished",
+      "current_points": null,
+      "league": "japan",
+      "date_iso": "2026-11-14",
+      "phase": "Zasadnicza",
+      "round": 4,
+      "term_number": 4,
+      "round_source_label": "Kolejka",
+      "set_points": [
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 25,
+          "away": 17
+        },
+        {
+          "home": 21,
+          "away": 25
+        },
+        {
+          "home": 22,
+          "away": 25
+        },
+        {
+          "home": 15,
+          "away": 11
+        }
+      ],
+      "home_points": 108,
+      "away_points": 100,
+      "home_logo": "https://www.svleague.jp/files/2026-27/team/wdnagoya/emblem.png",
+      "away_logo": "https://www.svleague.jp/files/2026-27/team/sakai/emblem.png",
       "broadcast": [],
       "details_checked_at": null
     },
@@ -2493,10 +2550,14 @@
         "address": ""
       },
       "match_number": "1",
-      "home_sets": 0,
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
-      "status": "scheduled",
+      "set_scores": [
+        "25:19",
+        "25:18",
+        "25:22"
+      ],
+      "status": "finished",
       "current_points": null,
       "league": "japan",
       "date_iso": "2026-11-14",
@@ -2504,11 +2565,82 @@
       "round": 4,
       "term_number": 4,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 19
+        },
+        {
+          "home": 25,
+          "away": 18
+        },
+        {
+          "home": 25,
+          "away": 22
+        }
+      ],
+      "home_points": 75,
+      "away_points": 59,
       "home_logo": "https://www.svleague.jp/files/2026-27/team/osakab/emblem.png",
       "away_logo": "https://www.svleague.jp/files/2026-27/team/fkagoshima/emblem.png",
+      "broadcast": [],
+      "details_checked_at": null
+    },
+    {
+      "id": "jp-38014",
+      "competition": "SV.League Men",
+      "group": "Kolejka 4 · mecz 1",
+      "date": "14.11.2026",
+      "time": "05:05",
+      "home": "Suntory Sunbirds Osaka",
+      "away": "JTEKT Stings Aichi",
+      "home_team_id": "suntory",
+      "away_team_id": "stingsaichi",
+      "source_url": "https://www.svleague.jp/match/detail/38014/",
+      "venue": {
+        "name": "おおきにアリーナ舞洲",
+        "city": "",
+        "address": ""
+      },
+      "match_number": "1",
+      "home_sets": 3,
+      "away_sets": 1,
+      "set_scores": [
+        "25:22",
+        "25:16",
+        "21:25",
+        "25:20"
+      ],
+      "status": "finished",
+      "current_points": null,
+      "league": "japan",
+      "date_iso": "2026-11-14",
+      "phase": "Zasadnicza",
+      "round": 4,
+      "term_number": 4,
+      "round_source_label": "Kolejka",
+      "set_points": [
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 25,
+          "away": 16
+        },
+        {
+          "home": 21,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 20
+        }
+      ],
+      "home_points": 96,
+      "away_points": 83,
+      "home_logo": "https://www.svleague.jp/files/2026-27/team/suntory/emblem.png",
+      "away_logo": "https://www.svleague.jp/files/2026-27/team/stingsaichi/emblem.png",
       "broadcast": [],
       "details_checked_at": null
     },
