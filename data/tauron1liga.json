@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-14T00:25:58.861205+00:00",
+  "updated_at": "2026-11-14T13:40:36.396244+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -5101,7 +5101,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "MCKiS Jaworzno",
       "away": "BBTS Bielsko-Biała",
@@ -5135,7 +5135,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "KKS MICKIEWICZ Kluczbork",
       "away": "BKS Bydgoszcz",
@@ -5169,7 +5169,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Stal Nysa",
       "away": "FORT Poznań",
@@ -5203,7 +5203,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Nowak-Mosty MKS Będzin",
       "away": "Lechia Tomaszów Mazowiecki",
