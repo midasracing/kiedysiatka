@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-15T14:07:34.702438+00:00",
+  "updated_at": "2026-11-15T18:38:12.110538+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -4232,15 +4232,42 @@
       "round": 10,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "CUK Anioły Toruń",
       "away": "Lechia Tomaszów Mazowiecki",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 2,
+      "away_sets": 3,
+      "set_scores": [
+        "15:25",
+        "18:25",
+        "27:25",
+        "25:16",
+        "11:15"
+      ],
+      "set_points": [
+        {
+          "home": 15,
+          "away": 25
+        },
+        {
+          "home": 18,
+          "away": 25
+        },
+        {
+          "home": 27,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 16
+        },
+        {
+          "home": 11,
+          "away": 15
+        }
+      ],
+      "home_points": 96,
+      "away_points": 106,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105197/nocookies/1.html",
       "home_team_id": "86",
@@ -4266,16 +4293,38 @@
       "round": 10,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "live",
       "home": "KPS Płock",
       "away": "ICT PIERROT Czarni Radom",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
-      "current_points": null,
+      "home_sets": 2,
+      "away_sets": 2,
+      "set_scores": [
+        "25:15",
+        "25:18",
+        "29:31",
+        "17:25"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 15
+        },
+        {
+          "home": 25,
+          "away": 18
+        },
+        {
+          "home": 29,
+          "away": 31
+        },
+        {
+          "home": 17,
+          "away": 25
+        }
+      ],
+      "home_points": 96,
+      "away_points": 89,
+      "current_points": "4:3",
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105198/nocookies/1.html",
       "home_team_id": "94",
       "away_team_id": "85",
@@ -5291,7 +5340,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "KPS Płock",
       "away": "KS Sparta Grodzisk Mazowiecki",
@@ -5325,7 +5374,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "KPS Siedlce",
       "away": "AVIA Sędziszów Małopolski",
@@ -9777,6 +9826,18 @@
   "table": [
     {
       "rank": 1,
+      "team": "CUK Anioły Toruń",
+      "points": 22,
+      "played": 9,
+      "wins": 7,
+      "losses": 2,
+      "sets_for": 25,
+      "sets_against": 11,
+      "points_for": 813,
+      "points_against": 767
+    },
+    {
+      "rank": 2,
       "team": "PZL LEONARDO Avia Świdnik",
       "points": 21,
       "played": 10,
@@ -9786,18 +9847,6 @@
       "sets_against": 16,
       "points_for": 970,
       "points_against": 908
-    },
-    {
-      "rank": 2,
-      "team": "CUK Anioły Toruń",
-      "points": 21,
-      "played": 8,
-      "wins": 7,
-      "losses": 1,
-      "sets_for": 23,
-      "sets_against": 8,
-      "points_for": 717,
-      "points_against": 661
     },
     {
       "rank": 3,
@@ -9849,6 +9898,18 @@
     },
     {
       "rank": 7,
+      "team": "Lechia Tomaszów Mazowiecki",
+      "points": 14,
+      "played": 10,
+      "wins": 5,
+      "losses": 5,
+      "sets_for": 21,
+      "sets_against": 22,
+      "points_for": 957,
+      "points_against": 931
+    },
+    {
+      "rank": 8,
       "team": "AVIA Sędziszów Małopolski",
       "points": 14,
       "played": 10,
@@ -9860,7 +9921,7 @@
       "points_against": 906
     },
     {
-      "rank": 8,
+      "rank": 9,
       "team": "ICT PIERROT Czarni Radom",
       "points": 13,
       "played": 8,
@@ -9872,7 +9933,7 @@
       "points_against": 705
     },
     {
-      "rank": 9,
+      "rank": 10,
       "team": "BKS Bydgoszcz",
       "points": 13,
       "played": 9,
@@ -9882,18 +9943,6 @@
       "sets_against": 19,
       "points_for": 795,
       "points_against": 807
-    },
-    {
-      "rank": 10,
-      "team": "Lechia Tomaszów Mazowiecki",
-      "points": 12,
-      "played": 9,
-      "wins": 4,
-      "losses": 5,
-      "sets_for": 18,
-      "sets_against": 20,
-      "points_for": 851,
-      "points_against": 835
     },
     {
       "rank": 11,
