@@ -2,7 +2,7 @@
   "league": "italy",
   "competition": "SuperLega Credem Banca",
   "source": "https://ww2.legavolley.it/Calendario.asp",
-  "updated_at": "2026-11-11T11:50:51.691485+00:00",
+  "updated_at": "2026-11-17T00:13:30.129677+00:00",
   "teams": [
     {
       "name": "Acqua Sant'Anna Cuneo",
@@ -115,18 +115,6 @@
       "rank": 4
     },
     {
-      "team": "Tinet Prata di Pordenone",
-      "played": 4,
-      "wins": 2,
-      "losses": 2,
-      "points": 6,
-      "sets_for": 6,
-      "sets_against": 7,
-      "points_for": 288,
-      "points_against": 302,
-      "rank": 5
-    },
-    {
       "team": "Allianz Milano",
       "played": 5,
       "wins": 2,
@@ -136,7 +124,7 @@
       "sets_against": 11,
       "points_for": 397,
       "points_against": 427,
-      "rank": 6
+      "rank": 5
     },
     {
       "team": "Valsa Group Modena",
@@ -148,7 +136,31 @@
       "sets_against": 10,
       "points_for": 408,
       "points_against": 402,
+      "rank": 6
+    },
+    {
+      "team": "Tinet Prata di Pordenone",
+      "played": 5,
+      "wins": 2,
+      "losses": 3,
+      "points": 6,
+      "sets_for": 6,
+      "sets_against": 10,
+      "points_for": 360,
+      "points_against": 382,
       "rank": 7
+    },
+    {
+      "team": "Pallavolo Padova",
+      "played": 6,
+      "wins": 2,
+      "losses": 4,
+      "points": 6,
+      "sets_for": 6,
+      "sets_against": 13,
+      "points_for": 409,
+      "points_against": 463,
+      "rank": 8
     },
     {
       "team": "Rana Verona",
@@ -160,7 +172,7 @@
       "sets_against": 12,
       "points_for": 426,
       "points_against": 439,
-      "rank": 8
+      "rank": 9
     },
     {
       "team": "Cisterna Volley",
@@ -172,18 +184,6 @@
       "sets_against": 12,
       "points_for": 375,
       "points_against": 399,
-      "rank": 9
-    },
-    {
-      "team": "Pallavolo Padova",
-      "played": 5,
-      "wins": 1,
-      "losses": 4,
-      "points": 3,
-      "sets_for": 3,
-      "sets_against": 13,
-      "points_for": 329,
-      "points_against": 391,
       "rank": 10
     },
     {
@@ -1869,7 +1869,7 @@
       "broadcast": []
     },
     {
-      "id": "it-2026-andata-23",
+      "id": "it-40307",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 4",
       "date": "16.11.2026",
@@ -1878,30 +1878,47 @@
       "away": "Tinet Prata di Pordenone",
       "home_team_id": "6866",
       "away_team_id": "6897",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40307",
       "venue": {
         "name": "Kioene Arena",
-        "city": "Padova (PD)"
+        "city": "Padova"
       },
       "match_number": "23",
-      "status": "scheduled",
-      "home_sets": 0,
+      "status": "finished",
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
+      "set_scores": [
+        "25:21",
+        "25:23",
+        "30:28"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-17T00:13:29.875814+00:00",
       "league": "italy",
       "date_iso": "2026-11-16",
       "phase": "Zasadnicza",
       "round": 4,
       "term_number": 4,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 25,
+          "away": 23
+        },
+        {
+          "home": 30,
+          "away": 28
+        }
+      ],
+      "home_points": 80,
+      "away_points": 72,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_PAD",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_PDP",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
       "id": "it-2026-andata-36",
