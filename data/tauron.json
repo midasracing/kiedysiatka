@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-17T04:12:46.076209+00:00",
+  "updated_at": "2026-11-17T16:15:42.747789+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -3760,7 +3760,7 @@
       "date_iso": "2026-12-14",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Stilon Gorzów",
       "away": "GKS Katowice",
@@ -3794,7 +3794,7 @@
       "date_iso": "2026-12-14",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "NEONET Norwid Częstochowa",
       "away": "BOGDANKA LUK Lublin",
@@ -3865,7 +3865,7 @@
       "date_iso": "2026-12-17",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Energa Indykpol AZS Olsztyn",
       "away": "Podziemia Kredowe ChKS Chełm",
