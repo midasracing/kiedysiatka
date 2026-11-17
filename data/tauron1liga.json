@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-17T16:15:48.510789+00:00",
+  "updated_at": "2026-11-17T20:38:17.598597+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -2164,15 +2164,32 @@
       "round": 5,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "KPS Siedlce",
       "away": "SMS PZPS Spała",
-      "home_sets": 0,
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_scores": [
+        "25:18",
+        "25:17",
+        "25:17"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 18
+        },
+        {
+          "home": 25,
+          "away": 17
+        },
+        {
+          "home": 25,
+          "away": 17
+        }
+      ],
+      "home_points": 75,
+      "away_points": 52,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105158/nocookies/1.html",
       "home_team_id": "39",
@@ -9973,6 +9990,18 @@
     },
     {
       "rank": 11,
+      "team": "KPS Siedlce",
+      "points": 11,
+      "played": 9,
+      "wins": 4,
+      "losses": 5,
+      "sets_for": 13,
+      "sets_against": 17,
+      "points_for": 682,
+      "points_against": 696
+    },
+    {
+      "rank": 12,
       "team": "MCKiS Jaworzno",
       "points": 11,
       "played": 10,
@@ -9984,7 +10013,7 @@
       "points_against": 916
     },
     {
-      "rank": 12,
+      "rank": 13,
       "team": "BBTS Bielsko-Biała",
       "points": 11,
       "played": 8,
@@ -9994,18 +10023,6 @@
       "sets_against": 15,
       "points_for": 654,
       "points_against": 660
-    },
-    {
-      "rank": 13,
-      "team": "KPS Siedlce",
-      "points": 8,
-      "played": 8,
-      "wins": 3,
-      "losses": 5,
-      "sets_for": 10,
-      "sets_against": 17,
-      "points_for": 607,
-      "points_against": 644
     },
     {
       "rank": 14,
@@ -10023,13 +10040,13 @@
       "rank": 15,
       "team": "SMS PZPS Spała",
       "points": 4,
-      "played": 7,
+      "played": 8,
       "wins": 1,
-      "losses": 6,
+      "losses": 7,
       "sets_for": 8,
-      "sets_against": 19,
-      "points_for": 566,
-      "points_against": 625
+      "sets_against": 22,
+      "points_for": 618,
+      "points_against": 700
     },
     {
       "rank": 16,
