@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-17T20:38:12.564036+00:00",
+  "updated_at": "2026-11-18T02:36:23.192739+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -3899,7 +3899,7 @@
       "date_iso": "2026-12-18",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Stilon Gorzów",
       "away": "Ślepsk Malow Suwałki",
@@ -3922,7 +3922,7 @@
       },
       "match_number": "084",
       "term_number": 12,
-      "details_checked_at": "2026-11-06T11:11:26.011579+00:00"
+      "details_checked_at": "2026-11-18T02:36:21.206444+00:00"
     },
     {
       "id": "1104885",
