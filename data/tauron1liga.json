@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-18T15:49:54.380296+00:00",
+  "updated_at": "2026-11-18T20:11:25.450712+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -5387,7 +5387,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "KPS Płock",
       "away": "KS Sparta Grodzisk Mazowiecki",
@@ -5421,7 +5421,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "KPS Siedlce",
       "away": "AVIA Sędziszów Małopolski",
