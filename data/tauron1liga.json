@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-18T02:36:30.525149+00:00",
+  "updated_at": "2026-11-18T15:49:54.380296+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -4890,6 +4890,9 @@
       "away_team_id": "16",
       "home_logo": "https://www.tauron1liga.pl/dl/724997/inline/scalecrop=100x100/ea1fad/cuk_anioly.png",
       "away_logo": "https://www.tauron1liga.pl/dl/724996/inline/scalecrop=100x100/c0bbf6/bks_bydgoszcz.png",
+      "broadcast": [
+        "Polsat Box"
+      ],
       "venue": {
         "name": "Kujawsko-Pomorskiej Arenie Toruń",
         "address": "Bema73-89",
@@ -5384,7 +5387,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "KPS Płock",
       "away": "KS Sparta Grodzisk Mazowiecki",
@@ -5407,7 +5410,7 @@
       },
       "match_number": "107",
       "term_number": 14,
-      "details_checked_at": "2026-11-15T14:07:32.649031+00:00"
+      "details_checked_at": "2026-11-18T15:49:52.102658+00:00"
     },
     {
       "id": "1105233",
@@ -5418,7 +5421,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "KPS Siedlce",
       "away": "AVIA Sędziszów Małopolski",
@@ -5441,7 +5444,7 @@
       },
       "match_number": "112",
       "term_number": 14,
-      "details_checked_at": "2026-11-15T14:07:32.649031+00:00"
+      "details_checked_at": "2026-11-18T15:49:52.102658+00:00"
     },
     {
       "id": "1105227",
@@ -5520,7 +5523,7 @@
       "date_iso": "2026-12-18",
       "round": 15,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "AVIA Sędziszów Małopolski",
       "away": "MCKiS Jaworzno",
@@ -5554,7 +5557,7 @@
       "date_iso": "2026-12-18",
       "round": 15,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "SMS PZPS Spała",
       "away": "KPS Płock",
@@ -5588,7 +5591,7 @@
       "date_iso": "2026-12-18",
       "round": 15,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "CUK Anioły Toruń",
       "away": "BBTS Bielsko-Biała",
