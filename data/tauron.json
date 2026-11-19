@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-18T20:11:19.557455+00:00",
+  "updated_at": "2026-11-19T01:53:37.632479+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -2541,24 +2541,34 @@
       "date_iso": "2026-11-18",
       "round": 7,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
-      "status": "live",
+      "phase": "Zasadnicza",
+      "status": "finished",
       "home": "Stilon Gorzów",
       "away": "BOGDANKA LUK Lublin",
       "home_sets": 0,
-      "away_sets": 1,
+      "away_sets": 3,
       "set_scores": [
-        "20:25"
+        "20:25",
+        "18:25",
+        "18:25"
       ],
       "set_points": [
         {
           "home": 20,
           "away": 25
+        },
+        {
+          "home": 18,
+          "away": 25
+        },
+        {
+          "home": 18,
+          "away": 25
         }
       ],
-      "home_points": 20,
-      "away_points": 25,
-      "current_points": "5:6",
+      "home_points": 56,
+      "away_points": 75,
+      "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104852/nocookies/1.html",
       "home_team_id": "28",
       "away_team_id": "45",
@@ -2574,7 +2584,7 @@
       },
       "match_number": "045",
       "term_number": 7,
-      "details_checked_at": "2026-11-15T23:10:55.115925+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104856",
@@ -2585,7 +2595,7 @@
       "date_iso": "2026-11-19",
       "round": 7,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "NEONET Norwid Częstochowa",
       "away": "PGE Projekt Warszawa",
@@ -2611,7 +2621,7 @@
       },
       "match_number": "049",
       "term_number": 7,
-      "details_checked_at": "2026-11-15T23:10:55.115925+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104854",
@@ -2622,7 +2632,7 @@
       "date_iso": "2026-11-19",
       "round": 7,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "ZAKSA Kędzierzyn-Koźle",
       "away": "Jastrzębie Barkom",
@@ -2648,7 +2658,7 @@
       },
       "match_number": "047",
       "term_number": 7,
-      "details_checked_at": "2026-11-15T23:10:55.115925+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104850",
@@ -2659,7 +2669,7 @@
       "date_iso": "2026-11-20",
       "round": 7,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Energa Indykpol AZS Olsztyn",
       "away": "GKS Katowice",
@@ -2685,7 +2695,7 @@
       },
       "match_number": "043",
       "term_number": 7,
-      "details_checked_at": "2026-11-15T23:10:55.115925+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104851",
@@ -2696,7 +2706,7 @@
       "date_iso": "2026-11-21",
       "round": 7,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Asseco Resovia Rzeszów",
       "away": "PGE GiEK SKRA Bełchatów",
@@ -2722,7 +2732,7 @@
       },
       "match_number": "044",
       "term_number": 7,
-      "details_checked_at": "2026-11-15T23:10:55.115925+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104853",
@@ -2733,7 +2743,7 @@
       "date_iso": "2026-11-21",
       "round": 7,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Aluron CMC Warta Zawiercie",
       "away": "Ślepsk Malow Suwałki",
@@ -2759,7 +2769,7 @@
       },
       "match_number": "046",
       "term_number": 7,
-      "details_checked_at": "2026-11-15T23:10:55.115925+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104855",
@@ -2770,7 +2780,7 @@
       "date_iso": "2026-11-21",
       "round": 7,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Podziemia Kredowe ChKS Chełm",
       "away": "Energa Trefl Gdańsk",
@@ -2796,7 +2806,7 @@
       },
       "match_number": "048",
       "term_number": 7,
-      "details_checked_at": "2026-11-15T23:10:55.115925+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104861",
@@ -3835,7 +3845,7 @@
       "date_iso": "2026-11-18",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "finished",
       "home": "Energa Trefl Gdańsk",
       "away": "Aluron CMC Warta Zawiercie",
@@ -3878,7 +3888,7 @@
       },
       "match_number": "079",
       "term_number": 12,
-      "details_checked_at": "2026-11-15T23:10:55.115925+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104889",
@@ -3957,7 +3967,7 @@
       "date_iso": "2026-12-19",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "GKS Katowice",
       "away": "ZAKSA Kędzierzyn-Koźle",
@@ -3980,7 +3990,7 @@
       },
       "match_number": "078",
       "term_number": 12,
-      "details_checked_at": "2026-11-06T11:11:26.011579+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104887",
@@ -3991,7 +4001,7 @@
       "date_iso": "2026-12-19",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "BOGDANKA LUK Lublin",
       "away": "PGE Projekt Warszawa",
@@ -4014,7 +4024,7 @@
       },
       "match_number": "080",
       "term_number": 12,
-      "details_checked_at": "2026-11-06T11:11:26.011579+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104888",
@@ -4025,7 +4035,7 @@
       "date_iso": "2026-12-19",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "PGE GiEK SKRA Bełchatów",
       "away": "NEONET Norwid Częstochowa",
@@ -4048,7 +4058,7 @@
       },
       "match_number": "081",
       "term_number": 12,
-      "details_checked_at": "2026-11-06T11:11:26.011579+00:00"
+      "details_checked_at": "2026-11-19T01:53:31.403020+00:00"
     },
     {
       "id": "1104890",
@@ -7420,6 +7430,18 @@
   "table": [
     {
       "rank": 1,
+      "team": "BOGDANKA LUK Lublin",
+      "points": 21,
+      "played": 7,
+      "wins": 7,
+      "losses": 0,
+      "sets_for": 21,
+      "sets_against": 2,
+      "points_for": 575,
+      "points_against": 483
+    },
+    {
+      "rank": 2,
       "team": "Aluron CMC Warta Zawiercie",
       "points": 21,
       "played": 8,
@@ -7429,18 +7451,6 @@
       "sets_against": 6,
       "points_for": 669,
       "points_against": 569
-    },
-    {
-      "rank": 2,
-      "team": "BOGDANKA LUK Lublin",
-      "points": 18,
-      "played": 6,
-      "wins": 6,
-      "losses": 0,
-      "sets_for": 18,
-      "sets_against": 2,
-      "points_for": 500,
-      "points_against": 427
     },
     {
       "rank": 3,
@@ -7566,13 +7576,13 @@
       "rank": 13,
       "team": "Stilon Gorzów",
       "points": 5,
-      "played": 6,
+      "played": 7,
       "wins": 2,
-      "losses": 4,
+      "losses": 5,
       "sets_for": 8,
-      "sets_against": 16,
-      "points_for": 513,
-      "points_against": 541
+      "sets_against": 19,
+      "points_for": 569,
+      "points_against": 616
     },
     {
       "rank": 14,
