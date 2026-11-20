@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-20T01:48:23.515820+00:00",
+  "updated_at": "2026-11-20T15:37:41.864220+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -3482,45 +3482,11 @@
       "details_checked_at": "2026-11-19T20:14:16.604972+00:00"
     },
     {
-      "id": "1104875",
-      "league": "men",
-      "competition": "TAURON Liga",
-      "date": "05.12.2026",
-      "time": null,
-      "date_iso": "2026-12-05",
-      "round": 10,
-      "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
-      "status": "scheduled",
-      "home": "PGE GiEK SKRA Bełchatów",
-      "away": "Jastrzębie Barkom",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
-      "current_points": null,
-      "source_url": "https://www.tauronliga.pl/games/action/show/id/1104875/nocookies/1.html",
-      "home_team_id": "61",
-      "away_team_id": "8",
-      "home_logo": "https://www.tauronliga.pl/dl/724989/inline/scalecrop=100x100/53e6ce/pge_giek_skra.png",
-      "away_logo": "https://www.tauronliga.pl/dl/727772/inline/scalecrop=100x100/71cb1c/jastrzebie_barkom.png",
-      "venue": {
-        "name": "Hala Energia",
-        "address": "Dąbrowskiego 11A",
-        "city": "Bełchatów"
-      },
-      "match_number": "068",
-      "term_number": 10,
-      "details_checked_at": "2026-11-19T20:14:16.604972+00:00"
-    },
-    {
       "id": "1104877",
       "league": "men",
       "competition": "TAURON Liga",
       "date": "05.12.2026",
-      "time": null,
+      "time": "15:00",
       "date_iso": "2026-12-05",
       "round": 10,
       "round_source_label": "Kolejka",
@@ -3540,6 +3506,9 @@
       "away_team_id": "28",
       "home_logo": "https://www.tauronliga.pl/dl/724981/inline/scalecrop=100x100/2806ab/asseco_resovia.png",
       "away_logo": "https://www.tauronliga.pl/dl/728510/inline/scalecrop=100x100/16b98c/stilon_gorzow.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
       "venue": {
         "name": "Hala Podpromie",
         "address": "ul. Podpromie 10",
@@ -3550,18 +3519,18 @@
       "details_checked_at": "2026-11-19T20:14:16.604972+00:00"
     },
     {
-      "id": "1104871",
+      "id": "1104875",
       "league": "men",
       "competition": "TAURON Liga",
-      "date": "06.12.2026",
-      "time": null,
-      "date_iso": "2026-12-06",
+      "date": "05.12.2026",
+      "time": "20:30",
+      "date_iso": "2026-12-05",
       "round": 10,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
       "status": "scheduled",
-      "home": "GKS Katowice",
-      "away": "Energa Trefl Gdańsk",
+      "home": "PGE GiEK SKRA Bełchatów",
+      "away": "Jastrzębie Barkom",
       "home_sets": 0,
       "away_sets": 0,
       "set_scores": [],
@@ -3569,17 +3538,20 @@
       "home_points": 0,
       "away_points": 0,
       "current_points": null,
-      "source_url": "https://www.tauronliga.pl/games/action/show/id/1104871/nocookies/1.html",
-      "home_team_id": "18",
-      "away_team_id": "78",
-      "home_logo": "https://www.tauronliga.pl/dl/724988/inline/scalecrop=100x100/035f7d/gks_katowice.png",
-      "away_logo": "https://www.tauronliga.pl/dl/724987/inline/scalecrop=100x100/8ed289/energa_trefl_gdansk.png",
+      "source_url": "https://www.tauronliga.pl/games/action/show/id/1104875/nocookies/1.html",
+      "home_team_id": "61",
+      "away_team_id": "8",
+      "home_logo": "https://www.tauronliga.pl/dl/724989/inline/scalecrop=100x100/53e6ce/pge_giek_skra.png",
+      "away_logo": "https://www.tauronliga.pl/dl/727772/inline/scalecrop=100x100/71cb1c/jastrzebie_barkom.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
       "venue": {
-        "name": "Arena Katowice",
-        "address": "ul. Nowa Bukowa 1",
-        "city": "Katowice"
+        "name": "Hala Energia",
+        "address": "Dąbrowskiego 11A",
+        "city": "Bełchatów"
       },
-      "match_number": "064",
+      "match_number": "068",
       "term_number": 10,
       "details_checked_at": "2026-11-19T20:14:16.604972+00:00"
     },
@@ -3588,7 +3560,7 @@
       "league": "men",
       "competition": "TAURON Liga",
       "date": "06.12.2026",
-      "time": null,
+      "time": "15:00",
       "date_iso": "2026-12-06",
       "round": 10,
       "round_source_label": "Kolejka",
@@ -3608,12 +3580,52 @@
       "away_team_id": "62",
       "home_logo": "https://www.tauronliga.pl/dl/724993/inline/scalecrop=100x100/416fbd/zaksa.png",
       "away_logo": "https://www.tauronliga.pl/dl/728192/inline/scalecrop=100x100/e8bac3/pge_projekt_warszawa-1.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
       "venue": {
         "name": "HWS Azoty im. K. Pietrzyka",
         "address": "ul Mostowa 1a",
         "city": "Kędzierzyn-Koźle"
       },
       "match_number": "065",
+      "term_number": 10,
+      "details_checked_at": "2026-11-19T20:14:16.604972+00:00"
+    },
+    {
+      "id": "1104871",
+      "league": "men",
+      "competition": "TAURON Liga",
+      "date": "06.12.2026",
+      "time": "20:30",
+      "date_iso": "2026-12-06",
+      "round": 10,
+      "round_source_label": "Kolejka",
+      "phase": "Faza Zasadnicza",
+      "status": "scheduled",
+      "home": "GKS Katowice",
+      "away": "Energa Trefl Gdańsk",
+      "home_sets": 0,
+      "away_sets": 0,
+      "set_scores": [],
+      "set_points": [],
+      "home_points": 0,
+      "away_points": 0,
+      "current_points": null,
+      "source_url": "https://www.tauronliga.pl/games/action/show/id/1104871/nocookies/1.html",
+      "home_team_id": "18",
+      "away_team_id": "78",
+      "home_logo": "https://www.tauronliga.pl/dl/724988/inline/scalecrop=100x100/035f7d/gks_katowice.png",
+      "away_logo": "https://www.tauronliga.pl/dl/724987/inline/scalecrop=100x100/8ed289/energa_trefl_gdansk.png",
+      "broadcast": [
+        "TV Polsat Sport 1"
+      ],
+      "venue": {
+        "name": "Arena Katowice",
+        "address": "ul. Nowa Bukowa 1",
+        "city": "Katowice"
+      },
+      "match_number": "064",
       "term_number": 10,
       "details_checked_at": "2026-11-19T20:14:16.604972+00:00"
     },
@@ -3787,7 +3799,7 @@
       "date_iso": "2026-12-13",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "NEONET Norwid Częstochowa",
       "away": "BOGDANKA LUK Lublin",
@@ -3806,11 +3818,11 @@
       "venue": {
         "name": "Hala Częstochowa",
         "address": "ul. Żużlowa 4",
-        "city": "42-200 Częstochowa ul. Żużlowa 4"
+        "city": "42-200 Częstochowa, ul. Żużlowa 4"
       },
       "match_number": "075",
       "term_number": 11,
-      "details_checked_at": "2026-11-17T04:12:44.274903+00:00"
+      "details_checked_at": "2026-11-20T15:37:39.758627+00:00"
     },
     {
       "id": "1104884",
@@ -3855,7 +3867,7 @@
       "date_iso": "2026-12-14",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Stilon Gorzów",
       "away": "GKS Katowice",
@@ -3878,7 +3890,7 @@
       },
       "match_number": "071",
       "term_number": 11,
-      "details_checked_at": "2026-11-17T04:12:44.274903+00:00"
+      "details_checked_at": "2026-11-20T15:37:39.758627+00:00"
     },
     {
       "id": "1104886",
@@ -3943,7 +3955,7 @@
       "date_iso": "2026-12-17",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Energa Indykpol AZS Olsztyn",
       "away": "Podziemia Kredowe ChKS Chełm",
@@ -3966,7 +3978,7 @@
       },
       "match_number": "082",
       "term_number": 12,
-      "details_checked_at": "2026-11-17T04:12:44.274903+00:00"
+      "details_checked_at": "2026-11-20T15:37:39.758627+00:00"
     },
     {
       "id": "1104891",
@@ -4113,7 +4125,7 @@
       "date_iso": "2026-12-20",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Asseco Resovia Rzeszów",
       "away": "Jastrzębie Barkom",
