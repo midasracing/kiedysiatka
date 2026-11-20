@@ -2,7 +2,7 @@
   "league": "italy",
   "competition": "SuperLega Credem Banca",
   "source": "https://ww2.legavolley.it/Calendario.asp",
-  "updated_at": "2026-11-17T00:13:30.129677+00:00",
+  "updated_at": "2026-11-20T22:39:27.515075+00:00",
   "teams": [
     {
       "name": "Acqua Sant'Anna Cuneo",
@@ -163,16 +163,28 @@
       "rank": 8
     },
     {
-      "team": "Rana Verona",
-      "played": 5,
-      "wins": 2,
-      "losses": 3,
-      "points": 5,
-      "sets_for": 7,
-      "sets_against": 12,
-      "points_for": 426,
-      "points_against": 439,
+      "team": "Acqua Sant'Anna Cuneo",
+      "played": 6,
+      "wins": 1,
+      "losses": 5,
+      "points": 6,
+      "sets_for": 10,
+      "sets_against": 16,
+      "points_for": 565,
+      "points_against": 608,
       "rank": 9
+    },
+    {
+      "team": "Rana Verona",
+      "played": 6,
+      "wins": 2,
+      "losses": 4,
+      "points": 5,
+      "sets_for": 8,
+      "sets_against": 15,
+      "points_for": 518,
+      "points_against": 539,
+      "rank": 10
     },
     {
       "team": "Cisterna Volley",
@@ -184,18 +196,6 @@
       "sets_against": 12,
       "points_for": 375,
       "points_against": 399,
-      "rank": 10
-    },
-    {
-      "team": "Acqua Sant'Anna Cuneo",
-      "played": 5,
-      "wins": 0,
-      "losses": 5,
-      "points": 3,
-      "sets_for": 7,
-      "sets_against": 15,
-      "points_for": 465,
-      "points_against": 516,
       "rank": 11
     },
     {
@@ -1921,7 +1921,7 @@
       "broadcast": []
     },
     {
-      "id": "it-2026-andata-36",
+      "id": "it-40320",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 6",
       "date": "20.11.2026",
@@ -1930,30 +1930,52 @@
       "away": "Rana Verona",
       "home_team_id": "6863",
       "away_team_id": "6864",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40320",
       "venue": {
         "name": "Palasport di Cuneo",
-        "city": "Cuneo (CN)"
+        "city": "Cuneo"
       },
       "match_number": "36",
-      "status": "scheduled",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
+      "status": "finished",
+      "home_sets": 3,
+      "away_sets": 1,
+      "set_scores": [
+        "23:25",
+        "25:21",
+        "25:21",
+        "27:25"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-20T22:39:27.260915+00:00",
       "league": "italy",
       "date_iso": "2026-11-20",
       "phase": "Zasadnicza",
       "round": 6,
       "term_number": 6,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 23,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 27,
+          "away": 25
+        }
+      ],
+      "home_points": 100,
+      "away_points": 92,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_CUN",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_VER",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
       "id": "it-2026-andata-34",
