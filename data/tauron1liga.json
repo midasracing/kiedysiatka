@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-20T15:37:51.012497+00:00",
+  "updated_at": "2026-11-20T19:47:03.986559+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -4427,15 +4427,37 @@
       "round": 11,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "live",
       "home": "KPS Siedlce",
       "away": "Nowak-Mosty MKS Będzin",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 2,
+      "away_sets": 2,
+      "set_scores": [
+        "19:25",
+        "26:24",
+        "25:18",
+        "33:35"
+      ],
+      "set_points": [
+        {
+          "home": 19,
+          "away": 25
+        },
+        {
+          "home": 26,
+          "away": 24
+        },
+        {
+          "home": 25,
+          "away": 18
+        },
+        {
+          "home": 33,
+          "away": 35
+        }
+      ],
+      "home_points": 103,
+      "away_points": 102,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105203/nocookies/1.html",
       "home_team_id": "39",
@@ -4461,15 +4483,37 @@
       "round": 11,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "BKS Bydgoszcz",
       "away": "BBTS Bielsko-Biała",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 1,
+      "away_sets": 3,
+      "set_scores": [
+        "21:25",
+        "25:22",
+        "23:25",
+        "17:25"
+      ],
+      "set_points": [
+        {
+          "home": 21,
+          "away": 25
+        },
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 23,
+          "away": 25
+        },
+        {
+          "home": 17,
+          "away": 25
+        }
+      ],
+      "home_points": 86,
+      "away_points": 97,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105208/nocookies/1.html",
       "home_team_id": "16",
@@ -5251,7 +5295,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "MCKiS Jaworzno",
       "away": "BBTS Bielsko-Biała",
@@ -5285,7 +5329,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Stal Nysa",
       "away": "FORT Poznań",
@@ -5319,7 +5363,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Nowak-Mosty MKS Będzin",
       "away": "Lechia Tomaszów Mazowiecki",
@@ -5353,7 +5397,7 @@
       "date_iso": "2026-12-11",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "KKS MICKIEWICZ Kluczbork",
       "away": "BKS Bydgoszcz",
@@ -9969,6 +10013,18 @@
     },
     {
       "rank": 9,
+      "team": "BBTS Bielsko-Biała",
+      "points": 14,
+      "played": 9,
+      "wins": 4,
+      "losses": 5,
+      "sets_for": 17,
+      "sets_against": 16,
+      "points_for": 751,
+      "points_against": 746
+    },
+    {
+      "rank": 10,
       "team": "ICT PIERROT Czarni Radom",
       "points": 14,
       "played": 9,
@@ -9980,19 +10036,19 @@
       "points_against": 816
     },
     {
-      "rank": 10,
+      "rank": 11,
       "team": "BKS Bydgoszcz",
       "points": 13,
-      "played": 9,
+      "played": 10,
       "wins": 4,
-      "losses": 5,
-      "sets_for": 18,
-      "sets_against": 19,
-      "points_for": 795,
-      "points_against": 807
+      "losses": 6,
+      "sets_for": 19,
+      "sets_against": 22,
+      "points_for": 881,
+      "points_against": 904
     },
     {
-      "rank": 11,
+      "rank": 12,
       "team": "KPS Siedlce",
       "points": 11,
       "played": 9,
@@ -10004,7 +10060,7 @@
       "points_against": 696
     },
     {
-      "rank": 12,
+      "rank": 13,
       "team": "MCKiS Jaworzno",
       "points": 11,
       "played": 10,
@@ -10014,18 +10070,6 @@
       "sets_against": 24,
       "points_for": 878,
       "points_against": 916
-    },
-    {
-      "rank": 13,
-      "team": "BBTS Bielsko-Biała",
-      "points": 11,
-      "played": 8,
-      "wins": 3,
-      "losses": 5,
-      "sets_for": 14,
-      "sets_against": 15,
-      "points_for": 654,
-      "points_against": 660
     },
     {
       "rank": 14,
