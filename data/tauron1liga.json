@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-21T00:58:25.094199+00:00",
+  "updated_at": "2026-11-21T14:48:21.207795+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -5572,7 +5572,7 @@
       "date_iso": "2026-12-18",
       "round": 15,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "AVIA Sędziszów Małopolski",
       "away": "MCKiS Jaworzno",
@@ -5595,7 +5595,7 @@
       },
       "match_number": "113",
       "term_number": 15,
-      "details_checked_at": "2026-11-18T02:36:28.491075+00:00"
+      "details_checked_at": "2026-11-21T14:48:19.152365+00:00"
     },
     {
       "id": "1105240",
@@ -5606,7 +5606,7 @@
       "date_iso": "2026-12-18",
       "round": 15,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "SMS PZPS Spała",
       "away": "KPS Płock",
@@ -5629,7 +5629,7 @@
       },
       "match_number": "119",
       "term_number": 15,
-      "details_checked_at": "2026-11-18T02:36:28.491075+00:00"
+      "details_checked_at": "2026-11-21T14:48:19.152365+00:00"
     },
     {
       "id": "1105241",
@@ -5640,7 +5640,7 @@
       "date_iso": "2026-12-18",
       "round": 15,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "CUK Anioły Toruń",
       "away": "BBTS Bielsko-Biała",
@@ -5663,7 +5663,7 @@
       },
       "match_number": "120",
       "term_number": 15,
-      "details_checked_at": "2026-11-18T02:36:28.491075+00:00"
+      "details_checked_at": "2026-11-21T14:48:19.152365+00:00"
     },
     {
       "id": "1105235",
