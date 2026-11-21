@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-21T18:52:53.827670+00:00",
+  "updated_at": "2026-11-21T23:42:04.686260+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -5463,7 +5463,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "KPS Płock",
       "away": "KS Sparta Grodzisk Mazowiecki",
@@ -5497,7 +5497,7 @@
       "date_iso": "2026-12-12",
       "round": 14,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "KPS Siedlce",
       "away": "AVIA Sędziszów Małopolski",
@@ -5871,7 +5871,7 @@
       "date_iso": "2026-12-22",
       "round": 16,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "MCKiS Jaworzno",
       "away": "CUK Anioły Toruń",
@@ -5894,7 +5894,7 @@
       },
       "match_number": "121",
       "term_number": 16,
-      "details_checked_at": "2026-11-06T11:13:08.062250+00:00"
+      "details_checked_at": "2026-11-21T23:42:01.742668+00:00"
     },
     {
       "id": "1105244",
@@ -5905,7 +5905,7 @@
       "date_iso": "2026-12-22",
       "round": 16,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "SMS PZPS Spała",
       "away": "KKS MICKIEWICZ Kluczbork",
@@ -5928,7 +5928,7 @@
       },
       "match_number": "123",
       "term_number": 16,
-      "details_checked_at": "2026-11-06T11:13:08.062250+00:00"
+      "details_checked_at": "2026-11-21T23:42:01.742668+00:00"
     },
     {
       "id": "1105247",
@@ -5939,7 +5939,7 @@
       "date_iso": "2026-12-22",
       "round": 16,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "FORT Poznań",
       "away": "PZL LEONARDO Avia Świdnik",
@@ -5962,7 +5962,7 @@
       },
       "match_number": "126",
       "term_number": 16,
-      "details_checked_at": "2026-11-06T11:13:08.062250+00:00"
+      "details_checked_at": "2026-11-21T23:42:01.742668+00:00"
     },
     {
       "id": "1105249",
@@ -5973,7 +5973,7 @@
       "date_iso": "2026-12-22",
       "round": 16,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "ICT PIERROT Czarni Radom",
       "away": "AVIA Sędziszów Małopolski",
@@ -5996,7 +5996,7 @@
       },
       "match_number": "128",
       "term_number": 16,
-      "details_checked_at": "2026-11-06T11:13:08.062250+00:00"
+      "details_checked_at": "2026-11-21T23:42:01.742668+00:00"
     },
     {
       "id": "1105245",
