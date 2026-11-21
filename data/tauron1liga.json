@@ -82,7 +82,7 @@
       "id": "90"
     }
   ],
-  "updated_at": "2026-11-20T19:47:03.986559+00:00",
+  "updated_at": "2026-11-21T00:58:25.094199+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -4427,16 +4427,17 @@
       "round": 11,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "live",
+      "status": "finished",
       "home": "KPS Siedlce",
       "away": "Nowak-Mosty MKS Będzin",
-      "home_sets": 2,
+      "home_sets": 3,
       "away_sets": 2,
       "set_scores": [
         "19:25",
         "26:24",
         "25:18",
-        "33:35"
+        "33:35",
+        "15:13"
       ],
       "set_points": [
         {
@@ -4454,10 +4455,14 @@
         {
           "home": 33,
           "away": 35
+        },
+        {
+          "home": 15,
+          "away": 13
         }
       ],
-      "home_points": 103,
-      "away_points": 102,
+      "home_points": 118,
+      "away_points": 115,
       "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105203/nocookies/1.html",
       "home_team_id": "39",
@@ -9929,6 +9934,18 @@
     },
     {
       "rank": 2,
+      "team": "Nowak-Mosty MKS Będzin",
+      "points": 22,
+      "played": 11,
+      "wins": 7,
+      "losses": 4,
+      "sets_for": 25,
+      "sets_against": 16,
+      "points_for": 947,
+      "points_against": 866
+    },
+    {
+      "rank": 3,
       "team": "PZL LEONARDO Avia Świdnik",
       "points": 21,
       "played": 10,
@@ -9938,18 +9955,6 @@
       "sets_against": 16,
       "points_for": 970,
       "points_against": 908
-    },
-    {
-      "rank": 3,
-      "team": "Nowak-Mosty MKS Będzin",
-      "points": 21,
-      "played": 10,
-      "wins": 7,
-      "losses": 3,
-      "sets_for": 23,
-      "sets_against": 13,
-      "points_for": 832,
-      "points_against": 748
     },
     {
       "rank": 4,
@@ -10037,6 +10042,18 @@
     },
     {
       "rank": 11,
+      "team": "KPS Siedlce",
+      "points": 13,
+      "played": 10,
+      "wins": 5,
+      "losses": 5,
+      "sets_for": 16,
+      "sets_against": 19,
+      "points_for": 800,
+      "points_against": 811
+    },
+    {
+      "rank": 12,
       "team": "BKS Bydgoszcz",
       "points": 13,
       "played": 10,
@@ -10046,18 +10063,6 @@
       "sets_against": 22,
       "points_for": 881,
       "points_against": 904
-    },
-    {
-      "rank": 12,
-      "team": "KPS Siedlce",
-      "points": 11,
-      "played": 9,
-      "wins": 4,
-      "losses": 5,
-      "sets_for": 13,
-      "sets_against": 17,
-      "points_for": 682,
-      "points_against": 696
     },
     {
       "rank": 13,
