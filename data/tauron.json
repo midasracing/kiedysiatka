@@ -72,7 +72,7 @@
       "id": "56"
     }
   ],
-  "updated_at": "2026-11-21T14:48:13.102643+00:00",
+  "updated_at": "2026-11-21T18:52:45.521700+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -2778,15 +2778,42 @@
       "round": 7,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "Asseco Resovia Rzeszów",
       "away": "PGE GiEK SKRA Bełchatów",
-      "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "home_sets": 3,
+      "away_sets": 2,
+      "set_scores": [
+        "26:28",
+        "25:17",
+        "25:16",
+        "23:25",
+        "15:13"
+      ],
+      "set_points": [
+        {
+          "home": 26,
+          "away": 28
+        },
+        {
+          "home": 25,
+          "away": 17
+        },
+        {
+          "home": 25,
+          "away": 16
+        },
+        {
+          "home": 23,
+          "away": 25
+        },
+        {
+          "home": 15,
+          "away": 13
+        }
+      ],
+      "home_points": 114,
+      "away_points": 99,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104851/nocookies/1.html",
       "home_team_id": "3",
@@ -2815,15 +2842,32 @@
       "round": 7,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "Aluron CMC Warta Zawiercie",
       "away": "Ślepsk Malow Suwałki",
-      "home_sets": 0,
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_scores": [
+        "25:14",
+        "25:21",
+        "26:24"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 14
+        },
+        {
+          "home": 25,
+          "away": 21
+        },
+        {
+          "home": 26,
+          "away": 24
+        }
+      ],
+      "home_points": 76,
+      "away_points": 59,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104853/nocookies/1.html",
       "home_team_id": "2",
@@ -3724,7 +3768,7 @@
       "date_iso": "2026-12-12",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Jastrzębie Barkom",
       "away": "Energa Indykpol AZS Olsztyn",
@@ -3747,7 +3791,7 @@
       },
       "match_number": "073",
       "term_number": 11,
-      "details_checked_at": "2026-11-18T15:49:43.547955+00:00"
+      "details_checked_at": "2026-11-21T18:52:43.594817+00:00"
     },
     {
       "id": "1104881",
@@ -3758,7 +3802,7 @@
       "date_iso": "2026-12-12",
       "round": 11,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "Podziemia Kredowe ChKS Chełm",
       "away": "PGE GiEK SKRA Bełchatów",
@@ -3781,7 +3825,7 @@
       },
       "match_number": "074",
       "term_number": 11,
-      "details_checked_at": "2026-11-18T15:49:43.547955+00:00"
+      "details_checked_at": "2026-11-21T18:52:43.594817+00:00"
     },
     {
       "id": "1104879",
@@ -4016,7 +4060,7 @@
       "date_iso": "2026-12-18",
       "round": 12,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "Stilon Gorzów",
       "away": "Ślepsk Malow Suwałki",
@@ -7513,6 +7557,18 @@
   "table": [
     {
       "rank": 1,
+      "team": "Aluron CMC Warta Zawiercie",
+      "points": 24,
+      "played": 9,
+      "wins": 8,
+      "losses": 1,
+      "sets_for": 24,
+      "sets_against": 6,
+      "points_for": 745,
+      "points_against": 628
+    },
+    {
+      "rank": 2,
       "team": "BOGDANKA LUK Lublin",
       "points": 21,
       "played": 7,
@@ -7522,18 +7578,6 @@
       "sets_against": 2,
       "points_for": 575,
       "points_against": 483
-    },
-    {
-      "rank": 2,
-      "team": "Aluron CMC Warta Zawiercie",
-      "points": 21,
-      "played": 8,
-      "wins": 7,
-      "losses": 1,
-      "sets_for": 21,
-      "sets_against": 6,
-      "points_for": 669,
-      "points_against": 569
     },
     {
       "rank": 3,
@@ -7562,14 +7606,14 @@
     {
       "rank": 5,
       "team": "PGE GiEK SKRA Bełchatów",
-      "points": 11,
-      "played": 6,
+      "points": 12,
+      "played": 7,
       "wins": 4,
-      "losses": 2,
-      "sets_for": 13,
-      "sets_against": 10,
-      "points_for": 523,
-      "points_against": 521
+      "losses": 3,
+      "sets_for": 15,
+      "sets_against": 13,
+      "points_for": 622,
+      "points_against": 635
     },
     {
       "rank": 6,
@@ -7586,14 +7630,14 @@
     {
       "rank": 7,
       "team": "Asseco Resovia Rzeszów",
-      "points": 8,
-      "played": 6,
-      "wins": 2,
+      "points": 10,
+      "played": 7,
+      "wins": 3,
       "losses": 4,
-      "sets_for": 10,
-      "sets_against": 13,
-      "points_for": 507,
-      "points_against": 498
+      "sets_for": 13,
+      "sets_against": 15,
+      "points_for": 621,
+      "points_against": 597
     },
     {
       "rank": 8,
@@ -7611,13 +7655,13 @@
       "rank": 9,
       "team": "Ślepsk Malow Suwałki",
       "points": 7,
-      "played": 6,
+      "played": 7,
       "wins": 1,
-      "losses": 5,
+      "losses": 6,
       "sets_for": 11,
-      "sets_against": 16,
-      "points_for": 571,
-      "points_against": 579
+      "sets_against": 19,
+      "points_for": 630,
+      "points_against": 655
     },
     {
       "rank": 10,
