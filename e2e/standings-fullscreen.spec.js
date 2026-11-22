@@ -13,7 +13,8 @@ test('standings open full-screen with a top gradient and return to the league', 
 
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa.*TAURON Liga Mężczyzn/ });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole('button', { name: 'Wstecz' })).toBeVisible();
+  await expect(dialog.getByRole('button', { name: 'Wstecz' })).toHaveCount(0);
+  await expect(dialog.getByRole('tablist', { name: 'Widok rozgrywek' })).toBeVisible();
   await expect(dialog.locator('.vh-standings-fullscreen__fade')).toBeVisible();
   await expect(dialog.locator('.vh-standings-warp__canvas')).toBeVisible();
 
@@ -26,7 +27,7 @@ test('standings open full-screen with a top gradient and return to the league', 
   expect(Math.abs(dimensions.height - dimensions.viewport)).toBeLessThanOrEqual(2);
   expect(await page.locator('#root').evaluate(root => root.inert)).toBe(true);
 
-  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await dialog.getByRole('tab', { name: 'Mecze' }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
   expect(await page.locator('#root').evaluate(root => root.inert)).toBe(false);
