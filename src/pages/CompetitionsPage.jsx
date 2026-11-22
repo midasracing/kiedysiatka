@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import { ChevronLeft, Star, WifiOff } from 'lucide-react';
 import { LEAGUES } from '../data.js';
 import { leagueTimeline } from '../leagueTimeline.js';
+import { filterLeagueMatchesByMonth, leagueMonthKeys, leagueMonthLabel } from '../leagueMonths.js';
 import { EmptyState, FeedWarning, LoadingCards } from '../components/UiPrimitives.jsx';
 import { MatchGroups } from '../components/MatchCards.jsx';
 import FullscreenStandings from '../components/FullscreenStandings.jsx';
@@ -12,6 +13,7 @@ import LeagueSplitTransition from '../components/LeagueSplitTransition.jsx';
 const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, matches, loading, errors, refresh, logos, favorites, toggleFavorite, selectedLeague, setSelectedLeague }) {
   const [view, setView] = useState('matches');
   const [group, setGroup] = useState('all');
+  const [selectedMonth, setSelectedMonth] = useState('all');
   const [tableGroup, setTableGroup] = useState(null);
   const [visibleCount, setVisibleCount] = useState(30);
   const previousView = useRef('matches');
@@ -29,6 +31,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     setPickerIndex(snapshot.index);
     setView('matches');
     setGroup('all');
+    setSelectedMonth('all');
     setTableGroup(null);
     setVisibleCount(30);
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -75,8 +78,14 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const tableRows = league?.id === 'second' ? (currentTableGroup?.table || []) : (data?.table || []);
   // Match and result cards share one reverse-chronological timeline.
   const timeline = useMemo(() => leagueTimeline(matches, league?.id, group), [matches, league?.id, group]);
-  useEffect(() => setVisibleCount(30), [league?.id, group]);
-  const pageMatches = timeline.slice(0, visibleCount);
+  const monthKeys = useMemo(() => leagueMonthKeys(timeline), [timeline]);
+  const monthMatches = useMemo(
+    () => filterLeagueMatchesByMonth(timeline, selectedMonth),
+    [timeline, selectedMonth]
+  );
+  useEffect(() => setSelectedMonth('all'), [league?.id]);
+  useEffect(() => setVisibleCount(30), [league?.id, group, selectedMonth]);
+  const pageMatches = monthMatches.slice(0, visibleCount);
   // Preserve the selector's Impact letterforms while fitting the league name
   // into one uppercase line. Font-size changes uniformly, never scaleX.
   useLayoutEffect(() => {
@@ -135,14 +144,27 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
         </div>
       </header>
       <div className="vh-segmented" role="tablist" aria-label="Widok rozgrywek">{[['matches','Mecze'], ['table','Tabela'], ['teams','Drużyny']].map(([id,label]) => <button key={id} role="tab" aria-selected={view === id} className={view === id ? 'selected' : ''} onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}</div>
-      {grouped.length > 0 && <div className="vh-controls"><button type="button" className={'vh-filter-chip ' + (group === 'all' ? 'chosen' : '')} onClick={() => setGroup('all')}>Wszystkie grupy</button>{grouped.map(item => <button key={item.name} type="button" className={'vh-filter-chip ' + (group === item.name ? 'chosen' : '')} onClick={() => setGroup(item.name)}>{item.name}</button>)}</div>}
+      {view === 'matches' && monthKeys.length > 0 && (
+        <div className="vh-controls vh-league-months" role="group" aria-label="Miesiąc spotkań">
+          <button type="button" className={'vh-filter-chip' + (selectedMonth === 'all' ? ' chosen' : '')}
+            aria-pressed={selectedMonth === 'all'} onClick={() => setSelectedMonth('all')}>
+            Wszystkie
+          </button>
+          {monthKeys.map(month => <button key={month} type="button" data-month={month}
+            className={'vh-filter-chip' + (selectedMonth === month ? ' chosen' : '')}
+            aria-pressed={selectedMonth === month} onClick={() => setSelectedMonth(month)}>
+            {leagueMonthLabel(month)}
+          </button>)}
+        </div>
+      )}
+      {grouped.length > 0 && <div className="vh-controls"><button type="button" className={'vh-filter-chip ' + (group === 'all' ? 'chosen' : '')} onClick={() => { setGroup('all'); setSelectedMonth('all'); }}>Wszystkie grupy</button>{grouped.map(item => <button key={item.name} type="button" className={'vh-filter-chip ' + (group === item.name ? 'chosen' : '')} onClick={() => { setGroup(item.name); setSelectedMonth('all'); }}>{item.name}</button>)}</div>}
       <FeedWarning errors={league && errors[league.id] ? { [league.id]: errors[league.id] } : {}} refresh={refresh} />
       {!data && loading ? <LoadingCards /> : !data ? <EmptyState icon={WifiOff} title="Nie udało się pobrać ligi" message="Sprawdź połączenie i spróbuj ponownie." action="Odśwież dane" onAction={refresh} /> : <>
         {view === 'matches' && <>
           <MatchGroups matches={pageMatches} logos={logos} showDates showLeagueHeading={false} emptyMessage="Brak spotkań w pobranych danych tej ligi." />
-          {timeline.length > visibleCount && <button type="button" className="vh-match-more"
+          {monthMatches.length > visibleCount && <button type="button" className="vh-match-more"
             onClick={() => setVisibleCount(count => count + 30)}>
-            Pokaż starsze mecze <span>{Math.min(30, timeline.length - visibleCount)} z {timeline.length - visibleCount}</span>
+            Pokaż starsze mecze <span>{Math.min(30, monthMatches.length - visibleCount)} z {monthMatches.length - visibleCount}</span>
           </button>}
         </>}
         {view === 'teams' && <TeamsGrid teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} />}

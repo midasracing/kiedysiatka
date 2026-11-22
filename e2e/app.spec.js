@@ -44,7 +44,7 @@ test('league selector opens league details with a reversible split transition', 
   await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
   await expect(page.getByRole('tablist', { name: 'Widok rozgrywek' })).toBeVisible();
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
-  await page.getByRole('button', { name: 'Wszystkie rozgrywki' }).click();
+  await page.getByRole('button', { name: 'Wstecz' }).click();
   await expect(picker).toBeVisible();
   await expect(picker.getByRole('option', { name: 'TAURON Liga Mężczyzn' }))
     .toHaveAttribute('aria-selected', 'true');
