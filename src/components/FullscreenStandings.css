@@ -23,9 +23,10 @@
   border-radius: 0;
 }
 
-/* Animate ONLY the table content. The menu, black sheet and league title keep
-   their existing motion. The warped Canvas is painted in prepare, revealed
-   after the sheet nearly reaches its destination, and hidden before return. */
+/* The canvas is already painted when the panel starts moving. Reveal its
+   red rows across most of the existing 500ms sweep, rather than flashing
+   them in during the last 170ms. Animate opacity ONLY: no blur, transform
+   or redraw; menu, black sheet and title keep their approved timing. */
 .vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-warp {
   opacity: 0;
 }
@@ -36,12 +37,12 @@
   animation: vh-table-content-out 540ms linear both;
 }
 @keyframes vh-table-content-in {
-  0%, 66% { opacity: 0; }
+  0%, 20% { opacity: 0; animation-timing-function: cubic-bezier(.36,0,.23,1); }
   100% { opacity: 1; }
 }
 @keyframes vh-table-content-out {
-  0% { opacity: 1; }
-  23%, 100% { opacity: 0; }
+  0% { opacity: 1; animation-timing-function: cubic-bezier(.48,0,.64,1); }
+  78%, 100% { opacity: 0; }
 }
 
 /* A graduated top veil keeps the floating league heading readable without
