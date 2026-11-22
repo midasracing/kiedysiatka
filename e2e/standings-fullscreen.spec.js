@@ -18,17 +18,6 @@ test('standings open full-screen with a top gradient and return to the league', 
   await expect(dialog.getByRole('button', { name: 'Wstecz' })).toBeVisible();
   await expect(dialog.locator('.vh-standings-fullscreen__fade')).toBeVisible();
   await expect(dialog.locator('.vh-standings-warp__canvas')).toBeVisible();
-  // REDLINE must never stretch the canvas itself: the previous animation
-  // created enormous distorted team names and shrank the viewport width.
-  await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('transform', 'none');
-  await expect(dialog).toHaveAttribute('data-redline-phase', 'active', { timeout: 5000 });
-  const titleFrame = await dialog.locator('.vh-standings-fullscreen__identity h2').evaluate(node => {
-    const rect = node.getBoundingClientRect();
-    const parent = node.parentElement.getBoundingClientRect();
-    return { left: rect.left, right: rect.right, parentLeft: parent.left, parentRight: parent.right };
-  });
-  expect(titleFrame.left).toBeGreaterThanOrEqual(titleFrame.parentLeft - 1);
-  expect(titleFrame.right).toBeLessThanOrEqual(titleFrame.parentRight + 1);
 
   const dimensions = await dialog.evaluate(element => {
     const surface = element.querySelector('.vh-standings-warp').getBoundingClientRect();

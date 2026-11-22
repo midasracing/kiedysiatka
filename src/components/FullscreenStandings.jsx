@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft } from 'lucide-react';
 import Standings from './Standings.jsx';
-import RedlineWarpCanvas from './RedlineWarpCanvas.jsx';
-import { REDLINE_IN_MS, REDLINE_OUT_MS } from '../redlineWarpMath.js';
 import './FullscreenStandings.css';
 
 /**
@@ -16,63 +14,6 @@ export default function FullscreenStandings({
 }) {
   const backRef = useRef(null);
   const leagueTitleRef = useRef(null);
-  const sourceRef = useRef(null);
-  const sourceYsRef = useRef([]);
-  const exitStarted = useRef(false);
-  const exitTimer = useRef(null);
-  const reducedMotion = useRef(
-    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true
-  ).current;
-  const [phase, setPhase] = useState(reducedMotion ? 'active' : 'enter');
-
-  const exitTable = useCallback(() => {
-    if (exitStarted.current) return;
-    exitStarted.current = true;
-    if (reducedMotion) {
-      onBack();
-      return;
-    }
-    // Reveal the existing cards beneath the portal before the tunnel opens.
-    sourceRef.current?.classList.add('is-redline-returning');
-    sourceRef.current?.classList.remove('is-redline-hidden');
-    setPhase('exit');
-    exitTimer.current = window.setTimeout(onBack, REDLINE_OUT_MS);
-  }, [onBack, reducedMotion]);
-
-  useEffect(() => {
-    if (reducedMotion) return undefined;
-    const timer = window.setTimeout(() => {
-      setPhase(current => current === 'enter' ? 'active' : current);
-    }, REDLINE_IN_MS);
-    return () => window.clearTimeout(timer);
-  }, [reducedMotion]);
-
-  useEffect(() => () => window.clearTimeout(exitTimer.current), []);
-
-  // Sample the outgoing match-card positions once. Never animate, stretch or
-  // measure the Impact title through a CSS transform: that causes a resize
-  // feedback loop on Safari and makes long league headings overflow the screen.
-  useLayoutEffect(() => {
-    if (reducedMotion) return undefined;
-    const source = document.querySelector('[data-route="competitions"] .vh-competition-detail');
-    if (!source) return undefined;
-    sourceRef.current = source;
-    sourceYsRef.current = Array.from(
-      source.querySelectorAll('.vh-match, .vh-team-tile')
-    ).map(node => {
-      const rect = node.getBoundingClientRect();
-      return rect.top + rect.height / 2;
-    }).filter(y => y > -80 && y < window.innerHeight + 100).slice(0, 10);
-    source.classList.add('is-redline-source');
-    const frame = requestAnimationFrame(() => {
-      if (!exitStarted.current) source.classList.add('is-redline-hidden');
-    });
-    return () => {
-      cancelAnimationFrame(frame);
-      source.classList.remove('is-redline-source', 'is-redline-hidden', 'is-redline-returning');
-      sourceRef.current = null;
-    };
-  }, [leagueName, reducedMotion]);
 
   // Use the same Impact letterforms as the red team names in the warped table.
   // Fit long league names uniformly into the available width, without scaleX.
@@ -85,8 +26,7 @@ export default function FullscreenStandings({
       if (cancelled) return;
       const maxSize = 112;
       title.style.fontSize = `${maxSize}px`;
-      // offsetWidth excludes animation transforms, unlike getBoundingClientRect.
-      const measuredWidth = title.offsetWidth;
+      const measuredWidth = title.getBoundingClientRect().width;
       const available = Math.max(1, wrapper.clientWidth - 2);
       if (measuredWidth > 0) {
         title.style.fontSize = `${Math.min(maxSize, maxSize * available / measuredWidth)}px`;
@@ -128,7 +68,7 @@ export default function FullscreenStandings({
     const handleKey = event => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        exitTable();
+        onBack();
       }
     };
     document.addEventListener('keydown', handleKey);
@@ -142,19 +82,17 @@ export default function FullscreenStandings({
       window.scrollTo(scrollX, scrollY);
       previousFocus?.focus?.({ preventScroll: true });
     };
-  }, [exitTable]);
+  }, [onBack]);
 
   return createPortal(
     <section className="vh-standings-fullscreen" role="dialog" aria-modal="true"
-      data-redline-phase={phase} aria-label={`Tabela ligowa — ${leagueName}`}>
+      aria-label={`Tabela ligowa — ${leagueName}`}>
       <Standings key={selectedGroup || leagueName} rows={rows} logos={logos} />
       <div className="vh-standings-fullscreen__fade" aria-hidden="true" />
-      {!reducedMotion && phase !== 'active' &&
-        <RedlineWarpCanvas phase={phase} sourceYsRef={sourceYsRef} />}
       <header className="vh-standings-fullscreen__header">
         <div className="vh-standings-fullscreen__topline">
           <button ref={backRef} className="vh-standings-fullscreen__back"
-            type="button" onClick={exitTable} disabled={phase === 'exit'}>
+            type="button" onClick={onBack}>
             <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
             <span>Wstecz</span>
           </button>
