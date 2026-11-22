@@ -31,15 +31,14 @@ for (const [leagueName, secondOption] of [
     const teamName = (await tile.locator('.vh-club-wall__name').textContent()).trim();
     const name = tile.locator('.vh-club-wall__name');
     const crest = tile.locator('.vh-club-wall__crest');
-    await expect(name).toHaveCSS('color', 'rgb(232, 224, 215)');
+    await expect(name).toHaveCSS('color', 'rgb(240, 234, 229)');
     await expect(crest).toBeVisible();
     // In the editorial wall the crest is always left of the white team name.
     const crestBox = await crest.boundingBox();
     const nameBox = await name.boundingBox();
     expect(crestBox.x + crestBox.width).toBeLessThanOrEqual(nameBox.x);
-    // Local flat paper stamps preserve dark logo legibility. No giant stripe,
-    // decorative cutout, filter or light halo behind individual badges.
-    await expect(crest).toHaveCSS('background-color', 'rgb(158, 149, 139)');
+    // The club index has no square badges, glow, gradient or background stripe.
+    await expect(crest).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
     const stripe = await grid.evaluate(el => getComputedStyle(el, '::before').content);
     expect(stripe).toBe('none');
     const glow = await crest.evaluate(el => getComputedStyle(el, '::before').backgroundImage);
@@ -69,9 +68,9 @@ for (const [leagueName, secondOption] of [
     // The team profile uses understated dark printing plates instead of
     // full-screen scarlet and ivory panels.
     await expect(profile.locator('.vh-team-snapshot__metric').nth(0))
-      .toHaveCSS('background-color', 'rgb(48, 24, 27)');
+      .toHaveCSS('background-color', 'rgb(26, 20, 22)');
     await expect(profile.locator('.vh-team-snapshot__metric').nth(1))
-      .toHaveCSS('background-color', 'rgb(36, 32, 35)');
+      .toHaveCSS('background-color', 'rgb(26, 23, 25)');
 
     const removeFavorite = profile.getByRole('button', { name: 'Usuń z ulubionych: ' + teamName });
     await removeFavorite.click();
@@ -145,12 +144,11 @@ test('team overview and roster reflect official feed values, not mock numbers', 
   await expect(profile.locator('.vh-profile-position').first().getByRole('heading', { name: 'Przyjmujący' })).toBeVisible();
   await expect(profile.locator('.vh-profile-position').last().getByRole('heading', { name: 'Libero' })).toBeVisible();
   const jan = profile.locator('.vh-profile-player').filter({ hasText: 'Jan Testowy' });
-  // The poster treatment visibly layers two crops of the same official image,
-  // preserving the player data and keeping the second crop decorative.
-  await expect(jan.locator('.vh-profile-player__portrait')).toHaveCount(2);
-  await expect(jan.locator('.vh-profile-player__portrait--lead')).toBeVisible();
-  await expect(jan.locator('.vh-profile-player__portrait--echo')).toHaveAttribute('aria-hidden', 'true');
-  await expect(jan.locator('.vh-profile-player__print-number')).toHaveText('14');
+  // Editorial roster: one authentic photo; avoid repeated portraits or
+  // decorative numbers competing with player data.
+  await expect(jan.locator('.vh-profile-player__portrait')).toHaveCount(1);
+  await expect(jan.locator('.vh-profile-player__portrait')).toBeVisible();
+  await expect(jan.locator('.vh-profile-player__print-number')).toHaveCount(0);
   await expect(jan.locator('.vh-profile-player__stat')).toHaveCount(3);
   await expect(jan).toContainText('Zasięg ataku');
   await expect(jan).toContainText('323');
