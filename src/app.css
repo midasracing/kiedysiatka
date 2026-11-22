@@ -437,8 +437,8 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   [data-route="competitions"] .vh-round-selector__arrows button { transition: none; }
 }
 
-/* Favorites: same serif heading rhythm as the full-screen Rozgrywki picker.
-   Only the category selector remains beneath it; the rest is empty black. */
+/* Favorites: retain the large Rozgrywki-style heading and minimal switcher.
+   Underneath, show saved selections only; empty categories remain blank. */
 .vh-favorites-screen {
   position: relative;
   width: calc(100% + 40px);
@@ -449,6 +449,9 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 }
 .vh-favorites-heading { margin: 0; }
 .vh-favorites-tabs { margin: 28px 0 0; }
+.vh-favorites-saved { margin: 22px 0 0; }
+.vh-favorites-saved .vh-team-grid { margin: 0; }
+.vh-favorites-saved .vh-league-stack { margin: 0; }
 @media (max-width: 390px) {
   .vh-favorites-screen {
     width: calc(100% + 28px);

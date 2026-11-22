@@ -90,7 +90,7 @@ test('home starts with match list, without the marked intro and hero banner', as
 
 });
 
-test('favorites keep their saved counts after reload, without extra content', async ({ page }) => {
+test('favorites show only saved teams and leagues and allow removal', async ({ page }) => {
   await page.goto('/#favorites');
   await page.evaluate(() => localStorage.setItem('vh-favs', JSON.stringify({
     teams: ['Przykładowa drużyna'],
@@ -101,11 +101,45 @@ test('favorites keep their saved counts after reload, without extra content', as
   const screen = page.locator('[data-route="favorites"] .vh-favorites-screen');
   const tabs = screen.getByRole('tablist', { name: 'Rodzaj ulubionych' });
   await expect(tabs.getByRole('tab', { name: /Drużyny\s+1/ })).toHaveAttribute('aria-selected', 'true');
+  const teamsPanel = screen.getByRole('tabpanel', { name: 'Polubione drużyny' });
+  await expect(teamsPanel.getByText('Przykładowa drużyna')).toBeVisible();
+  await expect(teamsPanel.locator('.vh-team-tile')).toHaveCount(1);
+  await expect(screen.locator('.vh-search-input, .vh-picker-list, .vh-empty, .vh-section-heading')).toHaveCount(0);
+
   await tabs.getByRole('tab', { name: /Rozgrywki\s+1/ }).click();
   await expect(tabs.getByRole('tab', { name: /Rozgrywki\s+1/ })).toHaveAttribute('aria-selected', 'true');
-  await expect(screen.locator('.vh-picker-row, .vh-league-stack, .vh-team-grid, .vh-empty, .vh-search-input')).toHaveCount(0);
+  const leaguesPanel = screen.getByRole('tabpanel', { name: 'Polubione rozgrywki' });
+  await expect(leaguesPanel.getByText('TAURON Liga Mężczyzn')).toBeVisible();
+  await expect(leaguesPanel.locator('.vh-league-tile')).toHaveCount(1);
+  await expect(screen.getByRole('tabpanel', { name: 'Polubione drużyny' })).toHaveCount(0);
+
+  await leaguesPanel.getByRole('button', { name: 'Usuń z ulubionych: TAURON Liga Mężczyzn' }).click();
+  await expect(tabs.getByRole('tab', { name: /Rozgrywki\s+0/ })).toBeVisible();
+  await expect(screen.locator('.vh-league-tile')).toHaveCount(0);
+  await tabs.getByRole('tab', { name: /Drużyny\s+1/ }).click();
+  await screen.getByRole('button', { name: 'Usuń z ulubionych: Przykładowa drużyna' }).click();
+  await expect(tabs.getByRole('tab', { name: /Drużyny\s+0/ })).toBeVisible();
+  await expect(screen.locator('.vh-team-grid, .vh-empty, .vh-picker-list')).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('vh-favs'))))
+    .toEqual({ teams: [], leagues: [] });
   await page.reload();
-  await expect(tabs.getByRole('tab', { name: /Rozgrywki\s+1/ })).toBeVisible();
+  await expect(tabs.getByRole('tab', { name: /Drużyny\s+0/ })).toBeVisible();
+});
+
+test('saved favorite league opens its details from Ulubione', async ({ page }) => {
+  await page.goto('/#favorites');
+  await page.evaluate(() => localStorage.setItem('vh-favs', JSON.stringify({
+    teams: [],
+    leagues: ['TAURON Liga Mężczyzn'],
+  })));
+  await page.reload();
+  await page.getByRole('tablist', { name: 'Rodzaj ulubionych' })
+    .getByRole('tab', { name: /Rozgrywki/ }).click();
+  await page.getByRole('tabpanel', { name: 'Polubione rozgrywki' })
+    .locator('.vh-league-main').click();
+  await expect(page.locator('#main-content')).toHaveAttribute('data-page', 'competitions');
+  await expect(page.locator('[data-route="competitions"]')
+    .getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
 });
 
 test('Kiedy Siatka SVG loads without an animated or hidden logo', async ({ page }) => {
