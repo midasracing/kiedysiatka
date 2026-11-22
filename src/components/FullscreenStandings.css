@@ -87,7 +87,7 @@
   margin: 5px 0 0;
   color: #f5f2ed;
   font: normal 400 clamp(24px, 5.5vw, 34px)/1.15 var(--font-editorial, Georgia, serif);
-  letter-spacing: -.025em;
+  letter-spacing: 0;
   text-wrap: balance;
 }
 
