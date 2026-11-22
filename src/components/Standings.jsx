@@ -3,9 +3,10 @@ import { Trophy } from 'lucide-react';
 import { normalizeName } from '../data.js';
 import TeamLogo from './TeamLogo.jsx';
 import { EmptyState } from './UiPrimitives.jsx';
+import { STANDINGS_ROW_HEIGHT, STANDINGS_TOP_INSET, standingsScrollBounds, standingsWarpScale } from './standingsWarpMath.js';
 import './StandingsWarp.css';
 
-const ROW_HEIGHT = 68;
+const ROW_HEIGHT = STANDINGS_ROW_HEIGHT;
 const RED = '#fc0001';
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const numberOrDash = value => value ?? '–';
@@ -86,8 +87,13 @@ function WarpTable({ rows, logos }) {
     let previousY = 0;
     let previousTime = 0;
 
-    const limit = () => Math.max(0, rows.length * ROW_HEIGHT + 14 - height);
-    const setOffset = next => { offset = clamp(next, 0, limit()); };
+    // Allow the first and the last team to reach the visual center.
+    // These limits intentionally include the blank space above/below the list.
+    const bounds = () => standingsScrollBounds(rows.length, height);
+    const setOffset = next => {
+      const { min, max } = bounds();
+      offset = clamp(next, min, max);
+    };
 
     const render = () => {
       drawingFrame = 0;
@@ -97,23 +103,22 @@ function WarpTable({ rows, logos }) {
       context.fillRect(0, 0, width, height);
       context.imageSmoothingEnabled = true;
 
-      const first = Math.max(0, Math.floor(offset / ROW_HEIGHT) - 1);
-      const last = Math.min(rows.length, Math.ceil((offset + height) / ROW_HEIGHT) + 1);
+      const first = Math.max(0, Math.floor((offset - STANDINGS_TOP_INSET) / ROW_HEIGHT) - 1);
+      const last = Math.min(rows.length, Math.ceil((offset + height - STANDINGS_TOP_INSET) / ROW_HEIGHT) + 1);
       for (let index = first; index < last; index += 1) {
         const source = sourceRows[index];
         if (!source) continue;
-        const top = 7 + index * ROW_HEIGHT - offset;
-        // Project every strip into the same hourglass field. Adjacent rows
-        // have no seams because the warp depends on the screen Y, not the row.
+        const top = STANDINGS_TOP_INSET + index * ROW_HEIGHT - offset;
+        // Screen-centered lens: the table is readable in the middle, and
+        // characters stretch beyond the edges near the top and bottom.
         for (let sourceY = 0; sourceY < ROW_HEIGHT; sourceY += 3) {
           const stripHeight = Math.min(3, ROW_HEIGHT - sourceY);
           const screenY = top + sourceY;
           if (screenY + stripHeight < 0 || screenY > height) continue;
           const normalized = (screenY + stripHeight / 2 - height / 2) / (height / 2);
-          const distance = Math.min(1, Math.abs(normalized));
-          const scale = 0.19 + 0.85 * Math.pow(distance, 1.65);
+          const scale = standingsWarpScale(screenY + stripHeight / 2, height);
           const targetWidth = width * scale;
-          const shift = Math.sin(normalized * Math.PI) * width * 0.016;
+          const shift = Math.sin(normalized * Math.PI) * width * 0.025;
           const targetX = (width - targetWidth) / 2 + shift;
           context.drawImage(
             source, 0, sourceY * 2, source.width, stripHeight * 2,
@@ -197,7 +202,7 @@ function WarpTable({ rows, logos }) {
       if (!(event.key in increments) && event.key !== 'Home' && event.key !== 'End') return;
       event.preventDefault();
       stopMomentum();
-      setOffset(event.key === 'Home' ? 0 : event.key === 'End' ? limit() : offset + increments[event.key]);
+      setOffset(event.key === 'Home' ? bounds().min : event.key === 'End' ? bounds().max : offset + increments[event.key]);
       queueRender();
     };
 
