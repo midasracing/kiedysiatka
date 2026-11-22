@@ -86,9 +86,8 @@
 .vh-standings-fullscreen__identity h2 {
   margin: 5px 0 0;
   color: #f5f2ed;
-  font: italic 900 clamp(24px, 5.5vw, 34px)/1.15 var(--font-editorial, Georgia, serif);
-  font-optical-sizing: auto;
-  letter-spacing: -.035em;
+  font: normal 400 clamp(24px, 5.5vw, 34px)/1.15 var(--font-editorial, Georgia, serif);
+  letter-spacing: -.025em;
   text-wrap: balance;
 }
 
