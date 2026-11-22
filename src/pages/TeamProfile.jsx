@@ -1,16 +1,48 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronLeft, ChevronRight, Star } from 'lucide-react';
-import { dateKey, normalizeName } from '../data.js';
+import { dateKey, feedDateKey, fromKey, isLive, normalizeName } from '../data.js';
 import { NOW } from '../dateUtils.js';
-import { teamProfileSummary, sortedRoster } from '../teamProfileData.js';
+import { teamProfileSummary, sortedRoster, teamStanding, teamOpponentPreview } from '../teamProfileData.js';
 import { MatchGroups } from '../components/MatchCards.jsx';
 import TeamLogo from '../components/TeamLogo.jsx';
 import './TeamProfile.css';
 
-function Statistic({ value, label }) {
-  return <div className="vh-profile-stat">
-    <strong>{value}</strong>
-    <span>{label}</span>
+function shortFixtureDate(match) {
+  const date = fromKey(feedDateKey(match?.date));
+  return date ? date.toLocaleDateString('pl-PL', {
+    day: 'numeric', month: 'short', year: '2-digit',
+  }).replace(/\./g, '') : '—';
+}
+
+function FixtureSnapshot({ title, match, opponent, logos, upcoming = false }) {
+  return <div className="vh-team-snapshot__fixture">
+    <div className="vh-team-snapshot__fixture-heading">
+      <span>{upcoming && isLive(match) ? 'Trwający mecz' : title}</span>
+      <time dateTime={match ? feedDateKey(match.date) : undefined}>
+        {shortFixtureDate(match)}
+      </time>
+    </div>
+    {opponent ? <div className="vh-team-snapshot__fixture-content">
+      <div className="vh-team-snapshot__opponent">
+        <TeamLogo name={opponent.opponent}
+          logo={opponent.opponentLogo || logos.get(normalizeName(opponent.opponent))} />
+        <strong>{opponent.opponent}</strong>
+      </div>
+      {upcoming ? <div className="vh-team-snapshot__kickoff">
+        {isLive(match) ? <span className="vh-team-snapshot__live">LIVE</span>
+          : <span>{match.time || '—:—'}</span>}
+      </div> : opponent.ourSets != null ? <div className="vh-team-snapshot__result"
+        aria-label={`Wynik: ${opponent.ourSets} do ${opponent.theirSets}, ${opponent.won ? 'wygrana' : 'porażka'}`}>
+        <span className="vh-team-snapshot__set">{opponent.ourSets}</span>
+        <span className="vh-team-snapshot__colon">:</span>
+        <span className="vh-team-snapshot__set">{opponent.theirSets}</span>
+        <span className={'vh-team-snapshot__outcome ' + (opponent.won ? 'is-win' : 'is-loss')}>
+          {opponent.won ? 'W' : 'P'}
+        </span>
+      </div> : null}
+    </div> : <p className="vh-team-snapshot__no-match">
+      {upcoming ? 'Brak zaplanowanych meczów' : 'Brak zakończonych spotkań'}
+    </p>}
   </div>;
 }
 
@@ -60,7 +92,7 @@ function splitTeamName(name) {
 }
 
 const TeamProfile = React.memo(function TeamProfile({
-  league, team, matches, logos, favorites, toggleFavorite, onBack,
+  league, team, matches, standings, logos, favorites, toggleFavorite, onBack,
 }) {
   const [showHistory, setShowHistory] = useState(false);
   const nameRef = useRef(null);
@@ -73,6 +105,11 @@ const TeamProfile = React.memo(function TeamProfile({
   const crest = team.logo || logos.get(normalizeName(team.name));
   const past = showHistory ? profile.recent : profile.recent.slice(0, 4);
   const next = profile.upcoming.slice(0, 2);
+  const standingsRow = useMemo(() => teamStanding(standings, team.name), [standings, team.name]);
+  const previousMatch = profile.recent[0] || null;
+  const followingMatch = profile.upcoming[0] || null;
+  const previousOpponent = teamOpponentPreview(previousMatch, team.name);
+  const followingOpponent = teamOpponentPreview(followingMatch, team.name);
   // Keep the league-picker font on exactly two lines, fitting to available width.
   useLayoutEffect(() => {
     const title = nameRef.current;
@@ -130,14 +167,21 @@ const TeamProfile = React.memo(function TeamProfile({
       </div>
     </header>
 
-    <section className="vh-team-profile__section" aria-label="Bilans spotkań">
-      <div className="vh-team-profile__section-heading">
-        <h2>Bilans</h2><span>Na podstawie zakończonych spotkań z wynikiem</span>
+    <section className="vh-team-snapshot" aria-label="Pozycja, punkty i najbliższe spotkania">
+      <div className="vh-team-snapshot__metrics">
+        <div className="vh-team-snapshot__metric">
+          <span>Pozycja</span><strong>{standingsRow?.position ?? '—'}</strong>
+        </div>
+        <div className="vh-team-snapshot__metric">
+          <span>Punkty</span><strong>{standingsRow?.points ?? '—'}</strong>
+        </div>
       </div>
-      <div className="vh-team-profile__stats">
-        <Statistic value={profile.played} label="Mecze" />
-        <Statistic value={profile.won} label="Wygrane" />
-        <Statistic value={profile.lost} label="Porażki" />
+      <div className="vh-team-snapshot__fixtures">
+        <FixtureSnapshot title="Poprzedni mecz" match={previousMatch}
+          opponent={previousOpponent} logos={logos} />
+        <div className="vh-team-snapshot__divider" aria-hidden="true" />
+        <FixtureSnapshot title="Kolejny mecz" match={followingMatch}
+          opponent={followingOpponent} logos={logos} upcoming />
       </div>
     </section>
 
