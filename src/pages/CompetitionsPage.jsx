@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, Star, WifiOff } from 'lucide-react';
-import { LEAGUES } from '../data.js';
+import { ChevronLeft, ChevronRight, Star, WifiOff } from 'lucide-react';
+import { LEAGUES, dateKey } from '../data.js';
 import { leagueTimeline } from '../leagueTimeline.js';
-import { filterLeagueMatchesByMonth, leagueMonthKeys, leagueMonthLabel } from '../leagueMonths.js';
+import { leagueRounds, recommendedRoundNumber } from '../leagueRounds.js';
+import { NOW } from '../dateUtils.js';
 import { EmptyState, FeedWarning, LoadingCards } from '../components/UiPrimitives.jsx';
 import { MatchGroups } from '../components/MatchCards.jsx';
 import FullscreenStandings from '../components/FullscreenStandings.jsx';
 import TeamsGrid from '../components/TeamsGrid.jsx';
 import LeaguePicker from '../components/LeaguePicker.jsx';
 import LeagueSplitTransition from '../components/LeagueSplitTransition.jsx';
-import FluidMonthSurface from '../components/FluidMonthSurface.jsx';
 
 const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, matches, loading, errors, refresh, logos, favorites, toggleFavorite, selectedLeague, setSelectedLeague }) {
   const [view, setView] = useState('matches');
   const [group, setGroup] = useState('all');
-  const [selectedMonth, setSelectedMonth] = useState('all');
+  const [roundOverride, setRoundOverride] = useState(null);
   const [tableGroup, setTableGroup] = useState(null);
   const [visibleCount, setVisibleCount] = useState(30);
   const previousView = useRef('matches');
@@ -32,7 +32,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     setPickerIndex(snapshot.index);
     setView('matches');
     setGroup('all');
-    setSelectedMonth('all');
+    setRoundOverride(null);
     setTableGroup(null);
     setVisibleCount(30);
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -79,14 +79,20 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const tableRows = league?.id === 'second' ? (currentTableGroup?.table || []) : (data?.table || []);
   // Match and result cards share one reverse-chronological timeline.
   const timeline = useMemo(() => leagueTimeline(matches, league?.id, group), [matches, league?.id, group]);
-  const monthKeys = useMemo(() => leagueMonthKeys(timeline), [timeline]);
-  const monthMatches = useMemo(
-    () => filterLeagueMatchesByMonth(timeline, selectedMonth),
-    [timeline, selectedMonth]
-  );
-  useEffect(() => setSelectedMonth('all'), [league?.id]);
-  useEffect(() => setVisibleCount(30), [league?.id, group, selectedMonth]);
-  const pageMatches = monthMatches.slice(0, visibleCount);
+  const { rounds, reliable: roundsReliable } = useMemo(() => leagueRounds(timeline), [timeline]);
+  const scope = (league?.id || '') + ':' + group;
+  const manualNumber = roundOverride?.scope === scope ? roundOverride.number : null;
+  const recommendedNumber = recommendedRoundNumber(rounds, dateKey(NOW()));
+  const selectedRoundNumber = rounds.some(item => item.number === manualNumber)
+    ? manualNumber : recommendedNumber;
+  const roundIndex = rounds.findIndex(item => item.number === selectedRoundNumber);
+  const selectedRound = roundIndex < 0 ? null : rounds[roundIndex];
+  const pageMatches = roundsReliable ? (selectedRound?.matches || []) : timeline.slice(0, visibleCount);
+  const goRound = delta => {
+    const next = rounds[roundIndex + delta];
+    if (next) setRoundOverride({ scope, number: next.number });
+  };
+  useEffect(() => setVisibleCount(30), [league?.id, group]);
   // Preserve the selector's Impact letterforms while fitting the league name
   // into one uppercase line. Font-size changes uniformly, never scaleX.
   useLayoutEffect(() => {
@@ -144,33 +150,49 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           <h1 ref={leagueTitleRef}>{league.name}</h1>
         </div>
       </header>
-      <div className={'vh-league-tabs-with-months' + (view === 'matches' && monthKeys.length > 0 ? ' has-months' : '')}>
-        {view === 'matches' && monthKeys.length > 0 && <FluidMonthSurface />}
-        <div className="vh-segmented" role="tablist" aria-label="Widok rozgrywek">{[['matches','Mecze'], ['table','Tabela'], ['teams','Drużyny']].map(([id,label]) => <button key={id} role="tab" aria-selected={view === id} className={view === id ? 'selected' : ''} onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}</div>
-        {view === 'matches' && monthKeys.length > 0 && (
-          <div className="vh-month-flow">
-            <div className="vh-league-months" role="group" aria-label="Miesiąc spotkań">
-              <button type="button" className={'vh-filter-chip vh-month-flow__option' + (selectedMonth === 'all' ? ' chosen' : '')}
-                aria-pressed={selectedMonth === 'all'} onClick={() => setSelectedMonth('all')}>
-                Wszystkie
-              </button>
-              {monthKeys.map(month => <button key={month} type="button" data-month={month}
-                className={'vh-filter-chip vh-month-flow__option' + (selectedMonth === month ? ' chosen' : '')}
-                aria-pressed={selectedMonth === month} onClick={() => setSelectedMonth(month)}>
-                {leagueMonthLabel(month)}
-              </button>)}
-            </div>
-          </div>
-        )}
+      <div className="vh-league-view-tabs">
+        <div className="vh-segmented" role="tablist" aria-label="Widok rozgrywek">
+          {[
+            ['matches', 'Mecze'],
+            ['table', 'Tabela'],
+            ['teams', 'Drużyny'],
+          ].map(([id, label]) => <button key={id} role="tab" aria-selected={view === id}
+            className={view === id ? 'selected' : ''}
+            onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}
+        </div>
       </div>
-      {grouped.length > 0 && <div className="vh-controls"><button type="button" className={'vh-filter-chip ' + (group === 'all' ? 'chosen' : '')} onClick={() => { setGroup('all'); setSelectedMonth('all'); }}>Wszystkie grupy</button>{grouped.map(item => <button key={item.name} type="button" className={'vh-filter-chip ' + (group === item.name ? 'chosen' : '')} onClick={() => { setGroup(item.name); setSelectedMonth('all'); }}>{item.name}</button>)}</div>}
+      {grouped.length > 0 && <div className="vh-controls">
+        <button type="button" className={'vh-filter-chip ' + (group === 'all' ? 'chosen' : '')}
+          onClick={() => { setGroup('all'); setRoundOverride(null); }}>Wszystkie grupy</button>
+        {grouped.map(item => <button key={item.name} type="button"
+          className={'vh-filter-chip ' + (group === item.name ? 'chosen' : '')}
+          onClick={() => { setGroup(item.name); setRoundOverride(null); }}>{item.name}</button>)}
+      </div>}
+      {view === 'matches' && timeline.length > 0 && (
+        <div className="vh-round-selector" role="group" aria-label="Nawigacja po kolejkach">
+          <h2 className="vh-round-selector__heading">
+            {roundsReliable ? <>Kolejka <span key={selectedRoundNumber} className="vh-round-selector__number">{selectedRoundNumber}</span></> : 'Terminarz'}
+          </h2>
+          <div className="vh-round-selector__arrows">
+            <button type="button" aria-label="Poprzednia kolejka"
+              title="Poprzednia kolejka" disabled={roundIndex <= 0}
+              onClick={() => goRound(-1)}><ChevronLeft size={24} strokeWidth={1.9}/></button>
+            <button type="button" aria-label="Następna kolejka"
+              title="Następna kolejka" disabled={roundIndex < 0 || roundIndex >= rounds.length - 1}
+              onClick={() => goRound(1)}><ChevronRight size={24} strokeWidth={1.9}/></button>
+          </div>
+        </div>
+      )}
+      {view === 'matches' && timeline.length > 0 && !roundsReliable && (
+        <p className="vh-round-selector__note">Źródło nie udostępnia wiarygodnych numerów kolejek dla tej ligi.</p>
+      )}
       <FeedWarning errors={league && errors[league.id] ? { [league.id]: errors[league.id] } : {}} refresh={refresh} />
       {!data && loading ? <LoadingCards /> : !data ? <EmptyState icon={WifiOff} title="Nie udało się pobrać ligi" message="Sprawdź połączenie i spróbuj ponownie." action="Odśwież dane" onAction={refresh} /> : <>
         {view === 'matches' && <>
           <MatchGroups matches={pageMatches} logos={logos} showDates showLeagueHeading={false} emptyMessage="Brak spotkań w pobranych danych tej ligi." />
-          {monthMatches.length > visibleCount && <button type="button" className="vh-match-more"
+          {!roundsReliable && timeline.length > visibleCount && <button type="button" className="vh-match-more"
             onClick={() => setVisibleCount(count => count + 30)}>
-            Pokaż starsze mecze <span>{Math.min(30, monthMatches.length - visibleCount)} z {monthMatches.length - visibleCount}</span>
+            Pokaż starsze mecze <span>{Math.min(30, timeline.length - visibleCount)} z {timeline.length - visibleCount}</span>
           </button>}
         </>}
         {view === 'teams' && <TeamsGrid teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} />}

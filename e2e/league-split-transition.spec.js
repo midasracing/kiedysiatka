@@ -107,45 +107,54 @@ test('league gradient stays pinned to the very top while scrolling', async ({ pa
   await expect(page.getByRole('button', { name: 'Wstecz' })).toHaveCount(1);
 });
 
-test('league month chips use the existing filter style and restrict match dates', async ({ page }) => {
+test('matchweek arrows navigate genuine source rounds in chronological fixture order', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#competitions');
+  const picker = page.getByRole('listbox', { name: /Wybierz ligę/ });
+  await picker.focus();
+  await page.keyboard.press('Home');
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
+  await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
+
+  const rounds = page.getByRole('group', { name: 'Nawigacja po kolejkach' });
+  await expect(rounds).toBeVisible({ timeout: 10000 });
+  await expect(rounds.getByRole('heading', { name: /Kolejka \d+/ })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Miesiąc spotkań' })).toHaveCount(0);
+  await expect(page.locator('.vh-fluid-month-surface')).toHaveCount(0);
+  await expect(page.locator('.vh-month-flow')).toHaveCount(0);
+
+  const number = rounds.locator('.vh-round-selector__number');
+  const first = Number(await number.textContent());
+  expect(first).toBeGreaterThanOrEqual(1);
+  const next = rounds.getByRole('button', { name: 'Następna kolejka' });
+  await expect(next).toBeEnabled();
+  await next.click();
+  await expect(number).toHaveText(String(first + 1));
+  const cards = page.locator('.vh-match-groups .vh-match');
+  await expect(cards.first()).toBeVisible();
+  const dates = await page.locator('.vh-match-date-heading').evaluateAll(nodes =>
+    nodes.map(node => node.getAttribute('data-match-date'))
+  );
+  expect(dates).toEqual([...dates].sort());
+
+  await rounds.getByRole('button', { name: 'Poprzednia kolejka' }).click();
+  await expect(number).toHaveText(String(first));
+  await page.getByRole('tab', { name: 'Drużyny' }).click();
+  await expect(rounds).toHaveCount(0);
+  await page.getByRole('tab', { name: 'Mecze' }).click();
+  await expect(rounds).toBeVisible();
+});
+
+test('II liga cannot invent a matchweek when source labels all fixtures round one', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#competitions');
   await page.getByRole('option', { name: 'II Liga Mężczyzn' }).click();
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
-  const months = page.getByRole('group', { name: 'Miesiąc spotkań' });
-  await expect(months).toBeVisible({ timeout: 10000 });
-  // A single SVG outline morphs from the Mecze pill to the month panel.
-  // No separate white rectangle, triangular connector or dark ribbon.
-  const tabs = page.locator('.vh-league-tabs-with-months');
-  await expect(tabs).toHaveClass(/has-months/);
-  const surface = tabs.locator('.vh-fluid-month-surface');
-  await expect(surface).toHaveCount(1);
-  await expect(surface.locator('path')).toHaveAttribute('d', /M .+ Z/);
-  await expect(tabs.locator('.vh-month-flow__neck')).toHaveCount(0);
-  await expect(tabs.locator('.vh-segmented button.selected')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-  await expect(months).toHaveCSS('overflow-x', 'auto');
-  await expect(months).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-  await expect(months).toHaveCSS('border-top-width', '0px');
-  await expect(months.locator('.vh-month-flow__option').first()).toHaveCSS('border-radius', '10px');
-  const all = months.getByRole('button', { name: 'Wszystkie' });
-  await expect(all).toHaveAttribute('aria-pressed', 'true');
-
-  const target = months.locator('button[data-month]').first();
-  const month = await target.getAttribute('data-month');
-  expect(month).toMatch(/^\d{4}-(0[1-9]|1[0-2])$/);
-  await target.click();
-  await expect(target).toHaveAttribute('aria-pressed', 'true');
-  await expect(target).toHaveClass(/chosen/);
-  await expect(all).toHaveAttribute('aria-pressed', 'false');
-  const dates = page.locator('.vh-match-date-heading');
-  await expect(dates.first()).toBeVisible();
-  for (const date of await dates.all()) {
-    expect((await date.getAttribute('data-match-date')).slice(0, 7)).toBe(month);
-  }
-  await all.click();
-  await expect(all).toHaveAttribute('aria-pressed', 'true');
-  await page.getByRole('tab', { name: 'Drużyny' }).click();
-  await expect(months).toHaveCount(0);
-  await page.getByRole('tab', { name: 'Mecze' }).click();
-  await expect(months).toBeVisible();
+  const rounds = page.getByRole('group', { name: 'Nawigacja po kolejkach' });
+  await expect(rounds).toBeVisible({ timeout: 10000 });
+  await expect(rounds.getByRole('heading', { name: 'Terminarz' })).toBeVisible();
+  await expect(rounds.getByRole('button', { name: 'Poprzednia kolejka' })).toBeDisabled();
+  await expect(rounds.getByRole('button', { name: 'Następna kolejka' })).toBeDisabled();
+  await expect(page.locator('.vh-match-groups .vh-match').first()).toBeVisible();
 });
