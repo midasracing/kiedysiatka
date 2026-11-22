@@ -77,6 +77,10 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const closeTable = useCallback(() => setView(previousView.current), []);
   const currentTableGroup = grouped.find(item => item.name === tableGroup) || grouped[0];
   const tableRows = league?.id === 'second' ? (currentTableGroup?.table || []) : (data?.table || []);
+  // Keep the previous match/team screen mounted beneath the table portal.
+  // Its cards flatten into perspective lines, then restore on return,
+  // without remounting the list or losing the previous scroll position.
+  const underlayView = view === 'table' ? previousView.current : view;
   // Match and result cards share one reverse-chronological timeline.
   const timeline = useMemo(() => leagueTimeline(matches, league?.id, group), [matches, league?.id, group]);
   const { rounds, reliable: roundsReliable } = useMemo(() => leagueRounds(timeline), [timeline]);
@@ -165,7 +169,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           className={'vh-filter-chip ' + (group === item.name ? 'chosen' : '')}
           onClick={() => { setGroup(item.name); setRoundOverride(null); }}>{item.name}</button>)}
       </div>}
-      {view === 'matches' && timeline.length > 0 && (
+      {underlayView === 'matches' && timeline.length > 0 && (
         <div className="vh-round-selector" role="group" aria-label="Nawigacja po kolejkach">
           <h2 className="vh-round-selector__heading">
             {roundsReliable ? <>Kolejka <span key={selectedRoundNumber} className="vh-round-selector__number">{selectedRoundNumber}</span></> : 'Terminarz'}
@@ -180,19 +184,19 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           </div>
         </div>
       )}
-      {view === 'matches' && timeline.length > 0 && !roundsReliable && (
+      {underlayView === 'matches' && timeline.length > 0 && !roundsReliable && (
         <p className="vh-round-selector__note">Źródło nie udostępnia wiarygodnych numerów kolejek dla tej ligi.</p>
       )}
       <FeedWarning errors={league && errors[league.id] ? { [league.id]: errors[league.id] } : {}} refresh={refresh} />
       {!data && loading ? <LoadingCards /> : !data ? <EmptyState icon={WifiOff} title="Nie udało się pobrać ligi" message="Sprawdź połączenie i spróbuj ponownie." action="Odśwież dane" onAction={refresh} /> : <>
-        {view === 'matches' && <>
+        {underlayView === 'matches' && <>
           <MatchGroups matches={pageMatches} logos={logos} showDates showLeagueHeading={false} emptyMessage="Brak spotkań w pobranych danych tej ligi." />
           {!roundsReliable && timeline.length > visibleCount && <button type="button" className="vh-match-more"
             onClick={() => setVisibleCount(count => count + 30)}>
             Pokaż starsze mecze <span>{Math.min(30, timeline.length - visibleCount)} z {timeline.length - visibleCount}</span>
           </button>}
         </>}
-        {view === 'teams' && <TeamsGrid teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} />}
+        {underlayView === 'teams' && <TeamsGrid teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} />}
       </>}
       {data?.updated_at && <p className="vh-source-note">Aktualizacja źródła: {new Date(data.updated_at).toLocaleString('pl-PL')}</p>}
       {view === 'table' && (league.id === 'second' ? groupChoices : [data]).some(item => Object.keys(item?.source_table_discrepancies || {}).length > 0) && <p className="vh-source-note" role="status">Wyniki i tabela VolleyStation są publikowane osobno. Pokazujemy tabelę dokładnie według źródła.</p>}

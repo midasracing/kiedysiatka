@@ -154,3 +154,49 @@ test('II liga cannot invent a matchweek when source labels all fixtures round on
   await expect(rounds.getByRole('button', { name: 'Następna kolejka' })).toBeDisabled();
   await expect(page.locator('.vh-match-groups .vh-match').first()).toBeVisible();
 });
+
+
+test('REDLINE WARP joins the league to the lens and reverses cleanly on return', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const failures = [];
+  page.on('pageerror', error => failures.push(error.message));
+  await page.goto('/#competitions');
+  await page.getByRole('option', { name: 'TAURON Liga Mężczyzn' }).click();
+  await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
+  const cards = page.locator('.vh-competition-detail .vh-match');
+  await expect(cards.first()).toBeVisible();
+  await page.getByRole('tab', { name: 'Tabela' }).click();
+
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAttribute('data-redline-phase', /enter|active/);
+  await expect(dialog.locator('.vh-standings-warp')).toBeVisible();
+  await expect(page.locator('.vh-competition-detail.is-redline-source')).toHaveCount(1);
+  await expect(dialog).toHaveAttribute('data-redline-phase', 'active', { timeout: 4500 });
+  await expect(dialog.locator('.vh-redline-canvas')).toHaveCount(0);
+  await expect(dialog.getByRole('heading', { name: 'TAURON LIGA MĘŻCZYZN' })).toBeVisible();
+
+  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await expect(dialog).toHaveAttribute('data-redline-phase', 'exit');
+  await expect(dialog.locator('.vh-redline-canvas')).toHaveCount(1);
+  await expect(dialog).toHaveCount(0, { timeout: 3000 });
+  await expect(page.locator('.vh-competition-detail.is-redline-source')).toHaveCount(0);
+  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
+  await expect(cards.first()).toBeVisible();
+  expect(failures).toEqual([]);
+});
+
+test('reduced-motion users skip REDLINE WARP on both entry and exit', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#competitions');
+  await page.getByRole('option', { name: 'II Liga Mężczyzn' }).click();
+  await expect(page.locator('.vh-league-split')).toHaveCount(0);
+  await page.getByRole('tab', { name: 'Tabela' }).click();
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  await expect(dialog).toHaveAttribute('data-redline-phase', 'active');
+  await expect(dialog.locator('.vh-redline-canvas')).toHaveCount(0);
+  await expect(page.locator('.vh-competition-detail.is-redline-source')).toHaveCount(0);
+  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await expect(dialog).toHaveCount(0);
+  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
+});

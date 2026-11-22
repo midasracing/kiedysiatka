@@ -163,3 +163,165 @@
     margin: calc(env(safe-area-inset-top, 0px) + 205px) 16px 24px;
   }
 }
+
+/* REDLINE WARP — shared-title, card-to-perspective transition.
+   The portal remains mounted during exit, so reverse motion is never cut off.
+   Only transform/opacity are animated; the existing table lens is untouched. */
+.vh-standings-fullscreen[data-redline-phase="enter"],
+.vh-standings-fullscreen[data-redline-phase="exit"] {
+  background: transparent;
+}
+.vh-redline-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  contain: strict;
+}
+.vh-standings-fullscreen__header { z-index: 5; }
+
+.vh-competition-detail.is-redline-source .vh-competition-heading h1 {
+  opacity: 0;
+}
+.vh-competition-detail.is-redline-source .vh-match,
+.vh-competition-detail.is-redline-source .vh-team-tile {
+  transform-origin: center center;
+  transition: transform 190ms cubic-bezier(.17,.8,.3,1),
+    opacity 160ms ease;
+  will-change: transform, opacity;
+}
+.vh-competition-detail.is-redline-source.is-redline-hidden .vh-match,
+.vh-competition-detail.is-redline-source.is-redline-hidden .vh-team-tile {
+  transform: perspective(820px) rotateX(69deg) scaleY(.09);
+  opacity: 0;
+}
+.vh-competition-detail.is-redline-source.is-redline-returning .vh-match,
+.vh-competition-detail.is-redline-source.is-redline-returning .vh-team-tile {
+  transition-delay: 185ms;
+}
+
+.vh-standings-fullscreen[data-redline-phase="enter"] .vh-standings-warp {
+  animation: vh-redline-lens-in 660ms cubic-bezier(.17,.76,.24,1) both;
+  transform-origin: 50% 53%;
+}
+.vh-standings-fullscreen[data-redline-phase="exit"] .vh-standings-warp {
+  animation: vh-redline-lens-out 470ms cubic-bezier(.32,0,.55,1) both;
+  transform-origin: 50% 53%;
+}
+@keyframes vh-redline-lens-in {
+  0%, 34% {
+    opacity: 0;
+    transform: translate3d(0, 55px, 0) scale(.86, .15);
+    clip-path: inset(44% 0 44% 0);
+  }
+  60% {
+    opacity: .55;
+    transform: translate3d(0, 18px, 0) scale(.94, .65);
+    clip-path: inset(21% 0 20% 0);
+  }
+  88%, 100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    clip-path: inset(0);
+  }
+}
+@keyframes vh-redline-lens-out {
+  0%, 16% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    clip-path: inset(0);
+  }
+  48% {
+    opacity: .48;
+    transform: translate3d(0, 24px, 0) scale(.93, .58);
+    clip-path: inset(23% 0 23% 0);
+  }
+  72%, 100% {
+    opacity: 0;
+    transform: translate3d(0, 55px, 0) scale(.86, .15);
+    clip-path: inset(44% 0 44% 0);
+  }
+}
+.vh-standings-fullscreen[data-redline-phase="enter"] .vh-standings-fullscreen__fade {
+  animation: vh-redline-veil-in 660ms linear both;
+}
+.vh-standings-fullscreen[data-redline-phase="exit"] .vh-standings-fullscreen__fade {
+  animation: vh-redline-veil-out 470ms linear both;
+}
+@keyframes vh-redline-veil-in {
+  0%, 50% { opacity: 0; }
+  85%, 100% { opacity: 1; }
+}
+@keyframes vh-redline-veil-out {
+  0%, 15% { opacity: 1; }
+  75%, 100% { opacity: 0; }
+}
+
+.vh-standings-fullscreen__identity h2 {
+  transform-origin: 0 0;
+  will-change: transform, color;
+}
+.vh-standings-fullscreen[data-redline-phase="enter"] .vh-standings-fullscreen__identity h2 {
+  animation: vh-redline-title-in 660ms cubic-bezier(.18,.75,.22,1) both;
+}
+.vh-standings-fullscreen[data-redline-phase="exit"] .vh-standings-fullscreen__identity h2 {
+  animation: vh-redline-title-out 470ms cubic-bezier(.32,0,.6,1) both;
+}
+@keyframes vh-redline-title-in {
+  0%, 16% {
+    color: #fc0001;
+    transform: translate3d(var(--redline-title-x, 0px), var(--redline-title-y, 0px), 0)
+      scale(var(--redline-title-scale, 1));
+  }
+  69% {
+    color: #fc0001;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    color: #fff;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+@keyframes vh-redline-title-out {
+  0%, 19% {
+    color: #fff;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  60% {
+    color: #fc0001;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    color: #fc0001;
+    transform: translate3d(var(--redline-title-x, 0px), var(--redline-title-y, 0px), 0)
+      scale(var(--redline-title-scale, 1));
+  }
+}
+
+.vh-standings-fullscreen[data-redline-phase="enter"] .vh-standings-fullscreen__topline,
+.vh-standings-fullscreen[data-redline-phase="enter"] .vh-standings-fullscreen__groups {
+  animation: vh-redline-chrome-in 660ms ease-out both;
+}
+.vh-standings-fullscreen[data-redline-phase="exit"] .vh-standings-fullscreen__topline,
+.vh-standings-fullscreen[data-redline-phase="exit"] .vh-standings-fullscreen__groups {
+  animation: vh-redline-chrome-out 470ms ease-in both;
+}
+@keyframes vh-redline-chrome-in {
+  0%, 44% { opacity: 0; transform: translate3d(0, -8px, 0); }
+  85%, 100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes vh-redline-chrome-out {
+  0% { opacity: 1; transform: translate3d(0, 0, 0); }
+  35%, 100% { opacity: 0; transform: translate3d(0, -8px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vh-standings-fullscreen[data-redline-phase="enter"] .vh-standings-warp,
+  .vh-standings-fullscreen[data-redline-phase="exit"] .vh-standings-warp,
+  .vh-standings-fullscreen[data-redline-phase="enter"] .vh-standings-fullscreen__identity h2,
+  .vh-standings-fullscreen[data-redline-phase="exit"] .vh-standings-fullscreen__identity h2 {
+    animation: none;
+  }
+}
