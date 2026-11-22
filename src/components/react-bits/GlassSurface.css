@@ -1,8 +1,0 @@
-/* Static glass base; the lens visuals are owned by BottomNav.css and theme.css. */
-.glass-surface {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}

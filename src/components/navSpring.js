@@ -32,9 +32,9 @@ export function isNavSpringSettled(position, velocity, target) {
 // returns to its original proportions as velocity and distance approach zero.
 export function navLensStretch(velocity, distanceToTarget) {
   if (!Number.isFinite(velocity) || !Number.isFinite(distanceToTarget)) return 1;
-  const bySpeed = Math.abs(velocity) / 6700;
-  const nearTarget = Math.abs(distanceToTarget) / 330;
-  return 1 + Math.min(0.16, bySpeed, nearTarget);
+  const bySpeed = Math.abs(velocity) / 9000;
+  const nearTarget = Math.abs(distanceToTarget) / 450;
+  return 1 + Math.min(0.08, bySpeed, nearTarget);
 }
 
 // Precompute once per tap. Web Animations can then play these transforms on

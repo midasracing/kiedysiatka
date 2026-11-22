@@ -43,7 +43,7 @@ test('the glass stretch is bounded and disappears when settled', () => {
   assert.equal(navLensStretch(800, 0), 1);
   assert.equal(navLensStretch(Number.NaN, 500), 1);
   assert.ok(navLensStretch(1200, 100) > 1);
-  assert.ok(navLensStretch(9000, 2000) <= 1.16);
+  assert.ok(navLensStretch(9000, 2000) <= 1.08);
 });
 
 test('native motion preserves position and velocity when a tap interrupts it', () => {

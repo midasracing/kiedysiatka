@@ -151,7 +151,7 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   .vh-floating-head{gap:12px;padding-top:calc(10px + env(safe-area-inset-top))}
 }
 
-/* The selected indicator is the single React Bits GlassSurface; search is static CSS. */
+/* The dock has one opaque red lens; all other navigation layers were removed. */
 
 @media(max-width:390px){.vh-app{padding-left:14px;padding-right:14px}.vh-date-wrap{margin-left:-14px;margin-right:-14px}.vh-match .im-name{font-size:14px}.vh-match .im-meta{font-size:12px}.vh-team-grid{gap:8px}}
 @media(min-width:760px){.vh-app{width:min(100%,680px)}}

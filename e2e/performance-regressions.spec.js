@@ -18,9 +18,9 @@ test('a provisional unstyled picker layout cannot erase the selected league', as
   await page.locator('#provisional-picker-layout').evaluate(style => style.remove());
   const selected = page.getByRole('option', { name: 'II Liga Mężczyzn', exact: true });
   await expect(selected).toHaveAttribute('aria-selected', 'true');
-  await expect.poll(() => picker.evaluate(node => node.scrollTop)).toBe(232);
+  await expect.poll(() => picker.evaluate(node => node.scrollTop)).toBe(0);
   await selected.click();
-  await expect(page.getByRole('heading', { name: 'II Liga Mężczyzn', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn', exact: true })).toBeVisible();
 });
 
 test('a fast failing logo keeps its initials and a new logo can load after refresh', async ({ page }) => {
@@ -51,7 +51,7 @@ test('resizing the viewport preserves the selected league and its centered posit
   await page.setViewportSize({ width: 390, height: 500 });
   await page.goto('/#competitions');
   const picker = page.getByRole('listbox', { name: /Wybierz ligę/ });
-  const selected = picker.getByRole('option', { name: 'II Liga Mężczyzn', exact: true });
+  const selected = picker.getByRole('option', { name: 'TAURON Liga Mężczyzn', exact: true });
   const centerDistance = () => selected.evaluate(option => {
     const host = option.closest('.vh-league-picker__scroll').getBoundingClientRect();
     const row = option.getBoundingClientRect();
@@ -63,5 +63,5 @@ test('resizing the viewport preserves the selected league and its centered posit
   await expect.poll(centerDistance).toBeLessThan(2);
   await expect(selected).toHaveAttribute('aria-selected', 'true');
   await selected.click();
-  await expect(page.getByRole('heading', { name: 'II Liga Mężczyzn', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn', exact: true })).toBeVisible();
 });

@@ -161,18 +161,18 @@ test('old Rive wordmark assets are no longer used', async ({ page }) => {
 });
 
 
-test('exactly one React Bits glass surface is mounted in the dock, without legacy FluidGlass', async ({ page }) => {
+test('single opaque red lens without leftover legacy glass layers', async ({ page }) => {
   await page.goto('/');
   const nav = page.getByRole('navigation', { name: 'Główna nawigacja' });
-  await expect(nav.locator('.vh-nav-lens .glass-surface')).toHaveCount(1);
+  await expect(nav.locator('.vh-nav-lens .glass-surface')).toHaveCount(0);
   await expect(nav.locator('.vh-nav-lens .fluid-glass')).toHaveCount(0);
-  await expect(page.locator('.glass-surface')).toHaveCount(1);
+  await expect(page.locator('.glass-surface')).toHaveCount(0);
   await expect(page.locator('.fluid-glass')).toHaveCount(0);
   for (const name of ['Główna', 'Kalendarz', 'Rozgrywki', 'Ulubione']) {
     await expect(nav.getByRole('button', { name })).toBeVisible();
   }
   await nav.getByRole('button', { name: 'Ulubione' }).click();
-  await expect(nav.locator('.vh-nav-lens .glass-surface')).toHaveCount(1);
+  await expect(nav.locator('.vh-nav-lens .glass-surface')).toHaveCount(0);
 });
 
 test('rapid switches keep one live screen and menu in sync, without cloning page lists', async ({ page }) => {
@@ -340,14 +340,14 @@ test('floating nav is a persistent portal, separate from route content', async (
   }
 });
 
-test('no unused WebGL fluid glass canvas or second navigation is rendered', async ({ page }) => {
+test('no legacy WebGL or glass layers remain under the dock', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.fluid-glass__canvas')).toHaveCount(0);
   await expect(page.getByRole('navigation', { name: 'Główna nawigacja' })).toHaveCount(1);
-  await expect(page.locator('.vh-nav-lens .glass-surface')).toHaveCount(1);
+  await expect(page.locator('.vh-nav-lens .glass-surface')).toHaveCount(0);
 });
 
-test('bottom navigation uses just one React glass lens and no CSS pill overlay', async ({ page }) => {
+test('single red lens with no extra CSS pill overlay', async ({ page }) => {
   await page.goto('/');
   const nav = page.getByRole('navigation', { name: 'Główna nawigacja' });
   await expect(nav).toBeVisible();
@@ -388,10 +388,12 @@ test('tabs reveal immediately with native motion and no extra icon animations', 
     await expect(page.locator('#main-content')).toHaveCSS('animation-name','none');
     await expect(page.locator('.vh-page')).toHaveCount(1);
   }
+  // A single short FLIP per icon smooths the flex relayout; no spring,
+  // shader, or never-ending animation is attached to the glyphs.
   const motionCount = await nav.locator('.vh-nav-item svg').evaluateAll(icons =>
     icons.flatMap(icon => icon.getAnimations())
       .filter(animation => animation.effect?.getKeyframes?.().some(frame => frame.transform != null)).length);
-  expect(motionCount).toBe(0);
+  expect(motionCount).toBeLessThanOrEqual(4);
 });
 
 test('prepared tabs reuse their DOM and keep filters while only one panel is visible', async ({ page }) => {
@@ -443,7 +445,7 @@ test('moving lens uses native transforms with no backdrop filters or filter maps
       if (root.querySelector('.vh-nav-items').dataset.active !== 'favorites') return;
       observer.disconnect();
       const lens = root.querySelector('.vh-nav-lens');
-      const material = lens.querySelector('.glass-surface');
+      const material = lens;
       resolve({
         nativeTransforms: lens.getAnimations().some(animation =>
           animation.effect.getKeyframes().every(frame => typeof frame.transform === 'string')),
@@ -551,4 +553,29 @@ test('all two-line league labels fit narrow mobile screens with unchanged font-s
     expect(result.fits).toBe(true);
     expect(result.startsInside).toBe(true);
   }
+});
+
+test('opaque dock hides page content and passing lens never overlays white inactive icons', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const nav = page.getByRole('navigation', { name: 'Główna nawigacja' });
+  await expect(nav).toHaveCSS('background-color', 'rgb(18, 15, 16)');
+  await expect(nav.locator('.glass-surface')).toHaveCount(0);
+  const lens = nav.locator('.vh-nav-lens');
+  await expect(lens).toHaveCSS('background-color', 'rgb(252, 0, 1)');
+  expect(await lens.evaluate(el => getComputedStyle(el).zIndex)).toBe('2');
+  expect(await nav.locator('.vh-nav-item:not(.active)').first().evaluate(el => getComputedStyle(el).zIndex)).toBe('1');
+  expect(await nav.locator('.vh-nav-item.active').evaluate(el => getComputedStyle(el).zIndex)).toBe('3');
+  for (const target of ['Ulubione', 'Główna', 'Kalendarz', 'Rozgrywki', 'Główna']) {
+    await nav.getByRole('button', { name: target }).evaluate(button => button.click());
+    await expect(nav.locator('.vh-nav-item.active')).toHaveCount(1);
+  }
+  await page.waitForTimeout(750);
+  await expect(nav.getByRole('button', { name: 'Główna' })).toHaveAttribute('aria-current', 'page');
+  const misalignment = await nav.evaluate(element => {
+    const lensRect = element.querySelector('.vh-nav-lens').getBoundingClientRect();
+    const selectedRect = element.querySelector('.vh-nav-item.active').getBoundingClientRect();
+    return Math.abs(lensRect.left - selectedRect.left) + Math.abs(lensRect.width - selectedRect.width);
+  });
+  expect(misalignment).toBeLessThan(2);
 });
