@@ -21,6 +21,8 @@ const reverseFrames = frames => frames.slice().reverse().map(frame => ({
 export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
   const lineRefs = useRef([]);
   const veilRef = useRef(null);
+  const topCurtainRef = useRef(null);
+  const bottomCurtainRef = useRef(null);
   const gradientRef = useRef(null);
   const headingRef = useRef(null);
   const pointerRef = useRef(null);
@@ -143,8 +145,10 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       animate(lineRefs.current[index], frames, EASING, opening);
     });
 
-    // Keep the league details visible until the returning names actually
-    // arrive. The black backdrop grows with the curtain, never ahead of it.
+    // The opening is a real two-panel mask: black covers the ready-to-use
+    // detail until BOTH selected lines reach full width. There is NO
+    // crossfade: the view appears only in the growing gap between panels.
+    // Preserve the approved return veil keyframes entirely.
     animate(veilRef.current, [
       { offset: 0, opacity: 1 },
       { offset: .22, opacity: .91 },
@@ -153,11 +157,22 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       { offset: 1, opacity: 0 },
     ], 'linear', [
       { offset: 0, opacity: 1 },
-      { offset: .52, opacity: 1 },
-      { offset: .76, opacity: .40 },
-      { offset: .95, opacity: 0 },
+      { offset: .605, opacity: 1 },
+      { offset: .61, opacity: 0 },
       { offset: 1, opacity: 0 },
     ]);
+
+    if (phase === 'open') {
+      // Full black halves remain stationary through touch + proportional
+      // zoom; they only peel away when the two words separate.
+      const panelFrames = direction => [
+        { offset: 0, transform: 'translate3d(0,0,0)' },
+        { offset: .61, transform: 'translate3d(0,0,0)', easing: 'cubic-bezier(.68,0,.23,1)' },
+        { offset: 1, transform: `translate3d(0,${direction * 102}%,0)` },
+      ];
+      animate(topCurtainRef.current, panelFrames(-1));
+      animate(bottomCurtainRef.current, panelFrames(1));
+    }
 
     // Match the actual selector's top gradient throughout both directions.
     // On return it builds gradually while the entire list converges,
@@ -170,8 +185,8 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       { offset: 1, opacity: 0 },
     ], 'linear', [
       { offset: 0, opacity: 1 },
-      { offset: .38, opacity: 1 },
-      { offset: .77, opacity: .1 },
+      { offset: .34, opacity: 1 },
+      { offset: .61, opacity: 0 },
       { offset: 1, opacity: 0 },
     ]);
 
@@ -182,8 +197,8 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       { offset: 1, opacity: 0 },
     ], 'linear', [
       { offset: 0, opacity: 1 },
-      { offset: .28, opacity: 1 },
-      { offset: .69, opacity: 0 },
+      { offset: .22, opacity: 1 },
+      { offset: .60, opacity: 0 },
       { offset: 1, opacity: 0 },
     ]);
 
@@ -212,6 +227,10 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
     <div className="vh-league-split" data-phase={phase}
       data-names={rows.length} aria-hidden="true">
       <div className="vh-league-split__veil" ref={veilRef} />
+      {phase === 'open' && <>
+        <div ref={topCurtainRef} className="vh-league-split__curtain vh-league-split__curtain--top" />
+        <div ref={bottomCurtainRef} className="vh-league-split__curtain vh-league-split__curtain--bottom" />
+      </>}
       {snapshot?.gradient && <div
         ref={gradientRef}
         className="vh-league-split__gradient"

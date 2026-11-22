@@ -11,6 +11,25 @@ test('touching the centred league splits two full-width lines and reverse restor
   await expect(split).toBeVisible();
   await expect(split).toHaveAttribute('data-names', '6');
   await expect(split.locator('.vh-league-split__line')).toHaveCount(12);
+  await expect(split.locator('.vh-league-split__curtain')).toHaveCount(2);
+  const curtainFrames = await split.evaluate(node => {
+    const top = node.querySelector('.vh-league-split__curtain--top');
+    const bottom = node.querySelector('.vh-league-split__curtain--bottom');
+    const veil = node.querySelector('.vh-league-split__veil');
+    return {
+      top: top.getAnimations()[0].effect.getKeyframes(),
+      bottom: bottom.getAnimations()[0].effect.getKeyframes(),
+      veil: veil.getAnimations()[0].effect.getKeyframes(),
+    };
+  });
+  expect(curtainFrames.top.map(f => f.offset)).toEqual([0, .61, 1]);
+  expect(curtainFrames.top[0].transform).toBe(curtainFrames.top[1].transform);
+  expect(curtainFrames.bottom[0].transform).toBe(curtainFrames.bottom[1].transform);
+  expect(curtainFrames.top[2].transform).toContain('-102%');
+  expect(curtainFrames.bottom[2].transform).toContain('102%');
+  expect(curtainFrames.veil[1].opacity).toBe('1');
+  expect(curtainFrames.veil[2].opacity).toBe('0');
+  await expect(page.locator('.vh-competition-detail')).toHaveCSS('opacity', '1');
   await expect(split.locator('.vh-league-split__gradient')).toHaveCSS('background-image', /linear-gradient/);
   await expect(split.locator('[data-league-row="2"]').first()).toHaveText('II Liga');
   await expect(split.locator('[data-league-row="2"]').last()).toHaveText('Mężczyzn');
@@ -45,6 +64,7 @@ test('touching the centred league splits two full-width lines and reverse restor
   // not appear only when the selected name animation finally ends.
   await expect(closing).toHaveAttribute('data-names', '6');
   await expect(closing.locator('.vh-league-split__line')).toHaveCount(12);
+  await expect(closing.locator('.vh-league-split__curtain')).toHaveCount(0);
   await expect(closing.locator('.vh-league-split__heading')).toHaveText('Rozgrywki');
   const fade = closing.locator('.vh-league-split__gradient');
   await expect(fade).toHaveCSS('background-image', /linear-gradient/);

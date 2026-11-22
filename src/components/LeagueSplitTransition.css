@@ -64,3 +64,20 @@
   will-change: opacity;
 }
 .vh-league-split__heading { z-index: 4; }
+
+/* Genuine opaque curtain halves for OPEN only. The league detail is fully
+   rendered underneath, then revealed spatially through the expanding seam.
+   The return still uses its original veil and text animations. */
+.vh-league-split__curtain {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  width: 100%;
+  height: calc(50% + 1px);
+  background: #000;
+  pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.vh-league-split__curtain--top { top: 0; }
+.vh-league-split__curtain--bottom { top: calc(50% - 1px); }
