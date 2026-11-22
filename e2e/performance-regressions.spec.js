@@ -61,7 +61,7 @@ test('a fast failing logo keeps its initials and a new logo can load after refre
   await page.getByRole('option', { name: 'TAURON Liga Mężczyzn', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
   await page.getByRole('tab', { name: 'Drużyny', exact: true }).click();
-  const row = page.locator('.vh-team-tile').filter({ hasText: 'Audit Team' });
+  const row = page.locator('.vh-club-wall__row').filter({ hasText: 'Audit Team' });
   await row.scrollIntoViewIfNeeded();
   await expect(row.locator('.team-mark')).toHaveText('AT');
   await expect(row.locator('img')).toHaveCount(0);
