@@ -2,7 +2,7 @@
   "league": "italy",
   "competition": "SuperLega Credem Banca",
   "source": "https://ww2.legavolley.it/Calendario.asp",
-  "updated_at": "2026-11-22T19:12:50.944524+00:00",
+  "updated_at": "2026-11-22T21:45:13.901715+00:00",
   "teams": [
     {
       "name": "Acqua Sant'Anna Cuneo",
@@ -116,14 +116,14 @@
     },
     {
       "team": "Valsa Group Modena",
-      "played": 5,
-      "wins": 2,
+      "played": 6,
+      "wins": 3,
       "losses": 3,
-      "points": 6,
-      "sets_for": 7,
+      "points": 9,
+      "sets_for": 10,
       "sets_against": 10,
-      "points_for": 408,
-      "points_against": 402,
+      "points_for": 483,
+      "points_against": 457,
       "rank": 5
     },
     {
@@ -200,14 +200,14 @@
     },
     {
       "team": "Cisterna Volley",
-      "played": 5,
+      "played": 6,
       "wins": 1,
-      "losses": 4,
+      "losses": 5,
       "points": 3,
       "sets_for": 5,
-      "sets_against": 12,
-      "points_for": 375,
-      "points_against": 399,
+      "sets_against": 15,
+      "points_for": 430,
+      "points_against": 474,
       "rank": 12
     }
   ],
@@ -2186,7 +2186,7 @@
       "broadcast": []
     },
     {
-      "id": "it-2026-andata-31",
+      "id": "it-40315",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 6",
       "date": "22.11.2026",
@@ -2195,30 +2195,47 @@
       "away": "Cisterna Volley",
       "home_team_id": "6867",
       "away_team_id": "6859",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40315",
       "venue": {
         "name": "PalaSport G.Panini",
-        "city": "Modena (MO)"
+        "city": "Modena"
       },
       "match_number": "31",
-      "status": "scheduled",
-      "home_sets": 0,
+      "status": "finished",
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
+      "set_scores": [
+        "25:23",
+        "25:20",
+        "25:12"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-22T21:45:13.647422+00:00",
       "league": "italy",
       "date_iso": "2026-11-22",
       "phase": "Zasadnicza",
       "round": 6,
       "term_number": 6,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 23
+        },
+        {
+          "home": 25,
+          "away": 20
+        },
+        {
+          "home": 25,
+          "away": 12
+        }
+      ],
+      "home_points": 75,
+      "away_points": 55,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_MOD",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_CIS",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
       "id": "it-2026-andata-55",
