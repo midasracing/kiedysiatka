@@ -14,6 +14,10 @@ import { sameName } from '../nameUtils.js';
 import LeaguePicker from '../components/LeaguePicker.jsx';
 import LeagueSplitTransition from '../components/LeagueSplitTransition.jsx';
 
+const canMorphTeam = () => typeof document !== 'undefined'
+  && typeof document.startViewTransition === 'function'
+  && !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
 const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, matches, loading, errors, refresh, logos, favorites, toggleFavorite, selectedLeague, setSelectedLeague }) {
   const [view, setView] = useState('matches');
   const [group, setGroup] = useState('all');
@@ -84,9 +88,6 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     ? data?.teams?.find(team => sameName(team.name, selectedTeamName)) : null;
   // Only transform the selected crest/name during navigation. The remaining
   // club rows use native scrolling, with no per-scroll React work or canvas.
-  const canMorphTeam = () => typeof document.startViewTransition === 'function'
-    && !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-
   const openTeamProfile = useCallback((team, source) => {
     if (!team?.name || teamTransitionBusy.current) return;
     teamListScroll.current = window.scrollY;
