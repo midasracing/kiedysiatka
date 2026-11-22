@@ -57,12 +57,13 @@ const TeamProfile = React.memo(function TeamProfile({
   return <section className="vh-team-profile" aria-label={`Profil drużyny: ${team.name}`}>
     <div className="vh-team-profile__toolbar">
       <button type="button" className="vh-team-profile__back" onClick={onBack}>
-        <ChevronLeft size={22} strokeWidth={2} aria-hidden="true" /> Drużyny
+        <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
+        <span>Wstecz</span>
       </button>
       <button type="button" className={'vh-team-profile__favorite' + (isFavorite ? ' is-favorite' : '')}
         aria-label={(isFavorite ? 'Usuń z' : 'Dodaj do') + ' ulubionych: ' + team.name}
         aria-pressed={isFavorite} onClick={() => toggleFavorite('teams', team.name)}>
-        <Star size={21} fill={isFavorite ? 'currentColor' : 'none'} aria-hidden="true" />
+        <Star size={23} strokeWidth={2.1} fill={isFavorite ? 'currentColor' : 'none'} aria-hidden="true" />
       </button>
     </div>
 
