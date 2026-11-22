@@ -26,6 +26,12 @@ test('touching the centred league splits two full-width lines and reverse restor
   expect(openFrames[1].filter).toBe('brightness(1.36)');
   expect(openFrames[3].transform).toBe(openFrames[4].transform);
   expect(openFrames[3].transform).not.toBe(openFrames[0].transform);
+  // Enlarged text must keep natural glyph proportions: scaleX = scaleY.
+  for (const frame of [openFrames[3], openFrames[4], openFrames[5]]) {
+    const [x, y] = frame.transform.match(/scale\\(([^,]+),\\s*([^)]*)\\)/)?.slice(1).map(Number) || [];
+    expect(x).toBeGreaterThan(0);
+    expect(x).toBeCloseTo(y, 6);
+  }
   await expect(split.locator('[data-league-row="0"]')).toHaveCount(2);
   await expect(split.locator('[data-league-row="5"]')).toHaveCount(2);
   await expect(page.getByRole('heading', { name: 'II Liga Mężczyzn' })).toBeVisible();

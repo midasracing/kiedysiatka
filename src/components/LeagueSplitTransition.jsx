@@ -106,18 +106,17 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       }
       let opening;
       if (line.rowIndex === snapshot.index) {
-        // 0–17%: tactile response (small press/brightness pulse).
-        // 17–55%: two lines expand TOGETHER to the viewport width.
-        // 55–100%: the first line exits above, second below.
-        const width = vw * 1.06;
-        const bigScaleX = width / naturalWidth;
-        const bigScaleY = clamp(Math.sqrt(bigScaleX) * 1.24, 1.2, 2.7);
-        const expandedHeight = naturalHeight * bigScaleY;
-        const wideX = (vw - width) / 2;
+        // 0–17%: tactile pulse.
+        // 17–55%: uniform zoom, never horizontal text stretching.
+        // Each line reaches both screen edges at its own proportional scale.
+        // 55–100%: the two lines form the upper/lower curtains.
+        const zoom = vw / naturalWidth;
+        const expandedHeight = naturalHeight * zoom;
+        const wideX = 0;
         const stackY = (line.partIndex === 0
           ? vh * .5 - expandedHeight * 1.03
           : vh * .5 + expandedHeight * .03);
-        const fullWidth = position(wideX, stackY, bigScaleX, bigScaleY);
+        const fullWidth = position(wideX, stackY, zoom, zoom);
         const pressed = position(
           line.left - line.width * .024,
           line.top - line.height * .024,
@@ -130,7 +129,7 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
           { offset: .17, transform: start, filter: 'brightness(1)', easing: 'cubic-bezier(.55,0,.16,1)' },
           { offset: .55, transform: fullWidth, filter: 'brightness(1)' },
           { offset: .61, transform: fullWidth, filter: 'brightness(1)', easing: 'cubic-bezier(.7,0,.26,1)' },
-          { offset: 1, transform: position(wideX, targetY, bigScaleX, bigScaleY), filter: 'brightness(1)' },
+          { offset: 1, transform: position(wideX, targetY, zoom, zoom), filter: 'brightness(1)' },
         ];
       } else {
         // Other names wait for the enlargement to finish, then peel away
