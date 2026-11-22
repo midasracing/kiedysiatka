@@ -30,3 +30,26 @@
   will-change: transform, opacity;
   -webkit-font-smoothing: antialiased;
 }
+/* Match the selector heading and pointer during the reverse animation,
+   so they never pop in after the overlay is removed. */
+.vh-league-split__heading {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  color: #f5f2ed;
+  line-height: 1.06;
+  white-space: nowrap;
+  pointer-events: none;
+  will-change: opacity;
+}
+.vh-league-split__pointer {
+  position: absolute;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 8px solid #fc0001;
+  pointer-events: none;
+  will-change: opacity;
+}

@@ -111,22 +111,41 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
       programmaticTarget.current = null;
       updateFromScroll();
     }
-    const lines = [...option.querySelectorAll('.vh-league-picker__line')].map(line => {
-      const bounds = line.getBoundingClientRect();
-      const style = window.getComputedStyle(line);
+    const captureText = element => {
+      const bounds = element.getBoundingClientRect();
+      const style = window.getComputedStyle(element);
       return {
-        text: line.textContent,
+        text: element.textContent,
         left: bounds.left,
         top: bounds.top,
         width: bounds.width,
         height: bounds.height,
-        naturalWidth: line.offsetWidth,
-        naturalHeight: line.offsetHeight,
+        naturalWidth: element.offsetWidth,
+        naturalHeight: element.offsetHeight,
         font: style.font,
         letterSpacing: style.letterSpacing,
       };
+    };
+    // Capture every name before the picker unmounts. The return transition
+    // uses these same positions, so no row can appear late on black.
+    const rows = [...scrollerRef.current.querySelectorAll('.vh-league-picker__option')]
+      .map((row, rowIndex) => ({
+        index: rowIndex,
+        lines: [...row.querySelectorAll('.vh-league-picker__line')].map(captureText),
+      }));
+    const heading = scrollerRef.current.closest('.vh-competitions-screen')
+      ?.querySelector('.vh-competitions-topfade h1');
+    const pointer = scrollerRef.current.parentElement
+      ?.querySelector('.vh-league-picker__pointer');
+    const pointerBounds = pointer?.getBoundingClientRect();
+    const lines = rows[index]?.lines || [];
+    if (lines.length === 2) onOpen(leagues[index], {
+      index,
+      lines,
+      rows,
+      heading: heading ? captureText(heading) : null,
+      pointer: pointerBounds ? { left: pointerBounds.left, top: pointerBounds.top } : null,
     });
-    if (lines.length === 2) onOpen(leagues[index], { index, lines });
   };
 
   const onKeyDown = event => {
