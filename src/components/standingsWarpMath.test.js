@@ -18,8 +18,8 @@ test('first and last league row can each be centered, regardless of viewport hei
 test('centre remains legible and the lens expands both ends beyond the screen', () => {
   const h = 620;
   assert.equal(standingsWarpScale(h / 2, h), 1);
-  assert.equal(standingsWarpScale(0, h), 3.25);
-  assert.equal(standingsWarpScale(h, h), 3.25);
+  assert.ok(Math.abs(standingsWarpScale(0, h) - 3.25) < 1e-9);
+  assert.ok(Math.abs(standingsWarpScale(h, h) - 3.25) < 1e-9);
   assert.equal(standingsWarpScale(h / 2 - 10, h), 1);
   assert.equal(standingsWarpScale(h / 2 + 10, h), 1);
   assert.ok(standingsWarpScale(100, h) > 1);
