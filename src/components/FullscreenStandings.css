@@ -198,6 +198,7 @@
   inset: 0;
   z-index: 1;
   background: #000;
+  contain: paint;
 }
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface {
   animation: vh-liquid-open 1120ms cubic-bezier(.52,.02,.28,1) both;
@@ -288,7 +289,9 @@
   font: inherit;
   line-height: inherit;
 }
-.vh-competition-detail.is-liquid-table-open .vh-table-tab__label {
+/* The whole selected button is temporarily lifted out of the segmented
+   control. Leaving its empty white plate behind breaks the illusion. */
+.vh-competition-detail.is-liquid-table-open .vh-table-tab {
   opacity: 0;
 }
 

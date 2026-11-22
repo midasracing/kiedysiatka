@@ -89,7 +89,7 @@ test('Liquid Dive respects reduced motion and preserves the teams tab on return'
 test('one slow black portal reveals the table and the same selected Tabela pill resurfaces', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openLeague(page);
-  const original = page.getByRole('tab', { name: 'Tabela' });
+  const original = page.locator('.vh-competition-detail .vh-table-tab');
   const originBox = await original.boundingBox();
   await original.click();
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
@@ -124,6 +124,9 @@ test('one slow black portal reveals the table and the same selected Tabela pill 
   expect(scene.radius).toBeGreaterThan(400);
 
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  // The original selected pill has really been lifted out: no empty white
+  // button remains inside the old segmented control during the transition.
+  await expect(original).toHaveCSS('opacity', '0');
   await expect(dialog.locator('.vh-standings-fullscreen__flying-pill')).toHaveCount(0);
   const surfaced = dialog.getByRole('button', { name: 'Zamknij tabelę' });
   const design = await surfaced.evaluate(node => {
