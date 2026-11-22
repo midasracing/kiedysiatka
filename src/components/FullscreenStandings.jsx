@@ -4,7 +4,7 @@ import { ChevronLeft } from 'lucide-react';
 import Standings from './Standings.jsx';
 import './FullscreenStandings.css';
 
-const SLIDE_ENTER_MS = 620;
+const SLIDE_ENTER_MS = 500;
 const SLIDE_EXIT_MS = 540;
 
 /**
@@ -22,7 +22,23 @@ export default function FullscreenStandings({
   const reducedMotion = useRef(
     window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true
   ).current;
-  const [phase, setPhase] = useState(reducedMotion ? 'active' : 'enter');
+  const [phase, setPhase] = useState(reducedMotion ? 'active' : 'prepare');
+
+  useEffect(() => {
+    if (reducedMotion) return undefined;
+    // Standings queues its first canvas draw on mount. Let that frame paint
+    // before starting the sheet, rather than rasterizing during the swipe.
+    let secondFrame = 0;
+    const firstFrame = requestAnimationFrame(() => {
+      secondFrame = requestAnimationFrame(() => {
+        setPhase(current => current === 'prepare' ? 'enter' : current);
+      });
+    });
+    return () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+    };
+  }, [reducedMotion]);
 
   const exitTable = useCallback(() => {
     if (exiting.current) return;
@@ -36,14 +52,14 @@ export default function FullscreenStandings({
   }, [onBack, reducedMotion]);
 
   useEffect(() => {
-    if (reducedMotion) return undefined;
+    if (phase !== 'enter') return undefined;
     // Finish from animationend; a busy first paint must not cut the swipe.
     // The timer only recovers from an interrupted animation.
     const timer = window.setTimeout(() => {
       setPhase(current => current === 'enter' ? 'active' : current);
     }, SLIDE_ENTER_MS + 1000);
     return () => window.clearTimeout(timer);
-  }, [reducedMotion]);
+  }, [phase]);
 
   useEffect(() => () => window.clearTimeout(exitTimer.current), []);
 

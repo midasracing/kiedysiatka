@@ -201,6 +201,7 @@
 /* A native-feeling vertical swipe: one opaque sheet slides in from the
    bottom. Never clip, scale or distort the warped Canvas; the full viewport
    is composed as a single translation on its parent. */
+.vh-standings-fullscreen[data-liquid-phase="prepare"],
 .vh-standings-fullscreen[data-liquid-phase="enter"],
 .vh-standings-fullscreen[data-liquid-phase="exit"] {
   background: transparent;
@@ -214,12 +215,22 @@
   backface-visibility: hidden;
   contain: layout paint;
 }
+.vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-fullscreen__surface,
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface,
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__surface {
   will-change: transform;
 }
+.vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-fullscreen__surface {
+  transform: translate3d(0,100%,0);
+}
+.vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-fullscreen__header {
+  opacity: 0;
+}
+.vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-fullscreen__identity h2 {
+  color: #fc0001;
+}
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface {
-  animation: vh-standings-slide-up 620ms cubic-bezier(.22,.82,.25,1) both;
+  animation: vh-standings-slide-up 500ms cubic-bezier(.25,.65,.3,1) both;
 }
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__surface {
   animation: vh-standings-slide-down 540ms cubic-bezier(.42,0,.64,1) both;
@@ -235,7 +246,7 @@
 /* The Tabela button does not fly into the corner. It only materializes in
    its final position as the sliding panel finishes its swipe. */
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__header {
-  animation: vh-slide-header-in 620ms linear both;
+  animation: vh-slide-header-in 500ms linear both;
 }
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__header {
   animation: vh-slide-header-out 540ms linear both;
@@ -269,7 +280,7 @@
   visibility: hidden;
 }
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__identity h2 {
-  animation: vh-slide-title-in 620ms linear both;
+  animation: vh-slide-title-in 500ms linear both;
 }
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__identity h2 {
   animation: vh-slide-title-out 540ms linear both;

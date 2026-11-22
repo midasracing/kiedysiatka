@@ -9,8 +9,12 @@ async function openLeague(page) {
   await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
 }
 
-test('Tabela slides up as a full black sheet, without pill morph or moving corner button', async ({ page }) => {
+test('Tabela slides up as a full black sheet, without pill morph or moving corner button', async ({ page, browserName }) => {
   await page.setViewportSize({ width: 390, height: 844 });
+  if (browserName === 'chromium') {
+    const session = await page.context().newCDPSession(page);
+    await session.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  }
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await openLeague(page);
@@ -28,6 +32,18 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
     '.vh-standings-fullscreen__surface { animation-play-state: paused !important; }'
   });
   await trigger.click();
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'prepare');
+  await expect(dialog.locator('.vh-standings-fullscreen__surface')).toHaveCSS('animation-name', 'none');
+  await page.clock.runFor(16);
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'prepare');
+  const hasPaintedRows = await dialog.locator('canvas').evaluate(canvas => {
+    const context = canvas.getContext('2d');
+    const pixels = context.getImageData(0, Math.floor(canvas.height / 2) - 80, canvas.width, 160).data;
+    return pixels.some((red, index) => index % 4 === 0 && red > 180 && pixels[index + 1] < 80 && pixels[index + 2] < 80);
+  });
+  expect(hasPaintedRows).toBe(true);
+  await page.clock.runFor(32);
 
   // Clicking Tabela must activate the SAME light capsule as the other tabs.
   // The sheet covers this selected tab naturally as it slides in from below.
@@ -37,7 +53,6 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
   await expect(trigger).toHaveCSS('color', selectedStyles.color);
   await expect(trigger).toHaveCSS('border-radius', selectedStyles.radius);
 
-  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
   await expect(dialog.locator('.vh-standings-fullscreen__flying-pill')).toHaveCount(0);
   const scene = await dialog.evaluate(root => {
@@ -74,6 +89,9 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
   await pausedSheet.evaluate(node => node.remove());
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  const settled = await dialog.locator('.vh-standings-fullscreen__surface').boundingBox();
+  expect(Math.abs(settled.y)).toBeLessThan(1);
+  expect(Math.abs(settled.height - 844)).toBeLessThan(2);
   await expect(dialog.getByRole('button', { name: 'Zamknij tabelę' })).toBeVisible();
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('transform', 'none');
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('clip-path', 'none');
