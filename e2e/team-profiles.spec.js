@@ -31,20 +31,17 @@ for (const [leagueName, secondOption] of [
     const teamName = (await tile.locator('.vh-club-wall__name').textContent()).trim();
     const name = tile.locator('.vh-club-wall__name');
     const crest = tile.locator('.vh-club-wall__crest');
-    await expect(name).toHaveCSS('color', 'rgb(245, 242, 237)');
+    await expect(name).toHaveCSS('color', 'rgb(232, 224, 215)');
     await expect(crest).toBeVisible();
     // In the editorial wall the crest is always left of the white team name.
     const crestBox = await crest.boundingBox();
     const nameBox = await name.boundingBox();
     expect(crestBox.x + crestBox.width).toBeLessThanOrEqual(nameBox.x);
-    // One uninterrupted warm-paper stripe, red seam and no individual halo.
-    const paper = await grid.evaluate(el => ({
-      background: getComputedStyle(el, '::before').backgroundColor,
-      seam: getComputedStyle(el, '::before').borderRightColor,
-    }));
-    expect(paper).toEqual({ background: 'rgb(190, 184, 172)', seam: 'rgb(252, 0, 1)' });
-    const cut = await tile.evaluate(el => getComputedStyle(el, '::before').clipPath);
-    expect(cut).toContain('polygon(');
+    // Local flat paper stamps preserve dark logo legibility. No giant stripe,
+    // decorative cutout, filter or light halo behind individual badges.
+    await expect(crest).toHaveCSS('background-color', 'rgb(158, 149, 139)');
+    const stripe = await grid.evaluate(el => getComputedStyle(el, '::before').content);
+    expect(stripe).toBe('none');
     const glow = await crest.evaluate(el => getComputedStyle(el, '::before').backgroundImage);
     expect(glow).toBe('none');
     const nameGap = nameBox.x - (crestBox.x + crestBox.width);
@@ -69,6 +66,12 @@ for (const [leagueName, secondOption] of [
     expect(await players.count()).toBeGreaterThan(0);
     await expect(profile.locator('.vh-team-snapshot__metric')).toHaveCount(2);
     await expect(profile.locator('.vh-team-snapshot__fixture')).toHaveCount(2);
+    // The team profile uses understated dark printing plates instead of
+    // full-screen scarlet and ivory panels.
+    await expect(profile.locator('.vh-team-snapshot__metric').nth(0))
+      .toHaveCSS('background-color', 'rgb(48, 24, 27)');
+    await expect(profile.locator('.vh-team-snapshot__metric').nth(1))
+      .toHaveCSS('background-color', 'rgb(36, 32, 35)');
 
     const removeFavorite = profile.getByRole('button', { name: 'Usuń z ulubionych: ' + teamName });
     await removeFavorite.click();
