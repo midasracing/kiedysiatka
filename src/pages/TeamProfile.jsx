@@ -45,7 +45,7 @@ function FixtureSnapshot({ title, match, opponent, logos, upcoming = false }) {
   </div>;
 }
 
-function PlayerCard({ player, teamName, teamLogo }) {
+function PlayerCard({ player }) {
   const name = player.full_name || [player.first_name, player.last_name].filter(Boolean).join(' ') || 'Zawodnik';
   const officialProfile = /^https:\/\/www\.tauron(?:1)?liga\.pl\/players\/id\/\d+\//.test(player.source_url || '')
     ? player.source_url : null;
@@ -68,7 +68,6 @@ function PlayerCard({ player, teamName, teamLogo }) {
     <div className="vh-profile-player__copy">
       <strong>{name}</strong>
       <div className="vh-profile-player__identity-meta">
-        <TeamLogo name={teamName} logo={teamLogo} />
         <span>{player.number != null ? '#' + player.number : '—'}{player.position ? ' · ' + player.position : ''}</span>
       </div>
     </div>
@@ -213,7 +212,7 @@ const TeamProfile = React.memo(function TeamProfile({
             <div className="vh-profile-players">
               {group.players.map((player, index) =>
                 <PlayerCard key={player.id ? `${player.id}-${index}` : index}
-                  player={player} teamName={team.name} teamLogo={crest} />)}
+                  player={player} />)}
             </div>
           </section>)}
         </div>
