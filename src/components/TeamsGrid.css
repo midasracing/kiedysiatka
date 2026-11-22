@@ -1,33 +1,53 @@
-/* Club Wall — one continuous matte crest strip next to black editorial type.
-   The Favorites screen keeps the independent compact team cards. */
+/* Club Wall / Ink & Paper — stark print-editorial team identities.
+   One continuous paper stock, no individual cards, effects or scroll handlers.
+   The Favorites screen retains its original compact tile layout. */
 .vh-club-wall {
   --vh-club-stripe: clamp(110px, 29vw, 140px);
+  --vh-club-paper: #beb8ac;
+  --vh-club-print: #fc0001;
   position: relative;
   width: calc(100% + 40px);
   margin: 12px -20px 0;
   padding: 0 0 calc(128px + env(safe-area-inset-bottom, 0px));
   background: #000;
 }
-/* A single stripe behind the entire list, not separate logo tiles. */
+/* A single uninterrupted strip of matte, warm grey paper, bounded by a
+   precise print-red hairline. No per-crest circles, fades or gradients. */
 .vh-club-wall::before {
   content: '';
   position: absolute;
   inset: 0 auto calc(128px + env(safe-area-inset-bottom, 0px)) 0;
   width: var(--vh-club-stripe);
-  background: #92908b;
+  background: var(--vh-club-paper);
+  border-right: 2px solid var(--vh-club-print);
   pointer-events: none;
 }
 .vh-club-wall__row {
   position: relative;
   min-height: 140px;
-  border-bottom: 1px solid rgba(252, 0, 1, .28);
+  border-bottom: 1px solid #562026;
   background: transparent;
+}
+/* A small red die-cut at the paper/ink seam acts as the row marker instead
+   of numbering or extra UI copy. Stays outside the text hit target. */
+.vh-club-wall__row::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  left: var(--vh-club-stripe);
+  top: 50%;
+  width: 9px;
+  height: 16px;
+  background: var(--vh-club-print);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 .vh-club-wall__open {
   display: grid;
   grid-template-columns: clamp(82px, 23vw, 112px) minmax(0, 1fr);
   align-items: center;
-  column-gap: 10px;
+  column-gap: 18px;
   width: 100%;
   min-height: 140px;
   margin: 0;
@@ -131,15 +151,18 @@ button.vh-club-wall__open:focus-visible .vh-club-wall__name {
   }
   .vh-club-wall__open {
     grid-template-columns: 82px minmax(0, 1fr);
-    column-gap: 7px;
+    column-gap: 18px;
     padding: 20px 43px 20px 14px;
     min-height: 132px;
   }
   .vh-club-wall__row { min-height: 132px; }
   .vh-club-wall__name { font-size: clamp(31px, 9.6vw, 39px); }
   .vh-club-wall__crest,
-.vh-club-wall__crest > .vh-team-logo,
-  .vh-club-wall__crest > .vh-team-logo .team-mark { width: 82px; height: 82px; }
+  .vh-club-wall__crest > .vh-team-logo,
+  .vh-club-wall__crest > .vh-team-logo .team-mark {
+    width: 82px;
+    height: 82px;
+  }
   .vh-club-wall__star { right: 3px; }
 }
 @media (prefers-reduced-motion: reduce) {
