@@ -1,5 +1,5 @@
 .vh-team-profile {
-  --profile-red: #d63d36;
+  --profile-red: var(--accent, #fc0001);
   --profile-panel: #191113;
   --profile-border: #513238;
   --profile-ink: #ded4cb;
