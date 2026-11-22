@@ -77,7 +77,8 @@ test('team overview and roster reflect official feed values, not mock numbers', 
       teams: [
         { id: '100', name: 'Klub Testowy', logo: '', players: [
           { id: '14', full_name: 'Jan Testowy', number: 14, position: 'Libero',
-            height_cm: 186, weight_kg: 78, spike_reach_cm: 323 },
+            height_cm: 186, weight_kg: 78, spike_reach_cm: 323,
+            source_url: 'https://www.tauronliga.pl/players/id/14/tour/53.html' },
           { id: '4', full_name: 'Kacper Próba', number: 4, position: 'Przyjmujący' }
         ] },
         { id: '101', name: 'Rywal', players: [] },
@@ -108,11 +109,22 @@ test('team overview and roster reflect official feed values, not mock numbers', 
   await expect(profile.locator('.vh-team-snapshot__fixture').nth(1)).toContainText('Rywal');
   await expect(profile.locator('.vh-team-snapshot__fixture').nth(1)).toContainText('17:00');
   await expect(profile.locator('.vh-profile-player')).toHaveCount(2);
-  await expect(profile.locator('.vh-profile-player').first()).toContainText('Kacper Próba');
-  await expect(profile).toContainText('Atak 323 cm');
-  await expect(profile).toContainText('Waga 78 kg');
+  await expect(profile.locator('.vh-profile-position')).toHaveCount(2);
+  await expect(profile.locator('.vh-profile-position').first().getByRole('heading', { name: 'Przyjmujący' })).toBeVisible();
+  await expect(profile.locator('.vh-profile-position').last().getByRole('heading', { name: 'Libero' })).toBeVisible();
+  const jan = profile.locator('.vh-profile-player').filter({ hasText: 'Jan Testowy' });
+  await expect(jan.locator('.vh-profile-player__stat')).toHaveCount(3);
+  await expect(jan).toContainText('Zasięg ataku');
+  await expect(jan).toContainText('323');
+  await expect(jan).toContainText('Waga');
+  await expect(jan).toContainText('78');
+  await expect(jan).not.toContainText('Zasięg bloku');
+  await expect(jan.getByRole('link', { name: 'Otwórz oficjalny profil zawodnika: Jan Testowy' }))
+    .toHaveAttribute('href', 'https://www.tauronliga.pl/players/id/14/tour/53.html');
   // Players with no reported weight have no placeholder or invented value.
-  await expect(profile.locator('.vh-profile-player').first()).not.toContainText('Waga');
+  const kacper = profile.locator('.vh-profile-player').filter({ hasText: 'Kacper Próba' });
+  await expect(kacper).toContainText('Przyjmujący');
+  await expect(kacper).not.toContainText('Waga');
   // Only the concise previous/next fixture preview remains in the overview.
   await expect(profile.getByRole('heading', { name: 'Najbliższe mecze' })).toHaveCount(0);
   await expect(profile.getByRole('heading', { name: 'Ostatnie wyniki' })).toHaveCount(0);
