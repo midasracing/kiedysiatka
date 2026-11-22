@@ -1,9 +1,16 @@
 import { test, expect } from '@playwright/test';
 
+async function openLeagueThroughFavorites(page) {
+  await page.goto('/#favorites');
+  await page.getByRole('tab', { name: /Rozgrywki/ }).click();
+  await page.locator('.vh-picker-row').filter({ hasText: 'TAURON Liga Mężczyzn' }).click();
+  await page.locator('.vh-league-stack .vh-league-main').filter({ hasText: 'TAURON Liga Mężczyzn' }).click();
+  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
+}
+
 test('standings open full-screen with a top gradient and return to the league', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/#competitions');
-  await page.getByRole('button', { name: /01 TAURON Liga Mężczyzn/ }).click();
+  await openLeagueThroughFavorites(page);
   await page.getByRole('tab', { name: 'Tabela' }).click();
 
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa.*TAURON Liga Mężczyzn/ });
@@ -29,8 +36,7 @@ test('standings open full-screen with a top gradient and return to the league', 
 });
 
 test('Escape closes fullscreen standings and restores previous teams tab', async ({ page }) => {
-  await page.goto('/#competitions');
-  await page.getByRole('button', { name: /01 TAURON Liga Mężczyzn/ }).click();
+  await openLeagueThroughFavorites(page);
   await page.getByRole('tab', { name: 'Drużyny' }).click();
   await page.getByRole('tab', { name: 'Tabela' }).click();
   await expect(page.getByRole('dialog', { name: /Tabela ligowa/ })).toBeVisible();

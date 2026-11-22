@@ -1,22 +1,25 @@
 import { test, expect } from '@playwright/test';
 
-test('league detail has no red cover and lists scheduled games and results in one timeline', async ({ page }) => {
+test('league selector replaces categories and cards without opening league details', async ({ page }) => {
   const failures = [];
   page.on('pageerror', error => failures.push(error.message));
   await page.goto('/#competitions');
-  await page.getByRole('button', { name: /01 TAURON Liga Mężczyzn/ }).click();
-  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
-  await expect(page.locator('.vh-league-cover')).toHaveCount(0);
-  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
-  await expect(page.getByRole('tab', { name: 'Wyniki' })).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Pełny terminarz' })).toHaveCount(0);
-  await expect(page.getByRole('heading', { name: 'Najbliższe mecze' })).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Dodaj do ulubionych: TAURON Liga Mężczyzn' })).toBeEnabled();
-  await expect(page.locator('.vh-match-date-heading').first()).toBeVisible();
-  const dates = await page.locator('.vh-match-date-heading').evaluateAll(items => items.map(item => item.dataset.matchDate));
-  expect(dates).toEqual([...dates].sort().reverse());
-  await page.getByRole('button', { name: 'Wszystkie rozgrywki' }).click();
   await expect(page.getByRole('heading', { name: 'Rozgrywki' })).toBeVisible();
+  const picker = page.getByRole('listbox', { name: /Wybierz ligę/ });
+  await expect(picker).toBeVisible();
+  await expect(picker.locator('canvas')).toBeVisible();
+  await expect(picker.getByRole('option')).toHaveCount(6);
+  await expect(picker.getByRole('option', { name: 'TAURON Liga Mężczyzn' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tablist', { name: 'Region rozgrywek' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Dostępne ligi' })).toHaveCount(0);
+  await expect(page.locator('[data-route="competitions"] .vh-league-stack')).toHaveCount(0);
+  await picker.focus();
+  await page.keyboard.press('End');
+  await expect(picker.getByRole('option', { name: 'SV.League Men' })).toHaveAttribute('aria-selected', 'true');
+  await page.keyboard.press('Home');
+  await expect(picker.getByRole('option', { name: 'TAURON Liga Mężczyzn' })).toHaveAttribute('aria-selected', 'true');
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('tablist', { name: 'Widok rozgrywek' })).toHaveCount(0);
   expect(failures).toEqual([]);
 });
 
@@ -30,7 +33,7 @@ test('renders React navigation and shared match design', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Wszystkie ligi' })).toBeVisible();
   await nav.getByRole('button', { name: 'Rozgrywki' }).click();
   await expect(page.getByRole('heading', { name: 'Rozgrywki' })).toBeVisible();
-  await expect(page.locator('.vh-tab-panel:not([hidden])').getByText('TAURON Liga Mężczyzn').first()).toBeVisible();
+  await expect(page.locator('.vh-tab-panel:not([hidden])').getByRole('listbox', { name: /Wybierz ligę/ })).toBeVisible();
 });
 
 test('home starts with match list, without the marked intro and hero banner', async ({ page }) => {
@@ -50,10 +53,10 @@ test('home starts with match list, without the marked intro and hero banner', as
 });
 
 test('favorites persist after reload', async ({ page }) => {
-  await page.goto('/#competitions');
-  await page.getByRole('button', { name: 'Dodaj do ulubionych: TAURON Liga Mężczyzn' }).click();
+  await page.goto('/#favorites');
+  await page.getByRole('tab', { name: /Rozgrywki/ }).click();
+  await page.locator('.vh-picker-row').filter({ hasText: 'TAURON Liga Mężczyzn' }).click();
   await page.reload();
-  await page.getByRole('navigation', { name: 'Główna nawigacja' }).getByRole('button', { name: 'Ulubione' }).click();
   await page.getByRole('tab', { name: /Rozgrywki/ }).click();
   await expect(page.locator('.vh-tab-panel:not([hidden]) .vh-league-stack').getByText('TAURON Liga Mężczyzn')).toBeVisible();
 });
@@ -329,9 +332,10 @@ test('mobile navigation, date strip and saved favorites survive the cleanup', as
   await nav.getByRole('button', { name: 'Kalendarz' }).click();
   await expect(page.getByRole('tablist', { name: 'Wybierz dzień' })).toBeVisible();
   await nav.getByRole('button', { name: 'Rozgrywki' }).click();
-  await page.getByRole('button', { name: 'Dodaj do ulubionych: TAURON Liga Mężczyzn' }).click();
+  await expect(page.getByRole('listbox', { name: /Wybierz ligę/ })).toBeVisible();
   await nav.getByRole('button', { name: 'Ulubione' }).click();
   await page.getByRole('tab', { name: /Rozgrywki/ }).click();
+  await page.locator('.vh-picker-row').filter({ hasText: 'TAURON Liga Mężczyzn' }).click();
   await expect(page.locator('.vh-tab-panel:not([hidden])').getByText('TAURON Liga Mężczyzn').first()).toBeVisible();
 });
 
