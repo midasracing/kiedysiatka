@@ -159,7 +159,12 @@
   font: 600 11px/1.35 var(--font-ui);
   text-align: right;
 }
-.vh-team-snapshot { margin: 20px 0 32px; }
+.vh-team-snapshot {
+  /* Keep the same full-bleed bounds as the club identity rectangle. */
+  width: calc(100% + 40px);
+  max-width: none;
+  margin: 20px -20px 32px;
+}
 .vh-team-snapshot__metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -179,24 +184,24 @@
   justify-content: center;
   gap: 10px;
   min-width: 0;
-  min-height: 90px;
-  padding: 14px 10px;
+  min-height: 72px;
+  padding: 11px 10px;
 }
 .vh-team-snapshot__metric > span {
   color: var(--profile-muted);
-  font: 900 clamp(17px, 4.3vw, 21px)/1 var(--profile-display);
+  font: 900 clamp(14px, 3.8vw, 17px)/1 var(--profile-display);
   text-transform: uppercase;
   letter-spacing: .005em;
 }
 .vh-team-snapshot__metric > strong {
   color: var(--profile-ink);
-  font: 900 clamp(44px, 11vw, 58px)/.9 var(--profile-display);
+  font: 900 clamp(32px, 8.5vw, 42px)/.95 var(--profile-display);
   font-variant-numeric: tabular-nums;
   letter-spacing: -.02em;
 }
 .vh-team-snapshot__fixtures {
   margin-top: 10px;
-  padding: 18px 17px;
+  padding: 16px 18px;
 }
 .vh-team-snapshot__fixture-heading {
   display: flex;
@@ -207,7 +212,7 @@
 }
 .vh-team-snapshot__fixture-heading > span {
   color: var(--profile-muted);
-  font: 900 19px/1 var(--profile-display);
+  font: 900 16px/1 var(--profile-display);
   text-transform: uppercase;
   letter-spacing: .005em;
 }
@@ -244,7 +249,7 @@
 .vh-team-snapshot__opponent strong {
   min-width: 0;
   color: var(--profile-ink);
-  font: 900 clamp(16px, 5vw, 22px)/1 var(--profile-display);
+  font: 900 clamp(14px, 4.2vw, 18px)/1.05 var(--profile-display);
   letter-spacing: -.005em;
   text-transform: uppercase;
   overflow-wrap: anywhere;
@@ -254,14 +259,14 @@
   flex: 0 0 auto;
   align-items: center;
   gap: 4px;
-  font: 900 23px/1 var(--profile-display);
+  font: 900 18px/1 var(--profile-display);
   font-variant-numeric: tabular-nums;
 }
 .vh-team-snapshot__set {
   display: grid;
   place-items: center;
-  width: 26px;
-  height: 31px;
+  width: 24px;
+  height: 27px;
   border: 1px solid #593038;
   border-radius: 7px;
   color: var(--profile-ink);
@@ -271,19 +276,19 @@
 .vh-team-snapshot__outcome {
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 31px;
+  width: 25px;
+  height: 27px;
   margin-left: 2px;
   border-radius: 7px;
   color: #fff;
-  font: 900 21px/1 var(--profile-display);
+  font: 900 18px/1 var(--profile-display);
 }
-.vh-team-snapshot__outcome.is-win { background: var(--profile-red); }
+.vh-team-snapshot__outcome.is-win { background: #379b50; }
 .vh-team-snapshot__outcome.is-loss { background: #71343c; }
 .vh-team-snapshot__kickoff {
   flex: 0 0 auto;
   color: var(--profile-ink);
-  font: 900 24px/1 var(--profile-display);
+  font: 900 19px/1 var(--profile-display);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -304,18 +309,18 @@
 }
 @media(max-width:390px) {
   .vh-team-snapshot__metrics { gap: 8px; }
-  .vh-team-snapshot__metric { gap: 7px; padding: 12px 7px; }
-  .vh-team-snapshot__fixtures { padding: 16px 13px; }
+  .vh-team-snapshot__metric { gap: 7px; padding: 10px 7px; }
+  .vh-team-snapshot__fixtures { padding: 15px 17px; }
   .vh-team-snapshot__opponent { gap: 7px; }
   .vh-team-snapshot__opponent .vh-team-logo,
   .vh-team-snapshot__opponent .vh-team-logo .team-mark {
     width: 28px; height: 28px; flex-basis: 28px;
   }
-  .vh-team-snapshot__opponent strong { font-size: clamp(15px, 4.8vw, 19px); }
-  .vh-team-snapshot__set { width: 23px; height: 28px; }
-  .vh-team-snapshot__outcome { width: 24px; height: 28px; }
-  .vh-team-snapshot__result { gap: 3px; font-size: 19px; }
-  .vh-team-snapshot__kickoff { font-size: 20px; }
+  .vh-team-snapshot__opponent strong { font-size: clamp(13px, 3.9vw, 16px); }
+  .vh-team-snapshot__set { width: 22px; height: 26px; }
+  .vh-team-snapshot__outcome { width: 23px; height: 26px; }
+  .vh-team-snapshot__result { gap: 3px; font-size: 17px; }
+  .vh-team-snapshot__kickoff { font-size: 18px; }
 }
 .vh-team-profile .vh-match-groups { margin: 0; }
 .vh-team-profile .vh-match-groups > section { margin: 0; }
