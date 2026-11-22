@@ -7,7 +7,7 @@
   --club-stamp: clamp(88px, 23vw, 108px);
   --club-ink: #e8e0d7;
   --club-rule: #533036;
-  --club-accent: #e63b34;
+  --club-accent: var(--accent, #fc0001);
   position: relative;
   width: calc(100% + 40px);
   margin: 14px -20px 0;
