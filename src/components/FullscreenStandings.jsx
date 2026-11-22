@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ChevronLeft } from 'lucide-react';
 import Standings from './Standings.jsx';
 import './FullscreenStandings.css';
 
@@ -16,7 +15,7 @@ export default function FullscreenStandings({
   leagueName, rows, logos, groups = [], selectedGroup, onSelectGroup, onBack,
   origin, returnTab = 'matches',
 }) {
-  const backRef = useRef(null);
+  const tableTabRef = useRef(null);
   const exitTimer = useRef(null);
   const exiting = useRef(false);
   const reducedMotion = useRef(
@@ -91,7 +90,8 @@ export default function FullscreenStandings({
     body.style.width = '100%';
     body.style.overflow = 'hidden';
     if (root) root.inert = true;
-    backRef.current?.focus({ preventScroll: true });
+    // Keep keyboard focus inside the modal even without a back button.
+    tableTabRef.current?.focus({ preventScroll: true });
 
     const handleKey = event => {
       if (event.key === 'Escape') {
@@ -131,7 +131,7 @@ export default function FullscreenStandings({
         '--vh-title-width': `${sourceTitle?.width ?? Math.max(1, window.innerWidth - 40)}px`,
         '--vh-title-height': `${sourceTitle?.height ?? 48}px`,
         '--vh-sheet-origin-offset': sourceMenu
-          ? `calc(${sourceMenu.top}px - env(safe-area-inset-top, 0px) - 82px)`
+          ? `calc(${sourceMenu.top}px - env(safe-area-inset-top, 0px) - 12px)`
           : '100dvh',
         '--vh-menu-left': `${sourceMenu?.left ?? 20}px`,
         '--vh-menu-width': `${sourceMenu?.width ?? Math.max(1, window.innerWidth - 40)}px`,
@@ -152,23 +152,16 @@ export default function FullscreenStandings({
           ['table', 'Tabela'],
           ['teams', 'Drużyny'],
         ].map(([id, label]) => <button key={id} type="button"
+          ref={id === 'table' ? tableTabRef : undefined}
           role="tab"
           className={((phase === 'exit' ? exitDestination : 'table') === id) ? 'is-selected' : ''}
           aria-selected={(phase === 'exit' ? exitDestination : 'table') === id}
-          disabled={phase === 'exit' || phase === 'prepare'}
-          onClick={() => { if (id !== 'table') exitTable(id); }}>
+          disabled={phase === 'exit'}
+          onClick={() => { if (phase === 'active' && id !== 'table') exitTable(id); }}>
           {label}
         </button>)}
       </div>
       <header className="vh-standings-fullscreen__header">
-        <div className="vh-standings-fullscreen__topline">
-          <button ref={backRef} className="vh-standings-fullscreen__back"
-            type="button" onClick={() => exitTable()} disabled={phase === 'exit'}>
-            <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
-            <span>Wstecz</span>
-          </button>
-        </div>
-        <div className="vh-standings-fullscreen__identity-spacer" aria-hidden="true" />
         {groups.length > 0 && <div className="vh-standings-fullscreen__groups"
           role="group" aria-label="Wybierz grupę ligi">
           {groups.map(item =>
