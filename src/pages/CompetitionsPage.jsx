@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { ChevronLeft, ChevronRight, Star, WifiOff } from 'lucide-react';
 import { LEAGUES, dateKey } from '../data.js';
 import { leagueTimeline } from '../leagueTimeline.js';
@@ -20,6 +21,9 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const [tableGroup, setTableGroup] = useState(null);
   const [tableOrigin, setTableOrigin] = useState(null);
   const [selectedTeamName, setSelectedTeamName] = useState(null);
+  const [returningTeamName, setReturningTeamName] = useState(null);
+  const lastOpenedTeamName = useRef(null);
+  const teamTransitionBusy = useRef(false);
   const teamListScroll = useRef(0);
   const restoreTeamScroll = useRef(false);
   const [visibleCount, setVisibleCount] = useState(30);
@@ -78,14 +82,61 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const supportsTeamProfiles = league?.id === 'men' || league?.id === 'first';
   const selectedTeam = supportsTeamProfiles && selectedTeamName
     ? data?.teams?.find(team => sameName(team.name, selectedTeamName)) : null;
-  const openTeamProfile = useCallback(team => {
-    if (!team?.name) return;
+  // Only transform the selected crest/name during navigation. The remaining
+  // club rows use native scrolling, with no per-scroll React work or canvas.
+  const canMorphTeam = () => typeof document.startViewTransition === 'function'
+    && !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+  const openTeamProfile = useCallback((team, source) => {
+    if (!team?.name || teamTransitionBusy.current) return;
     teamListScroll.current = window.scrollY;
     restoreTeamScroll.current = false;
+    lastOpenedTeamName.current = team.name;
+    const label = source?.querySelector('.vh-club-wall__name');
+    const logo = source?.querySelector('.vh-team-logo');
+    if (canMorphTeam() && label && logo) {
+      teamTransitionBusy.current = true;
+      label.style.viewTransitionName = 'vh-club-name';
+      logo.style.viewTransitionName = 'vh-club-logo';
+      try {
+        const transition = document.startViewTransition(() => {
+          flushSync(() => setSelectedTeamName(team.name));
+        });
+        transition.finished.catch(() => {}).finally(() => {
+          teamTransitionBusy.current = false;
+        });
+      } catch {
+        teamTransitionBusy.current = false;
+        setSelectedTeamName(team.name);
+      }
+      return;
+    }
     setSelectedTeamName(team.name);
   }, []);
+
   const closeTeamProfile = useCallback(() => {
+    if (teamTransitionBusy.current) return;
     restoreTeamScroll.current = true;
+    if (canMorphTeam() && lastOpenedTeamName.current) {
+      teamTransitionBusy.current = true;
+      try {
+        const transition = document.startViewTransition(() => {
+          flushSync(() => {
+            setReturningTeamName(lastOpenedTeamName.current);
+            setSelectedTeamName(null);
+          });
+        });
+        transition.finished.catch(() => {}).finally(() => {
+          teamTransitionBusy.current = false;
+          setReturningTeamName(null);
+        });
+      } catch {
+        teamTransitionBusy.current = false;
+        setReturningTeamName(null);
+        setSelectedTeamName(null);
+      }
+      return;
+    }
     setSelectedTeamName(null);
   }, []);
   useLayoutEffect(() => {
@@ -271,12 +322,14 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           </button>}
         </>}
         {underlayView === 'teams' && <TeamsGrid
+          variant="wall"
+          morphTeam={returningTeamName}
           teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams}
           logos={logos} favorites={favorites} toggleFavorite={toggleFavorite}
           onOpenTeam={supportsTeamProfiles ? openTeamProfile : undefined}
         />}
       </>}
-      {data?.updated_at && <p className="vh-source-note">Aktualizacja źródła: {new Date(data.updated_at).toLocaleString('pl-PL')}</p>}
+      {data?.updated_at && underlayView !== 'teams' && <p className="vh-source-note">Aktualizacja źródła: {new Date(data.updated_at).toLocaleString('pl-PL')}</p>}
       {view === 'table' && (league.id === 'second' ? groupChoices : [data]).some(item => Object.keys(item?.source_table_discrepancies || {}).length > 0) && <p className="vh-source-note" role="status">Wyniki i tabela VolleyStation są publikowane osobno. Pokazujemy tabelę dokładnie według źródła.</p>}
     </section> : <section className="vh-competitions-screen">
       <header className="vh-competitions-topfade">
