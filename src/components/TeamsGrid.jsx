@@ -6,7 +6,7 @@ import { EmptyState } from './UiPrimitives.jsx';
 import './TeamsGrid.css';
 
 export default function TeamsGrid({
-  teams = [], logos, favorites, toggleFavorite, onOpenTeam, variant = 'tiles',
+  teams = [], logos, favorites, toggleFavorite, onOpenTeam, variant = 'tiles', morphTeam = null,
 }) {
   if (!teams.length) return <EmptyState title="Brak listy drużyn"
     message="Lista zespołów nie jest jeszcze dostępna w oficjalnym źródle." />;
@@ -18,9 +18,14 @@ export default function TeamsGrid({
       {teams.map((team, index) => {
         const favorite = favorites.teams.some(name => sameName(name, team.name));
         const logo = team.logo || logos.get(normalizeName(team.name));
+        const returnTarget = morphTeam && sameName(team.name, morphTeam);
         const identity = <>
-          <strong className="vh-club-wall__name">{team.name}</strong>
-          <TeamLogo name={team.name} logo={logo} className="vh-club-wall__logo" />
+          <strong className="vh-club-wall__name"
+            style={returnTarget ? { viewTransitionName: 'vh-club-name' } : undefined}>{team.name}</strong>
+          <span className="vh-club-wall__crest"
+            style={returnTarget ? { viewTransitionName: 'vh-club-logo' } : undefined}>
+            <TeamLogo name={team.name} logo={logo} className="vh-club-wall__logo" />
+          </span>
         </>;
         return <article key={team.id || team.name + index}
           className={'vh-club-wall__row' + (onOpenTeam ? ' is-openable' : '')}>
