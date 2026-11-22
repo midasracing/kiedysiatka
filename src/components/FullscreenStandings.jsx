@@ -137,28 +137,30 @@ export default function FullscreenStandings({
     };
   }, [exitTable]);
 
-  const originX = Number.isFinite(origin?.x) ? origin.x : window.innerWidth / 2;
-  const originY = Number.isFinite(origin?.y) ? origin.y : window.innerHeight / 2;
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  // The final circle ends precisely beyond the furthest viewport corner;
-  // 160vmax made the old version visually complete far too early.
-  const radius = Math.max(
-    Math.hypot(originX, originY), Math.hypot(vw - originX, originY),
-    Math.hypot(originX, vh - originY), Math.hypot(vw - originX, vh - originY),
-  ) + 12;
-  const pillWidth = Number.isFinite(origin?.width) ? Math.max(80, origin.width) : 112;
-  const pillHeight = Number.isFinite(origin?.height) ? Math.max(40, origin.height) : 43;
+  const pillWidth = Number.isFinite(origin?.width) ? Math.max(1, origin.width) : 112;
+  const pillHeight = Number.isFinite(origin?.height) ? Math.max(1, origin.height) : 43;
   const sourceLeft = Number.isFinite(origin?.left) ? origin.left : (vw - pillWidth) / 2;
-  const sourceTop = Number.isFinite(origin?.top) ? origin.top : vh / 2;
+  const sourceTop = Number.isFinite(origin?.top) ? origin.top : (vh - pillHeight) / 2;
+  // The black reveal is clipped to the REAL Tabela tab at frame zero.
+  // Animate the four edges out to the viewport, retaining the selected
+  // button's rounded corners until they naturally flatten at full screen.
+  // No extra backdrop layer, no scaling of the distorted standings Canvas.
+  const sourceRight = Math.max(0, vw - sourceLeft - pillWidth);
+  const sourceBottom = Math.max(0, vh - sourceTop - pillHeight);
+  const pillRadius = Number.isFinite(origin?.radius)
+    ? Math.max(0, Math.min(origin.radius, pillHeight / 2, pillWidth / 2)) : 13;
 
   return createPortal(
     <section ref={portalRef} className="vh-standings-fullscreen" role="dialog" aria-modal="true"
       data-liquid-phase={phase}
       style={{
-        '--vh-liquid-x': `${originX}px`,
-        '--vh-liquid-y': `${originY}px`,
-        '--vh-liquid-radius': `${radius}px`,
+        '--vh-liquid-top': `${Math.max(0, sourceTop)}px`,
+        '--vh-liquid-right': `${sourceRight}px`,
+        '--vh-liquid-bottom': `${sourceBottom}px`,
+        '--vh-liquid-left': `${Math.max(0, sourceLeft)}px`,
+        '--vh-liquid-corner-radius': `${pillRadius}px`,
         '--vh-pill-width': `${pillWidth}px`,
         '--vh-pill-height': `${pillHeight}px`,
         '--vh-pill-left': `${sourceLeft}px`,

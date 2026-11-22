@@ -185,10 +185,9 @@
   }
 }
 
-/* LIQUID DIVE 3 — the whole finished standings view, including its
-   BLACK background, title, header and warped Canvas, lies inside ONE growing
-   circular portal. Nothing waits for a second delayed reveal, and the table's
-   geometry is never scaled or transformed. */
+/* The black standings view grows from the ACTUAL Tabela pill geometry.
+   Animate one rounded rectangular clipping surface (not a zero-radius circle);
+   the table, gradient and heading stay full-sized inside it. */
 .vh-standings-fullscreen[data-liquid-phase="enter"],
 .vh-standings-fullscreen[data-liquid-phase="exit"] {
   background: transparent;
@@ -208,10 +207,14 @@
 }
 @keyframes vh-liquid-open {
   from {
-    clip-path: circle(0px at var(--vh-liquid-x) var(--vh-liquid-y));
+    clip-path: inset(
+      var(--vh-liquid-top) var(--vh-liquid-right)
+      var(--vh-liquid-bottom) var(--vh-liquid-left)
+      round var(--vh-liquid-corner-radius)
+    );
   }
   to {
-    clip-path: circle(var(--vh-liquid-radius) at var(--vh-liquid-x) var(--vh-liquid-y));
+    clip-path: inset(0px 0px 0px 0px round 0px);
   }
 }
 

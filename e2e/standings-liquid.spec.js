@@ -21,15 +21,29 @@ test('Liquid Dive opens from the actual Tabela tab without stretching standings'
 
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toBeVisible();
-  const coords = await dialog.evaluate(node => {
+  const rectangle = await dialog.evaluate(node => {
     const css = getComputedStyle(node);
+    const read = key => Number.parseFloat(css.getPropertyValue(key));
+    const surface = node.querySelector('.vh-standings-fullscreen__surface');
+    const keyframes = surface.getAnimations().flatMap(animation => animation.effect?.getKeyframes?.() || []);
     return {
-      x: Number.parseFloat(css.getPropertyValue('--vh-liquid-x')),
-      y: Number.parseFloat(css.getPropertyValue('--vh-liquid-y')),
+      left: read('--vh-liquid-left'),
+      top: read('--vh-liquid-top'),
+      right: read('--vh-liquid-right'),
+      bottom: read('--vh-liquid-bottom'),
+      radius: read('--vh-liquid-corner-radius'),
+      width: innerWidth,
+      height: innerHeight,
+      keyframes: keyframes.map(frame => frame.clipPath).filter(Boolean),
     };
   });
-  expect(coords.x).toBeCloseTo(origin.x + origin.width / 2, 0);
-  expect(coords.y).toBeCloseTo(origin.y + origin.height / 2, 0);
+  expect(rectangle.left).toBeCloseTo(origin.x, 0);
+  expect(rectangle.top).toBeCloseTo(origin.y, 0);
+  expect(rectangle.right).toBeCloseTo(rectangle.width - origin.x - origin.width, 0);
+  expect(rectangle.bottom).toBeCloseTo(rectangle.height - origin.y - origin.height, 0);
+  expect(rectangle.radius).toBeGreaterThan(0);
+  expect(rectangle.keyframes.some(value => value.includes('inset('))).toBe(true);
+  expect(rectangle.keyframes.some(value => value.includes('circle('))).toBe(false);
 
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
   await expect(dialog.locator('.vh-standings-fullscreen__liquid')).toHaveCount(0);
@@ -106,22 +120,23 @@ test('one slow black portal reveals the table and the same selected Tabela pill 
       inkLayers: root.querySelectorAll('.vh-standings-fullscreen__liquid').length,
       tableInsidePortal: surface.contains(root.querySelector('.vh-standings-warp')),
       headingInsidePortal: surface.contains(root.querySelector('.vh-standings-fullscreen__identity h2')),
-      circleKeyframes: Array.from(document.styleSheets).some(sheet => {
+      pillKeyframes: Array.from(document.styleSheets).some(sheet => {
         try {
           return Array.from(sheet.cssRules).some(rule =>
-            rule.name === 'vh-liquid-open' && rule.cssText.includes('circle('));
+            rule.name === 'vh-liquid-open' && rule.cssText.includes('inset(') &&
+              !rule.cssText.includes('circle('));
         } catch { return false; }
       }),
       hasFlight: !!flying,
-      radius: parseFloat(getComputedStyle(root).getPropertyValue('--vh-liquid-radius')),
+      cornerRadius: parseFloat(getComputedStyle(root).getPropertyValue('--vh-liquid-corner-radius')),
     };
   });
   expect(scene.background).toBe('rgb(0, 0, 0)');
   expect(scene.inkLayers).toBe(0);
   expect(scene.tableInsidePortal).toBe(true);
   expect(scene.headingInsidePortal).toBe(true);
-  expect(scene.circleKeyframes).toBe(true);
-  expect(scene.radius).toBeGreaterThan(400);
+  expect(scene.pillKeyframes).toBe(true);
+  expect(scene.cornerRadius).toBeGreaterThan(0);
 
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
   // The original selected pill has really been lifted out: no empty white

@@ -81,6 +81,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       top: rect.top,
       width: rect.width,
       height: rect.height,
+      radius: Math.min(rect.height / 2, Number.parseFloat(getComputedStyle(event.currentTarget).borderTopLeftRadius) || 13),
       x: rect.left + rect.width / 2,
       y: rect.top + rect.height / 2,
     });
