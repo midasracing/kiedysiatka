@@ -56,12 +56,20 @@
   min-height: 57px;
 }
 
-.vh-standings-fullscreen__section-title {
+.vh-standings-fullscreen__section-title-wrap {
+  display: block;
   flex: 0 0 auto;
+  overflow: hidden;
+  padding: 4px 0 6px;
+  margin: -4px 0 -6px;
+}
+.vh-standings-fullscreen__section-title {
+  display: block;
   color: #fc0001;
-  font: 600 clamp(36px, 10vw, 52px)/1.05 var(--font-editorial, 'Playfair Display', Georgia, serif);
+  /* Exactly the DM Sans face/weight used by the league's Tabela tab. */
+  font: 750 clamp(36px, 10vw, 52px)/1.05 var(--font-ui, 'DM Sans', sans-serif);
   text-transform: none;
-  letter-spacing: -.012em;
+  letter-spacing: -.025em;
   white-space: nowrap;
 }
 
@@ -161,5 +169,119 @@
   .vh-standings-fullscreen { overflow-y: auto; }
   .vh-standings-fullscreen .vh-table-scroll {
     margin: calc(env(safe-area-inset-top, 0px) + 205px) 16px 24px;
+  }
+}
+
+/* LIQUID DIVE — animation lives on a flat cover, never the standings Canvas.
+   The Tabela tab sinks at the source; a separate large label rises at top-right.
+   No FLIP transform, image stretch or geometry feedback. */
+.vh-standings-fullscreen[data-liquid-phase="enter"],
+.vh-standings-fullscreen[data-liquid-phase="exit"] {
+  background: transparent;
+}
+.vh-standings-fullscreen__liquid,
+.vh-standings-fullscreen__surface {
+  position: absolute;
+  inset: 0;
+}
+.vh-standings-fullscreen__liquid {
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle 300px at var(--vh-liquid-x) var(--vh-liquid-y),
+    #34030a 0%, #140105 36%, #000 82%);
+  will-change: clip-path;
+}
+.vh-standings-fullscreen__surface {
+  z-index: 1;
+  background: #000;
+}
+
+/* A black ink portal blooms from the REAL tab position and subsequently
+   reveals the untouched full-screen table. The opening layer is cheap to
+   rasterize, unlike a clipped full-resolution Canvas. */
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__liquid {
+  animation: vh-liquid-bloom 620ms cubic-bezier(.2,.72,.2,1) both;
+}
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__liquid {
+  animation: vh-liquid-recede 500ms cubic-bezier(.5,0,.65,.38) both;
+}
+@keyframes vh-liquid-bloom {
+  0%   { clip-path: circle(0px at var(--vh-liquid-x) var(--vh-liquid-y)); }
+  18%  { clip-path: circle(30px at var(--vh-liquid-x) var(--vh-liquid-y)); }
+  45%  { clip-path: circle(190px at var(--vh-liquid-x) var(--vh-liquid-y)); }
+  68%, 100% { clip-path: circle(150vmax at var(--vh-liquid-x) var(--vh-liquid-y)); }
+}
+@keyframes vh-liquid-recede {
+  0%, 32% { clip-path: circle(150vmax at var(--vh-liquid-x) var(--vh-liquid-y)); }
+  71% { clip-path: circle(175px at var(--vh-liquid-x) var(--vh-liquid-y)); }
+  100% { clip-path: circle(0px at var(--vh-liquid-x) var(--vh-liquid-y)); }
+}
+
+/* The table is never transformed or masked. It only fades on once the flat
+   liquid cover has reached every edge of the screen. */
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface {
+  animation: vh-liquid-content-enter 620ms linear both;
+}
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__surface {
+  animation: vh-liquid-content-exit 500ms linear both;
+}
+@keyframes vh-liquid-content-enter {
+  0%, 68% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes vh-liquid-content-exit {
+  0%, 10% { opacity: 1; }
+  32%, 100% { opacity: 0; }
+}
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__section-title {
+  animation: vh-liquid-title-emerge 620ms cubic-bezier(.2,.75,.25,1) both;
+}
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__section-title {
+  animation: vh-liquid-title-dive 500ms ease-in both;
+}
+@keyframes vh-liquid-title-emerge {
+  0%, 62% { opacity: 0; transform: translate3d(0, 110%, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes vh-liquid-title-dive {
+  0% { opacity: 1; transform: translate3d(0, 0, 0); }
+  30%, 100% { opacity: 0; transform: translate3d(0, 110%, 0); }
+}
+
+/* The source text disappears into the tab, not across the viewport. */
+.vh-competition-detail .vh-league-view-tabs .vh-segmented .vh-table-tab__label {
+  display: inline-block;
+  margin: 0;
+  font: inherit;
+  line-height: inherit;
+  opacity: 1;
+}
+.vh-competition-detail .vh-league-view-tabs .vh-segmented .vh-table-tab {
+  overflow: hidden;
+}
+.vh-competition-detail.is-liquid-table-open .vh-table-tab__label {
+  animation: vh-liquid-tab-dive 185ms cubic-bezier(.5,0,.85,.5) both;
+}
+.vh-competition-detail.is-liquid-table-open.is-liquid-table-returning .vh-table-tab__label {
+  animation: vh-liquid-tab-emerge 500ms ease-out both;
+}
+@keyframes vh-liquid-tab-dive {
+  0% { opacity: 1; transform: translate3d(0,0,0); }
+  100% { opacity: 0; transform: translate3d(0, 17px, 0); }
+}
+@keyframes vh-liquid-tab-emerge {
+  0%, 76% { opacity: 0; transform: translate3d(0, 17px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vh-competition-detail.is-liquid-table-open .vh-table-tab__label {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .vh-standings-fullscreen__surface,
+  .vh-standings-fullscreen__section-title {
+    animation: none !important;
   }
 }

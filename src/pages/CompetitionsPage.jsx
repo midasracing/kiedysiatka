@@ -16,6 +16,8 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const [group, setGroup] = useState('all');
   const [roundOverride, setRoundOverride] = useState(null);
   const [tableGroup, setTableGroup] = useState(null);
+  const [tableOrigin, setTableOrigin] = useState(null);
+  const [tableReturning, setTableReturning] = useState(false);
   const [visibleCount, setVisibleCount] = useState(30);
   const previousView = useRef('matches');
   const [pickerIndex, setPickerIndex] = useState(2);
@@ -69,14 +71,31 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const data = league ? feeds[league.id] : null;
   const grouped = league?.id === 'second' ? (data?.groups || []) : [];
   const groupChoices = group === 'all' ? grouped : grouped.filter(item => item.name === group);
-  const openTable = () => {
-    previousView.current = view === 'table' ? 'matches' : view;
+  const openTable = event => {
+    if (view === 'table') return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    // Capture the ACTUAL tab position before the portal locks document scroll.
+    // No DOM measurement or interpolation of the large standings Canvas.
+    setTableOrigin({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    });
+    setTableReturning(false);
+    previousView.current = view;
     setTableGroup(group === 'all' ? (grouped[0]?.name ?? null) : group);
     setView('table');
   };
-  const closeTable = useCallback(() => setView(previousView.current), []);
+  const startTableReturn = useCallback(() => setTableReturning(true), []);
+  const closeTable = useCallback(() => {
+    setView(previousView.current);
+    setTableReturning(false);
+    setTableOrigin(null);
+  }, []);
   const currentTableGroup = grouped.find(item => item.name === tableGroup) || grouped[0];
   const tableRows = league?.id === 'second' ? (currentTableGroup?.table || []) : (data?.table || []);
+  // Keep the outgoing screen alive behind the portal. The liquid cover opens
+  // directly from its "Tabela" tab and reverses without rebuilding the cards.
+  const underlayView = view === 'table' ? previousView.current : view;
   // Match and result cards share one reverse-chronological timeline.
   const timeline = useMemo(() => leagueTimeline(matches, league?.id, group), [matches, league?.id, group]);
   const { rounds, reliable: roundsReliable } = useMemo(() => leagueRounds(timeline), [timeline]);
@@ -126,8 +145,10 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       selectedGroup={currentTableGroup?.name || null}
       onSelectGroup={setTableGroup}
       onBack={closeTable}
+      onExitStart={startTableReturn}
+      origin={tableOrigin}
     />}
-    {league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '')}>
+    {league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '') + (view === 'table' ? ' is-liquid-table-open' : '') + (tableReturning ? ' is-liquid-table-returning' : '')}>
       <div className="vh-competition-toolbar">
         <button className="vh-back" type="button" onClick={returnToPicker}>
           <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
@@ -154,8 +175,10 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
             ['table', 'Tabela'],
             ['teams', 'Drużyny'],
           ].map(([id, label]) => <button key={id} role="tab" aria-selected={view === id}
-            className={view === id ? 'selected' : ''}
-            onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}
+            className={(view === id ? 'selected' : '') + (id === 'table' ? ' vh-table-tab' : '')}
+            onClick={event => id === 'table' ? openTable(event) : setView(id)}>{id === 'table'
+              ? <span className="vh-table-tab__label">{label}</span>
+              : label}</button>)}
         </div>
       </div>
       {grouped.length > 0 && <div className="vh-controls">
@@ -165,7 +188,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           className={'vh-filter-chip ' + (group === item.name ? 'chosen' : '')}
           onClick={() => { setGroup(item.name); setRoundOverride(null); }}>{item.name}</button>)}
       </div>}
-      {view === 'matches' && timeline.length > 0 && (
+      {underlayView === 'matches' && timeline.length > 0 && (
         <div className="vh-round-selector" role="group" aria-label="Nawigacja po kolejkach">
           <h2 className="vh-round-selector__heading">
             {roundsReliable ? <>Kolejka <span key={selectedRoundNumber} className="vh-round-selector__number">{selectedRoundNumber}</span></> : 'Terminarz'}
@@ -180,19 +203,19 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           </div>
         </div>
       )}
-      {view === 'matches' && timeline.length > 0 && !roundsReliable && (
+      {underlayView === 'matches' && timeline.length > 0 && !roundsReliable && (
         <p className="vh-round-selector__note">Źródło nie udostępnia wiarygodnych numerów kolejek dla tej ligi.</p>
       )}
       <FeedWarning errors={league && errors[league.id] ? { [league.id]: errors[league.id] } : {}} refresh={refresh} />
       {!data && loading ? <LoadingCards /> : !data ? <EmptyState icon={WifiOff} title="Nie udało się pobrać ligi" message="Sprawdź połączenie i spróbuj ponownie." action="Odśwież dane" onAction={refresh} /> : <>
-        {view === 'matches' && <>
+        {underlayView === 'matches' && <>
           <MatchGroups matches={pageMatches} logos={logos} showDates showLeagueHeading={false} emptyMessage="Brak spotkań w pobranych danych tej ligi." />
           {!roundsReliable && timeline.length > visibleCount && <button type="button" className="vh-match-more"
             onClick={() => setVisibleCount(count => count + 30)}>
             Pokaż starsze mecze <span>{Math.min(30, timeline.length - visibleCount)} z {timeline.length - visibleCount}</span>
           </button>}
         </>}
-        {view === 'teams' && <TeamsGrid teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} />}
+        {underlayView === 'teams' && <TeamsGrid teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} />}
       </>}
       {data?.updated_at && <p className="vh-source-note">Aktualizacja źródła: {new Date(data.updated_at).toLocaleString('pl-PL')}</p>}
       {view === 'table' && (league.id === 'second' ? groupChoices : [data]).some(item => Object.keys(item?.source_table_discrepancies || {}).length > 0) && <p className="vh-source-note" role="status">Wyniki i tabela VolleyStation są publikowane osobno. Pokazujemy tabelę dokładnie według źródła.</p>}
