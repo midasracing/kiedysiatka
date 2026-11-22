@@ -183,8 +183,10 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     setTableGroup(group === 'all' ? (grouped[0]?.name ?? null) : group);
     setView('table');
   };
-  const closeTable = useCallback(() => {
-    setView(previousView.current);
+  const closeTable = useCallback(destination => {
+    setView(destination === 'matches' || destination === 'teams'
+      ? destination
+      : previousView.current);
     setTableOrigin(null);
   }, []);
   const currentTableGroup = grouped.find(item => item.name === tableGroup) || grouped[0];
