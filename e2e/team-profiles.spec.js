@@ -31,7 +31,7 @@ for (const [leagueName, secondOption] of [
     const teamName = (await tile.locator('.vh-club-wall__name').textContent()).trim();
     const name = tile.locator('.vh-club-wall__name');
     const crest = tile.locator('.vh-club-wall__crest');
-    await expect(name).toHaveCSS('color', 'rgb(240, 234, 229)');
+    await expect(name).toHaveCSS('color', 'rgb(245, 242, 237)');
     await expect(crest).toBeVisible();
     // In the editorial wall the crest is always left of the white team name.
     const crestBox = await crest.boundingBox();
@@ -65,12 +65,16 @@ for (const [leagueName, secondOption] of [
     expect(await players.count()).toBeGreaterThan(0);
     await expect(profile.locator('.vh-team-snapshot__metric')).toHaveCount(2);
     await expect(profile.locator('.vh-team-snapshot__fixture')).toHaveCount(2);
-    // The team profile uses understated dark printing plates instead of
-    // full-screen scarlet and ivory panels.
+    // Both figures now share the site's existing dark surface token.
     await expect(profile.locator('.vh-team-snapshot__metric').nth(0))
-      .toHaveCSS('background-color', 'rgb(26, 20, 22)');
+      .toHaveCSS('background-color', 'rgb(29, 11, 15)');
     await expect(profile.locator('.vh-team-snapshot__metric').nth(1))
-      .toHaveCSS('background-color', 'rgb(26, 23, 25)');
+      .toHaveCSS('background-color', 'rgb(29, 11, 15)');
+    // Club identity and match preview reuse a single wine-coloured material.
+    await expect(profile.locator('.vh-team-profile__hero'))
+      .toHaveCSS('border-top-left-radius', '20px');
+    await expect(profile.locator('.vh-team-snapshot__fixtures'))
+      .toHaveCSS('border-top-left-radius', '20px');
 
     const removeFavorite = profile.getByRole('button', { name: 'Usuń z ulubionych: ' + teamName });
     await removeFavorite.click();
@@ -148,7 +152,11 @@ test('team overview and roster reflect official feed values, not mock numbers', 
   // decorative numbers competing with player data.
   await expect(jan.locator('.vh-profile-player__portrait')).toHaveCount(1);
   await expect(jan.locator('.vh-profile-player__portrait')).toBeVisible();
+  await expect(jan.locator('.vh-profile-player__portrait'))
+    .toHaveCSS('object-fit', 'contain');
   await expect(jan.locator('.vh-profile-player__print-number')).toHaveCount(0);
+  await expect(jan.locator('.vh-profile-player__identity-meta .vh-team-logo'))
+    .toHaveCount(0);
   await expect(jan.locator('.vh-profile-player__stat')).toHaveCount(3);
   await expect(jan).toContainText('Zasięg ataku');
   await expect(jan).toContainText('323');
