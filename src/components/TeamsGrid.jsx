@@ -20,12 +20,12 @@ export default function TeamsGrid({
         const logo = team.logo || logos.get(normalizeName(team.name));
         const returnTarget = morphTeam && sameName(team.name, morphTeam);
         const identity = <>
-          <strong className="vh-club-wall__name"
-            style={returnTarget ? { viewTransitionName: 'vh-club-name' } : undefined}>{team.name}</strong>
           <span className="vh-club-wall__crest"
             style={returnTarget ? { viewTransitionName: 'vh-club-logo' } : undefined}>
             <TeamLogo name={team.name} logo={logo} className="vh-club-wall__logo" />
           </span>
+          <strong className="vh-club-wall__name"
+            style={returnTarget ? { viewTransitionName: 'vh-club-name' } : undefined}>{team.name}</strong>
         </>;
         return <article key={team.id || team.name + index}
           className={'vh-club-wall__row' + (onOpenTeam ? ' is-openable' : '')}>
