@@ -30,7 +30,7 @@
 }
 .vh-club-wall__open {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(72px, 21vw, 100px);
+  grid-template-columns: clamp(82px, 23vw, 112px) minmax(0, 1fr);
   align-items: center;
   column-gap: 10px;
   width: 100%;
@@ -40,7 +40,7 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: #f32e25;
+  color: #f5f2ed;
   text-align: left;
   text-decoration: none;
   cursor: default;
@@ -52,7 +52,7 @@ button.vh-club-wall__open { cursor: pointer; }
   min-width: 0;
   width: 100%;
   margin: 0;
-  color: #f32e25;
+  color: #f5f2ed;
   font: 900 clamp(34px, 10vw, 52px)/.94 Impact, 'Arial Narrow', 'Arial Black', sans-serif;
   letter-spacing: -.015em;
   text-transform: uppercase;
@@ -66,16 +66,41 @@ button.vh-club-wall__open { cursor: pointer; }
 .vh-club-wall__crest > .vh-team-logo .team-mark {
   display: grid;
   place-items: center;
-  width: clamp(72px, 21vw, 100px);
-  height: clamp(72px, 21vw, 100px);
+  width: clamp(82px, 23vw, 112px);
+  height: clamp(82px, 23vw, 112px);
   flex: 0 0 auto;
   background: transparent;
+}
+.vh-club-wall__crest {
+  position: relative;
+  isolation: isolate;
+}
+/* Soft warm-white illumination behind transparent original crests.
+   It reveals almost-black badges without recoloring any official logo
+   or introducing a visible square/circle frame. */
+.vh-club-wall__crest::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(249, 244, 235, .76) 0%,
+    rgba(249, 244, 235, .55) 32%,
+    rgba(249, 244, 235, .23) 57%,
+    rgba(249, 244, 235, 0) 80%);
+  pointer-events: none;
+}
+.vh-club-wall__crest > .vh-team-logo {
+  position: relative;
+  z-index: 1;
 }
 .vh-club-wall__crest > .vh-team-logo img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .45));
 }
 .vh-club-wall__crest > .vh-team-logo .team-mark {
   color: #f5f2ed;
@@ -110,17 +135,17 @@ button.vh-club-wall__open { cursor: pointer; }
 }
 button.vh-club-wall__open:active .vh-club-wall__name,
 button.vh-club-wall__open:focus-visible .vh-club-wall__name {
-  color: #f5f2ed;
+  color: #ff3b32;
   transform: translate3d(5px, 0, 0);
 }
 @media (hover: hover) and (pointer: fine) {
   .vh-club-wall__row:hover::after { opacity: 1; }
-  .vh-club-wall__open:hover .vh-club-wall__name { color: #fff1ee; transform: translate3d(6px, 0, 0); }
+  .vh-club-wall__open:hover .vh-club-wall__name { color: #ff3b32; transform: translate3d(6px, 0, 0); }
 }
 @media (max-width: 390px) {
   .vh-club-wall { width: calc(100% + 28px); margin-left: -14px; margin-right: -14px; }
   .vh-club-wall__open {
-    grid-template-columns: minmax(0, 1fr) 72px;
+    grid-template-columns: 82px minmax(0, 1fr);
     column-gap: 7px;
     padding: 20px 43px 20px 14px;
     min-height: 132px;
@@ -129,7 +154,7 @@ button.vh-club-wall__open:focus-visible .vh-club-wall__name {
   .vh-club-wall__name { font-size: clamp(31px, 9.6vw, 39px); }
   .vh-club-wall__crest,
 .vh-club-wall__crest > .vh-team-logo,
-  .vh-club-wall__crest > .vh-team-logo .team-mark { width: 72px; height: 72px; }
+  .vh-club-wall__crest > .vh-team-logo .team-mark { width: 82px; height: 82px; }
   .vh-club-wall__star { right: 3px; }
 }
 @media (prefers-reduced-motion: reduce) {
