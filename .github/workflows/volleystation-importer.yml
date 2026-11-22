@@ -32,6 +32,21 @@ jobs:
           python -m py_compile scripts/update_volleystation.py
           python scripts/update_volleystation.py --league second --help
           python scripts/update_volleystation.py --league pomorska3liga --help
+      - name: Accept unresolved fixtures on the official results page
+        run: |
+          python - <<'PY'
+          from scripts.update_volleystation import merge_fixture_lists
+          fixture = dict(round=7, match_number=34, status='scheduled', time='17:00', source_url='https://pomorskie.volleystation.com/pl/schedule/')
+          placeholder = dict(fixture, time=None)
+          merged, = merge_fixture_lists([fixture], [placeholder])
+          assert merged['status'] == 'scheduled' and merged['time'] == '17:00'
+          final = dict(fixture, status='finished', home_sets=3, away_sets=1)
+          merged, = merge_fixture_lists([final], [placeholder])
+          assert merged['status'] == 'finished' and merged['home_sets'] == 3
+          live = dict(fixture, status='live', home_sets=1, away_sets=0)
+          merged, = merge_fixture_lists([fixture], [live])
+          assert merged['status'] == 'live' and merged['home_sets'] == 1
+          PY
       - name: Validate published VolleyStation feeds
         run: |
           python - <<'PY'
