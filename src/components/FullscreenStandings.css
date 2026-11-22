@@ -51,39 +51,9 @@
 .vh-standings-fullscreen__topline {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 16px;
   min-height: 57px;
-}
-
-.vh-standings-fullscreen__section-title-wrap {
-  display: flex;
-  align-items: center;
-  flex: 0 0 auto;
-  padding: 5px;
-  background: #24211e;
-  border-radius: 19px;
-  box-shadow: 0 4px 16px rgba(0,0,0,.24);
-}
-.vh-standings-fullscreen__section-title {
-  display: grid;
-  place-items: center;
-  width: var(--vh-pill-width, 112px);
-  height: var(--vh-pill-height, 43px);
-  min-height: 40px;
-  padding: 0 10px;
-  border: 0;
-  border-radius: 13px;
-  background: #f5f2ed;
-  color: #211b17;
-  font: 750 14px/1.2 var(--font-ui, 'DM Sans', sans-serif);
-  letter-spacing: 0;
-  text-align: center;
-  white-space: nowrap;
-  cursor: pointer;
-  pointer-events: auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,.13);
-  -webkit-tap-highlight-color: transparent;
 }
 
 .vh-standings-fullscreen__back {
@@ -198,9 +168,8 @@
   }
 }
 
-/* A native-feeling vertical swipe: one opaque sheet slides in from the
-   bottom. Never clip, scale or distort the warped Canvas; the full viewport
-   is composed as a single translation on its parent. */
+/* The menu travels upward with the black sheet as ONE composited surface.
+   The league title remains stationary above it, like before. */
 .vh-standings-fullscreen[data-liquid-phase="prepare"],
 .vh-standings-fullscreen[data-liquid-phase="enter"],
 .vh-standings-fullscreen[data-liquid-phase="exit"] {
@@ -215,13 +184,73 @@
   backface-visibility: hidden;
   contain: layout paint;
 }
+/* The traveling segmented selector takes the place of the removed corner
+   button. It stays under Wstecz at the top after the sheet settles. */
+.vh-standings-fullscreen__travel-menu {
+  position: absolute;
+  z-index: 4;
+  top: var(--vh-menu-target-top, calc(env(safe-area-inset-top, 0px) + 82px));
+  left: var(--vh-menu-left, 20px);
+  box-sizing: border-box;
+  display: flex;
+  gap: 3px;
+  align-items: stretch;
+  width: var(--vh-menu-width, calc(100% - 40px));
+  height: var(--vh-menu-height, 53px);
+  padding: 5px;
+  border-radius: 17px;
+  background: #24211e;
+  color: #b8b5b5;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.vh-standings-fullscreen__travel-menu > button {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 13px;
+  background: transparent;
+  color: inherit;
+  font: 750 14px/1.2 var(--font-ui, 'DM Sans', sans-serif);
+  white-space: nowrap;
+}
+.vh-standings-fullscreen__travel-menu > button.is-selected {
+  background: #f5f2ed;
+  color: #211b17;
+  box-shadow: 0 4px 12px rgba(0,0,0,.13);
+}
+.vh-standings-fullscreen__travel-menu > button:focus-visible {
+  outline: 2px solid #fc0001;
+  outline-offset: -3px;
+}
+.vh-standings-fullscreen__travel-menu > button:disabled {
+  cursor: default;
+}
+.vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-fullscreen__travel-menu {
+  opacity: 1;
+}
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__travel-menu {
+  animation: vh-travel-menu-in 500ms linear both;
+}
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__travel-menu {
+  animation: vh-travel-menu-out 540ms linear both;
+}
+@keyframes vh-travel-menu-in {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes vh-travel-menu-out {
+  0%, 100% { opacity: 1; }
+}
+
 .vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-fullscreen__surface,
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface,
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__surface {
   will-change: transform;
 }
 .vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-fullscreen__surface {
-  transform: translate3d(0,100%,0);
+  transform: translate3d(0,var(--vh-sheet-origin-offset,100dvh),0);
 }
 .vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-fullscreen__header {
   opacity: 0;
@@ -236,15 +265,14 @@
   animation: vh-standings-slide-down 540ms cubic-bezier(.42,0,.64,1) both;
 }
 @keyframes vh-standings-slide-up {
-  from { transform: translate3d(0,100%,0); }
+  from { transform: translate3d(0,var(--vh-sheet-origin-offset,100dvh),0); }
   to { transform: translate3d(0,0,0); }
 }
 @keyframes vh-standings-slide-down {
   from { transform: translate3d(0,0,0); }
-  to { transform: translate3d(0,100%,0); }
+  to { transform: translate3d(0,var(--vh-sheet-origin-offset,100dvh),0); }
 }
-/* The Tabela button does not fly into the corner. It only materializes in
-   its final position as the sliding panel finishes its swipe. */
+/* Back navigation fades in after the rising menu clears its original place. */
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__header {
   animation: vh-slide-header-in 500ms linear both;
 }
@@ -259,21 +287,17 @@
   0% { opacity: 1; }
   12%, 100% { opacity: 0; }
 }
-/* Do not override the Tabela tab's selected capsule: it must respond
-   exactly like Mecze / Drużyny on the click, before the black sheet slides
-   over the menu. The regular segmented-control styling handles selection. */
+/* The selected source tab is hidden behind a visually identical menu in the
+   portal, which lifts together with the black sheet. No second top-right button. */
+.vh-competition-detail.is-liquid-table-open .vh-league-view-tabs {
+  visibility: hidden;
+}
 .vh-competition-detail .vh-league-view-tabs .vh-segmented .vh-table-tab__label {
   display: inline-block;
   margin: 0;
   font: inherit;
   line-height: inherit;
 }
-.vh-standings-fullscreen__section-title:focus-visible {
-  outline: 2px solid #fc0001;
-  outline-offset: 3px;
-}
-.vh-standings-fullscreen__section-title:active { opacity: .76; }
-
 /* One league title remains stationary above the sheet and changes only
    color, avoiding duplicate lettering and layout jumps during the swipe. */
 .vh-competition-detail.is-liquid-table-open .vh-competition-heading h1 {
@@ -296,6 +320,7 @@
 @media (prefers-reduced-motion: reduce) {
   .vh-standings-fullscreen__surface,
   .vh-standings-fullscreen__header,
+  .vh-standings-fullscreen__travel-menu,
   .vh-standings-fullscreen__identity h2 {
     animation: none !important;
     transform: none !important;
