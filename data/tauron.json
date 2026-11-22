@@ -20,8 +20,6 @@
           "height_cm": 192.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 334.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3158/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:14.460536+00:00"
@@ -40,8 +38,6 @@
           "height_cm": 193.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 343.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/314/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:16.466506+00:00"
@@ -60,8 +56,6 @@
           "height_cm": 201.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 356.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2532/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:18.494711+00:00"
@@ -80,8 +74,6 @@
           "height_cm": 201.0,
           "weight_kg": 100.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1760/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:20.471345+00:00"
@@ -100,8 +92,6 @@
           "height_cm": 199.0,
           "weight_kg": 84.0,
           "spike_reach_cm": 353.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/803/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:22.470233+00:00"
@@ -120,8 +110,6 @@
           "height_cm": 203.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/270/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:24.503721+00:00"
@@ -140,8 +128,6 @@
           "height_cm": 180.0,
           "weight_kg": 72.0,
           "spike_reach_cm": 320.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/825/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:26.473638+00:00"
@@ -160,8 +146,6 @@
           "height_cm": 203.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 358.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2841/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:28.469267+00:00"
@@ -180,8 +164,6 @@
           "height_cm": 212.0,
           "weight_kg": 110.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/35/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:30.496597+00:00"
@@ -200,8 +182,6 @@
           "height_cm": 192.0,
           "weight_kg": 72.0,
           "spike_reach_cm": 315.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1728/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:32.475481+00:00"
@@ -220,8 +200,6 @@
           "height_cm": 208.0,
           "weight_kg": 98.0,
           "spike_reach_cm": 351.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1579/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:34.479014+00:00"
@@ -240,8 +218,6 @@
           "height_cm": 200.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2281/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:36.509490+00:00"
@@ -260,8 +236,6 @@
           "height_cm": 184.0,
           "weight_kg": 74.0,
           "spike_reach_cm": 325.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/478/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:38.470830+00:00"
@@ -280,8 +254,6 @@
           "height_cm": 188.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1908/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
           "profile_checked_at": "2026-11-22T17:15:40.481497+00:00"
@@ -309,8 +281,6 @@
           "height_cm": 204.0,
           "weight_kg": 102.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1612/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:14.965220+00:00"
@@ -329,8 +299,6 @@
           "height_cm": 200.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/487/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:16.991320+00:00"
@@ -349,8 +317,6 @@
           "height_cm": 186.0,
           "weight_kg": 84.0,
           "spike_reach_cm": 320.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2385/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:18.965005+00:00"
@@ -369,8 +335,6 @@
           "height_cm": 199.0,
           "weight_kg": 85.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1039/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:20.967663+00:00"
@@ -389,8 +353,6 @@
           "height_cm": 204.0,
           "weight_kg": 100.0,
           "spike_reach_cm": 354.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1280/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:23.002661+00:00"
@@ -409,8 +371,6 @@
           "height_cm": 197.0,
           "weight_kg": 99.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2836/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:24.962251+00:00"
@@ -429,8 +389,6 @@
           "height_cm": 195.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2271/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:26.963719+00:00"
@@ -449,8 +407,6 @@
           "height_cm": 201.0,
           "weight_kg": 98.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/253/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:28.998037+00:00"
@@ -469,8 +425,6 @@
           "height_cm": 183.0,
           "weight_kg": 77.0,
           "spike_reach_cm": 319.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1707/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:30.969999+00:00"
@@ -489,8 +443,6 @@
           "height_cm": 184.0,
           "weight_kg": 73.0,
           "spike_reach_cm": 328.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1977/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:32.969681+00:00"
@@ -509,8 +461,6 @@
           "height_cm": 203.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 374.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1179/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:35.000139+00:00"
@@ -529,8 +479,6 @@
           "height_cm": 195.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1443/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:36.976662+00:00"
@@ -549,8 +497,6 @@
           "height_cm": 193.0,
           "weight_kg": 103.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1071/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:38.981666+00:00"
@@ -569,8 +515,6 @@
           "height_cm": 206.0,
           "weight_kg": 105.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3258/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:41.011171+00:00"
@@ -589,8 +533,6 @@
           "height_cm": 200.0,
           "weight_kg": 91.0,
           "spike_reach_cm": 365.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2549/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
           "profile_checked_at": "2026-11-22T17:15:42.962852+00:00"
@@ -618,8 +560,6 @@
           "height_cm": 198.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 365.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1786/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:15.514419+00:00"
@@ -638,8 +578,6 @@
           "height_cm": 198.0,
           "weight_kg": 98.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1453/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:17.469184+00:00"
@@ -658,8 +596,6 @@
           "height_cm": 198.0,
           "weight_kg": 115.0,
           "spike_reach_cm": 352.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1740/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:19.464880+00:00"
@@ -678,8 +614,6 @@
           "height_cm": 198.0,
           "weight_kg": 98.0,
           "spike_reach_cm": 349.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1603/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:21.525940+00:00"
@@ -698,8 +632,6 @@
           "height_cm": 202.0,
           "weight_kg": 105.0,
           "spike_reach_cm": 349.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/842/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:23.469347+00:00"
@@ -718,8 +650,6 @@
           "height_cm": 182.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1946/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:25.468568+00:00"
@@ -738,8 +668,6 @@
           "height_cm": 201.0,
           "weight_kg": 96.0,
           "spike_reach_cm": 365.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2480/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:27.504947+00:00"
@@ -758,8 +686,6 @@
           "height_cm": 176.0,
           "weight_kg": 67.0,
           "spike_reach_cm": 312.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3260/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:29.464304+00:00"
@@ -778,8 +704,6 @@
           "height_cm": 206.0,
           "weight_kg": 94.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2479/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:31.466289+00:00"
@@ -798,8 +722,6 @@
           "height_cm": 188.0,
           "weight_kg": 83.0,
           "spike_reach_cm": 343.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3259/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:33.506862+00:00"
@@ -818,8 +740,6 @@
           "height_cm": 200.0,
           "weight_kg": 96.0,
           "spike_reach_cm": 380.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2839/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:35.467199+00:00"
@@ -838,8 +758,6 @@
           "height_cm": 198.0,
           "weight_kg": 105.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1354/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:37.466355+00:00"
@@ -858,8 +776,6 @@
           "height_cm": 187.0,
           "weight_kg": 100.0,
           "spike_reach_cm": 335.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2080/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:39.524776+00:00"
@@ -878,8 +794,6 @@
           "height_cm": 208.0,
           "weight_kg": 106.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1150/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
           "profile_checked_at": "2026-11-22T17:15:41.477471+00:00"
@@ -907,8 +821,6 @@
           "height_cm": 206.0,
           "weight_kg": 96.0,
           "spike_reach_cm": 343.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/816/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:15.965010+00:00"
@@ -927,8 +839,6 @@
           "height_cm": 191.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1784/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:17.963371+00:00"
@@ -947,8 +857,6 @@
           "height_cm": 190.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/324/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:20.002832+00:00"
@@ -967,8 +875,6 @@
           "height_cm": 186.0,
           "weight_kg": 85.0,
           "spike_reach_cm": 320.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1285/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:21.968802+00:00"
@@ -987,8 +893,6 @@
           "height_cm": 180.0,
           "weight_kg": 77.0,
           "spike_reach_cm": 320.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/785/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:23.962870+00:00"
@@ -1007,8 +911,6 @@
           "height_cm": 186.0,
           "weight_kg": 70.0,
           "spike_reach_cm": 331.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2834/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:25.988055+00:00"
@@ -1027,8 +929,6 @@
           "height_cm": 193.0,
           "weight_kg": 75.0,
           "spike_reach_cm": 343.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3257/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:27.952131+00:00"
@@ -1047,8 +947,6 @@
           "height_cm": 200.0,
           "weight_kg": 94.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2169/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:29.969023+00:00"
@@ -1067,8 +965,6 @@
           "height_cm": 200.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1082/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:32.001662+00:00"
@@ -1087,8 +983,6 @@
           "height_cm": 202.0,
           "weight_kg": 75.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1011/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:33.962487+00:00"
@@ -1107,8 +1001,6 @@
           "height_cm": 181.0,
           "weight_kg": 73.0,
           "spike_reach_cm": 313.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1239/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:35.967686+00:00"
@@ -1127,8 +1019,6 @@
           "height_cm": 195.0,
           "weight_kg": 82.0,
           "spike_reach_cm": 346.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1954/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:38.009610+00:00"
@@ -1147,8 +1037,6 @@
           "height_cm": 197.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1951/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:39.977628+00:00"
@@ -1167,8 +1055,6 @@
           "height_cm": 195.0,
           "weight_kg": 85.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1069/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:41.968637+00:00"
@@ -1187,8 +1073,6 @@
           "height_cm": 209.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2835/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:44.000604+00:00"
@@ -1207,8 +1091,6 @@
           "height_cm": 206.0,
           "weight_kg": 98.0,
           "spike_reach_cm": 357.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3283/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:45.966327+00:00"
@@ -1227,8 +1109,6 @@
           "height_cm": 199.0,
           "weight_kg": 100.0,
           "spike_reach_cm": 357.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/858/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
           "profile_checked_at": "2026-11-22T17:15:47.973914+00:00"
@@ -1256,8 +1136,6 @@
           "height_cm": 205.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 362.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2014/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:15:44.472502+00:00"
@@ -1276,8 +1154,6 @@
           "height_cm": 185.0,
           "weight_kg": 70.0,
           "spike_reach_cm": 335.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2041/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:15:46.479741+00:00"
@@ -1296,8 +1172,6 @@
           "height_cm": 202.0,
           "weight_kg": 89.0,
           "spike_reach_cm": 340.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1911/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:15:48.520640+00:00"
@@ -1316,8 +1190,6 @@
           "height_cm": 199.0,
           "weight_kg": 98.0,
           "spike_reach_cm": 365.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1516/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:15:50.485171+00:00"
@@ -1336,8 +1208,6 @@
           "height_cm": 208.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/413/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:15:52.480818+00:00"
@@ -1356,8 +1226,6 @@
           "height_cm": 179.0,
           "weight_kg": 72.0,
           "spike_reach_cm": null,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2360/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:15:54.509766+00:00"
@@ -1376,8 +1244,6 @@
           "height_cm": 200.0,
           "weight_kg": 106.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/137/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:15:56.478123+00:00"
@@ -1396,8 +1262,6 @@
           "height_cm": 191.0,
           "weight_kg": 87.0,
           "spike_reach_cm": 343.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/408/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:15:58.480963+00:00"
@@ -1416,8 +1280,6 @@
           "height_cm": 197.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 342.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2827/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:16:00.495820+00:00"
@@ -1436,8 +1298,6 @@
           "height_cm": 195.0,
           "weight_kg": 85.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3159/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:16:02.469013+00:00"
@@ -1456,8 +1316,6 @@
           "height_cm": 198.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 337.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2015/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:16:04.482776+00:00"
@@ -1476,8 +1334,6 @@
           "height_cm": 198.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1787/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:16:06.517958+00:00"
@@ -1496,8 +1352,6 @@
           "height_cm": 188.0,
           "weight_kg": 87.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2825/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:16:08.478689+00:00"
@@ -1516,8 +1370,6 @@
           "height_cm": 208.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 357.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1671/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:16:10.495886+00:00"
@@ -1536,8 +1388,6 @@
           "height_cm": 174.0,
           "weight_kg": 68.0,
           "spike_reach_cm": 305.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2548/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:28:27.917205+00:00"
@@ -1556,8 +1406,6 @@
           "height_cm": 185.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 321.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2842/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
           "profile_checked_at": "2026-11-22T17:16:14.476961+00:00"
@@ -1585,8 +1433,6 @@
           "height_cm": 205.0,
           "weight_kg": 104.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/278/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:15:45.510406+00:00"
@@ -1605,8 +1451,6 @@
           "height_cm": 200.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/837/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:15:47.476950+00:00"
@@ -1625,8 +1469,6 @@
           "height_cm": 200.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/323/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:15:49.474610+00:00"
@@ -1645,8 +1487,6 @@
           "height_cm": 195.0,
           "weight_kg": 96.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2405/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:15:51.513208+00:00"
@@ -1665,8 +1505,6 @@
           "height_cm": 183.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2231/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:15:53.479554+00:00"
@@ -1685,8 +1523,6 @@
           "height_cm": 195.0,
           "weight_kg": 91.0,
           "spike_reach_cm": 319.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3169/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:15:55.475536+00:00"
@@ -1705,8 +1541,6 @@
           "height_cm": 191.0,
           "weight_kg": 89.0,
           "spike_reach_cm": 339.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/660/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:15:57.516504+00:00"
@@ -1725,8 +1559,6 @@
           "height_cm": 199.0,
           "weight_kg": 89.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/405/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:15:59.479680+00:00"
@@ -1745,8 +1577,6 @@
           "height_cm": 206.0,
           "weight_kg": 109.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1712/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:16:01.482678+00:00"
@@ -1765,8 +1595,6 @@
           "height_cm": 200.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2428/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:16:03.519272+00:00"
@@ -1785,8 +1613,6 @@
           "height_cm": 203.0,
           "weight_kg": 103.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3271/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:16:05.472907+00:00"
@@ -1805,8 +1631,6 @@
           "height_cm": 195.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 325.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/682/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:16:07.477438+00:00"
@@ -1825,8 +1649,6 @@
           "height_cm": 176.0,
           "weight_kg": 78.0,
           "spike_reach_cm": 325.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1918/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:16:09.512515+00:00"
@@ -1845,8 +1667,6 @@
           "height_cm": 204.0,
           "weight_kg": 110.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/407/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
           "profile_checked_at": "2026-11-22T17:16:11.486368+00:00"
@@ -1874,8 +1694,6 @@
           "height_cm": 205.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2536/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:15:46.999741+00:00"
@@ -1894,8 +1712,6 @@
           "height_cm": 193.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 342.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1641/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:15:48.969116+00:00"
@@ -1914,8 +1730,6 @@
           "height_cm": 199.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 342.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/369/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:15:50.988801+00:00"
@@ -1934,8 +1748,6 @@
           "height_cm": 198.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/12/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:15:53.012809+00:00"
@@ -1954,8 +1766,6 @@
           "height_cm": 203.0,
           "weight_kg": 108.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2519/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:15:54.970668+00:00"
@@ -1974,8 +1784,6 @@
           "height_cm": 198.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2769/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:15:56.976102+00:00"
@@ -1994,8 +1802,6 @@
           "height_cm": 207.0,
           "weight_kg": 108.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2359/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:15:59.017810+00:00"
@@ -2014,8 +1820,6 @@
           "height_cm": 196.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2337/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:16:00.981815+00:00"
@@ -2034,8 +1838,6 @@
           "height_cm": 208.0,
           "weight_kg": 106.0,
           "spike_reach_cm": 348.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2403/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:16:02.982533+00:00"
@@ -2054,8 +1856,6 @@
           "height_cm": 198.0,
           "weight_kg": 87.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/302/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:16:05.021224+00:00"
@@ -2074,8 +1874,6 @@
           "height_cm": 185.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 310.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1055/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:16:06.982032+00:00"
@@ -2094,8 +1892,6 @@
           "height_cm": 178.0,
           "weight_kg": 75.0,
           "spike_reach_cm": 310.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2436/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:16:08.981727+00:00"
@@ -2114,8 +1910,6 @@
           "height_cm": 195.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/285/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:16:11.006013+00:00"
@@ -2134,8 +1928,6 @@
           "height_cm": 208.0,
           "weight_kg": 96.0,
           "spike_reach_cm": 340.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2151/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
           "profile_checked_at": "2026-11-22T17:16:12.987461+00:00"
@@ -2163,8 +1955,6 @@
           "height_cm": 185.0,
           "weight_kg": 81.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3168/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:15:51.958624+00:00"
@@ -2183,8 +1973,6 @@
           "height_cm": 204.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 348.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/802/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:15:53.969965+00:00"
@@ -2203,8 +1991,6 @@
           "height_cm": 201.0,
           "weight_kg": 96.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/436/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:15:56.023114+00:00"
@@ -2223,8 +2009,6 @@
           "height_cm": 196.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 347.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/251/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:15:57.981616+00:00"
@@ -2243,8 +2027,6 @@
           "height_cm": 198.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 342.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1598/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:15:59.982525+00:00"
@@ -2263,8 +2045,6 @@
           "height_cm": 200.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 346.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3171/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:01.995238+00:00"
@@ -2283,8 +2063,6 @@
           "height_cm": 200.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 358.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3262/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:03.978844+00:00"
@@ -2303,8 +2081,6 @@
           "height_cm": 203.0,
           "weight_kg": 99.0,
           "spike_reach_cm": 347.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3263/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:05.973432+00:00"
@@ -2323,8 +2099,6 @@
           "height_cm": 196.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3261/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:08.007934+00:00"
@@ -2343,8 +2117,6 @@
           "height_cm": 204.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 340.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2290/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:09.989068+00:00"
@@ -2363,8 +2135,6 @@
           "height_cm": 209.0,
           "weight_kg": 99.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3267/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:11.990506+00:00"
@@ -2383,8 +2153,6 @@
           "height_cm": 195.0,
           "weight_kg": 89.0,
           "spike_reach_cm": 352.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3266/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:14.015203+00:00"
@@ -2403,8 +2171,6 @@
           "height_cm": 197.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3167/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:15.973290+00:00"
@@ -2423,8 +2189,6 @@
           "height_cm": 204.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/820/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:17.986724+00:00"
@@ -2443,8 +2207,6 @@
           "height_cm": 186.0,
           "weight_kg": 77.0,
           "spike_reach_cm": 320.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/515/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
           "profile_checked_at": "2026-11-22T17:16:20.026608+00:00"
@@ -2472,8 +2234,6 @@
           "height_cm": 202.0,
           "weight_kg": 98.0,
           "spike_reach_cm": 367.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/72/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:15.511172+00:00"
@@ -2492,8 +2252,6 @@
           "height_cm": 183.0,
           "weight_kg": 78.0,
           "spike_reach_cm": 332.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1399/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:17.504519+00:00"
@@ -2512,8 +2270,6 @@
           "height_cm": 190.0,
           "weight_kg": 84.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2586/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:19.477814+00:00"
@@ -2532,8 +2288,6 @@
           "height_cm": 197.0,
           "weight_kg": 89.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/235/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:21.565182+00:00"
@@ -2552,8 +2306,6 @@
           "height_cm": 197.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2455/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:23.481300+00:00"
@@ -2572,8 +2324,6 @@
           "height_cm": 194.0,
           "weight_kg": 77.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/726/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:25.520564+00:00"
@@ -2592,8 +2342,6 @@
           "height_cm": 197.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 349.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2844/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:27.524051+00:00"
@@ -2612,8 +2360,6 @@
           "height_cm": 187.0,
           "weight_kg": 81.0,
           "spike_reach_cm": 336.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/678/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:29.487246+00:00"
@@ -2632,8 +2378,6 @@
           "height_cm": 213.0,
           "weight_kg": 104.0,
           "spike_reach_cm": 375.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1606/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:31.487478+00:00"
@@ -2652,8 +2396,6 @@
           "height_cm": 202.0,
           "weight_kg": 100.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1713/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:33.493018+00:00"
@@ -2672,8 +2414,6 @@
           "height_cm": 180.0,
           "weight_kg": 76.0,
           "spike_reach_cm": 315.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/9/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:35.485787+00:00"
@@ -2692,8 +2432,6 @@
           "height_cm": 204.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/290/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:37.549022+00:00"
@@ -2712,8 +2450,6 @@
           "height_cm": 205.0,
           "weight_kg": 102.0,
           "spike_reach_cm": 358.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/937/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:39.492426+00:00"
@@ -2732,8 +2468,6 @@
           "height_cm": 198.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1023/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
           "profile_checked_at": "2026-11-22T17:16:41.484836+00:00"
@@ -2761,8 +2495,6 @@
           "height_cm": 203.0,
           "weight_kg": 87.0,
           "spike_reach_cm": 387.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3284/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:17.001396+00:00"
@@ -2781,8 +2513,6 @@
           "height_cm": 188.0,
           "weight_kg": 83.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/855/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:18.992175+00:00"
@@ -2801,8 +2531,6 @@
           "height_cm": 201.0,
           "weight_kg": 87.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1078/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:20.990247+00:00"
@@ -2821,8 +2549,6 @@
           "height_cm": 200.0,
           "weight_kg": 85.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1149/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:22.987721+00:00"
@@ -2841,8 +2567,6 @@
           "height_cm": 210.0,
           "weight_kg": 110.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2443/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:24.981177+00:00"
@@ -2861,8 +2585,6 @@
           "height_cm": 201.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/293/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:26.984857+00:00"
@@ -2881,8 +2603,6 @@
           "height_cm": 196.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 352.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/87/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:29.018111+00:00"
@@ -2901,8 +2621,6 @@
           "height_cm": 178.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 325.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1339/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:30.990862+00:00"
@@ -2921,8 +2639,6 @@
           "height_cm": 204.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/305/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:33.028076+00:00"
@@ -2941,8 +2657,6 @@
           "height_cm": 203.0,
           "weight_kg": 89.0,
           "spike_reach_cm": 354.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3268/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:34.988470+00:00"
@@ -2961,8 +2675,6 @@
           "height_cm": 202.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/362/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:36.989322+00:00"
@@ -2981,8 +2693,6 @@
           "height_cm": 180.0,
           "weight_kg": 79.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/419/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:39.044074+00:00"
@@ -3001,8 +2711,6 @@
           "height_cm": 197.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2019/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:40.978124+00:00"
@@ -3021,8 +2729,6 @@
           "height_cm": 217.0,
           "weight_kg": 105.0,
           "spike_reach_cm": 365.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/279/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:42.994820+00:00"
@@ -3041,8 +2747,6 @@
           "height_cm": 191.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 325.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1687/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:45.048635+00:00"
@@ -3061,8 +2765,6 @@
           "height_cm": 210.0,
           "weight_kg": 94.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/834/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
           "profile_checked_at": "2026-11-22T17:16:47.025568+00:00"
@@ -3090,8 +2792,6 @@
           "height_cm": 207.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1335/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:18.519591+00:00"
@@ -3110,8 +2810,6 @@
           "height_cm": 206.0,
           "weight_kg": 103.0,
           "spike_reach_cm": 346.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1514/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:20.524654+00:00"
@@ -3130,8 +2828,6 @@
           "height_cm": 190.0,
           "weight_kg": 85.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/823/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:22.507648+00:00"
@@ -3150,8 +2846,6 @@
           "height_cm": 198.0,
           "weight_kg": 98.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2433/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:24.484432+00:00"
@@ -3170,8 +2864,6 @@
           "height_cm": 189.0,
           "weight_kg": 89.0,
           "spike_reach_cm": 325.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1227/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:26.479637+00:00"
@@ -3190,8 +2882,6 @@
           "height_cm": 184.0,
           "weight_kg": 78.0,
           "spike_reach_cm": 334.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/434/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:28.477778+00:00"
@@ -3210,8 +2900,6 @@
           "height_cm": 202.0,
           "weight_kg": 94.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/839/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:30.518217+00:00"
@@ -3230,8 +2918,6 @@
           "height_cm": 186.0,
           "weight_kg": 85.0,
           "spike_reach_cm": 320.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/904/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:32.491640+00:00"
@@ -3250,8 +2936,6 @@
           "height_cm": 194.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/888/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:34.529339+00:00"
@@ -3270,8 +2954,6 @@
           "height_cm": 210.0,
           "weight_kg": 110.0,
           "spike_reach_cm": 363.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2823/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:36.487159+00:00"
@@ -3290,8 +2972,6 @@
           "height_cm": 195.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 348.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1303/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:38.493395+00:00"
@@ -3310,8 +2990,6 @@
           "height_cm": 182.0,
           "weight_kg": 78.0,
           "spike_reach_cm": 325.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3272/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:40.533903+00:00"
@@ -3330,8 +3008,6 @@
           "height_cm": 203.0,
           "weight_kg": 105.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/382/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:42.548066+00:00"
@@ -3350,8 +3026,6 @@
           "height_cm": 204.0,
           "weight_kg": 96.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/85/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:44.490914+00:00"
@@ -3370,8 +3044,6 @@
           "height_cm": 193.0,
           "weight_kg": 78.0,
           "spike_reach_cm": 352.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2327/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:46.499011+00:00"
@@ -3399,8 +3071,6 @@
           "height_cm": 203.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2831/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:24.019016+00:00"
@@ -3419,8 +3089,6 @@
           "height_cm": 198.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/741/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:25.987218+00:00"
@@ -3439,8 +3107,6 @@
           "height_cm": 185.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 333.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1604/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:27.991510+00:00"
@@ -3459,8 +3125,6 @@
           "height_cm": 198.0,
           "weight_kg": 89.0,
           "spike_reach_cm": 353.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3274/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:29.982531+00:00"
@@ -3479,8 +3143,6 @@
           "height_cm": 197.0,
           "weight_kg": 103.0,
           "spike_reach_cm": 371.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/482/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:32.034994+00:00"
@@ -3499,8 +3161,6 @@
           "height_cm": 210.0,
           "weight_kg": 87.0,
           "spike_reach_cm": 352.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/468/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:33.996710+00:00"
@@ -3519,8 +3179,6 @@
           "height_cm": 196.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 343.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/602/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:36.025193+00:00"
@@ -3539,8 +3197,6 @@
           "height_cm": 180.0,
           "weight_kg": 79.0,
           "spike_reach_cm": 338.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1602/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:37.984632+00:00"
@@ -3559,8 +3215,6 @@
           "height_cm": 195.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 341.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/786/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:39.987673+00:00"
@@ -3579,8 +3233,6 @@
           "height_cm": 183.0,
           "weight_kg": 70.0,
           "spike_reach_cm": 317.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/799/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:41.986563+00:00"
@@ -3599,8 +3251,6 @@
           "height_cm": 201.0,
           "weight_kg": 92.0,
           "spike_reach_cm": 340.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/282/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:44.005288+00:00"
@@ -3619,8 +3269,6 @@
           "height_cm": 200.0,
           "weight_kg": 90.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3273/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:45.989675+00:00"
@@ -3639,8 +3287,6 @@
           "height_cm": 202.0,
           "weight_kg": 87.0,
           "spike_reach_cm": 352.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2547/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:47.488058+00:00"
@@ -3659,8 +3305,6 @@
           "height_cm": 194.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2473/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
           "profile_checked_at": "2026-11-22T17:16:48.485571+00:00"
@@ -3688,8 +3332,6 @@
           "height_cm": 200.0,
           "weight_kg": 100.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2093/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:48.068489+00:00"
@@ -3708,8 +3350,6 @@
           "height_cm": 190.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 341.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2581/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:49.043814+00:00"
@@ -3728,8 +3368,6 @@
           "height_cm": 185.0,
           "weight_kg": 75.0,
           "spike_reach_cm": 317.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3166/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:49.482517+00:00"
@@ -3748,8 +3386,6 @@
           "height_cm": 199.0,
           "weight_kg": 84.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3265/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:49.994985+00:00"
@@ -3768,8 +3404,6 @@
           "height_cm": 203.0,
           "weight_kg": 86.0,
           "spike_reach_cm": 352.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1446/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:50.535043+00:00"
@@ -3788,8 +3422,6 @@
           "height_cm": 197.0,
           "weight_kg": 100.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1614/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:51.080943+00:00"
@@ -3808,8 +3440,6 @@
           "height_cm": 177.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 330.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/300/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:52.032734+00:00"
@@ -3828,8 +3458,6 @@
           "height_cm": 206.0,
           "weight_kg": 88.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/334/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:52.493468+00:00"
@@ -3848,8 +3476,6 @@
           "height_cm": 197.0,
           "weight_kg": 100.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2084/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:53.001890+00:00"
@@ -3868,8 +3494,6 @@
           "height_cm": 190.0,
           "weight_kg": 83.0,
           "spike_reach_cm": 335.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3275/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:53.495361+00:00"
@@ -3888,8 +3512,6 @@
           "height_cm": 198.0,
           "weight_kg": 84.0,
           "spike_reach_cm": 341.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3264/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:54.494866+00:00"
@@ -3908,8 +3530,6 @@
           "height_cm": 200.0,
           "weight_kg": 84.0,
           "spike_reach_cm": 341.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2740/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:55.033459+00:00"
@@ -3928,8 +3548,6 @@
           "height_cm": 208.0,
           "weight_kg": 97.0,
           "spike_reach_cm": 370.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2233/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:55.503238+00:00"
@@ -3948,8 +3566,6 @@
           "height_cm": 199.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 347.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1036/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:56.039894+00:00"
@@ -3968,8 +3584,6 @@
           "height_cm": 188.0,
           "weight_kg": 78.0,
           "spike_reach_cm": 326.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1455/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
           "profile_checked_at": "2026-11-22T17:16:57.012169+00:00"
@@ -3997,8 +3611,6 @@
           "height_cm": 202.0,
           "weight_kg": 108.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/864/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:16:53.184262+00:00"
@@ -4017,8 +3629,6 @@
           "height_cm": 193.0,
           "weight_kg": 75.0,
           "spike_reach_cm": 338.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/186/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:16:55.620379+00:00"
@@ -4037,8 +3647,6 @@
           "height_cm": 200.0,
           "weight_kg": 84.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2861/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:16:58.154938+00:00"
@@ -4057,8 +3665,6 @@
           "height_cm": 185.0,
           "weight_kg": 81.0,
           "spike_reach_cm": 320.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1077/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:16:59.631156+00:00"
@@ -4077,8 +3683,6 @@
           "height_cm": 204.0,
           "weight_kg": 85.0,
           "spike_reach_cm": 360.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/3160/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:01.113670+00:00"
@@ -4097,8 +3701,6 @@
           "height_cm": 198.0,
           "weight_kg": 93.0,
           "spike_reach_cm": 355.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/301/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:02.723677+00:00"
@@ -4117,8 +3719,6 @@
           "height_cm": 191.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1427/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:04.100868+00:00"
@@ -4137,8 +3737,6 @@
           "height_cm": 201.0,
           "weight_kg": 94.0,
           "spike_reach_cm": 345.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1964/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:05.502571+00:00"
@@ -4157,8 +3755,6 @@
           "height_cm": 187.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 310.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/318/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:06.895005+00:00"
@@ -4177,8 +3773,6 @@
           "height_cm": 195.0,
           "weight_kg": 80.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1785/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:08.322789+00:00"
@@ -4197,8 +3791,6 @@
           "height_cm": 180.0,
           "weight_kg": 70.0,
           "spike_reach_cm": 305.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1400/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:09.670216+00:00"
@@ -4217,8 +3809,6 @@
           "height_cm": 203.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/1306/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:11.002113+00:00"
@@ -4237,8 +3827,6 @@
           "height_cm": 200.0,
           "weight_kg": 87.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/2826/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:12.433817+00:00"
@@ -4257,8 +3845,6 @@
           "height_cm": 202.0,
           "weight_kg": 95.0,
           "spike_reach_cm": 350.0,
-          "block_reach_cm": null,
-          "standing_reach_cm": null,
           "source_url": "https://www.tauronliga.pl/players/id/815/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
           "profile_checked_at": "2026-11-22T17:17:14.182915+00:00"
