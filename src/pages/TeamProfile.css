@@ -57,40 +57,91 @@
   -webkit-tap-highlight-color: transparent;
 }
 .vh-team-profile__favorite.is-favorite { color: #fff; }
+/* Full-bleed team identity card: compact horizontal lockup on mobile. */
 .vh-team-profile__hero {
-  position:relative; isolation:isolate; overflow:hidden;
-  margin:22px 0 30px; padding:26px 22px 29px;
-  border:1px solid #421d20; border-radius:27px;
-  background:linear-gradient(148deg,#2d080d 0%,#150609 49%,#050505 100%);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: calc(100% + 40px);
+  max-width: none;
+  margin: 18px -20px 30px;
+  padding: 23px 20px 25px;
+  border: 1px solid #421d20;
+  border-radius: 22px;
+  background: linear-gradient(148deg,#2d080d 0%,#150609 49%,#050505 100%);
 }
 .vh-team-profile__hero::after {
-  content:'';position:absolute;inset:auto -35% -80% 5%;height:165%;
-  border-radius:50%;background:radial-gradient(ellipse,rgba(252,0,1,.17),transparent 66%);
-  pointer-events:none;z-index:-1;
+  content: '';
+  position: absolute;
+  inset: auto -25% -100% 10%;
+  height: 180%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse,rgba(252,0,1,.17),transparent 66%);
+  pointer-events: none;
+  z-index: -1;
 }
 .vh-team-profile__eyebrow {
-  display:flex;align-items:center;gap:8px;margin:0 0 27px;
-  color:#f07079;font:800 11px/1.3 var(--font-ui);
-  letter-spacing:.13em;text-transform:uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 21px;
+  color: #f07079;
+  font: 800 11px/1.3 var(--font-ui);
+  letter-spacing: .13em;
+  text-transform: uppercase;
 }
-.vh-team-profile__eyebrow span {color:#936166}
+.vh-team-profile__eyebrow span { color: #936166; }
+.vh-team-profile__identity {
+  display: grid;
+  grid-template-columns: 82px minmax(0,1fr);
+  align-items: center;
+  column-gap: 18px;
+}
 .vh-team-profile__crest {
-  display:grid;place-items:center;width:108px;height:108px;
-  margin-bottom:21px;border:1px solid #744348;border-radius:27px;
-  background:rgba(255,255,255,.045);
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 .vh-team-profile__crest .vh-team-logo,
-.vh-team-profile__crest .vh-team-logo .team-mark { width:80px;height:80px;flex-basis:80px; }
-.vh-team-profile__crest .vh-team-logo img {width:100%;height:100%;object-fit:contain;}
-.vh-team-profile__crest .vh-team-logo .team-mark {border-radius:16px;font-size:27px;}
-.vh-team-profile__hero h1 {
-  margin:0 0 16px;max-width:510px;
-  font:600 clamp(31px,8.6vw,54px)/1.08 var(--font-editorial,Georgia,serif);
-  letter-spacing:-.012em;overflow-wrap:anywhere;color:#f5f2ed;
+.vh-team-profile__crest .vh-team-logo .team-mark {
+  width: 82px;
+  height: 82px;
+  flex-basis: 82px;
 }
+.vh-team-profile__crest .vh-team-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.vh-team-profile__crest .vh-team-logo .team-mark {
+  border-radius: 16px;
+  font-size: 25px;
+}
+.vh-team-profile__identity-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.vh-team-profile__hero h1 {
+  margin: 0 0 12px;
+  color: #f5f2ed;
+  font: 600 clamp(23px,6.4vw,38px)/1.02 var(--font-editorial,Georgia,serif);
+  letter-spacing: -.02em;
+  overflow-wrap: anywhere;
+}
+.vh-team-profile__hero h1 span { display: block; }
 .vh-team-profile__country {
-  display:inline-flex;align-items:center;gap:7px;
-  color:#b8a5a7;font:600 12px/1.2 var(--font-ui);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #b8a5a7;
+  font: 600 12px/1.2 var(--font-ui);
 }
 .vh-team-profile__section {margin:27px 0 32px;}
 .vh-team-profile__section-heading {
@@ -176,8 +227,13 @@
 }
 .vh-profile-player__copy a:hover {color:#fff;}
 @media(max-width:390px) {
-  .vh-team-profile__hero {padding:23px 19px;}
-  .vh-profile-stat {padding:15px 8px;}
+  .vh-team-profile__hero { padding: 21px 17px 23px; }
+  .vh-team-profile__identity { grid-template-columns: 68px minmax(0,1fr); column-gap: 12px; }
+  .vh-team-profile__crest,
+  .vh-team-profile__crest .vh-team-logo,
+  .vh-team-profile__crest .vh-team-logo .team-mark { width: 68px; height: 68px; flex-basis: 68px; }
+  .vh-team-profile__hero h1 { font-size: clamp(21px,6.3vw,26px); }
+  .vh-profile-stat { padding: 15px 8px; }
 }
 @media(min-width:760px) {.vh-profile-player__visual {height:230px;}}
 @media(prefers-reduced-motion: reduce) {.vh-team-profile {animation:none;}}
