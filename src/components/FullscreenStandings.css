@@ -23,6 +23,27 @@
   border-radius: 0;
 }
 
+/* Animate ONLY the table content. The menu, black sheet and league title keep
+   their existing motion. The warped Canvas is painted in prepare, revealed
+   after the sheet nearly reaches its destination, and hidden before return. */
+.vh-standings-fullscreen[data-liquid-phase="prepare"] .vh-standings-warp {
+  opacity: 0;
+}
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-warp {
+  animation: vh-table-content-in 500ms linear both;
+}
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-warp {
+  animation: vh-table-content-out 540ms linear both;
+}
+@keyframes vh-table-content-in {
+  0%, 66% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes vh-table-content-out {
+  0% { opacity: 1; }
+  23%, 100% { opacity: 0; }
+}
+
 /* A graduated top veil keeps the floating league heading readable without
    boxing in the typography — the warped table still fills the viewport. */
 .vh-standings-fullscreen__fade {
@@ -288,5 +309,9 @@
   .vh-standings-fullscreen__identity h2 {
     animation: none !important;
     transform: none !important;
+  }
+  .vh-standings-fullscreen .vh-standings-warp {
+    animation: none !important;
+    opacity: 1 !important;
   }
 }
