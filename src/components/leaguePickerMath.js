@@ -2,6 +2,20 @@
 // spacers center the first and last options without distorting their text.
 export const PICKER_ROW_HEIGHT = 116;
 
+// Continuously varying, non-rounded indent centered on the viewport marker.
+export function pickerIndentForDistance(distance) {
+  const ratio = Math.abs(distance) / (PICKER_ROW_HEIGHT * 1.25);
+  return 54 * Math.exp(-ratio * ratio);
+}
+
+// Calculate text fit ONCE at its maximum indentation, not during scroll.
+export function pickerFixedScale(naturalWidth, viewportWidth) {
+  if (!naturalWidth) return 1;
+  const pad = viewportWidth <= 390 ? 48 : 52;
+  const space = Math.max(1, viewportWidth - pad - 12 - 54);
+  return Math.min(1, space / naturalWidth);
+}
+
 export function pickerScrollForIndex(index) {
   return Math.max(0, index) * PICKER_ROW_HEIGHT;
 }

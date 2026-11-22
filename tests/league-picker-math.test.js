@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { PICKER_ROW_HEIGHT, leagueNameLines, pickerIndexFromScroll, pickerScrollForIndex } from '../src/components/leaguePickerMath.js';
+import { PICKER_ROW_HEIGHT, leagueNameLines, pickerIndexFromScroll, pickerScrollForIndex, pickerIndentForDistance, pickerFixedScale } from '../src/components/leaguePickerMath.js';
 
 test('native picker scroll positions each of six leagues in the centre', () => {
   for (let i = 0; i < 6; i++) {
@@ -29,4 +29,19 @@ test('supported league names are complete and divided into exactly two lines', (
     assert.deepEqual(lines, expected);
     assert.equal(lines.join(' '), name);
   }
+});
+
+test('indent is continuous without integer pixel quantization', () => {
+  assert.equal(pickerIndentForDistance(0), 54);
+  assert.equal(pickerIndentForDistance(58), pickerIndentForDistance(-58));
+  assert.ok(pickerIndentForDistance(0.25) < 54);
+  assert.ok(pickerIndentForDistance(0.25) > pickerIndentForDistance(1));
+  assert.ok(pickerIndentForDistance(116) < pickerIndentForDistance(58));
+});
+
+test('text scale is fixed by the available viewport width', () => {
+  assert.equal(pickerFixedScale(0, 390), 1);
+  assert.equal(pickerFixedScale(100, 390), 1);
+  assert.equal(pickerFixedScale(400, 390), (390 - 48 - 12 - 54) / 400);
+  assert.equal(pickerFixedScale(400, 428), (428 - 52 - 12 - 54) / 400);
 });

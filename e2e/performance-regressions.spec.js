@@ -87,3 +87,30 @@ test('resizing the viewport preserves the selected league and its centered posit
   await selected.click();
   await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn', exact: true })).toBeVisible();
 });
+
+test('picker scroll moves red text smoothly without rescaling each frame', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#competitions');
+  const picker = page.getByRole('listbox', { name: /Wybierz ligę/ });
+  await expect(picker).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  const readAt = offset => picker.evaluate(async (scroller, next) => {
+    // Disable native snapping only while measuring intermediate positions.
+    scroller.style.scrollSnapType = 'none';
+    scroller.scrollTop = next;
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const transform = scroller.querySelector('.vh-league-picker__label').style.transform;
+    const scale = transform.match(/scaleX\(([^)]+)\)/);
+    const x = transform.match(/translate3d\(([^p]+)px/);
+    return { scale: Number(scale?.[1]), x: Number(x?.[1]) };
+  }, offset);
+  await expect.poll(async () => (await readAt(0)).x).toBeGreaterThan(50);
+  const a = await readAt(0);
+  const b = await readAt(53.25);
+  const c = await readAt(82.6);
+  expect(a.scale).toBe(b.scale);
+  expect(b.scale).toBe(c.scale);
+  expect(a.x).toBeGreaterThan(b.x);
+  expect(b.x).toBeGreaterThan(c.x);
+  expect(b.x % 1).not.toBe(0);
+});

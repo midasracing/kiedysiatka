@@ -4,7 +4,7 @@
   position: relative;
   isolation: isolate;
   width: calc(100% + 40px);
-  height: clamp(390px, calc(100dvh - 274px - env(safe-area-inset-top)), 680px);
+  height: clamp(390px, calc(100svh - 274px - env(safe-area-inset-top)), 680px);
   margin: 4px -20px 20px;
   overflow: hidden;
   background: #000;
@@ -20,6 +20,7 @@
   overflow-x: hidden;
   padding: var(--picker-spacer) 0;
   scroll-snap-type: y proximity;
+  overflow-anchor: none;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
@@ -60,17 +61,14 @@
   letter-spacing: -.012em;
   color: #fc0001;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .vh-league-picker__line { display: inline-block; flex: none; white-space: nowrap; }
 /* Immediate finger-down feedback, before the opening WAAPI animation starts. */
 .vh-league-picker__option[aria-selected="true"]:active .vh-league-picker__label,
 .vh-league-picker__option.is-pressed .vh-league-picker__label {
   filter: brightness(1.36);
-}
-.vh-league-picker__option[aria-selected="true"]:active .vh-league-picker__line,
-.vh-league-picker__option.is-pressed .vh-league-picker__line {
-  transform: scale(1.04);
-  transform-origin: left center;
 }
 .vh-league-picker__option:focus-visible {
   outline: 2px solid #fc0001;

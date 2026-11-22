@@ -1,5 +1,5 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import { leagueNameLines, pickerIndexFromScroll, pickerScrollForIndex, PICKER_ROW_HEIGHT } from './leaguePickerMath.js';
+import { leagueNameLines, pickerIndexFromScroll, pickerScrollForIndex, pickerIndentForDistance, pickerFixedScale, PICKER_ROW_HEIGHT } from './leaguePickerMath.js';
 import './LeaguePicker.css';
 
 // The reference uses a native vertical list with a fixed selection marker.
@@ -11,6 +11,8 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
   const scrollerRef = useRef(null);
   const animationRef = useRef(0);
   const measuredSize = useRef('');
+  const labelsRef = useRef([]);
+  const fixedScalesRef = useRef([]);
   const programmaticTarget = useRef(null);
   const selectedRef = useRef(clamp(initialIndex, 0, leagues.length - 1));
   const [selected, setSelected] = useState(() => clamp(initialIndex, 0, leagues.length - 1));
@@ -19,11 +21,12 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
     animationRef.current = 0;
     const scroller = scrollerRef.current;
     if (!scroller || !leagues.length || !active) return;
-    const width = scroller.clientWidth;
-    // Native scroll anchoring may fire before ResizeObserver when CSS or the
-    // viewport changes. Do not treat that provisional offset as a new choice.
-    if (measuredSize.current !== scroller.clientHeight + ':' + width) return;
-    const position = scroller.scrollTop;
+    // All layout measurements happen on resize/font readiness, NEVER inside
+    // the scroll frame. Reading six offsetWidths per frame forced Safari to
+    // synchronously reflow the text while its native momentum was running.
+    if (!measuredSize.current) return;
+    // Ignore iOS rubber-band overscroll at the first and last rows.
+    const position = clamp(scroller.scrollTop, 0, pickerScrollForIndex(leagues.length - 1));
     const target = programmaticTarget.current;
     // Keep the selected option stable while native smooth-scroll passes over
     // intermediate rows. Real finger/wheel scrolling clears the target.
@@ -42,21 +45,16 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
       setSelected(index);
       onSelectionChange?.(index);
     }
-    // The video has a curved, stepped indentation in X, NOT warped letter
-    // shapes. Transform only six text spans; native touch momentum stays intact.
-    const options = scroller.querySelectorAll('.vh-league-picker__label');
-    // Complete layout reads before writing any transforms.
-    const widths = Array.from(options, option => option.offsetWidth);
-    const pad = width <= 390 ? 48 : 52;
+    // Only translate the cached text layers during momentum. A varying
+    // scaleX re-rasterized the Impact glyphs every frame, causing shimmer
+    // and tiny sideways jerks. Keep each line's scale fixed at its measured
+    // safe width, and update the indent with SUBPIXEL precision.
+    const options = labelsRef.current;
+    const scales = fixedScalesRef.current;
     for (let i = 0; i < options.length; i += 1) {
-      const distance = Math.abs(i * PICKER_ROW_HEIGHT - position);
-      const ratio = distance / (PICKER_ROW_HEIGHT * 1.25);
-      const desiredIndent = Math.round(54 * Math.exp(-ratio * ratio));
-      const naturalWidth = widths[i];
-      // Keep full two-line titles readable on narrow phones without reducing font size.
-      const available = Math.max(1, width - pad - 12 - desiredIndent);
-      const fit = naturalWidth ? Math.min(1, available / naturalWidth) : 1;
-      options[i].style.transform = `translate3d(${desiredIndent}px,0,0) scaleX(${fit})`;
+      const desiredIndent = pickerIndentForDistance(i * PICKER_ROW_HEIGHT - position);
+      options[i].style.transform =
+        `translate3d(${desiredIndent.toFixed(2)}px,0,0) scaleX(${(scales[i] || 1).toFixed(5)})`;
     }
   }, [active, leagues.length, onSelectionChange]);
 
@@ -69,6 +67,17 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
     const scroller = scrollerRef.current;
     if (!scroller) return undefined;
     let previousSize = '';
+    let cancelled = false;
+    const measureLabels = () => {
+      // These DOM reads run only at mount, on a genuine viewport resize
+      // and after the Impact web font becomes available.
+      const width = scroller.clientWidth;
+      const labels = [...scroller.querySelectorAll('.vh-league-picker__label')];
+      labelsRef.current = labels;
+      fixedScalesRef.current = labels.map(label =>
+        pickerFixedScale(label.offsetWidth, width));
+      queueUpdate();
+    };
     const resize = () => {
       const height = scroller.clientHeight;
       const size = height + ':' + scroller.clientWidth;
@@ -76,22 +85,28 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
       previousSize = size;
       measuredSize.current = size;
       scroller.style.setProperty('--picker-spacer', `${Math.max(0, (height - PICKER_ROW_HEIGHT) / 2)}px`);
+      measureLabels();
       const destination = clamp(selectedRef.current, 0, leagues.length - 1);
-      // WebKit can report the unstyled height before CSS finishes loading.
-      // That first scroll is clamped to zero. Preserve the intended selection
-      // until the next resize can center it, just as during choose().
+      // Only an actual viewport change may realign the chosen row. Dynamic
+      // iPhone toolbar changes no longer resize the list (100svh in CSS).
       programmaticTarget.current = destination;
       scroller.scrollTop = pickerScrollForIndex(destination);
       queueUpdate();
     };
     resize();
+    document.fonts?.ready?.then(() => {
+      if (!cancelled) measureLabels();
+    });
     const observer = new ResizeObserver(resize);
     // Centering changes padding, so the content box changes as a result of
     // our own callback. Observe the fixed outer box to avoid a WebKit resize
     // feedback loop while still detecting viewport changes.
     observer.observe(scroller, { box: 'border-box' });
     return () => {
+      cancelled = true;
       observer.disconnect();
+      labelsRef.current = [];
+      fixedScalesRef.current = [];
       // StrictMode mounts this effect again after its cleanup. A cancelled
       // frame ID must not block the next mount's scroll updates forever.
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
@@ -228,6 +243,7 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
           onTouchStart={event => {
             if (index === selectedRef.current) event.currentTarget.classList.add('is-pressed');
           }}
+          onTouchMove={event => event.currentTarget.classList.remove('is-pressed')}
           onTouchEnd={event => event.currentTarget.classList.remove('is-pressed')}
           onTouchCancel={event => event.currentTarget.classList.remove('is-pressed')}
           onClick={event => openSelected(index, event.currentTarget)}
