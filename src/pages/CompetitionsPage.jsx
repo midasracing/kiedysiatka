@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ChevronLeft, Star, WifiOff } from 'lucide-react';
 import { LEAGUES } from '../data.js';
 import { leagueTimeline } from '../leagueTimeline.js';
@@ -19,6 +19,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const [split, setSplit] = useState(null);
   const splitSnapshot = useRef(null);
   const transitionBusy = useRef(false);
+  const leagueTitleRef = useRef(null);
 
   const openFromPicker = useCallback((item, snapshot) => {
     if (!active || transitionBusy.current || !snapshot || !item) return;
@@ -76,6 +77,26 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const timeline = useMemo(() => leagueTimeline(matches, league?.id, group), [matches, league?.id, group]);
   useEffect(() => setVisibleCount(30), [league?.id, group]);
   const pageMatches = timeline.slice(0, visibleCount);
+  // Preserve the selector's Impact letterforms while fitting the league name
+  // into one uppercase line. Font-size changes uniformly, never scaleX.
+  useLayoutEffect(() => {
+    const title = leagueTitleRef.current;
+    const holder = title?.parentElement;
+    if (!title || !holder) return undefined;
+    const fitTitle = () => {
+      const MAX_SIZE = 72;
+      title.style.fontSize = `${MAX_SIZE}px`;
+      const naturalWidth = title.getBoundingClientRect().width;
+      const available = Math.max(1, holder.clientWidth - 2);
+      if (!naturalWidth) return;
+      const fitted = Math.min(MAX_SIZE, MAX_SIZE * available / naturalWidth);
+      title.style.fontSize = `${Math.max(16, fitted)}px`;
+    };
+    fitTitle();
+    const observer = new ResizeObserver(fitTitle);
+    observer.observe(holder);
+    return () => observer.disconnect();
+  }, [selectedLeague]);
   return <>
     {active && split && <LeagueSplitTransition
       phase={split.phase} snapshot={split.snapshot} onComplete={finishSplit}
@@ -91,17 +112,24 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       onBack={closeTable}
     />}
     {league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '')}>
-      <button className="vh-back" type="button" onClick={returnToPicker}><ChevronLeft size={18} /> Wszystkie rozgrywki</button>
+      <div className="vh-competition-toolbar">
+        <button className="vh-back" type="button" onClick={returnToPicker}>
+          <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
+          <span>Wstecz</span>
+        </button>
+        <button type="button"
+          className={'vh-competition-favorite ' + (favorites.leagues.includes(league.name) ? 'is-favorite' : '')}
+          aria-label={(favorites.leagues.includes(league.name) ? 'Usuń z' : 'Dodaj do') + ' ulubionych: ' + league.name}
+          aria-pressed={favorites.leagues.includes(league.name)}
+          onClick={() => toggleFavorite('leagues', league.name)}>
+          <Star size={23} strokeWidth={2.1} aria-hidden="true"
+            fill={favorites.leagues.includes(league.name) ? 'currentColor' : 'none'} />
+        </button>
+      </div>
       <header className="vh-competition-heading">
         <div className="vh-competition-heading__copy">
-          <span className="vh-eyebrow">{league.flag || '🇵🇱'} {league.category === 'Europa' ? 'WŁOCHY' : league.category === 'Świat' ? 'JAPONIA' : 'POLSKA'} · MĘŻCZYŹNI</span>
-          <h1>{league.name}</h1>
+          <h1 ref={leagueTitleRef}>{league.name}</h1>
         </div>
-        <button type="button" className={'vh-competition-favorite ' + (favorites.leagues.includes(league.name) ? 'is-favorite' : '')}
-          aria-label={(favorites.leagues.includes(league.name) ? 'Usuń z' : 'Dodaj do') + ' ulubionych: ' + league.name}
-          onClick={() => toggleFavorite('leagues', league.name)}>
-          <Star size={21} fill={favorites.leagues.includes(league.name) ? 'currentColor' : 'none'} />
-        </button>
       </header>
       <div className="vh-segmented" role="tablist" aria-label="Widok rozgrywek">{[['matches','Mecze'], ['table','Tabela'], ['teams','Drużyny']].map(([id,label]) => <button key={id} role="tab" aria-selected={view === id} className={view === id ? 'selected' : ''} onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}</div>
       {grouped.length > 0 && <div className="vh-controls"><button type="button" className={'vh-filter-chip ' + (group === 'all' ? 'chosen' : '')} onClick={() => setGroup('all')}>Wszystkie grupy</button>{grouped.map(item => <button key={item.name} type="button" className={'vh-filter-chip ' + (group === item.name ? 'chosen' : '')} onClick={() => setGroup(item.name)}>{item.name}</button>)}</div>}
