@@ -24,11 +24,18 @@ for (const [leagueName, secondOption] of [
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await openLeague(page, leagueName, secondOption);
-    const grid = page.locator('[data-route="competitions"] .vh-team-grid');
+    const grid = page.locator('[data-route="competitions"] .vh-club-wall');
     await expect(grid).toBeVisible();
-    const tile = grid.locator('.vh-team-tile.is-openable').first();
+    const tile = grid.locator('.vh-club-wall__row.is-openable').first();
     await expect(tile).toBeVisible();
-    const teamName = await tile.locator('strong').first().innerText();
+    const teamName = await tile.locator('.vh-club-wall__name').innerText();
+    await expect(grid.locator('.vh-team-tile')).toHaveCount(0);
+    await expect(tile.getByText('Profil', { exact: true })).toHaveCount(0);
+    const star = tile.getByRole('button', { name: 'Dodaj do ulubionych: ' + teamName });
+    await star.click();
+    await expect(tile.getByRole('button', { name: 'Usuń z ulubionych: ' + teamName }))
+      .toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.vh-team-profile')).toHaveCount(0);
     await tile.getByRole('button', { name: 'Otwórz profil drużyny: ' + teamName }).click();
 
     const profile = page.locator('[data-route="competitions"] .vh-team-profile');
@@ -43,10 +50,10 @@ for (const [leagueName, secondOption] of [
     await expect(profile.locator('.vh-team-snapshot__metric')).toHaveCount(2);
     await expect(profile.locator('.vh-team-snapshot__fixture')).toHaveCount(2);
 
-    const addFavorite = profile.getByRole('button', { name: 'Dodaj do ulubionych: ' + teamName });
-    await addFavorite.click();
-    await expect(profile.getByRole('button', { name: 'Usuń z ulubionych: ' + teamName }))
-      .toHaveAttribute('aria-pressed', 'true');
+    const removeFavorite = profile.getByRole('button', { name: 'Usuń z ulubionych: ' + teamName });
+    await removeFavorite.click();
+    await expect(profile.getByRole('button', { name: 'Dodaj do ulubionych: ' + teamName }))
+      .toHaveAttribute('aria-pressed', 'false');
 
     await profile.getByRole('button', { name: 'Wstecz', exact: true }).click();
     await expect(profile).toHaveCount(0);
@@ -66,7 +73,8 @@ test('other leagues do not expose unfinished team detail pages', async ({ page }
   await picker.press('ArrowDown');
   await page.getByRole('option', { name: 'II Liga Mężczyzn', exact: true }).click();
   await page.getByRole('tab', { name: 'Drużyny', exact: true }).click();
-  await expect(page.locator('[data-route="competitions"] .vh-team-tile__open')).toHaveCount(0);
+  await expect(page.locator('[data-route="competitions"] .vh-club-wall')).toBeVisible();
+  await expect(page.getByRole('button', { name: /^Otwórz profil drużyny:/ })).toHaveCount(0);
 });
 
 test('team overview and roster reflect official feed values, not mock numbers', async ({ page }) => {
