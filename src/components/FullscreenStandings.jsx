@@ -5,7 +5,7 @@ import Standings from './Standings.jsx';
 import './FullscreenStandings.css';
 
 const LIQUID_ENTER_MS = 1120;
-const LIQUID_EXIT_MS = 880;
+const LIQUID_EXIT_MS = 760;
 
 /**
  * Fixed portal keeps the animated table outside PageStage's layout and outside

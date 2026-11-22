@@ -224,6 +224,52 @@ test('selected Tabela button dives from menu and rejoins the inactive tab on ret
   await expect(source).toHaveCSS('opacity', '1');
 });
 
+test('return closes as a rounded pill with no red table ghosts or vanishing button', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openLeague(page);
+  await page.getByRole('tab', { name: 'Tabela' }).click();
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+
+  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
+  const motion = await dialog.evaluate(root => {
+    const getAnimation = selector => {
+      const element = root.querySelector(selector);
+      const css = getComputedStyle(element);
+      const frames = element.getAnimations().flatMap(animation =>
+        animation.effect?.getKeyframes?.() || []);
+      return { name: css.animationName, duration: css.animationDuration, frames };
+    };
+    return {
+      reveal: getAnimation('.vh-standings-fullscreen__surface'),
+      rows: getAnimation('.vh-standings-warp'),
+      header: getAnimation('.vh-standings-fullscreen__header'),
+      title: getAnimation('.vh-standings-fullscreen__identity h2'),
+      pill: getAnimation('.vh-standings-fullscreen__flying-pill'),
+    };
+  });
+
+  expect(motion.reveal.name).toBe('vh-liquid-close');
+  expect(motion.reveal.duration).toBe('0.76s');
+  expect(motion.reveal.frames.length).toBeGreaterThanOrEqual(5);
+  expect(motion.reveal.frames.at(-1).clipPath).toContain('inset(');
+  expect(motion.rows.name).toBe('vh-liquid-rows-exit');
+  expect(motion.rows.frames.some(frame => frame.offset === 0.2 && frame.opacity === '0')).toBe(true);
+  expect(motion.header.name).toBe('vh-liquid-header-exit');
+  expect(motion.title.name).toBe('vh-liquid-league-return');
+  expect(motion.title.frames.some(frame => frame.offset === 0.55 && /#fc0001|rgb\(252,\s*0,\s*1\)/i.test(frame.color || ''))).toBe(true);
+  expect(motion.pill.name).toBe('vh-liquid-pill-return');
+  // Unlike the old 23-68% invisible gap, the pill stays fully visible
+  // throughout its continuous travel back to the original tab.
+  expect(motion.pill.frames.every(frame => frame.opacity === '1')).toBe(true);
+  expect(motion.pill.frames.some(frame => frame.offset === 0.64)).toBe(true);
+
+  await expect(dialog).toHaveCount(0, { timeout: 3500 });
+  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('.vh-competition-heading h1')).toHaveCSS('color', 'rgb(252, 0, 1)');
+});
+
 test('one league heading remains stationary above the unfold and changes only its ink', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openLeague(page);
