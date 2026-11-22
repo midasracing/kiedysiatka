@@ -152,7 +152,18 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const groupChoices = group === 'all' ? grouped : grouped.filter(item => item.name === group);
   const openTable = () => {
     if (view === 'table') return;
-    // Preserve one stationary title while the black standings sheet slides up.
+    // Preserve the stationary title, but lift the segmented menu as part of
+    // the same black standings surface. Measure before changing the view.
+    const menuNode = document.querySelector(
+      '[data-route="competitions"] .vh-competition-detail .vh-league-view-tabs > .vh-segmented'
+    );
+    const menuRect = menuNode?.getBoundingClientRect();
+    const menu = menuRect && menuRect.height > 0 ? {
+      left: menuRect.left,
+      top: Math.max(0, menuRect.top),
+      width: menuRect.width,
+      height: menuRect.height,
+    } : null;
     const titleNode = leagueTitleRef.current;
     const titleRect = titleNode?.getBoundingClientRect();
     const titleCss = titleNode && window.getComputedStyle(titleNode);
@@ -167,7 +178,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       lineHeight: titleCss.lineHeight,
       letterSpacing: titleCss.letterSpacing,
     } : null;
-    setTableOrigin({ title });
+    setTableOrigin({ title, menu });
     previousView.current = view;
     setTableGroup(group === 'all' ? (grouped[0]?.name ?? null) : group);
     setView('table');
@@ -249,6 +260,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       onSelectGroup={setTableGroup}
       onBack={closeTable}
       origin={tableOrigin}
+      returnTab={previousView.current}
     />}
     {league && selectedTeam ? <TeamProfile
       key={league.id + ':' + selectedTeam.name}
