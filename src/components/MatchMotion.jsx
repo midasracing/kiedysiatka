@@ -60,10 +60,3 @@ export function ScoreValue({ value, className = '' }) {
   </span>;
 }
 
-export function LeagueEntrance({ league, active, children }) {
-  const enabled = useContext(MotionEnabled);
-  return <div className={'vh-league-cover vh-league-entrance' + (enabled && active ? ' has-motion' : '')}>
-    {enabled && active && <RiveImpact key={league.id} className="vh-league-impact" />}
-    <div className="vh-league-copy">{children}</div>
-  </div>;
-}

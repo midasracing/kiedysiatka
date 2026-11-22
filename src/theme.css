@@ -31,7 +31,7 @@ button:focus-visible, a:focus-visible, input:focus-visible,
 /* Playfair Display SemiBold gives stronger editorial headings without changing spacing; data stays in DM Sans. */
 .vh-page-head h1,
 .vh-section-heading h2, .vh-day-heading h2,
-.vh-league-cover h2, .vh-sheet-header h2, .vh-empty h3 {
+.vh-sheet-header h2, .vh-empty h3 {
   font-family: var(--font-editorial);
   font-weight: 600;
   font-style: normal;
@@ -105,9 +105,6 @@ button.vh-league-tile:hover, .vh-league-select:hover { background: var(--surface
 .vh-segmented { background: #24211e; }
 .vh-segmented button { color: #c3bcb4; }
 .vh-segmented button.selected { background: var(--ink); color: #211b17; }
-.vh-league-cover { background: #290d0e; border-color: #8b2729; }
-.vh-league-cover p { color: #d4c1bb; }
-.vh-cover-favorite { color: #080808; background: #fc0001; border-color: #fc0001; }
 .vh-table-scroll { background: #191715; border-color: var(--line); }
 .vh-table th { color: var(--muted); }
 .vh-table td { color: var(--ink); }

@@ -1,21 +1,22 @@
 import { test, expect } from '@playwright/test';
 
-test('league entrance uses the local Rive file and keeps title and controls usable', async ({ page }) => {
+test('league detail has no red cover and lists scheduled games and results in one timeline', async ({ page }) => {
   const failures = [];
   page.on('pageerror', error => failures.push(error.message));
   await page.goto('/#competitions');
-  const open = () => page.getByRole('button', { name: /01 TAURON Liga Mężczyzn/ }).click();
-  await open();
-  const cover = page.locator('.vh-league-entrance');
-  await expect(cover.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
-  await expect(cover.getByRole('button', { name: 'Dodaj do ulubionych', exact: true })).toBeEnabled();
-  // Allow a cold first load to fall back; the next interaction uses a warm runtime.
-  await expect.poll(() => page.evaluate(() => performance.getEntriesByType('resource')
-    .some(entry => entry.name.endsWith('.wasm') && entry.responseEnd > 0))).toBe(true);
-  await page.getByRole('button', { name: 'Wszystkie rozgrywki', exact: true }).click();
-  await open();
-  await expect(cover.locator('canvas.is-ready')).toHaveCount(1);
-  await expect(cover.locator('canvas')).toHaveCount(0, { timeout: 2500 });
+  await page.getByRole('button', { name: /01 TAURON Liga Mężczyzn/ }).click();
+  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
+  await expect(page.locator('.vh-league-cover')).toHaveCount(0);
+  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: 'Wyniki' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Pełny terminarz' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Najbliższe mecze' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Dodaj do ulubionych: TAURON Liga Mężczyzn' })).toBeEnabled();
+  await expect(page.locator('.vh-match-date-heading').first()).toBeVisible();
+  const dates = await page.locator('.vh-match-date-heading').evaluateAll(items => items.map(item => item.dataset.matchDate));
+  expect(dates).toEqual([...dates].sort().reverse());
+  await page.getByRole('button', { name: 'Wszystkie rozgrywki' }).click();
+  await expect(page.getByRole('heading', { name: 'Rozgrywki' })).toBeVisible();
   expect(failures).toEqual([]);
 });
 

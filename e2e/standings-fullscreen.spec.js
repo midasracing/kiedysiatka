@@ -28,13 +28,13 @@ test('standings open full-screen with a top gradient and return to the league', 
   await expect(page.getByRole('navigation', { name: 'Główna nawigacja' })).toBeVisible();
 });
 
-test('Escape closes fullscreen standings and restores previous results tab', async ({ page }) => {
+test('Escape closes fullscreen standings and restores previous teams tab', async ({ page }) => {
   await page.goto('/#competitions');
   await page.getByRole('button', { name: /01 TAURON Liga Mężczyzn/ }).click();
-  await page.getByRole('tab', { name: 'Wyniki' }).click();
+  await page.getByRole('tab', { name: 'Drużyny' }).click();
   await page.getByRole('tab', { name: 'Tabela' }).click();
   await expect(page.getByRole('dialog', { name: /Tabela ligowa/ })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: /Tabela ligowa/ })).toHaveCount(0);
-  await expect(page.getByRole('tab', { name: 'Wyniki' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: 'Drużyny' })).toHaveAttribute('aria-selected', 'true');
 });
