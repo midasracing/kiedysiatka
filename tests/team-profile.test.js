@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { teamMatchHistory, teamProfileSummary, sortedRoster } from '../src/teamProfileData.js';
+import { teamMatchHistory, teamProfileSummary, sortedRoster, teamStanding, teamOpponentPreview } from '../src/teamProfileData.js';
 
 const fixture = [
   { leagueId: 'men', home: 'Klub A', away: 'Klub B', date: '17.11.2026', time: '18:00', status: 'finished', home_sets: 3, away_sets: 1 },
@@ -45,4 +45,36 @@ test('roster respects official shirt numbers and leaves source intact', () => {
   assert.deepEqual(sorted.map(player => player.full_name), ['Gracz A','Gracz B','Gracz C','Gracz D']);
   assert.equal(roster[0].number, 12);
   assert.deepEqual(sortedRoster(null), []);
+});
+
+test('team snapshot uses only the official standings row, including zero points', () => {
+  const rows = [
+    { rank: 1, team: 'Klub A', points: 0 },
+    { rank: 2, team: 'Klub B', points: 7 },
+  ];
+  assert.deepEqual(teamStanding(rows, 'KLUB A'), { position: 1, points: 0 });
+  assert.deepEqual(teamStanding(rows, 'klub b'), { position: 2, points: 7 });
+  assert.equal(teamStanding(rows, 'Klub C'), null);
+  assert.equal(teamStanding(null, 'Klub A'), null);
+  assert.deepEqual(teamStanding([{ team: 'Klub A', points: 5 }], 'Klub A'), { position: 1, points: 5 });
+});
+
+test('team snapshot shows the opponent and correct result for home and away games', () => {
+  const home = { home: 'Klub A', away: 'Klub B', status: 'finished',
+    home_sets: 3, away_sets: 1, away_logo: 'b.png' };
+  const away = { home: 'Klub C', away: 'Klub A', status: 'finished',
+    home_sets: 3, away_sets: 2, home_logo: 'c.png' };
+  assert.deepEqual(teamOpponentPreview(home, 'Klub A'), {
+    opponent: 'Klub B', opponentLogo: 'b.png',
+    ourSets: 3, theirSets: 1, won: true,
+  });
+  assert.deepEqual(teamOpponentPreview(away, 'Klub A'), {
+    opponent: 'Klub C', opponentLogo: 'c.png',
+    ourSets: 2, theirSets: 3, won: false,
+  });
+  const scheduled = teamOpponentPreview({ home: 'Klub A', away: 'Klub B', status: 'scheduled' }, 'Klub A');
+  assert.equal(scheduled.ourSets, null);
+  assert.equal(scheduled.won, null);
+  assert.equal(teamOpponentPreview(away, 'Klub D'), null);
+  assert.equal(teamOpponentPreview(null, 'Klub A'), null);
 });
