@@ -90,8 +90,6 @@
 .vh-team-profile__identity {
   position: relative;
   z-index: 1;
-}
-.vh-team-profile__identity {
   display: grid;
   grid-template-columns: 82px minmax(0,1fr);
   align-items: center;
@@ -186,9 +184,10 @@
   padding-left: 12px;
   border-left: 5px solid var(--profile-red);
   color: var(--profile-ink);
-  font: 900 clamp(29px, 8vw, 42px)/.98 var(--profile-display);
-  letter-spacing: -.012em;
-  text-transform: uppercase;
+  /* Vintage editorial contrast to the heavy athletic Impact lettering. */
+  font: 600 clamp(33px, 8.5vw, 46px)/1.07 var(--font-editorial, Georgia, serif);
+  letter-spacing: -.045em;
+  text-transform: none;
 }
 .vh-team-profile__section-heading > span {
   color: var(--profile-muted);
@@ -237,9 +236,9 @@
 .vh-team-snapshot__metric:nth-child(2) > strong { color: #131011; }
 .vh-team-snapshot__metric > span {
   color: var(--profile-muted);
-  font: 900 clamp(14px, 3.8vw, 17px)/1 var(--profile-display);
-  text-transform: uppercase;
-  letter-spacing: .005em;
+  font: 600 clamp(16px, 4.3vw, 20px)/1.05 var(--font-editorial, Georgia, serif);
+  text-transform: none;
+  letter-spacing: -.025em;
 }
 .vh-team-snapshot__metric > strong {
   color: var(--profile-ink);
@@ -262,9 +261,9 @@
 }
 .vh-team-snapshot__fixture-heading > span {
   color: var(--profile-muted);
-  font: 900 16px/1 var(--profile-display);
-  text-transform: uppercase;
-  letter-spacing: .005em;
+  font: 600 clamp(17px, 4.5vw, 20px)/1.1 var(--font-editorial, Georgia, serif);
+  text-transform: none;
+  letter-spacing: -.025em;
 }
 .vh-team-snapshot__fixture-heading > time {
   flex: 0 0 auto;
