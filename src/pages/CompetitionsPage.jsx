@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Star, Trophy, WifiOff } from 'lucide-react';
-import { CATEGORIES, LEAGUES } from '../data.js';
+import { ChevronLeft, Star, WifiOff } from 'lucide-react';
+import { LEAGUES } from '../data.js';
 import { leagueTimeline } from '../leagueTimeline.js';
-import { EmptyState, FeedWarning, LoadingCards, PageHeader, SectionTitle } from '../components/UiPrimitives.jsx';
+import { EmptyState, FeedWarning, LoadingCards, PageHeader } from '../components/UiPrimitives.jsx';
 import { MatchGroups } from '../components/MatchCards.jsx';
 import FullscreenStandings from '../components/FullscreenStandings.jsx';
 import TeamsGrid from '../components/TeamsGrid.jsx';
+import LeaguePicker from '../components/LeaguePicker.jsx';
 
 const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, matches, loading, errors, refresh, logos, favorites, toggleFavorite, selectedLeague, setSelectedLeague }) {
-  const [category, setCategory] = useState('Polska');
   const [view, setView] = useState('matches');
   const [group, setGroup] = useState('all');
   const [tableGroup, setTableGroup] = useState(null);
@@ -18,7 +18,6 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const data = league ? feeds[league.id] : null;
   const grouped = league?.id === 'second' ? (data?.groups || []) : [];
   const groupChoices = group === 'all' ? grouped : grouped.filter(item => item.name === group);
-  const openLeague = id => { setSelectedLeague(id); setView('matches'); setGroup('all'); setTableGroup(null); setVisibleCount(30); };
   const openTable = () => {
     previousView.current = view === 'table' ? 'matches' : view;
     setTableGroup(group === 'all' ? (grouped[0]?.name ?? null) : group);
@@ -71,9 +70,8 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       {data?.updated_at && <p className="vh-source-note">Aktualizacja źródła: {new Date(data.updated_at).toLocaleString('pl-PL')}</p>}
       {view === 'table' && (league.id === 'second' ? groupChoices : [data]).some(item => Object.keys(item?.source_table_discrepancies || {}).length > 0) && <p className="vh-source-note" role="status">Wyniki i tabela VolleyStation są publikowane osobno. Pokazujemy tabelę dokładnie według źródła.</p>}
     </> : <>
-      <PageHeader title="Rozgrywki" subtitle="Wybierz ligę. Poznaj drużyny, wyniki i aktualną tabelę." />
-      <div className="vh-segmented" role="tablist" aria-label="Region rozgrywek">{CATEGORIES.map(item => <button role="tab" aria-selected={category === item} className={category === item ? 'selected' : ''} key={item} onClick={() => setCategory(item)}>{item}</button>)}</div>
-      {LEAGUES.some(item => item.category === category) ? <><SectionTitle eyebrow={(category === 'Polska' ? 'POLSKA' : category === 'Europa' ? 'EUROPA' : 'ŚWIAT') + ' · MĘŻCZYŹNI'} title="Dostępne ligi" /><div className="vh-league-stack">{LEAGUES.filter(item => item.category === category).map((item, index) => <article className="vh-league-tile vh-league-select" key={item.id}><button className="vh-league-main" onClick={() => openLeague(item.id)}><span className="vh-league-number">{String(index + 1).padStart(2, '0')}</span><span><strong>{item.name}</strong><small>{item.description}</small></span><ChevronRight size={20} /></button><button type="button" className={'vh-star-button ' + (favorites.leagues.includes(item.name) ? 'is-favorite' : '')} aria-label={(favorites.leagues.includes(item.name) ? 'Usuń z' : 'Dodaj do') + ' ulubionych: ' + item.name} onClick={() => toggleFavorite('leagues', item.name)}><Star size={20} fill={favorites.leagues.includes(item.name) ? 'currentColor' : 'none'} /></button></article>)}</div></> : <EmptyState icon={Trophy} title="Wkrótce" message="Nowe rozgrywki dodamy dopiero po weryfikacji oficjalnych źródeł danych. Nie pokazujemy fikcyjnych wyników." />}
+      <PageHeader title="Rozgrywki" subtitle="Przesuń palcem i wybierz ligę." />
+      <LeaguePicker leagues={LEAGUES} active={active} />
     </>}
   </>;
 });
