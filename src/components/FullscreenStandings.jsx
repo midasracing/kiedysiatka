@@ -23,6 +23,7 @@ export default function FullscreenStandings({
     window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true
   ).current;
   const [phase, setPhase] = useState(reducedMotion ? 'active' : 'prepare');
+  const [exitDestination, setExitDestination] = useState(returnTab);
 
   useEffect(() => {
     if (reducedMotion) return undefined;
@@ -40,16 +41,17 @@ export default function FullscreenStandings({
     };
   }, [reducedMotion]);
 
-  const exitTable = useCallback(() => {
+  const exitTable = useCallback((destination = returnTab) => {
     if (exiting.current) return;
     exiting.current = true;
+    setExitDestination(destination);
     if (reducedMotion) {
-      onBack();
+      onBack(destination);
       return;
     }
     setPhase('exit');
-    exitTimer.current = window.setTimeout(onBack, SLIDE_EXIT_MS);
-  }, [onBack, reducedMotion]);
+    exitTimer.current = window.setTimeout(() => onBack(destination), SLIDE_EXIT_MS);
+  }, [onBack, reducedMotion, returnTab]);
 
   useEffect(() => {
     if (phase !== 'enter') return undefined;
@@ -128,7 +130,9 @@ export default function FullscreenStandings({
         '--vh-title-top': `${sourceTitle?.top ?? 135}px`,
         '--vh-title-width': `${sourceTitle?.width ?? Math.max(1, window.innerWidth - 40)}px`,
         '--vh-title-height': `${sourceTitle?.height ?? 48}px`,
-        '--vh-menu-origin-top': sourceMenu ? `${sourceMenu.top}px` : '100dvh',
+        '--vh-sheet-origin-offset': sourceMenu
+          ? `calc(${sourceMenu.top}px - env(safe-area-inset-top, 0px) - 82px)`
+          : '100dvh',
         '--vh-menu-left': `${sourceMenu?.left ?? 20}px`,
         '--vh-menu-width': `${sourceMenu?.width ?? Math.max(1, window.innerWidth - 40)}px`,
         '--vh-menu-height': `${sourceMenu?.height ?? 53}px`,
@@ -141,24 +145,28 @@ export default function FullscreenStandings({
       }}>
       <Standings key={selectedGroup || leagueName} rows={rows} logos={logos} />
       <div className="vh-standings-fullscreen__fade" aria-hidden="true" />
-      {sourceMenu && !reducedMotion && <div className="vh-standings-fullscreen__travel-menu"
-        aria-hidden="true">
-        <span className={(phase === 'exit' && returnTab === 'matches') ? 'is-selected' : ''}>Mecze</span>
-        <span className={phase !== 'exit' ? 'is-selected' : ''}>Tabela</span>
-        <span className={(phase === 'exit' && returnTab === 'teams') ? 'is-selected' : ''}>Drużyny</span>
-      </div>}
+      <div className="vh-standings-fullscreen__travel-menu"
+        role="tablist" aria-label="Widok rozgrywek">
+        {[
+          ['matches', 'Mecze'],
+          ['table', 'Tabela'],
+          ['teams', 'Drużyny'],
+        ].map(([id, label]) => <button key={id} type="button"
+          role="tab"
+          className={((phase === 'exit' ? exitDestination : 'table') === id) ? 'is-selected' : ''}
+          aria-selected={(phase === 'exit' ? exitDestination : 'table') === id}
+          disabled={phase === 'exit' || phase === 'prepare'}
+          onClick={() => { if (id !== 'table') exitTable(id); }}>
+          {label}
+        </button>)}
+      </div>
       <header className="vh-standings-fullscreen__header">
         <div className="vh-standings-fullscreen__topline">
           <button ref={backRef} className="vh-standings-fullscreen__back"
-            type="button" onClick={exitTable} disabled={phase === 'exit'}>
+            type="button" onClick={() => exitTable()} disabled={phase === 'exit'}>
             <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
             <span>Wstecz</span>
           </button>
-          <span className="vh-standings-fullscreen__section-title-wrap">
-            <button type="button" className="vh-standings-fullscreen__section-title"
-              onClick={exitTable} aria-disabled={phase === 'exit'}
-              aria-label="Zamknij tabelę">Tabela</button>
-          </span>
         </div>
         <div className="vh-standings-fullscreen__identity-spacer" aria-hidden="true" />
         {groups.length > 0 && <div className="vh-standings-fullscreen__groups"
