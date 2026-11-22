@@ -37,9 +37,11 @@ for (const [leagueName, secondOption] of [
     const crestBox = await crest.boundingBox();
     const nameBox = await name.boundingBox();
     expect(crestBox.x + crestBox.width).toBeLessThanOrEqual(nameBox.x);
-    // A soft light halo restores contrast for near-black crests without altering the image.
-    expect(await crest.evaluate(el =>
-      getComputedStyle(el, '::before').backgroundImage)).toContain('radial-gradient');
+    // One continuous matte stripe carries every crest; no individual glow.
+    const matte = await grid.evaluate(el => getComputedStyle(el, '::before').backgroundColor);
+    expect(matte).toBe('rgb(146, 144, 139)');
+    const glow = await crest.evaluate(el => getComputedStyle(el, '::before').backgroundImage);
+    expect(glow).toBe('none');
     await expect(grid.locator('.vh-team-tile')).toHaveCount(0);
     await expect(tile.getByText('Profil', { exact: true })).toHaveCount(0);
     const star = tile.getByRole('button', { name: 'Dodaj do ulubionych: ' + teamName });
