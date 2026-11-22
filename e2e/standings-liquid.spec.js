@@ -186,7 +186,10 @@ test('selected Tabela button dives from menu and rejoins the inactive tab on ret
   });
   expect(returning.animation).toContain('vh-liquid-pill-return');
   expect(returning.sourceOpacity).toBe('0');
-  expect(returning.sourceBackground).toBe('rgba(0, 0, 0, 0)');
+  // The white selected fill transitions back to a transparent menu slot
+  // over 180ms, so wait for the settled style instead of reading mid-frame.
+  await expect.poll(() => source.evaluate(node => getComputedStyle(node).backgroundColor),
+    { timeout: 700 }).toBe('rgba(0, 0, 0, 0)');
   await expect(dialog).toHaveCount(0, { timeout: 3500 });
   await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
   await expect(source).toHaveCSS('opacity', '1');
