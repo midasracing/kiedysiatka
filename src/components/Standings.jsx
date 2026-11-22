@@ -3,7 +3,7 @@ import { Trophy } from 'lucide-react';
 import { normalizeName } from '../data.js';
 import TeamLogo from './TeamLogo.jsx';
 import { EmptyState } from './UiPrimitives.jsx';
-import { STANDINGS_ROW_HEIGHT, STANDINGS_TOP_INSET, standingsScrollBounds, standingsWarpScale } from './standingsWarpMath.js';
+import { STANDINGS_ROW_HEIGHT, STANDINGS_TOP_INSET, standingsScrollBounds, standingsWarpScale, standingsWarpSourceY } from './standingsWarpMath.js';
 import './StandingsWarp.css';
 
 const ROW_HEIGHT = STANDINGS_ROW_HEIGHT;
@@ -103,27 +103,49 @@ function WarpTable({ rows, logos }) {
       context.fillRect(0, 0, width, height);
       context.imageSmoothingEnabled = true;
 
-      const first = Math.max(0, Math.floor((offset - STANDINGS_TOP_INSET) / ROW_HEIGHT) - 1);
-      const last = Math.min(rows.length, Math.ceil((offset + height - STANDINGS_TOP_INSET) / ROW_HEIGHT) + 1);
-      for (let index = first; index < last; index += 1) {
-        const source = sourceRows[index];
-        if (!source) continue;
-        const top = STANDINGS_TOP_INSET + index * ROW_HEIGHT - offset;
-        // Screen-centered lens: the table is readable in the middle, and
-        // characters stretch beyond the edges near the top and bottom.
-        for (let sourceY = 0; sourceY < ROW_HEIGHT; sourceY += 3) {
-          const stripHeight = Math.min(3, ROW_HEIGHT - sourceY);
-          const screenY = top + sourceY;
-          if (screenY + stripHeight < 0 || screenY > height) continue;
-          const normalized = (screenY + stripHeight / 2 - height / 2) / (height / 2);
-          const scale = standingsWarpScale(screenY + stripHeight / 2, height);
-          const targetWidth = width * scale;
-          const shift = Math.sin(normalized * Math.PI) * width * 0.025;
-          const targetX = (width - targetWidth) / 2 + shift;
+      // Inverse-project each screen strip through a continuous 2D lens.
+      // Unlike scaling source rows independently, this also compresses vertical
+      // spacing at the edges and avoids discontinuities between team names.
+      // Two-pixel destination strips keep the curved lettering smooth on iOS.
+      const rasterScale = 2;
+      const stripStep = 2;
+      const totalSourceHeight = rows.length * ROW_HEIGHT;
+      context.imageSmoothingQuality = 'high';
+      for (let screenY = 0; screenY < height; screenY += stripStep) {
+        const step = Math.min(stripStep, height - screenY);
+        const sourceStart = standingsWarpSourceY(screenY, height) + offset - STANDINGS_TOP_INSET;
+        const sourceEnd = standingsWarpSourceY(screenY + step, height) + offset - STANDINGS_TOP_INSET;
+        if (sourceEnd <= 0 || sourceStart >= totalSourceHeight) continue;
+
+        const midY = screenY + step / 2;
+        const normalized = (midY - height / 2) / (height / 2);
+        const scale = standingsWarpScale(midY, height);
+        const targetWidth = width * scale;
+        // Small opposing drifts at the two ends create a lens-like curvature;
+        // the centre remains perfectly aligned with the natural table width.
+        const shift = Math.sin(normalized * Math.PI) * width * 0.014;
+        const targetX = (width - targetWidth) / 2 + shift;
+        const sourceSpan = sourceEnd - sourceStart;
+        let cursor = Math.max(0, sourceStart);
+        const visibleEnd = Math.min(totalSourceHeight, sourceEnd);
+
+        // A strip occasionally crosses a row boundary. Split exactly there
+        // so no data is lost, duplicated, or projected into the wrong row.
+        while (cursor < visibleEnd - 0.0001) {
+          const index = Math.floor(cursor / ROW_HEIGHT);
+          const source = sourceRows[index];
+          if (!source) break;
+          const next = Math.min(visibleEnd, (index + 1) * ROW_HEIGHT);
+          const relativeStart = cursor - index * ROW_HEIGHT;
+          const relativeEnd = next - index * ROW_HEIGHT;
+          const targetY = screenY + (cursor - sourceStart) / sourceSpan * step;
+          const targetHeight = (next - cursor) / sourceSpan * step;
           context.drawImage(
-            source, 0, sourceY * 2, source.width, stripHeight * 2,
-            targetX, screenY, targetWidth, stripHeight + 0.6
+            source, 0, relativeStart * rasterScale,
+            source.width, (relativeEnd - relativeStart) * rasterScale,
+            targetX, targetY, targetWidth, targetHeight + 0.14
           );
+          cursor = next;
         }
       }
     };
