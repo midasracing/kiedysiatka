@@ -86,7 +86,10 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
     };
     resize();
     const observer = new ResizeObserver(resize);
-    observer.observe(scroller);
+    // Centering changes padding, so the content box changes as a result of
+    // our own callback. Observe the fixed outer box to avoid a WebKit resize
+    // feedback loop while still detecting viewport changes.
+    observer.observe(scroller, { box: 'border-box' });
     return () => {
       observer.disconnect();
       // StrictMode mounts this effect again after its cleanup. A cancelled

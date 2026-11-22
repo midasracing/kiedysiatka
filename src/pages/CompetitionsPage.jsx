@@ -141,19 +141,37 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     const title = leagueTitleRef.current;
     const holder = title?.parentElement;
     if (!title || !holder) return undefined;
+    let frame = 0;
+    let disposed = false;
+    let fittedWidth = -1;
     const fitTitle = () => {
+      frame = 0;
+      if (disposed) return;
       const MAX_SIZE = 72;
+      fittedWidth = holder.clientWidth;
       title.style.fontSize = `${MAX_SIZE}px`;
       const naturalWidth = title.getBoundingClientRect().width;
-      const available = Math.max(1, holder.clientWidth - 2);
+      const available = Math.max(1, fittedWidth - 2);
       if (!naturalWidth) return;
       const fitted = Math.min(MAX_SIZE, MAX_SIZE * available / naturalWidth);
       title.style.fontSize = `${Math.max(16, fitted)}px`;
     };
     fitTitle();
-    const observer = new ResizeObserver(fitTitle);
+    const queueFit = () => {
+      if (!disposed && !frame) frame = requestAnimationFrame(fitTitle);
+    };
+    const observer = new ResizeObserver(() => {
+      // Fitting changes the holder's height. Only its available width needs
+      // a new fit, and font writes must run outside ResizeObserver delivery.
+      if (holder.clientWidth !== fittedWidth) queueFit();
+    });
     observer.observe(holder);
-    return () => observer.disconnect();
+    document.fonts?.ready?.then(queueFit);
+    return () => {
+      disposed = true;
+      observer.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [selectedLeague]);
   return <>
     {active && split && <LeagueSplitTransition
