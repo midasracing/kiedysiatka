@@ -14,7 +14,7 @@ const SLIDE_EXIT_MS = 540;
  */
 export default function FullscreenStandings({
   leagueName, rows, logos, groups = [], selectedGroup, onSelectGroup, onBack,
-  origin,
+  origin, returnTab = 'matches',
 }) {
   const backRef = useRef(null);
   const exitTimer = useRef(null);
@@ -111,6 +111,7 @@ export default function FullscreenStandings({
   }, [exitTable]);
 
   const sourceTitle = origin?.title || null;
+  const sourceMenu = origin?.menu || null;
   const titleTypography = sourceTitle ? {
     fontSize: sourceTitle.fontSize,
     fontFamily: sourceTitle.fontFamily,
@@ -127,6 +128,10 @@ export default function FullscreenStandings({
         '--vh-title-top': `${sourceTitle?.top ?? 135}px`,
         '--vh-title-width': `${sourceTitle?.width ?? Math.max(1, window.innerWidth - 40)}px`,
         '--vh-title-height': `${sourceTitle?.height ?? 48}px`,
+        '--vh-menu-origin-top': sourceMenu ? `${sourceMenu.top}px` : '100dvh',
+        '--vh-menu-left': `${sourceMenu?.left ?? 20}px`,
+        '--vh-menu-width': `${sourceMenu?.width ?? Math.max(1, window.innerWidth - 40)}px`,
+        '--vh-menu-height': `${sourceMenu?.height ?? 53}px`,
       }}
       aria-label={`Tabela ligowa — ${leagueName}`}>
       <div className="vh-standings-fullscreen__surface" onAnimationEnd={event => {
@@ -136,6 +141,12 @@ export default function FullscreenStandings({
       }}>
       <Standings key={selectedGroup || leagueName} rows={rows} logos={logos} />
       <div className="vh-standings-fullscreen__fade" aria-hidden="true" />
+      {sourceMenu && !reducedMotion && <div className="vh-standings-fullscreen__travel-menu"
+        aria-hidden="true">
+        <span className={(phase === 'exit' && returnTab === 'matches') ? 'is-selected' : ''}>Mecze</span>
+        <span className={phase !== 'exit' ? 'is-selected' : ''}>Tabela</span>
+        <span className={(phase === 'exit' && returnTab === 'teams') ? 'is-selected' : ''}>Drużyny</span>
+      </div>}
       <header className="vh-standings-fullscreen__header">
         <div className="vh-standings-fullscreen__topline">
           <button ref={backRef} className="vh-standings-fullscreen__back"
