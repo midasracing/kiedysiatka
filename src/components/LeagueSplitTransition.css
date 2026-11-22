@@ -22,7 +22,9 @@
   display: block;
   width: max-content;
   max-width: none;
-  padding: 0;
+  /* Keep the lower tail of Polish glyphs (ę, ą) inside Safari's
+     transformed text layer during zoom, without moving or rescaling letters. */
+  padding: 0 0 .22em;
   margin: 0;
   white-space: nowrap;
   transform-origin: 0 0;
