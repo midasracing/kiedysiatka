@@ -23,17 +23,6 @@
 
 .vh-standings-warp:active .vh-standings-warp__canvas { cursor: grabbing; }
 
-.vh-standings-warp__hint {
-  position: absolute;
-  z-index: 1;
-  right: 13px;
-  bottom: 14px;
-  color: rgba(252, 0, 1, .72);
-  font: 800 10px/1.2 var(--font-ui, sans-serif);
-  letter-spacing: .11em;
-  pointer-events: none;
-}
-
 .vh-standings-warp__accessible {
   position: absolute;
   width: 1px;

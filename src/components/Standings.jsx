@@ -256,7 +256,6 @@ function WarpTable({ rows, logos }) {
   return <div className="vh-standings-warp" ref={surfaceRef} tabIndex={0} role="region"
     aria-label="Interaktywna tabela ligowa. Przesuń palcem w górę lub w dół, aby przeglądać drużyny. Możesz też użyć strzałek na klawiaturze.">
     <canvas ref={canvasRef} className="vh-standings-warp__canvas" aria-hidden="true" />
-    <span className="vh-standings-warp__hint" aria-hidden="true">PRZESUŃ PALCEM ↑↓</span>
     <div className="vh-standings-warp__accessible"><AccessibleTable rows={rows} logos={logos} /></div>
   </div>;
 }

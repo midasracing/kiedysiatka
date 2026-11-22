@@ -140,11 +140,6 @@
   color: #000;
 }
 
-.vh-standings-fullscreen .vh-standings-warp__hint {
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
-  right: 20px;
-}
-
 @media (max-width: 360px) {
   .vh-standings-fullscreen .vh-standings-warp {
     height: 100%;
