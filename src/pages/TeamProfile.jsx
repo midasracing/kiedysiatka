@@ -1,9 +1,8 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import React, { useLayoutEffect, useMemo, useRef } from 'react';
+import { ArrowUpRight, ChevronLeft, Star } from 'lucide-react';
 import { dateKey, feedDateKey, fromKey, isLive, normalizeName } from '../data.js';
 import { NOW } from '../dateUtils.js';
 import { teamProfileSummary, sortedRoster, teamStanding, teamOpponentPreview } from '../teamProfileData.js';
-import { MatchGroups } from '../components/MatchCards.jsx';
 import TeamLogo from '../components/TeamLogo.jsx';
 import './TeamProfile.css';
 
@@ -94,7 +93,6 @@ function splitTeamName(name) {
 const TeamProfile = React.memo(function TeamProfile({
   league, team, matches, standings, logos, favorites, toggleFavorite, onBack,
 }) {
-  const [showHistory, setShowHistory] = useState(false);
   const nameRef = useRef(null);
   const profile = useMemo(
     () => teamProfileSummary(matches, league.id, team.name, dateKey(NOW())),
@@ -103,8 +101,6 @@ const TeamProfile = React.memo(function TeamProfile({
   const [nameLineOne, nameLineTwo] = useMemo(() => splitTeamName(team.name), [team.name]);
   const isFavorite = favorites.teams.some(name => normalizeName(name) === normalizeName(team.name));
   const crest = team.logo || logos.get(normalizeName(team.name));
-  const past = showHistory ? profile.recent : profile.recent.slice(0, 4);
-  const next = profile.upcoming.slice(0, 2);
   const standingsRow = useMemo(() => teamStanding(standings, team.name), [standings, team.name]);
   const previousMatch = profile.recent[0] || null;
   const followingMatch = profile.upcoming[0] || null;
@@ -183,29 +179,6 @@ const TeamProfile = React.memo(function TeamProfile({
         <FixtureSnapshot title="Kolejny mecz" match={followingMatch}
           opponent={followingOpponent} logos={logos} upcoming />
       </div>
-    </section>
-
-    <section className="vh-team-profile__section">
-      <div className="vh-team-profile__section-heading">
-        <h2>Najbliższe mecze</h2><span>{next.length ? 'Terminarz' : 'Brak zaplanowanych spotkań'}</span>
-      </div>
-      {next.length > 0 &&
-        <MatchGroups matches={next} logos={logos} showLeagueHeading={false} showDates />}
-    </section>
-
-    <section className="vh-team-profile__section">
-      <div className="vh-team-profile__section-heading">
-        <h2>Ostatnie wyniki</h2><span>{profile.recent.length} z wynikami</span>
-      </div>
-      {past.length > 0
-        ? <MatchGroups matches={past} logos={logos} showLeagueHeading={false} showDates />
-        : <p className="vh-team-profile__empty">Nie ma jeszcze zakończonych meczów z potwierdzonym wynikiem.</p>}
-      {profile.recent.length > 4 &&
-        <button type="button" className="vh-team-profile__more"
-          onClick={() => setShowHistory(value => !value)}>
-          {showHistory ? 'Pokaż mniej' : 'Wszystkie wyniki'}
-          <ChevronRight size={18} aria-hidden="true" />
-        </button>}
     </section>
 
     <section className="vh-team-profile__section vh-team-profile__roster">
