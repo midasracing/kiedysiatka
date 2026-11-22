@@ -114,14 +114,17 @@ test('league month chips use the existing filter style and restrict match dates'
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
   const months = page.getByRole('group', { name: 'Miesiąc spotkań' });
   await expect(months).toBeVisible({ timeout: 10000 });
-  // The active Mecze tab and its expanded month selector form one cream
-  // surface; no detached ribbon, colored outline or triangular connector.
+  // A single SVG outline morphs from the Mecze pill to the month panel.
+  // No separate white rectangle, triangular connector or dark ribbon.
   const tabs = page.locator('.vh-league-tabs-with-months');
   await expect(tabs).toHaveClass(/has-months/);
+  const surface = tabs.locator('.vh-fluid-month-surface');
+  await expect(surface).toHaveCount(1);
+  await expect(surface.locator('path')).toHaveAttribute('d', /M .+ Z/);
   await expect(tabs.locator('.vh-month-flow__neck')).toHaveCount(0);
-  await expect(tabs.locator('.vh-segmented button.selected')).toHaveCSS('background-color', 'rgb(245, 242, 237)');
+  await expect(tabs.locator('.vh-segmented button.selected')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await expect(months).toHaveCSS('overflow-x', 'auto');
-  await expect(months).toHaveCSS('background-color', 'rgb(245, 242, 237)');
+  await expect(months).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await expect(months).toHaveCSS('border-top-width', '0px');
   await expect(months.locator('.vh-month-flow__option').first()).toHaveCSS('border-radius', '10px');
   const all = months.getByRole('button', { name: 'Wszystkie' });

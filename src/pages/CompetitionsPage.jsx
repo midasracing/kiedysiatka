@@ -9,6 +9,7 @@ import FullscreenStandings from '../components/FullscreenStandings.jsx';
 import TeamsGrid from '../components/TeamsGrid.jsx';
 import LeaguePicker from '../components/LeaguePicker.jsx';
 import LeagueSplitTransition from '../components/LeagueSplitTransition.jsx';
+import FluidMonthSurface from '../components/FluidMonthSurface.jsx';
 
 const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, matches, loading, errors, refresh, logos, favorites, toggleFavorite, selectedLeague, setSelectedLeague }) {
   const [view, setView] = useState('matches');
@@ -143,7 +144,8 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           <h1 ref={leagueTitleRef}>{league.name}</h1>
         </div>
       </header>
-      <div className={'vh-league-tabs-with-months' + (view === 'matches' && monthKeys.length > 0 ? ' has-months' : '') + (split?.phase === 'open' ? ' is-opening' : '')}>
+      <div className={'vh-league-tabs-with-months' + (view === 'matches' && monthKeys.length > 0 ? ' has-months' : '')}>
+        {view === 'matches' && monthKeys.length > 0 && <FluidMonthSurface />}
         <div className="vh-segmented" role="tablist" aria-label="Widok rozgrywek">{[['matches','Mecze'], ['table','Tabela'], ['teams','Drużyny']].map(([id,label]) => <button key={id} role="tab" aria-selected={view === id} className={view === id ? 'selected' : ''} onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}</div>
         {view === 'matches' && monthKeys.length > 0 && (
           <div className="vh-month-flow">
