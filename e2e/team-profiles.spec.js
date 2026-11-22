@@ -34,19 +34,21 @@ for (const [leagueName, secondOption] of [
     const profile = page.locator('[data-route="competitions"] .vh-team-profile');
     await expect(profile).toBeVisible();
     await expect(profile.getByRole('heading', { name: teamName, exact: true })).toBeVisible();
-    await expect(profile.getByText(leagueName === 'TAURON Liga Mężczyzn' ? 'TAURON Liga' : 'TAURON 1. Liga')).toBeVisible();
-    await expect(profile.getByRole('heading', { name: 'Bilans' })).toBeVisible();
+    await expect(profile.locator('.vh-team-snapshot')).toBeVisible();
+    await expect(profile.getByText('Pozycja', { exact: true })).toBeVisible();
+    await expect(profile.getByText('Punkty', { exact: true })).toBeVisible();
     await expect(profile.getByRole('heading', { name: 'Skład drużyny' })).toBeVisible();
     const players = profile.locator('.vh-profile-player');
     expect(await players.count()).toBeGreaterThan(0);
-    await expect(profile.locator('.vh-profile-stat')).toHaveCount(3);
+    await expect(profile.locator('.vh-team-snapshot__metric')).toHaveCount(2);
+    await expect(profile.locator('.vh-team-snapshot__fixture')).toHaveCount(2);
 
     const addFavorite = profile.getByRole('button', { name: 'Dodaj do ulubionych: ' + teamName });
     await addFavorite.click();
     await expect(profile.getByRole('button', { name: 'Usuń z ulubionych: ' + teamName }))
       .toHaveAttribute('aria-pressed', 'true');
 
-    await profile.getByRole('button', { name: 'Drużyny', exact: true }).click();
+    await profile.getByRole('button', { name: 'Wstecz', exact: true }).click();
     await expect(profile).toHaveCount(0);
     await expect(page.getByRole('tab', { name: 'Drużyny', exact: true })).toHaveAttribute('aria-selected', 'true');
     await expect(grid.getByRole('button', { name: 'Otwórz profil drużyny: ' + teamName })).toBeVisible();
@@ -67,7 +69,7 @@ test('other leagues do not expose unfinished team detail pages', async ({ page }
   await expect(page.locator('[data-route="competitions"] .vh-team-tile__open')).toHaveCount(0);
 });
 
-test('team profile stats and roster reflect official feed values, not mock numbers', async ({ page }) => {
+test('team overview and roster reflect official feed values, not mock numbers', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.route('**/data/tauron.json', async route => {
     await route.fulfill({ json: {
@@ -80,6 +82,7 @@ test('team profile stats and roster reflect official feed values, not mock numbe
         ] },
         { id: '101', name: 'Rywal', players: [] },
       ],
+      table: [{ team: 'Klub Testowy', rank: 7, points: 13 }],
       matches: [
         { id: 1, home: 'Klub Testowy', away: 'Rywal', date: '17.11.2026', time: '19:00',
           status: 'finished', home_sets: 3, away_sets: 1 },
@@ -97,9 +100,13 @@ test('team profile stats and roster reflect official feed values, not mock numbe
 
   const profile = page.locator('.vh-team-profile');
   await expect(profile.getByRole('heading', { name: 'Klub Testowy' })).toBeVisible();
-  await expect(profile.locator('.vh-profile-stat').nth(0)).toContainText('2');
-  await expect(profile.locator('.vh-profile-stat').nth(1)).toContainText('1');
-  await expect(profile.locator('.vh-profile-stat').nth(2)).toContainText('1');
+  await expect(profile.locator('.vh-team-snapshot__metric').nth(0)).toContainText('7');
+  await expect(profile.locator('.vh-team-snapshot__metric').nth(1)).toContainText('13');
+  await expect(profile.locator('.vh-team-snapshot__fixture').nth(0)).toContainText('2');
+  await expect(profile.locator('.vh-team-snapshot__fixture').nth(0)).toContainText('3');
+  await expect(profile.locator('.vh-team-snapshot__fixture').nth(0)).toContainText('P');
+  await expect(profile.locator('.vh-team-snapshot__fixture').nth(1)).toContainText('Rywal');
+  await expect(profile.locator('.vh-team-snapshot__fixture').nth(1)).toContainText('17:00');
   await expect(profile.locator('.vh-profile-player')).toHaveCount(2);
   await expect(profile.locator('.vh-profile-player').first()).toContainText('Kacper Próba');
   await expect(profile).toContainText('Atak 323 cm');
