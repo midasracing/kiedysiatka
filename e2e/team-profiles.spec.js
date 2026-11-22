@@ -108,6 +108,7 @@ test('team overview and roster reflect official feed values, not mock numbers', 
       teams: [
         { id: '100', name: 'Klub Testowy', logo: '', players: [
           { id: '14', full_name: 'Jan Testowy', number: 14, position: 'Libero',
+            photo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aXAAAAABJRU5ErkJggg==',
             height_cm: 186, weight_kg: 78, spike_reach_cm: 323,
             source_url: 'https://www.tauronliga.pl/players/id/14/tour/53.html' },
           { id: '4', full_name: 'Kacper Próba', number: 4, position: 'Przyjmujący' }
@@ -144,6 +145,12 @@ test('team overview and roster reflect official feed values, not mock numbers', 
   await expect(profile.locator('.vh-profile-position').first().getByRole('heading', { name: 'Przyjmujący' })).toBeVisible();
   await expect(profile.locator('.vh-profile-position').last().getByRole('heading', { name: 'Libero' })).toBeVisible();
   const jan = profile.locator('.vh-profile-player').filter({ hasText: 'Jan Testowy' });
+  // The poster treatment visibly layers two crops of the same official image,
+  // preserving the player data and keeping the second crop decorative.
+  await expect(jan.locator('.vh-profile-player__portrait')).toHaveCount(2);
+  await expect(jan.locator('.vh-profile-player__portrait--lead')).toBeVisible();
+  await expect(jan.locator('.vh-profile-player__portrait--echo')).toHaveAttribute('aria-hidden', 'true');
+  await expect(jan.locator('.vh-profile-player__print-number')).toHaveText('14');
   await expect(jan.locator('.vh-profile-player__stat')).toHaveCount(3);
   await expect(jan).toContainText('Zasięg ataku');
   await expect(jan).toContainText('323');
