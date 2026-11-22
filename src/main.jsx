@@ -68,7 +68,8 @@ function App() {
   // arrives. Low-priority renders can yield to a tap; subsequent navigation
   // only toggles visibility, including the first visit after the app settles.
   useEffect(() => {
-    if (loading) return undefined;
+    // Keep hidden calendar/team renders out of the intro's frame budget.
+    if (loading || startup) return undefined;
     const next = ROUTES.find(id => !visitedPages.includes(id));
     if (!next) return undefined;
     const prepare = () => startTransition(() => {
@@ -80,7 +81,7 @@ function App() {
     }
     const task = window.setTimeout(prepare, 150);
     return () => window.clearTimeout(task);
-  }, [loading, visitedPages]);
+  }, [loading, startup, visitedPages]);
   const navigate = useCallback(id => {
     if (!ROUTES.includes(id)) return;
     if (currentPage.current === id) window.scrollTo({ top: 0, behavior: 'instant' });

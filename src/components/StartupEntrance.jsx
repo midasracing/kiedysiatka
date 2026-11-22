@@ -38,10 +38,20 @@ export default function StartupEntrance({ enabled, onComplete }) {
     }).catch(() => { /* Logo choreography also works without the backdrop. */ });
     later(() => {
       if (disposed) return;
-      setRevealing(true);
       const logo = copy.current;
       const target = brand?.querySelector('img')?.getBoundingClientRect();
       const start = logo?.getBoundingClientRect();
+      const page = document.querySelector('.vh-tab-panel:not([hidden])');
+      // Read geometry before freezing the logo's layout and starting effects.
+      const elements = [
+        page?.querySelector('.vh-section-heading, .vh-page-head'),
+        page?.querySelector('.im-league'),
+        ...Array.from(page?.querySelectorAll('.vh-match') || []).filter(card => {
+          const box = card.getBoundingClientRect();
+          return box.top < window.innerHeight + 40 && box.bottom > 0;
+        }).slice(0, 4),
+      ].filter(Boolean);
+      setRevealing(true);
       if (logo && target?.width > 0 && start?.width > 0) {
         // Freeze layout once, then let the compositor fly the actual logo into
         // the exact header bounds. The real header remains hidden until landing.
@@ -63,21 +73,14 @@ export default function StartupEntrance({ enabled, onComplete }) {
         animate(logo, [{ opacity: 1 }, { opacity: 0 }], { duration: 400 });
         restoreBrand();
       }
-      const page = document.querySelector('.vh-tab-panel:not([hidden])');
-      const elements = [
-        page?.querySelector('.vh-section-heading, .vh-page-head'),
-        page?.querySelector('.im-league'),
-        ...Array.from(page?.querySelectorAll('.vh-match') || []).filter(card => {
-          const box = card.getBoundingClientRect();
-          return box.top < window.innerHeight + 40 && box.bottom > 0;
-        }).slice(0, 4),
-      ].filter(Boolean);
       elements.forEach((element, index) => animate(element, [
         { opacity: 0, transform: 'translate3d(0,28px,0)' },
         { opacity: 1, transform: 'translate3d(0,0,0)' },
       ], { duration: 550, delay: 100 + index * 55 }));
       animate(document.querySelector('.vh-bottom'), [{ opacity: 0 }, { opacity: 1 }], { duration: 480, delay: 180 });
     }, 980);
+    // The backdrop is fully transparent after its 650ms fade.
+    later(() => rive?.pause(), 1630);
     later(finish, 2250);
     const onVisibility = () => { if (document.hidden) finish(); };
     const viewportWidth = window.innerWidth;
