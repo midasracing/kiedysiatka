@@ -59,10 +59,16 @@ function PlayerCard({ player, teamName, teamLogo }) {
   ].filter(stat => stat.value != null && stat.value !== '');
 
   const identity = <>
-    <div className="vh-profile-player__visual">
-      {player.photo
-        ? <img src={player.photo} alt="" loading="lazy" decoding="async" />
-        : <div className="vh-profile-player__placeholder" aria-hidden="true">{String(name).slice(0, 1)}</div>}
+    <div className={'vh-profile-player__visual' + (player.photo ? ' has-photo' : '')}>
+      {player.number != null && <span className="vh-profile-player__print-number" aria-hidden="true">
+        {String(player.number).padStart(2, '0')}
+      </span>}
+      {player.photo ? <>
+        <img className="vh-profile-player__portrait vh-profile-player__portrait--echo"
+          src={player.photo} alt="" loading="lazy" decoding="async" aria-hidden="true" />
+        <img className="vh-profile-player__portrait vh-profile-player__portrait--lead"
+          src={player.photo} alt="" loading="lazy" decoding="async" />
+      </> : <div className="vh-profile-player__placeholder" aria-hidden="true">{String(name).slice(0, 1)}</div>}
     </div>
     <div className="vh-profile-player__copy">
       <strong>{name}</strong>
