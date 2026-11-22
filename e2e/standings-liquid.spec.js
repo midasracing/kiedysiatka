@@ -79,13 +79,13 @@ test('Tabela carries the whole league selector upwards, without a separate corne
   expect(scene.canvasInside).toBe(true);
   expect(scene.sheetAnimation).toBe('vh-standings-slide-up');
   expect(scene.frameValues).toHaveLength(2);
-  expect(scene.frameValues[0]).toContain('var(--vh-sheet-origin-offset');
-  expect(scene.frameValues[1]).toContain('0px');
+  expect(scene.frameValues[0]).not.toBe(scene.frameValues[1]);
+  expect(scene.originOffset).toContain('calc(');
+  expect(Math.abs(scene.menuTop - sourceMenuTop)).toBeLessThan(2);
   expect(scene.noClip).toBe('none');
   expect(scene.menuAnimation).toBe('vh-travel-menu-in');
   expect(scene.headerAnimation).toBe('vh-slide-header-in');
   expect(scene.menuFont).toBe(triggerFont);
-  expect(scene.originOffset).toContain(String(Math.round(sourceMenuTop)).slice(0, 2));
   expect(scene.dialogZ).toBeGreaterThan(100);
 
   await page.clock.runFor(750);
@@ -134,7 +134,7 @@ test('Wstecz slides the whole sheet down and restores the league and dock', asyn
   expect(exit.duration).toBe('0.54s');
   expect(exit.values).toHaveLength(2);
   expect(exit.values[0]).not.toContain('100%');
-  expect(exit.values[1]).toContain('var(--vh-sheet-origin-offset');
+  expect(exit.values[1]).not.toBe(exit.values[0]);
   expect(exit.header).toBe('vh-slide-header-out');
   expect(exit.flyers).toBe(0);
   await page.clock.runFor(650);
@@ -205,4 +205,19 @@ test('reduced motion and previous Teams selection return instantly', async ({ pa
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('tab', { name: 'Drużyny' })).toHaveAttribute('aria-selected', 'true');
   expect(await page.locator('#root').evaluate(node => node.inert)).toBe(false);
+});
+
+test('the raised menu replaces the corner button and switches directly to Drużyny', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openLeague(page);
+  await page.getByRole('tab', { name: 'Tabela' }).click();
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  await expect(dialog.locator('.vh-standings-fullscreen__section-title')).toHaveCount(0);
+  const raisedMenu = dialog.getByRole('tablist', { name: 'Widok rozgrywek' });
+  await raisedMenu.getByRole('tab', { name: 'Drużyny' }).click();
+  await expect(dialog).toHaveCount(0, { timeout: 3500 });
+  await expect(page.getByRole('tab', { name: 'Drużyny' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('.vh-competition-detail .vh-league-view-tabs')).toBeVisible();
+  await expect(page.locator('#root')).not.toHaveJSProperty('inert', true);
 });
