@@ -46,3 +46,22 @@ test('a fast failing logo keeps its initials and a new logo can load after refre
   await expect.poll(() => row.locator('img').evaluate(image => image.naturalWidth)).toBe(40);
   await expect(row.locator('.team-mark')).toHaveCount(0);
 });
+
+test('resizing the viewport preserves the selected league and its centered position', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 500 });
+  await page.goto('/#competitions');
+  const picker = page.getByRole('listbox', { name: /Wybierz ligę/ });
+  const selected = picker.getByRole('option', { name: 'II Liga Mężczyzn', exact: true });
+  const centerDistance = () => selected.evaluate(option => {
+    const host = option.closest('.vh-league-picker__scroll').getBoundingClientRect();
+    const row = option.getBoundingClientRect();
+    return Math.abs(row.top + row.height / 2 - host.top - host.height / 2);
+  });
+  await expect(selected).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(centerDistance).toBeLessThan(2);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(centerDistance).toBeLessThan(2);
+  await expect(selected).toHaveAttribute('aria-selected', 'true');
+  await selected.click();
+  await expect(page.getByRole('heading', { name: 'II Liga Mężczyzn', exact: true })).toBeVisible();
+});

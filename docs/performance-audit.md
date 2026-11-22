@@ -151,3 +151,10 @@ aktualny interfejs. Żadnego snapshotu `data/` nie zastąpiono starszą wersją.
 Przed publikacją integracja przeszła 45 testów JS, 32 testy Pythona oraz build
 produkcyjny. Historyczne pomiary powyżej dotyczą wcześniejszej bazy `8bc34d0`;
 nie są nowymi pomiarami FPS frontendowej wersji po integracji.
+
+
+Podczas końcowej kontroli CI odtworzono dodatkowo błąd developerskiego
+StrictMode: anulowany identyfikator RAF pozostawał ustawiony i blokował kolejne
+zdarzenia przewijania selektora. Sprzątanie klatki przeniesiono do efektu,
+który ją planuje, oraz zeruje się identyfikator po anulowaniu. Dotychczasowe
+testy selekcji i szerokości etykiet sprawdzają ponownie ten przypadek.
