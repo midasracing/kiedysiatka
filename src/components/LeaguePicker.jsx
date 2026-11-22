@@ -133,8 +133,17 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
         index: rowIndex,
         lines: [...row.querySelectorAll('.vh-league-picker__line')].map(captureText),
       }));
-    const heading = scrollerRef.current.closest('.vh-competitions-screen')
-      ?.querySelector('.vh-competitions-topfade h1');
+    const topfade = scrollerRef.current.closest('.vh-competitions-screen')
+      ?.querySelector('.vh-competitions-topfade');
+    const gradientBounds = topfade?.getBoundingClientRect();
+    const gradient = gradientBounds ? {
+      left: gradientBounds.left,
+      top: gradientBounds.top,
+      width: gradientBounds.width,
+      height: gradientBounds.height,
+      backgroundImage: window.getComputedStyle(topfade).backgroundImage,
+    } : null;
+    const heading = topfade?.querySelector('h1');
     const pointer = scrollerRef.current.parentElement
       ?.querySelector('.vh-league-picker__pointer');
     const pointerBounds = pointer?.getBoundingClientRect();
@@ -144,6 +153,7 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
       lines,
       rows,
       heading: heading ? captureText(heading) : null,
+      gradient,
       pointer: pointerBounds ? { left: pointerBounds.left, top: pointerBounds.top } : null,
     });
   };

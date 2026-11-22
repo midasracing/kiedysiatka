@@ -20,6 +20,7 @@ const reverseFrames = frames => frames.slice().reverse().map(frame => ({
 export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
   const lineRefs = useRef([]);
   const veilRef = useRef(null);
+  const gradientRef = useRef(null);
   const headingRef = useRef(null);
   const pointerRef = useRef(null);
 
@@ -109,9 +110,21 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       { offset: 1, opacity: 0 },
     ], 'linear');
 
+    // Match the actual selector's top gradient throughout both directions.
+    // On return it builds gradually while the entire list converges,
+    // reaching full strength exactly when the real selector takes over.
+    animate(gradientRef.current, [
+      { offset: 0, opacity: 1 },
+      { offset: .15, opacity: .88 },
+      { offset: .50, opacity: .48 },
+      { offset: .85, opacity: .08 },
+      { offset: 1, opacity: 0 },
+    ], 'linear');
+
     animate(headingRef.current, [
       { offset: 0, opacity: 1 },
-      { offset: .42, opacity: 0 },
+      { offset: .32, opacity: .92 },
+      { offset: .76, opacity: 0 },
       { offset: 1, opacity: 0 },
     ], 'linear');
 
@@ -135,6 +148,17 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
     <div className="vh-league-split" data-phase={phase}
       data-names={rows.length} aria-hidden="true">
       <div className="vh-league-split__veil" ref={veilRef} />
+      {snapshot?.gradient && <div
+        ref={gradientRef}
+        className="vh-league-split__gradient"
+        style={{
+          left: snapshot.gradient.left,
+          top: snapshot.gradient.top,
+          width: snapshot.gradient.width,
+          height: snapshot.gradient.height,
+          backgroundImage: snapshot.gradient.backgroundImage,
+        }}
+      />}
       {parts.map((line, index) =>
         <span
           key={`${line.rowIndex}-${line.partIndex}`}

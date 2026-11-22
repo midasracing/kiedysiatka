@@ -53,3 +53,14 @@
   pointer-events: none;
   will-change: opacity;
 }
+
+/* An exact copy of the selector's real top fade. It fades in *during* the
+   return curtain, rather than appearing after React swaps the screens. */
+.vh-league-split__gradient {
+  position: absolute;
+  z-index: 3;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  will-change: opacity;
+}
+.vh-league-split__heading { z-index: 4; }

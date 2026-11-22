@@ -11,6 +11,7 @@ test('touching the centred league splits two full-width lines and reverse restor
   await expect(split).toBeVisible();
   await expect(split).toHaveAttribute('data-names', '6');
   await expect(split.locator('.vh-league-split__line')).toHaveCount(12);
+  await expect(split.locator('.vh-league-split__gradient')).toHaveCSS('background-image', /linear-gradient/);
   await expect(split.locator('[data-league-row="2"]').first()).toHaveText('II Liga');
   await expect(split.locator('[data-league-row="2"]').last()).toHaveText('Mężczyzn');
   await expect(split.locator('[data-league-row="0"]')).toHaveCount(2);
@@ -27,6 +28,15 @@ test('touching the centred league splits two full-width lines and reverse restor
   await expect(closing).toHaveAttribute('data-names', '6');
   await expect(closing.locator('.vh-league-split__line')).toHaveCount(12);
   await expect(closing.locator('.vh-league-split__heading')).toHaveText('Rozgrywki');
+  const fade = closing.locator('.vh-league-split__gradient');
+  await expect(fade).toHaveCSS('background-image', /linear-gradient/);
+  const keyframeOpacities = await fade.evaluate(el =>
+    el.getAnimations().flatMap(animation =>
+      animation.effect?.getKeyframes().map(frame => Number(frame.opacity)) || []
+    ));
+  expect(keyframeOpacities.length).toBeGreaterThanOrEqual(4);
+  expect(keyframeOpacities[0]).toBe(0);
+  expect(keyframeOpacities.at(-1)).toBe(1);
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
   await expect(page.getByRole('listbox', { name: /Wybierz ligę/ })).toBeVisible();
   await expect(page.getByRole('option', { name: 'II Liga Mężczyzn' }))
