@@ -78,17 +78,6 @@
   background: #1d1215;
   box-shadow: inset 4px 0 0 var(--profile-red);
 }
-.vh-team-profile__hero::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  background: var(--profile-red);
-  clip-path: polygon(0 0, 100% 0, 100% 100%);
-  pointer-events: none;
-}
 .vh-team-profile__identity {
   position: relative;
   z-index: 1;
