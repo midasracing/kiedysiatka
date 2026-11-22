@@ -93,7 +93,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     restoreTeamScroll.current = false;
     lastOpenedTeamName.current = team.name;
     const label = source?.querySelector('.vh-club-wall__name');
-    const logo = source?.querySelector('.vh-team-logo');
+    const logo = source?.querySelector('.vh-club-wall__crest');
     if (canMorphTeam() && label && logo) {
       teamTransitionBusy.current = true;
       label.style.viewTransitionName = 'vh-club-name';
