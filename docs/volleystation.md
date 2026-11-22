@@ -10,6 +10,10 @@ jej z wyników; rozbieżności są wyłącznie diagnostyką `source_table_discre
 Nie uzupełniamy danych z PZPS ani PWZPS. Hala pozostaje `null`, gdy źródło jej
 nie podaje. Link transmisji pochodzi z odtwarzacza na stronie konkretnego meczu.
 
+Na stronie wyników mogą pozostać spotkania z nierozstrzygniętym wynikiem 0:0.
+Importer sprawdza ich szczegóły osobno i nadal pobiera pozostałe wyniki.
+Nie zamienia 0:0 na rezultat końcowy ani nie odrzuca przez nie całej ligi.
+
 ## Instalacja
 
 Wymagane: Python 3.12 oraz Chrome lub Chromium. W katalogu repozytorium:
@@ -52,6 +56,10 @@ Pliki główne to `data/2liga.json` i `data/pomorska3liga.json`. Kopie
 `public/data/` odświeżają lokalną aplikację Vite. Komputer i procesy muszą działać.
 GitHub Pages otrzymuje kolejne dane po zatwierdzeniu i wypchnięciu zmian `data/`
 do repozytorium. `Ctrl+C` zamyka scraper i jego przeglądarkę.
+
+Samo otwarcie aplikacji odświeża opublikowane pliki, lecz nie uruchamia lokalnego
+scrapera. W kalendarzu widoczny jest czas ostatniego odczytu obu tych lig;
+dane starsze niż doba otrzymują informację o możliwej nieaktualności.
 
 Gdy Chrome nie jest wykrywany, dodaj `--browser /usr/bin/chromium`.
 `--engine seleniumbase` lub `--engine camoufox` wybiera konkretny silnik.

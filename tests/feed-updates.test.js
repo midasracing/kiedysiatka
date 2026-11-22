@@ -1,7 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { shareFeedValue } from '../src/feedUpdates.js';
+import { isFeedStale, shareFeedValue, STALE_FEED_MS } from '../src/feedUpdates.js';
 import { fetchLeague, matchesFromFeeds, LEAGUES } from '../src/data.js';
+
+test('a successful download does not make an old source snapshot fresh', () => {
+  const now = Date.parse('2026-11-22T13:00:00Z');
+  assert.equal(isFeedStale({ updated_at: '2026-11-07T18:05:47Z' }, now), true);
+  assert.equal(isFeedStale({ updated_at: '2026-11-22T12:00:00Z' }, now), false);
+  assert.equal(isFeedStale({ updated_at: new Date(now - STALE_FEED_MS).toISOString() }, now), false);
+});
+
+test('missing metadata is not presented as a known stale timestamp', () => {
+  assert.equal(isFeedStale(undefined), false);
+  assert.equal(isFeedStale({ updated_at: 'invalid' }), false);
+});
 
 const fixture = () => ({ updated_at: '2026-10-31T15:00:00Z', teams: [{ name: 'A', logo: '/a.svg' }], matches: [
   { id: 'live', date: '31.10.2026', time: '15:00', home: 'A', away: 'B', status: 'live', home_sets: 1, away_sets: 0, current_points: '20:19', set_scores: ['25:20'] },

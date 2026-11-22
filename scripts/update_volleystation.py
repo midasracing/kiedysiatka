@@ -1162,6 +1162,31 @@ def validate_feed(
     }
 
 
+def merge_fixture_lists(schedule, results):
+    """Results pages can also contain unresolved 0:0 and live fixtures."""
+    by_key = {fixture_key(match): match for match in schedule}
+    if len(by_key) != len(schedule) or len({fixture_key(m) for m in results}) != len(
+        results
+    ):
+        raise InvalidFeed("Duplikaty w źródle")
+    status_order = {"scheduled": 0, "live": 1, "finished": 2}
+    for result in results:
+        key = fixture_key(result)
+        fixture = by_key.get(key, {})
+        # A placeholder on one list must not erase a score seen on the other.
+        if (
+            status_order.get(fixture.get("status"), -1)
+            > status_order[result["status"]]
+        ):
+            continue
+        merged = {**fixture, **result}
+        if not merged.get("time") and fixture.get("time"):
+            merged["time"] = fixture["time"]
+            merged["time_source"] = fixture.get("time_source") or fixture["source_url"]
+        by_key[key] = merged
+    return list(by_key.values())
+
+
 def build_feed(
     fetch,
     previous=None,
@@ -1224,20 +1249,7 @@ def build_feed(
     table = parse_table(standings_soup, expected_teams=cfg["expected_teams"])
     if len(table) != cfg["expected_teams"]:
         raise InvalidFeed("Niekompletna tabela źródłowa")
-    by_key = {fixture_key(m): m for m in schedule}
-    if len(by_key) != len(schedule) or len({fixture_key(m) for m in results}) != len(
-        results
-    ):
-        raise InvalidFeed("Duplikaty w źródle")
-    for result in results:
-        if result["status"] != "finished":
-            raise InvalidFeed("Nieprawidłowa strona wyników")
-        fixture = by_key.get(fixture_key(result), {})
-        result = {**fixture, **result}
-        if not result.get("time") and fixture.get("time"):
-            result["time"] = fixture["time"]
-        by_key[fixture_key(result)] = result
-    matches = list(by_key.values())
+    matches = merge_fixture_lists(schedule, results)
     cached = {
         detail_identity(m): m
         for m in previous.get("matches", [])
@@ -1294,7 +1306,8 @@ def build_feed(
 
     for match in matches:
         if match["status"] == "live" or (
-            match["status"] == "scheduled" and not match.get("time")
+            match["status"] == "scheduled"
+            and (not match.get("time") or match["source_url"] == results_url)
         ):
             detail(match)
             continue

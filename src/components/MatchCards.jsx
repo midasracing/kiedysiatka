@@ -1,6 +1,7 @@
 import React, { useId, useState } from 'react';
 import { ArrowRight, ChevronRight, Clock3 } from 'lucide-react';
-import { LEAGUES, isFinished, isLive, normalizeName } from '../data.js';
+import { LEAGUES, dateKey, feedDateKey, isFinished, isLive, normalizeName } from '../data.js';
+import { NOW } from '../dateUtils.js';
 import { broadcastLinks } from '../broadcasts.js';
 import { AnimatedSets } from './ScheduleMotion.jsx';
 import { ScoreValue } from './MatchMotion.jsx';
@@ -10,6 +11,7 @@ import { EmptyState } from './UiPrimitives.jsx';
 function Status({ match }) {
   if (isLive(match)) return <span className="im-live">NA ŻYWO</span>;
   if (isFinished(match)) return <span>Zakończony</span>;
+  if (match.status === 'scheduled' && feedDateKey(match.date) < dateKey(NOW())) return <span>Brak wyniku</span>;
   return <span>Zaplanowany</span>;
 }
 const MatchCard = React.memo(function MatchCard({ match, logos, compact = false }) {

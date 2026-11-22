@@ -27,3 +27,8 @@ export function shareFeedValue(previous, next) {
 }
 export const LIVE_REFRESH_MS = 10000;
 export const FULL_REFRESH_MS = 60000;
+export const STALE_FEED_MS = 24 * 60 * 60 * 1000;
+export function isFeedStale(feed, now = Date.now()) {
+  const updated = Date.parse(feed?.updated_at);
+  return Number.isFinite(updated) && now - updated > STALE_FEED_MS;
+}
