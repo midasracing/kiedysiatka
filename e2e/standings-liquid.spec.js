@@ -56,6 +56,15 @@ test('Tabela carries the whole league selector upwards, without a separate corne
 
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('animation-name', 'vh-table-content-in');
+  // The table now interpolates for 80% of the swipe rather than snapping in
+  // during its final third. No canvas blur or position changes are required.
+  const tableFadeFrames = await dialog.locator('.vh-standings-warp').evaluate(el =>
+    el.getAnimations().flatMap(anim => anim.effect?.getKeyframes?.() || [])
+      .filter(frame => frame.opacity != null)
+      .map(frame => ({ offset: frame.offset, opacity: Number(frame.opacity) }))
+  );
+  expect(tableFadeFrames).toContainEqual({ offset: 0.2, opacity: 0 });
+  expect(tableFadeFrames).toContainEqual({ offset: 1, opacity: 1 });
   await expect(dialog.locator('.vh-standings-fullscreen__flying-pill')).toHaveCount(0);
   await expect(dialog.locator('.vh-standings-fullscreen__section-title')).toHaveCount(0);
   const scene = await dialog.evaluate(root => {
@@ -123,6 +132,12 @@ test('The Mecze tab slides the sheet down and restores the league and dock', asy
   await dialog.getByRole('tab', { name: 'Mecze' }).click();
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('animation-name', 'vh-table-content-out');
+  const exitTableFade = await dialog.locator('.vh-standings-warp').evaluate(el =>
+    el.getAnimations().flatMap(anim => anim.effect?.getKeyframes?.() || [])
+      .filter(frame => frame.opacity != null)
+      .map(frame => ({ offset: frame.offset, opacity: Number(frame.opacity) }))
+  );
+  expect(exitTableFade).toContainEqual({ offset: 0.78, opacity: 0 });
   const exit = await dialog.evaluate(root => {
     const sheet = root.querySelector('.vh-standings-fullscreen__surface');
     const header = root.querySelector('.vh-standings-fullscreen__header');
