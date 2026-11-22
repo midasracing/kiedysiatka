@@ -7,13 +7,19 @@ test('league selector replaces categories and cards without opening league detai
   await expect(page.getByRole('heading', { name: 'Rozgrywki' })).toBeVisible();
   const picker = page.getByRole('listbox', { name: /Wybierz ligę/ });
   await expect(picker).toBeVisible();
-  await expect(picker.locator('canvas')).toBeVisible();
+  await expect(picker.locator('canvas')).toHaveCount(0);
+  await expect(picker.locator('.vh-league-picker__scroll')).toHaveCSS('overflow-y', 'auto');
+  await expect(picker.getByRole('option').first()).toHaveCSS('color', 'rgb(252, 0, 1)');
   await expect(picker.getByRole('option')).toHaveCount(6);
   await expect(picker.getByRole('option', { name: 'II Liga Mężczyzn' })).toHaveAttribute('aria-selected', 'true');
   await expect(page.getByRole('tablist', { name: 'Region rozgrywek' })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Dostępne ligi' })).toHaveCount(0);
   await expect(page.locator('[data-route="competitions"] .vh-league-stack')).toHaveCount(0);
   await picker.focus();
+  const scroller = picker.locator('.vh-league-picker__scroll');
+  await scroller.evaluate(node => { node.scrollTop = 4 * 78; });
+  await expect(picker.getByRole('option', { name: 'SuperLega Credem Banca' }))
+    .toHaveAttribute('aria-selected', 'true');
   await page.keyboard.press('End');
   await expect(picker.getByRole('option', { name: 'SV.League Men' })).toHaveAttribute('aria-selected', 'true');
   await page.keyboard.press('Home');

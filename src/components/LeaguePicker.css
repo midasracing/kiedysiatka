@@ -1,75 +1,95 @@
-/* Full-bleed warped type, shared visual geometry with the standings canvas. */
+/* Inspired by the user's clip: a plain vertical type list with dynamic indent.
+   Intentionally NO table lens, canvas, enlarged focus row or colour change. */
 .vh-league-picker {
   position: relative;
   isolation: isolate;
   width: calc(100% + 40px);
-  height: clamp(410px, calc(100dvh - 265px - env(safe-area-inset-top)), 710px);
-  margin: 6px -20px 20px;
+  height: clamp(390px, calc(100dvh - 274px - env(safe-area-inset-top)), 680px);
+  margin: 4px -20px 20px;
   overflow: hidden;
   background: #000;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
+}
+.vh-league-picker__scroll {
+  --picker-row-height: 78px;
+  --picker-spacer: 190px;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--picker-spacer) 0;
+  scroll-snap-type: y proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  outline-offset: -4px;
+}
+.vh-league-picker__scroll::-webkit-scrollbar { display: none; }
+.vh-league-picker__option {
+  box-sizing: border-box;
+  flex: 0 0 var(--picker-row-height);
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  height: var(--picker-row-height);
+  padding: 0 0 0 52px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fc0001;
+  cursor: pointer;
+  text-align: left;
+  scroll-snap-align: center;
   -webkit-tap-highlight-color: transparent;
+}
+.vh-league-picker__label {
+  display: block;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font: 900 clamp(33px, 10vw, 49px)/.98 Impact, 'Arial Narrow', 'Arial Black', sans-serif;
+  letter-spacing: -.012em;
+  color: #fc0001;
+  will-change: transform;
+}
+.vh-league-picker__option:focus-visible {
+  outline: 2px solid #fc0001;
   outline-offset: -5px;
 }
-.vh-league-picker__canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  cursor: grab;
-  touch-action: none;
-}
-.vh-league-picker:active .vh-league-picker__canvas { cursor: grabbing; }
 .vh-league-picker__pointer {
   position: absolute;
   top: 50%;
-  left: 13px;
+  left: 25px;
   transform: translateY(-50%);
+  width: 0;
+  height: 0;
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
-  border-left: 9px solid #fc0001;
+  border-left: 8px solid #fc0001;
   pointer-events: none;
-  filter: drop-shadow(0 0 10px rgba(252,0,1,.25));
 }
-.vh-league-picker__instruction {
+.vh-league-picker__hint {
   position: absolute;
-  bottom: 128px;
-  right: 22px;
-  color: rgba(252,0,1,.72);
+  right: 17px;
+  bottom: 100px;
   font: 800 10px/1.2 var(--font-ui, sans-serif);
   letter-spacing: .13em;
+  color: rgba(252, 0, 1, .6);
   pointer-events: none;
 }
-.vh-league-picker__accessible {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  clip-path: inset(50%);
-  white-space: nowrap;
+@media(max-width: 390px) {
+  .vh-league-picker {
+    width: calc(100% + 28px);
+    margin-left: -14px;
+    margin-right: -14px;
+  }
+  .vh-league-picker__option { padding-left: 48px; }
+  .vh-league-picker__pointer { left: 20px; }
 }
-.vh-league-picker--static {
-  display: grid;
-  align-content: start;
-  gap: 10px;
-  padding: 20px;
-  height: auto;
-  touch-action: auto;
-}
-.vh-league-picker--static button {
-  border: 0;
-  padding: 14px 4px;
-  text-align: left;
-  color: #fc0001;
-  background: transparent;
-  font: 900 clamp(28px, 9vw, 42px)/1.05 Impact, 'Arial Black', sans-serif;
-  text-transform: uppercase;
-}
-.vh-league-picker--static button.is-selected { color: #f5f2ed; }
-@media (max-width: 390px) {
-  .vh-league-picker { width: calc(100% + 28px); margin-left: -14px; margin-right: -14px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .vh-league-picker { touch-action: auto; }
+@media(prefers-reduced-motion: reduce) {
+  .vh-league-picker__scroll { scroll-behavior: auto; }
 }
