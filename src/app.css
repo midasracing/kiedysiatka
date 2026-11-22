@@ -365,9 +365,13 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 [data-route="competitions"] .vh-competition-detail::before {
   content: "";
   position: fixed;
-  inset: 0 0 auto;
+  /* Include the iPhone status-bar / safe area in the black top fade. */
+  top: calc(-1 * env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  bottom: auto;
   z-index: 1;
-  height: clamp(220px, 36dvh, 360px);
+  height: calc(clamp(220px, 36dvh, 360px) + env(safe-area-inset-top, 0px));
   pointer-events: none;
   background: linear-gradient(180deg,
     #000 0%,
@@ -384,6 +388,11 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   display: block;
   margin: 15px 0 25px;
 }
+/* Keep the league's switcher crisp above the black fade, not dimmed by it. */
+[data-route="competitions"] .vh-competition-detail > .vh-segmented {
+  position: relative;
+  z-index: 2;
+}
 [data-route="competitions"] .vh-competition-detail .vh-competition-heading__copy {
   width: 100%;
   max-width: 100%;
@@ -394,7 +403,7 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   width: max-content;
   max-width: none;
   margin: 0;
-  color: #fff;
+  color: #fc0001;
   font: 900 72px/.98 Impact, 'Arial Narrow', 'Arial Black', sans-serif;
   text-transform: uppercase;
   letter-spacing: -.012em;
