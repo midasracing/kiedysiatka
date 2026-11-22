@@ -101,14 +101,15 @@ test('Tabela carries the whole league selector upwards, without a separate corne
   await expect(raisedMenu).toBeVisible();
   await expect(raisedMenu.getByRole('tab', { name: 'Tabela' })).toHaveAttribute('aria-selected', 'true');
   const menuBounds = await raisedMenu.boundingBox();
-  expect(menuBounds.y).toBeGreaterThan(35);
-  expect(menuBounds.y).toBeLessThan(165);
+  expect(menuBounds.y).toBeGreaterThanOrEqual(0);
+  expect(menuBounds.y).toBeLessThan(80);
+  await expect(dialog.getByRole('button', { name: 'Wstecz' })).toHaveCount(0);
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('transform', 'none');
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('clip-path', 'none');
   expect(errors).toEqual([]);
 });
 
-test('Wstecz slides the whole sheet down and restores the league and dock', async ({ page }) => {
+test('The Mecze tab slides the sheet down and restores the league and dock', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openLeague(page);
   await page.getByRole('tab', { name: 'Tabela' }).click();
@@ -116,7 +117,7 @@ test('Wstecz slides the whole sheet down and restores the league and dock', asyn
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
   // Keep the exit keyframes available to inspect on slow mobile engines.
   await pauseClockAt(page, new Date('2026-11-04T14:00:00Z'));
-  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await dialog.getByRole('tab', { name: 'Mecze' }).click();
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
   const exit = await dialog.evaluate(root => {
     const sheet = root.querySelector('.vh-standings-fullscreen__surface');
@@ -166,7 +167,7 @@ test('league title stays in one position and only changes red to white', async (
   await expect(title).toHaveCSS('animation-name', 'vh-slide-title-in');
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
   await expect(title).toHaveCSS('color', 'rgb(255, 255, 255)');
-  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await dialog.getByRole('tab', { name: 'Mecze' }).click();
   await expect(title).toHaveCSS('animation-name', 'vh-slide-title-out');
   await expect(dialog).toHaveCount(0, { timeout: 3500 });
   await expect(source).toHaveCSS('visibility', 'visible');
@@ -201,7 +202,7 @@ test('reduced motion and previous Teams selection return instantly', async ({ pa
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active');
   await expect(dialog.locator('.vh-standings-fullscreen__surface')).toHaveCSS('animation-name', 'none');
-  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await dialog.getByRole('tab', { name: 'Drużyny' }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('tab', { name: 'Drużyny' })).toHaveAttribute('aria-selected', 'true');
   expect(await page.locator('#root').evaluate(node => node.inert)).toBe(false);
