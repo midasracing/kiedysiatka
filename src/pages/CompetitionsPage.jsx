@@ -17,7 +17,6 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const [roundOverride, setRoundOverride] = useState(null);
   const [tableGroup, setTableGroup] = useState(null);
   const [tableOrigin, setTableOrigin] = useState(null);
-  const [tableReturning, setTableReturning] = useState(false);
   const [visibleCount, setVisibleCount] = useState(30);
   const previousView = useRef('matches');
   const [pickerIndex, setPickerIndex] = useState(0);
@@ -71,12 +70,9 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const data = league ? feeds[league.id] : null;
   const grouped = league?.id === 'second' ? (data?.groups || []) : [];
   const groupChoices = group === 'all' ? grouped : grouped.filter(item => item.name === group);
-  const openTable = event => {
+  const openTable = () => {
     if (view === 'table') return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    // Capture the league title before the fullscreen portal locks scrolling.
-    // Its overlay copy will keep EXACTLY the same coordinates and letterforms:
-    // one visible name, only the color morphs from red to white.
+    // Preserve one stationary title while the black standings sheet slides up.
     const titleNode = leagueTitleRef.current;
     const titleRect = titleNode?.getBoundingClientRect();
     const titleCss = titleNode && window.getComputedStyle(titleNode);
@@ -91,27 +87,13 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       lineHeight: titleCss.lineHeight,
       letterSpacing: titleCss.letterSpacing,
     } : null;
-    // Capture the ACTUAL tab position before the portal locks document scroll.
-    // No DOM measurement or interpolation of the large standings Canvas.
-    setTableOrigin({
-      title,
-      left: rect.left,
-      top: rect.top,
-      width: rect.width,
-      height: rect.height,
-      radius: Math.min(rect.height / 2, Number.parseFloat(getComputedStyle(event.currentTarget).borderTopLeftRadius) || 13),
-      x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2,
-    });
-    setTableReturning(false);
+    setTableOrigin({ title });
     previousView.current = view;
     setTableGroup(group === 'all' ? (grouped[0]?.name ?? null) : group);
     setView('table');
   };
-  const startTableReturn = useCallback(() => setTableReturning(true), []);
   const closeTable = useCallback(() => {
     setView(previousView.current);
-    setTableReturning(false);
     setTableOrigin(null);
   }, []);
   const currentTableGroup = grouped.find(item => item.name === tableGroup) || grouped[0];
@@ -186,10 +168,9 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       selectedGroup={currentTableGroup?.name || null}
       onSelectGroup={setTableGroup}
       onBack={closeTable}
-      onExitStart={startTableReturn}
       origin={tableOrigin}
     />}
-    {league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '') + (view === 'table' ? ' is-liquid-table-open' : '') + (tableReturning ? ' is-liquid-table-returning' : '')}>
+    {league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '') + (view === 'table' ? ' is-liquid-table-open' : '')}>
       <div className="vh-competition-toolbar">
         <button className="vh-back" type="button" onClick={returnToPicker}>
           <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
@@ -217,7 +198,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
             ['teams', 'Drużyny'],
           ].map(([id, label]) => <button key={id} role="tab" aria-selected={view === id}
             className={(view === id ? 'selected' : '') + (id === 'table' ? ' vh-table-tab' : '')}
-            onClick={event => id === 'table' ? openTable(event) : setView(id)}>{id === 'table'
+            onClick={() => id === 'table' ? openTable() : setView(id)}>{id === 'table'
               ? <span className="vh-table-tab__label">{label}</span>
               : label}</button>)}
         </div>

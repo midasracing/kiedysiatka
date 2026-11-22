@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft } from 'lucide-react';
 import Standings from './Standings.jsx';
 import './FullscreenStandings.css';
 
-const LIQUID_ENTER_MS = 1120;
-const LIQUID_EXIT_MS = 760;
+const SLIDE_ENTER_MS = 620;
+const SLIDE_EXIT_MS = 540;
 
 /**
  * Fixed portal keeps the animated table outside PageStage's layout and outside
@@ -14,11 +14,9 @@ const LIQUID_EXIT_MS = 760;
  */
 export default function FullscreenStandings({
   leagueName, rows, logos, groups = [], selectedGroup, onSelectGroup, onBack,
-  onExitStart, origin,
+  origin,
 }) {
   const backRef = useRef(null);
-  const pillRef = useRef(null);
-  const portalRef = useRef(null);
   const exitTimer = useRef(null);
   const exiting = useRef(false);
   const reducedMotion = useRef(
@@ -33,40 +31,21 @@ export default function FullscreenStandings({
       onBack();
       return;
     }
-    onExitStart?.();
     setPhase('exit');
-    exitTimer.current = window.setTimeout(onBack, LIQUID_EXIT_MS);
-  }, [onBack, onExitStart, reducedMotion]);
+    exitTimer.current = window.setTimeout(onBack, SLIDE_EXIT_MS);
+  }, [onBack, reducedMotion]);
 
   useEffect(() => {
     if (reducedMotion) return undefined;
     const timer = window.setTimeout(() => {
       setPhase(current => current === 'enter' ? 'active' : current);
-    }, LIQUID_ENTER_MS);
+    }, SLIDE_ENTER_MS);
     return () => window.clearTimeout(timer);
   }, [reducedMotion]);
 
   useEffect(() => () => window.clearTimeout(exitTimer.current), []);
 
-  // One visual pill moves between the *real* segmented-button rectangle and
-  // its final header slot. No letter scaling and no animation on the table.
-  // Layout is measured before paint, so the flight starts without a jump.
-  useLayoutEffect(() => {
-    if (reducedMotion || !portalRef.current || !pillRef.current) return;
-    const target = pillRef.current.getBoundingClientRect();
-    const sourceLeft = Number.isFinite(origin?.left) ? origin.left : target.left;
-    const sourceTop = Number.isFinite(origin?.top) ? origin.top : target.top;
-    const dx = target.left - sourceLeft;
-    const dy = target.top - sourceTop;
-    portalRef.current.style.setProperty('--vh-flight-dx', `${dx}px`);
-    portalRef.current.style.setProperty('--vh-flight-dy', `${dy}px`);
-    portalRef.current.style.setProperty('--vh-flight-x30', `${dx * .30}px`);
-    portalRef.current.style.setProperty('--vh-flight-y30', `${dy * .30 + 16}px`);
-    portalRef.current.style.setProperty('--vh-flight-x75', `${dx * .75}px`);
-    portalRef.current.style.setProperty('--vh-flight-y75', `${dy * .75 + 12}px`);
-  }, [origin, reducedMotion]);
-
-  // The heading is a single fixed overlay at the source title's coordinates.
+  // The league heading stays stationary while the sheet moves underneath it.
   // It never scales, moves or gets clipped by the black unfolding surface.
   useEffect(() => {
     const body = document.body;
@@ -113,35 +92,6 @@ export default function FullscreenStandings({
     };
   }, [exitTable]);
 
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  const pillWidth = Number.isFinite(origin?.width) ? Math.max(1, origin.width) : 112;
-  const pillHeight = Number.isFinite(origin?.height) ? Math.max(1, origin.height) : 43;
-  const sourceLeft = Number.isFinite(origin?.left) ? origin.left : (vw - pillWidth) / 2;
-  const sourceTop = Number.isFinite(origin?.top) ? origin.top : (vh - pillHeight) / 2;
-  // The black reveal is clipped to the REAL Tabela tab at frame zero.
-  // Animate the four edges out to the viewport, retaining the selected
-  // button's rounded corners until they naturally flatten at full screen.
-  // No extra backdrop layer, no scaling of the distorted standings Canvas.
-  const sourceRight = Math.max(0, vw - sourceLeft - pillWidth);
-  const sourceBottom = Math.max(0, vh - sourceTop - pillHeight);
-  const pillRadius = Number.isFinite(origin?.radius)
-    ? Math.max(0, Math.min(origin.radius, pillHeight / 2, pillWidth / 2)) : 13;
-  // Progressively widen the rounded pill BEFORE opening vertically. Expanding
-  // all four inset edges at once created the tall black bar seen on iPhone.
-  const spillBounds = {
-    '--vh-spill-wide-top': `${Math.max(0, sourceTop * .90)}px`,
-    '--vh-spill-wide-right': `${sourceRight * .30}px`,
-    '--vh-spill-wide-bottom': `${sourceBottom * .90}px`,
-    '--vh-spill-wide-left': `${Math.max(0, sourceLeft * .30)}px`,
-    '--vh-spill-open-top': `${Math.max(0, sourceTop * .42)}px`,
-    '--vh-spill-open-right': `${sourceRight * .02}px`,
-    '--vh-spill-open-bottom': `${sourceBottom * .42}px`,
-    '--vh-spill-open-left': `${Math.max(0, sourceLeft * .02)}px`,
-    '--vh-spill-finish-top': `${Math.max(0, sourceTop * .055)}px`,
-    '--vh-spill-finish-bottom': `${sourceBottom * .055}px`,
-  };
-
   const sourceTitle = origin?.title || null;
   const titleTypography = sourceTitle ? {
     fontSize: sourceTitle.fontSize,
@@ -152,23 +102,13 @@ export default function FullscreenStandings({
   } : {};
 
   return createPortal(
-    <section ref={portalRef} className="vh-standings-fullscreen" role="dialog" aria-modal="true"
+    <section className="vh-standings-fullscreen" role="dialog" aria-modal="true"
       data-liquid-phase={phase}
       style={{
-        ...spillBounds,
         '--vh-title-left': `${sourceTitle?.left ?? 20}px`,
         '--vh-title-top': `${sourceTitle?.top ?? 135}px`,
-        '--vh-title-width': `${sourceTitle?.width ?? Math.max(1, vw - 40)}px`,
+        '--vh-title-width': `${sourceTitle?.width ?? Math.max(1, window.innerWidth - 40)}px`,
         '--vh-title-height': `${sourceTitle?.height ?? 48}px`,
-        '--vh-liquid-top': `${Math.max(0, sourceTop)}px`,
-        '--vh-liquid-right': `${sourceRight}px`,
-        '--vh-liquid-bottom': `${sourceBottom}px`,
-        '--vh-liquid-left': `${Math.max(0, sourceLeft)}px`,
-        '--vh-liquid-corner-radius': `${pillRadius}px`,
-        '--vh-pill-width': `${pillWidth}px`,
-        '--vh-pill-height': `${pillHeight}px`,
-        '--vh-pill-left': `${sourceLeft}px`,
-        '--vh-pill-top': `${sourceTop}px`,
       }}
       aria-label={`Tabela ligowa — ${leagueName}`}>
       <div className="vh-standings-fullscreen__surface">
@@ -182,7 +122,7 @@ export default function FullscreenStandings({
             <span>Wstecz</span>
           </button>
           <span className="vh-standings-fullscreen__section-title-wrap">
-            <button ref={pillRef} type="button" className="vh-standings-fullscreen__section-title"
+            <button type="button" className="vh-standings-fullscreen__section-title"
               onClick={exitTable} aria-disabled={phase === 'exit'}
               aria-label="Zamknij tabelę">Tabela</button>
           </span>
@@ -201,8 +141,6 @@ export default function FullscreenStandings({
       <div className="vh-standings-fullscreen__identity">
         <h2 style={titleTypography}>{leagueName.toLocaleUpperCase('pl-PL')}</h2>
       </div>
-      {!reducedMotion && phase !== 'active' &&
-        <span className="vh-standings-fullscreen__flying-pill" aria-hidden="true">Tabela</span>}
     </section>,
     document.body
   );

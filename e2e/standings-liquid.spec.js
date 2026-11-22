@@ -9,309 +9,153 @@ async function openLeague(page) {
   await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
 }
 
-test('Liquid Dive opens from the actual Tabela tab without stretching standings', async ({ page }) => {
-  // Keep the entry phase alive while reading its animation tracks. Slow
-  // WebKit workers can otherwise finish the 1120ms transition mid-assertion.
-  await pauseClockAt(page, new Date('2026-11-04T12:00:00Z'));
+test('Tabela slides up as a full black sheet, without pill morph or moving corner button', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  const pageErrors = [];
-  page.on('pageerror', error => pageErrors.push(error.message));
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
   await openLeague(page);
+  // Freeze only after the league-opening curtain has completed, so the swipe
+  // animation is still in its entry phase while WebKit reads its keyframes.
+  await pauseClockAt(page, new Date('2026-11-04T12:00:00Z'));
   const trigger = page.getByRole('tab', { name: 'Tabela' });
-  const origin = await trigger.boundingBox();
-  const sourceFont = await trigger.evaluate(node => getComputedStyle(node).fontFamily);
-  expect(origin).not.toBeNull();
+  const triggerFont = await trigger.evaluate(node => getComputedStyle(node).fontFamily);
   await trigger.click();
 
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
-  await expect(dialog).toBeVisible();
-  const rectangle = await dialog.evaluate(node => {
-    const css = getComputedStyle(node);
-    const read = key => Number.parseFloat(css.getPropertyValue(key));
-    const surface = node.querySelector('.vh-standings-fullscreen__surface');
-    const keyframes = surface.getAnimations().flatMap(animation => animation.effect?.getKeyframes?.() || []);
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
+  await expect(dialog.locator('.vh-standings-fullscreen__flying-pill')).toHaveCount(0);
+  const scene = await dialog.evaluate(root => {
+    const sheet = root.querySelector('.vh-standings-fullscreen__surface');
+    const button = root.querySelector('.vh-standings-fullscreen__section-title');
+    const header = root.querySelector('.vh-standings-fullscreen__header');
     return {
-      left: read('--vh-liquid-left'),
-      top: read('--vh-liquid-top'),
-      right: read('--vh-liquid-right'),
-      bottom: read('--vh-liquid-bottom'),
-      radius: read('--vh-liquid-corner-radius'),
-      width: innerWidth,
-      height: innerHeight,
-      keyframes: keyframes.map(frame => frame.clipPath).filter(Boolean),
+      panelColor: getComputedStyle(sheet).backgroundColor,
+      canvasInside: sheet.contains(root.querySelector('.vh-standings-warp__canvas')),
+      sheetAnimation: getComputedStyle(sheet).animationName,
+      frameValues: sheet.getAnimations().flatMap(animation =>
+        animation.effect?.getKeyframes?.() || []).map(frame => frame.transform).filter(Boolean),
+      noClip: getComputedStyle(sheet).clipPath,
+      buttonAnimation: getComputedStyle(button).animationName,
+      headerAnimation: getComputedStyle(header).animationName,
+      buttonFont: getComputedStyle(button).fontFamily,
+      dialogZ: Number(getComputedStyle(root).zIndex),
     };
   });
-  expect(rectangle.left).toBeCloseTo(origin.x, 0);
-  expect(rectangle.top).toBeCloseTo(origin.y, 0);
-  expect(rectangle.right).toBeCloseTo(rectangle.width - origin.x - origin.width, 0);
-  expect(rectangle.bottom).toBeCloseTo(rectangle.height - origin.y - origin.height, 0);
-  expect(rectangle.radius).toBeGreaterThan(0);
-  expect(rectangle.keyframes.some(value => value.includes('inset('))).toBe(true);
-  expect(rectangle.keyframes.some(value => value.includes('circle('))).toBe(false);
-  expect(rectangle.keyframes.length).toBeGreaterThanOrEqual(5);
-  // Midflight opens horizontally first (not a tall, letter-slicing bar).
-  const masks = await dialog.evaluate(node => {
-    const css = getComputedStyle(node);
-    const value = name => Number.parseFloat(css.getPropertyValue(name));
-    return {
-      width: innerWidth - value('--vh-spill-wide-left') - value('--vh-spill-wide-right'),
-      height: innerHeight - value('--vh-spill-wide-top') - value('--vh-spill-wide-bottom'),
-    };
-  });
-  expect(masks.width).toBeGreaterThan(masks.height * 1.2);
-  await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('animation-name', 'vh-liquid-rows-appear');
-  await expect(dialog.locator('.vh-standings-fullscreen__header')).toHaveCSS('animation-name', 'vh-liquid-header-appear');
+  expect(scene.panelColor).toBe('rgb(0, 0, 0)');
+  expect(scene.canvasInside).toBe(true);
+  expect(scene.sheetAnimation).toBe('vh-standings-slide-up');
+  expect(scene.frameValues).toHaveLength(2);
+  expect(scene.frameValues[0]).toContain('100%');
+  expect(scene.frameValues[1]).not.toContain('100%');
+  expect(scene.noClip).toBe('none');
+  expect(scene.buttonAnimation).toBe('none');
+  expect(scene.headerAnimation).toBe('vh-slide-header-in');
+  expect(scene.buttonFont).toBe(triggerFont);
+  expect(scene.dialogZ).toBeGreaterThan(100);
 
-  await page.clock.runFor(1200);
+  await page.clock.runFor(750);
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
-  await expect(dialog.locator('.vh-standings-fullscreen__liquid')).toHaveCount(0);
+  await expect(dialog.getByRole('button', { name: 'Zamknij tabelę' })).toBeVisible();
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('transform', 'none');
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('clip-path', 'none');
-  const title = dialog.locator('.vh-standings-fullscreen__section-title');
-  await expect(title).toHaveText('Tabela');
-  const font = await title.evaluate(node => getComputedStyle(node).fontFamily);
-  expect(font).toBe(sourceFont);
-
-  await dialog.getByRole('button', { name: 'Wstecz' }).click();
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
-  await page.clock.runFor(1000);
-  await expect(dialog).toHaveCount(0, { timeout: 3000 });
-  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
-  await expect(trigger).toBeVisible();
-  expect(pageErrors).toEqual([]);
+  expect(errors).toEqual([]);
 });
 
-test('Liquid Dive never distorts the full-width standings or overflows titles at 320px', async ({ page }) => {
+test('Wstecz slides the whole sheet down and restores the league and dock', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openLeague(page);
+  await page.getByRole('tab', { name: 'Tabela' }).click();
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  // Keep the exit keyframes available to inspect on slow mobile engines.
+  await pauseClockAt(page, new Date('2026-11-04T14:00:00Z'));
+  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
+  const exit = await dialog.evaluate(root => {
+    const sheet = root.querySelector('.vh-standings-fullscreen__surface');
+    const header = root.querySelector('.vh-standings-fullscreen__header');
+    return {
+      name: getComputedStyle(sheet).animationName,
+      duration: getComputedStyle(sheet).animationDuration,
+      values: sheet.getAnimations().flatMap(animation =>
+        animation.effect?.getKeyframes?.() || []).map(frame => frame.transform).filter(Boolean),
+      header: getComputedStyle(header).animationName,
+      flyers: root.querySelectorAll('.vh-standings-fullscreen__flying-pill').length,
+    };
+  });
+  expect(exit.name).toBe('vh-standings-slide-down');
+  expect(exit.duration).toBe('0.54s');
+  expect(exit.values).toHaveLength(2);
+  expect(exit.values[0]).not.toContain('100%');
+  expect(exit.values[1]).toContain('100%');
+  expect(exit.header).toBe('vh-slide-header-out');
+  expect(exit.flyers).toBe(0);
+  await page.clock.runFor(650);
+  await expect(dialog).toHaveCount(0, { timeout: 3500 });
+  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: 'Tabela' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Główna nawigacja' })).toBeVisible();
+  await expect(page.locator('#root')).not.toHaveJSProperty('inert', true);
+});
+
+test('league title stays in one position and only changes red to white', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openLeague(page);
+  await page.evaluate(() => document.fonts.ready);
+  const source = page.locator('.vh-competition-heading h1');
+  const before = await source.boundingBox();
+  const font = await source.evaluate(node => getComputedStyle(node).fontSize);
+  await page.getByRole('tab', { name: 'Tabela' }).click();
+
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  const title = dialog.locator('.vh-standings-fullscreen__identity h2');
+  await expect(title).toHaveCount(1);
+  await expect(source).toHaveCSS('visibility', 'hidden');
+  const after = await title.boundingBox();
+  expect(Math.abs(after.x - before.x)).toBeLessThan(2);
+  expect(Math.abs(after.y - before.y)).toBeLessThan(2);
+  expect(Math.abs(after.width - before.width)).toBeLessThan(3);
+  await expect(title).toHaveCSS('font-size', font);
+  await expect(title).toHaveCSS('animation-name', 'vh-slide-title-in');
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  await expect(title).toHaveCSS('color', 'rgb(255, 255, 255)');
+  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await expect(title).toHaveCSS('animation-name', 'vh-slide-title-out');
+  await expect(dialog).toHaveCount(0, { timeout: 3500 });
+  await expect(source).toHaveCSS('visibility', 'visible');
+  await expect(source).toHaveCSS('color', 'rgb(252, 0, 1)');
+});
+
+test('table viewport stays full size at 320px; swipe does not rescale rows', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });
   await openLeague(page);
   await page.getByRole('tab', { name: 'Tabela' }).click();
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
   await page.evaluate(() => document.fonts.ready);
-  const geometry = await dialog.evaluate(root => {
+  const bounds = await dialog.evaluate(root => {
     const warp = root.querySelector('.vh-standings-warp').getBoundingClientRect();
     const heading = root.querySelector('.vh-standings-fullscreen__identity h2').getBoundingClientRect();
-    const holder = root.querySelector('.vh-standings-fullscreen__identity').getBoundingClientRect();
-    return {
-      warpWidth: warp.width, warpHeight: warp.height, vw: innerWidth, vh: innerHeight,
-      titleLeft: heading.left, titleRight: heading.right,
-      holderLeft: holder.left, holderRight: holder.right,
-    };
+    return { width: warp.width, height: warp.height,
+      viewportW: innerWidth, viewportH: innerHeight,
+      headingLeft: heading.left, headingRight: heading.right };
   });
-  expect(geometry.warpWidth).toBeGreaterThanOrEqual(geometry.vw - 1);
-  expect(Math.abs(geometry.warpHeight - geometry.vh)).toBeLessThanOrEqual(2);
-  expect(geometry.titleLeft).toBeGreaterThanOrEqual(geometry.holderLeft - 1);
-  expect(geometry.titleRight).toBeLessThanOrEqual(geometry.holderRight + 2);
+  expect(bounds.width).toBeGreaterThanOrEqual(bounds.viewportW - 1);
+  expect(Math.abs(bounds.height - bounds.viewportH)).toBeLessThan(3);
+  expect(bounds.headingLeft).toBeGreaterThanOrEqual(-1);
+  expect(bounds.headingRight).toBeLessThanOrEqual(bounds.viewportW + 2);
 });
 
-test('Liquid Dive respects reduced motion and preserves the teams tab on return', async ({ page }) => {
+test('reduced motion and previous Teams selection return instantly', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await openLeague(page);
   await page.getByRole('tab', { name: 'Drużyny' }).click();
   await page.getByRole('tab', { name: 'Tabela' }).click();
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active');
-  await expect(dialog.locator('.vh-standings-fullscreen__liquid')).toHaveCount(0);
+  await expect(dialog.locator('.vh-standings-fullscreen__surface')).toHaveCSS('animation-name', 'none');
   await dialog.getByRole('button', { name: 'Wstecz' }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('tab', { name: 'Drużyny' })).toHaveAttribute('aria-selected', 'true');
   expect(await page.locator('#root').evaluate(node => node.inert)).toBe(false);
-});
-
-
-test('one slow black portal reveals the table and the same selected Tabela pill resurfaces', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await openLeague(page);
-  const original = page.locator('.vh-competition-detail .vh-table-tab');
-  const originBox = await original.boundingBox();
-  await original.click();
-  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
-  await expect(dialog).toBeVisible();
-
-  // The black backdrop AND its table are a single clipping element.
-  // An independent liquid mask or delayed opacity curtain caused the old jump.
-  const scene = await dialog.evaluate(root => {
-    const surface = root.querySelector('.vh-standings-fullscreen__surface');
-    const css = getComputedStyle(surface);
-    const flying = root.querySelector('.vh-standings-fullscreen__flying-pill');
-    return {
-      background: css.backgroundColor,
-      inkLayers: root.querySelectorAll('.vh-standings-fullscreen__liquid').length,
-      tableInsidePortal: surface.contains(root.querySelector('.vh-standings-warp')),
-      headingAbovePortal: !surface.contains(root.querySelector('.vh-standings-fullscreen__identity h2')) &&
-        !!root.querySelector(':scope > .vh-standings-fullscreen__identity h2'),
-      pillKeyframes: Array.from(document.styleSheets).some(sheet => {
-        try {
-          return Array.from(sheet.cssRules).some(rule =>
-            rule.name === 'vh-liquid-open' && rule.cssText.includes('inset(') &&
-              !rule.cssText.includes('circle('));
-        } catch { return false; }
-      }),
-      hasFlight: !!flying,
-      cornerRadius: parseFloat(getComputedStyle(root).getPropertyValue('--vh-liquid-corner-radius')),
-    };
-  });
-  expect(scene.background).toBe('rgb(0, 0, 0)');
-  expect(scene.inkLayers).toBe(0);
-  expect(scene.tableInsidePortal).toBe(true);
-  expect(scene.headingAbovePortal).toBe(true);
-  expect(scene.pillKeyframes).toBe(true);
-  expect(scene.cornerRadius).toBeGreaterThan(0);
-
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
-  // The original selected pill has really been lifted out: no empty white
-  // button remains inside the old segmented control during the transition.
-  await expect(original).toHaveCSS('opacity', '0');
-  await expect(dialog.locator('.vh-standings-fullscreen__flying-pill')).toHaveCount(0);
-  const surfaced = dialog.getByRole('button', { name: 'Zamknij tabelę' });
-  const design = await surfaced.evaluate(node => {
-    const css = getComputedStyle(node);
-    const box = node.getBoundingClientRect();
-    return {
-      background: css.backgroundColor, color: css.color,
-      borderRadius: css.borderRadius, fontSize: css.fontSize,
-      x: box.left, y: box.top, width: box.width, height: box.height,
-    };
-  });
-  const sourceStyle = await original.evaluate(node => {
-    const css = getComputedStyle(node);
-    return { background: css.backgroundColor, color: css.color,
-      borderRadius: css.borderRadius, fontSize: css.fontSize };
-  });
-  expect(design.background).toBe(sourceStyle.background);
-  expect(design.color).toBe(sourceStyle.color);
-  expect(design.borderRadius).toBe(sourceStyle.borderRadius);
-  expect(design.fontSize).toBe(sourceStyle.fontSize);
-  expect(Math.abs(design.width - originBox.width)).toBeLessThanOrEqual(1);
-  expect(Math.abs(design.height - originBox.height)).toBeLessThanOrEqual(1);
-  expect(design.x).toBeGreaterThan(originBox.x);
-  expect(design.y).toBeLessThan(originBox.y);
-
-  await surfaced.click();
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
-  await expect(dialog).toHaveCount(0, { timeout: 3500 });
-  await expect(original).toBeVisible();
-});
-
-test('selected Tabela button dives from menu and rejoins the inactive tab on return', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await openLeague(page);
-  const source = page.locator('.vh-competition-detail .vh-table-tab');
-  await source.click();
-  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
-  const entering = await dialog.evaluate(root => ({
-    source: getComputedStyle(document.querySelector('.vh-table-tab')).animationName,
-    pill: getComputedStyle(root.querySelector('.vh-standings-fullscreen__flying-pill')).animationName,
-  }));
-  expect(entering.source).toContain('vh-liquid-tab-submerge');
-  expect(entering.pill).toContain('vh-liquid-pill-arrive');
-
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
-  await dialog.getByRole('button', { name: 'Zamknij tabelę' }).click();
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
-  const returning = await dialog.evaluate(root => {
-    const sourceStyle = getComputedStyle(document.querySelector('.vh-table-tab'));
-    const pillStyle = getComputedStyle(root.querySelector('.vh-standings-fullscreen__flying-pill'));
-    return {
-      animation: pillStyle.animationName,
-      sourceOpacity: sourceStyle.opacity,
-      sourceBackground: sourceStyle.backgroundColor,
-    };
-  });
-  expect(returning.animation).toContain('vh-liquid-pill-return');
-  expect(returning.sourceOpacity).toBe('0');
-  // The white selected fill transitions back to a transparent menu slot
-  // over 180ms, so wait for the settled style instead of reading mid-frame.
-  await expect.poll(() => source.evaluate(node => getComputedStyle(node).backgroundColor),
-    { timeout: 700 }).toBe('rgba(0, 0, 0, 0)');
-  await expect(dialog).toHaveCount(0, { timeout: 3500 });
-  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
-  await expect(source).toHaveCSS('opacity', '1');
-});
-
-test('return closes as a rounded pill with no red table ghosts or vanishing button', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await openLeague(page);
-  await page.getByRole('tab', { name: 'Tabela' }).click();
-  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
-
-  await dialog.getByRole('button', { name: 'Wstecz' }).click();
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
-  const motion = await dialog.evaluate(root => {
-    const getAnimation = selector => {
-      const element = root.querySelector(selector);
-      const css = getComputedStyle(element);
-      const frames = element.getAnimations().flatMap(animation =>
-        animation.effect?.getKeyframes?.() || []);
-      return { name: css.animationName, duration: css.animationDuration, frames };
-    };
-    return {
-      reveal: getAnimation('.vh-standings-fullscreen__surface'),
-      rows: getAnimation('.vh-standings-warp'),
-      header: getAnimation('.vh-standings-fullscreen__header'),
-      title: getAnimation('.vh-standings-fullscreen__identity h2'),
-      pill: getAnimation('.vh-standings-fullscreen__flying-pill'),
-    };
-  });
-
-  expect(motion.reveal.name).toBe('vh-liquid-close');
-  expect(motion.reveal.duration).toBe('0.76s');
-  expect(motion.reveal.frames.length).toBeGreaterThanOrEqual(5);
-  expect(motion.reveal.frames.at(-1).clipPath).toContain('inset(');
-  expect(motion.rows.name).toBe('vh-liquid-rows-exit');
-  expect(motion.rows.frames.some(frame => frame.offset === 0.2 && frame.opacity === '0')).toBe(true);
-  expect(motion.header.name).toBe('vh-liquid-header-exit');
-  expect(motion.title.name).toBe('vh-liquid-league-return');
-  expect(motion.title.frames.some(frame => frame.offset === 0.55 && /#fc0001|rgb\(252,\s*0,\s*1\)/i.test(frame.color || ''))).toBe(true);
-  expect(motion.pill.name).toBe('vh-liquid-pill-return');
-  // The copy must MOVE towards its original slot and fade there, never
-  // blink off early or stay visible until the portal is removed.
-  expect(motion.pill.frames[0].opacity).toBe('1');
-  expect(motion.pill.frames.some(frame => frame.offset === 0.52 && frame.opacity === '1')).toBe(true);
-  expect(motion.pill.frames.some(frame => frame.offset === 0.8 && frame.opacity === '0')).toBe(true);
-  expect(motion.pill.frames.filter(frame => frame.transform != null).length).toBe(2);
-  expect(motion.pill.frames.at(-1).opacity).toBe('0');
-  const tabReturn = await page.locator('.vh-competition-detail .vh-table-tab').evaluate(node => ({
-    name: getComputedStyle(node).animationName,
-    frames: node.getAnimations().flatMap(animation => animation.effect?.getKeyframes?.() || []),
-  }));
-  expect(tabReturn.name).toContain('vh-liquid-tab-reappear');
-  expect(tabReturn.frames.some(frame => frame.offset === 0.65 && frame.opacity === '0')).toBe(true);
-  expect(tabReturn.frames.at(-1).opacity).toBe('1');
-
-  await expect(dialog).toHaveCount(0, { timeout: 3500 });
-  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
-  await expect(page.locator('.vh-competition-heading h1')).toHaveCSS('color', 'rgb(252, 0, 1)');
-});
-
-test('one league heading remains stationary above the unfold and changes only its ink', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await openLeague(page);
-  const source = page.locator('.vh-competition-heading h1');
-  await page.evaluate(() => document.fonts.ready);
-  const originalRect = await source.boundingBox();
-  const originalFont = await source.evaluate(node => getComputedStyle(node).fontSize);
-  await page.getByRole('tab', { name: 'Tabela' }).click();
-  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
-  const title = dialog.locator('.vh-standings-fullscreen__identity h2');
-  await expect(title).toHaveCount(1);
-  await expect(source).toHaveCSS('visibility', 'hidden');
-  expect(await dialog.locator('.vh-standings-fullscreen__surface .vh-standings-fullscreen__identity h2').count()).toBe(0);
-  const overlayRect = await title.boundingBox();
-  expect(Math.abs(overlayRect.x - originalRect.x)).toBeLessThanOrEqual(1);
-  expect(Math.abs(overlayRect.y - originalRect.y)).toBeLessThanOrEqual(1);
-  expect(Math.abs(overlayRect.width - originalRect.width)).toBeLessThanOrEqual(2);
-  await expect(title).toHaveCSS('font-size', originalFont);
-  await expect(title).toHaveCSS('animation-name', 'vh-liquid-league-white');
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
-  await expect(title).toHaveCSS('color', 'rgb(255, 255, 255)');
-  const atRestRect = await title.boundingBox();
-  expect(Math.abs(atRestRect.y - overlayRect.y)).toBeLessThanOrEqual(1);
-  await dialog.getByRole('button', { name: 'Wstecz' }).click();
-  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
-  await expect(dialog).toHaveCount(0, { timeout: 3500 });
-  await expect(source).toHaveCSS('visibility', 'visible');
-  await expect(source).toHaveCSS('color', 'rgb(252, 0, 1)');
 });

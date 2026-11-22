@@ -198,9 +198,9 @@
   }
 }
 
-/* The black standings view grows from the ACTUAL Tabela pill geometry.
-   Animate one rounded rectangular clipping surface (not a zero-radius circle);
-   the table, gradient and heading stay full-sized inside it. */
+/* A native-feeling vertical swipe: one opaque sheet slides in from the
+   bottom. Never clip, scale or distort the warped Canvas; the full viewport
+   is composed as a single translation on its parent. */
 .vh-standings-fullscreen[data-liquid-phase="enter"],
 .vh-standings-fullscreen[data-liquid-phase="exit"] {
   background: transparent;
@@ -210,201 +210,52 @@
   inset: 0;
   z-index: 1;
   background: #000;
-  contain: paint;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
 }
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface {
-  animation: vh-liquid-open 1120ms linear both;
+  animation: vh-standings-slide-up 620ms cubic-bezier(.22,.82,.25,1) both;
 }
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__surface {
-  /* A dedicated close animation lets the page reappear smoothly instead
-     of literally rewinding the long expanding black mask. */
-  animation: vh-liquid-close 760ms linear both;
+  animation: vh-standings-slide-down 540ms cubic-bezier(.42,0,.64,1) both;
 }
-/* A horizontally spreading pill morph. The black mask grows wide first,
-   then gently spills vertically; convex corners stay rounded until the
-   reveal has nearly filled the viewport. No second circle or black overlay. */
-@keyframes vh-liquid-open {
-  0% {
-    clip-path: inset(
-      var(--vh-liquid-top) var(--vh-liquid-right)
-      var(--vh-liquid-bottom) var(--vh-liquid-left)
-      round var(--vh-liquid-corner-radius)
-    );
-  }
-  22% {
-    clip-path: inset(
-      var(--vh-spill-wide-top) var(--vh-spill-wide-right)
-      var(--vh-spill-wide-bottom) var(--vh-spill-wide-left)
-      round 30px
-    );
-    animation-timing-function: cubic-bezier(.28,.68,.3,1);
-  }
-  52% {
-    clip-path: inset(
-      var(--vh-spill-open-top) var(--vh-spill-open-right)
-      var(--vh-spill-open-bottom) var(--vh-spill-open-left)
-      round 68px
-    );
-    animation-timing-function: cubic-bezier(.35,.5,.22,1);
-  }
-  82% {
-    clip-path: inset(
-      var(--vh-spill-finish-top) 0px
-      var(--vh-spill-finish-bottom) 0px
-      round 40px
-    );
-    animation-timing-function: ease-out;
-  }
-  100% {
-    clip-path: inset(0px 0px 0px 0px round 0px);
-  }
+@keyframes vh-standings-slide-up {
+  from { transform: translate3d(0,100%,0); }
+  to { transform: translate3d(0,0,0); }
 }
-/* On return, uncover the league screen early and narrow the black shape
-   into the original Tabela tab. All edges stay rounded and move together;
-   the last frame EXACTLY matches the captured source rectangle. */
-@keyframes vh-liquid-close {
-  0% {
-    clip-path: inset(0px 0px 0px 0px round 0px);
-  }
-  18% {
-    clip-path: inset(
-      var(--vh-spill-finish-top) 0px
-      var(--vh-spill-finish-bottom) 0px round 38px
-    );
-    animation-timing-function: cubic-bezier(.42,0,.28,1);
-  }
-  45% {
-    clip-path: inset(
-      var(--vh-spill-open-top) var(--vh-spill-open-right)
-      var(--vh-spill-open-bottom) var(--vh-spill-open-left) round 64px
-    );
-    animation-timing-function: cubic-bezier(.45,.05,.23,1);
-  }
-  78% {
-    clip-path: inset(
-      var(--vh-spill-wide-top) var(--vh-spill-wide-right)
-      var(--vh-spill-wide-bottom) var(--vh-spill-wide-left) round 27px
-    );
-    animation-timing-function: cubic-bezier(.2,.7,.26,1);
-  }
-  100% {
-    clip-path: inset(
-      var(--vh-liquid-top) var(--vh-liquid-right)
-      var(--vh-liquid-bottom) var(--vh-liquid-left)
-      round var(--vh-liquid-corner-radius)
-    );
-  }
+@keyframes vh-standings-slide-down {
+  from { transform: translate3d(0,0,0); }
+  to { transform: translate3d(0,100%,0); }
 }
-
-/* The screen is uncovered by the same pill-shaped black surface. Delay
-   the RED warp rows and title just until the black background is wide
-   enough, avoiding sliced lettering over the original match cards. */
-.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-warp {
-  animation: vh-liquid-rows-appear 1120ms linear both;
-}
-.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-warp {
-  /* Clear the warped red rows BEFORE the mask folds over them; otherwise
-     they remain visibly sliced across the closing black rectangle. */
-  animation: vh-liquid-rows-exit 760ms linear both;
-}
-@keyframes vh-liquid-rows-appear {
-  0%, 58% { opacity: 0; }
-  94%, 100% { opacity: 1; }
-}
-@keyframes vh-liquid-rows-exit {
-  0% { opacity: 1; }
-  20%, 100% { opacity: 0; }
-}
+/* The Tabela button does not fly into the corner. It only materializes in
+   its final position as the sliding panel finishes its swipe. */
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__header {
-  animation: vh-liquid-header-appear 1120ms linear both;
+  animation: vh-slide-header-in 620ms linear both;
 }
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__header {
-  animation: vh-liquid-header-exit 760ms linear both;
+  animation: vh-slide-header-out 540ms linear both;
 }
-@keyframes vh-liquid-header-appear {
-  0%, 66% { opacity: 0; }
-  95%, 100% { opacity: 1; }
+@keyframes vh-slide-header-in {
+  0%, 83% { opacity: 0; }
+  100% { opacity: 1; }
 }
-@keyframes vh-liquid-header-exit {
+@keyframes vh-slide-header-out {
   0% { opacity: 1; }
-  20%, 100% { opacity: 0; }
+  12%, 100% { opacity: 0; }
 }
-
-/* The trigger's selected tab disappears under the surface as an exact copy
-   travels to the top-right. Only a small pill is animated via compositor
-   transforms; this layer is never wrapped around the heavy standings Canvas. */
-.vh-standings-fullscreen__flying-pill {
-  position: fixed;
-  z-index: 8;
-  display: grid;
-  place-items: center;
-  left: var(--vh-pill-left);
-  top: var(--vh-pill-top);
-  width: var(--vh-pill-width);
-  height: var(--vh-pill-height);
-  padding: 0 10px;
-  border: 0;
-  border-radius: 13px;
-  background: #f5f2ed;
-  box-shadow: 0 0 0 5px #24211e, 0 4px 12px rgba(0,0,0,.13);
-  color: #211b17;
-  font: 750 14px/1.2 var(--font-ui, 'DM Sans', sans-serif);
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-  will-change: transform, opacity;
+/* Original Tabela tab is an ordinary button again, with no disappearing
+   duplicate or cross-screen motion. Once the sheet descends, the inactive
+   tab is already in the correct place. */
+.vh-competition-detail.is-liquid-table-open .vh-table-tab {
+  background: transparent;
+  color: #c3bcb4;
+  box-shadow: none;
 }
-/* The original selected tab makes the dive; this lightweight visual copy
-   travels while hidden, then resurfaces only at the header. Its movement and
-   the existing black portal have separate layers, so neither restarts the other. */
-.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__flying-pill {
-  animation: vh-liquid-pill-arrive 1120ms cubic-bezier(.22,.75,.28,1) both;
-}
-.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__flying-pill {
-  animation: vh-liquid-pill-return 760ms cubic-bezier(.26,.63,.22,1) both;
-}
-@keyframes vh-liquid-pill-arrive {
-  0%, 61% {
-    opacity: 0;
-    transform: translate3d(0, 12px, 0);
-  }
-  70% {
-    opacity: 0;
-    transform: translate3d(var(--vh-flight-dx, 0px),
-      calc(var(--vh-flight-dy, 0px) + 14px), 0);
-  }
-  90%, 100% {
-    opacity: 1;
-    transform: translate3d(var(--vh-flight-dx, 0px),var(--vh-flight-dy, 0px),0);
-  }
-}
-/* Reverse flight: Tabela travels toward its original tab and dissolves
-   progressively, without blinking off or reappearing as a white button.
-   The real inactive tab fades in only when the flying copy is almost gone. */
-@keyframes vh-liquid-pill-return {
-  0% {
-    opacity: 1;
-    transform: translate3d(var(--vh-flight-dx, 0px),var(--vh-flight-dy, 0px),0);
-    background: #f5f2ed;
-    color: #211b17;
-    box-shadow: 0 0 0 5px #24211e, 0 4px 12px rgba(0,0,0,.13);
-  }
-  /* Opacity fades over its own interval; transform interpolates smoothly
-     across the entire 0–100% duration with NO intermediate stop or jerk. */
-  52% { opacity: 1; }
-  80% { opacity: 0; }
-  100% {
-    opacity: 0;
-    transform: translate3d(0,0,0);
-  }
-}
-
-/* During the flight the *actual* header button retains its final geometry
-   for accurate destination measurement and becomes interactive at the end. */
-.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__section-title-wrap,
-.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__section-title-wrap {
-  opacity: 0;
-  pointer-events: none;
+.vh-competition-detail .vh-league-view-tabs .vh-segmented .vh-table-tab__label {
+  display: inline-block;
+  margin: 0;
+  font: inherit;
+  line-height: inherit;
 }
 .vh-standings-fullscreen__section-title:focus-visible {
   outline: 2px solid #fc0001;
@@ -412,74 +263,30 @@
 }
 .vh-standings-fullscreen__section-title:active { opacity: .76; }
 
-/* We leave the original Tabela tab in the segmented control so that exit
-   returns to exactly the same scroll position and matching selected pill. */
-.vh-competition-detail .vh-league-view-tabs .vh-segmented .vh-table-tab__label {
-  display: inline-block;
-  margin: 0;
-  font: inherit;
-  line-height: inherit;
+/* One league title remains stationary above the sheet and changes only
+   color, avoiding duplicate lettering and layout jumps during the swipe. */
+.vh-competition-detail.is-liquid-table-open .vh-competition-heading h1 {
+  visibility: hidden;
 }
-/* The REAL white tab sinks before its copy can appear in the top-right.
-   On close, the returning copy floats above the ink and blends into the
-   inactive tab, avoiding the previous abrupt double-button flash. */
-.vh-competition-detail.is-liquid-table-open:not(.is-liquid-table-returning) .vh-table-tab {
-  animation: vh-liquid-tab-submerge 240ms cubic-bezier(.36,0,.72,.42) both;
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__identity h2 {
+  animation: vh-slide-title-in 620ms linear both;
 }
-.vh-competition-detail.is-liquid-table-open.is-liquid-table-returning .vh-table-tab {
-  /* The source button is NOT another white pill. It only fades in as an
-     inactive label after the flying copy has dissolved near its destination. */
-  background: transparent;
-  color: #c3bcb4;
-  animation: vh-liquid-tab-reappear 760ms linear both;
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__identity h2 {
+  animation: vh-slide-title-out 540ms linear both;
 }
-@keyframes vh-liquid-tab-reappear {
-  0%, 65% { opacity: 0; }
-  95%, 100% { opacity: 1; }
+@keyframes vh-slide-title-in {
+  0%, 32% { color: #fc0001; }
+  78%, 100% { color: #fff; }
 }
-@keyframes vh-liquid-tab-submerge {
-  from { opacity: 1; transform: translate3d(0,0,0); }
-  to { opacity: 0; transform: translate3d(0,12px,0); }
-}
-/* Smoothly shift the selected surface back to Mecze or Drużyny after landing,
-   without touching the original pill typography or the black reveal. */
-.vh-competition-detail .vh-league-view-tabs .vh-segmented button {
-  transition: background-color 180ms ease, color 180ms ease;
+@keyframes vh-slide-title-out {
+  0%, 12% { color: #fff; }
+  62%, 100% { color: #fc0001; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .vh-competition-detail.is-liquid-table-open .vh-table-tab {
+  .vh-standings-fullscreen__surface,
+  .vh-standings-fullscreen__header,
+  .vh-standings-fullscreen__identity h2 {
     animation: none !important;
     transform: none !important;
   }
-}
-
-/* The name remains full-width, fixed and unscaled, with a soft red-to-white
-   colour handoff as the growing black background reaches its position. */
-.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__identity h2 {
-  animation: vh-liquid-league-white 1120ms ease-in-out both;
-}
-.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__identity h2 {
-  animation: vh-liquid-league-return 760ms linear both;
-}
-@keyframes vh-liquid-league-white {
-  0%, 45% { color: #fc0001; }
-  76%, 100% { color: #fff; }
-}
-@keyframes vh-liquid-league-return {
-  0%, 10% { color: #fff; }
-  55%, 100% { color: #fc0001; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vh-standings-fullscreen__surface,
-  .vh-standings-fullscreen__identity h2 {
-    animation: none !important;
-    clip-path: none !important;
-  }
-}
-
-/* The source title keeps its space in the league layout but never paints
-   underneath the one overlay heading during the opening or closing flight. */
-.vh-competition-detail.is-liquid-table-open .vh-competition-heading h1 {
-  visibility: hidden;
 }
