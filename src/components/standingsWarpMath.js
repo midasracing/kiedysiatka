@@ -27,3 +27,24 @@ export function standingsWarpSourceY(screenY, viewportHeight) {
   const normalized = (screenY - center) / center;
   return center + (screenY - center) * (1 + 0.36 * normalized * normalized);
 }
+
+// Projection depends only on the viewport, never on the scroll offset. Build
+// the same two-pixel strips once per resize instead of repeating pow/sin for
+// every strip of every animation frame.
+export function standingsWarpStrips(width, height) {
+  const strips = [];
+  for (let screenY = 0; screenY < height; screenY += 2) {
+    const step = Math.min(2, height - screenY);
+    const midY = screenY + step / 2;
+    const normalized = (midY - height / 2) / (height / 2);
+    const targetWidth = width * standingsWarpScale(midY, height);
+    strips.push({
+      screenY, step,
+      sourceStart: standingsWarpSourceY(screenY, height),
+      sourceEnd: standingsWarpSourceY(screenY + step, height),
+      targetWidth,
+      targetX: (width - targetWidth) / 2 + Math.sin(normalized * Math.PI) * width * 0.014,
+    });
+  }
+  return strips;
+}

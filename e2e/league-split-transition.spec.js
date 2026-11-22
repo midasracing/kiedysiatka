@@ -2,6 +2,16 @@ import { test, expect } from '@playwright/test';
 
 test('touching the centred league splits two full-width lines and reverse restores the selector', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
+  // Freeze only this short overlay while inspecting its full keyframe list.
+  // Slow CI must not lose an 860ms animation between locator assertions.
+  await page.addInitScript(() => {
+    const animate = Element.prototype.animate;
+    Element.prototype.animate = function (...args) {
+      const animation = animate.apply(this, args);
+      if (this.closest('.vh-league-split')) animation.pause();
+      return animation;
+    };
+  });
   await page.goto('/#competitions');
   const option = page.getByRole('option', { name: 'II Liga Mężczyzn' });
   await expect(option).toHaveAttribute('aria-selected', 'true');
@@ -56,6 +66,7 @@ test('touching the centred league splits two full-width lines and reverse restor
   await expect(page.getByRole('heading', { name: 'II Liga Mężczyzn' })).toBeVisible();
   await expect(page.getByRole('tab', { name: 'Mecze' })).toBeVisible();
 
+  await split.evaluate(node => node.getAnimations({ subtree: true }).forEach(animation => animation.finish()));
   await expect(split).toHaveCount(0, { timeout: 5000 });
   await page.getByRole('button', { name: 'Wstecz' }).click();
   const closing = page.locator('.vh-league-split[data-phase="close"]');
@@ -75,6 +86,7 @@ test('touching the centred league splits two full-width lines and reverse restor
   expect(keyframeOpacities.length).toBeGreaterThanOrEqual(4);
   expect(keyframeOpacities[0]).toBe(0);
   expect(keyframeOpacities.at(-1)).toBe(1);
+  await closing.evaluate(node => node.getAnimations({ subtree: true }).forEach(animation => animation.finish()));
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
   await expect(page.getByRole('listbox', { name: /Wybierz ligę/ })).toBeVisible();
   await expect(page.getByRole('option', { name: 'II Liga Mężczyzn' }))

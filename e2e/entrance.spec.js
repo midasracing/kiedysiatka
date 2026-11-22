@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { pauseClockAt } from './helpers/clock.js';
 
 test('the opening logo lands on the real header without changing its shape', async ({ page }) => {
   const now = new Date('2026-11-04T12:00:00Z');
-  await page.clock.install({ time: now });
-  await page.clock.pauseAt(now);
+  await pauseClockAt(page, now);
   await page.goto('/');
   const intro = page.locator('.vh-startup-intro');
   await expect(intro).toBeVisible();
@@ -22,8 +22,7 @@ test('the opening logo lands on the real header without changing its shape', asy
 
 test('home entrance uses the original logo, has no skip button and never replays on tab changes', async ({ page }) => {
   const now = new Date('2026-11-04T12:00:00Z');
-  await page.clock.install({ time: now });
-  await page.clock.pauseAt(now);
+  await pauseClockAt(page, now);
   await page.goto('/');
   const intro = page.locator('.vh-startup-intro');
   await expect(intro).toBeVisible();
@@ -45,8 +44,7 @@ test('home entrance uses the original logo, has no skip button and never replays
 
 test('entrance finishes on schedule even if the Rive asset is unavailable', async ({ page }) => {
   const now = new Date('2026-11-04T12:00:00Z');
-  await page.clock.install({ time: now });
-  await page.clock.pauseAt(now);
+  await pauseClockAt(page, now);
   await page.route('**/motion/entrance.riv*', route => route.abort());
   await page.goto('/');
   await expect(page.locator('.vh-startup-intro')).toHaveCount(1);
@@ -59,8 +57,7 @@ test('entrance finishes on schedule even if the Rive asset is unavailable', asyn
 
 test('reduced motion bypasses the entrance and direct links retain their destination', async ({ page }) => {
   const now = new Date('2026-11-04T12:00:00Z');
-  await page.clock.install({ time: now });
-  await page.clock.pauseAt(now);
+  await pauseClockAt(page, now);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   await expect(page.locator('.vh-startup-intro')).toHaveCount(0);

@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { pauseClockAt } from './helpers/clock.js';
 
 const match = (id, home, away) => ({ id, home, away, date: '31.10.2026', time: '15:00', status: 'live', home_sets: 1, away_sets: 0, current_points: '20:19', set_scores: ['25:20'] });
 async function setup(page) {
-  await page.clock.install({ time: new Date('2026-10-31T15:05:00Z') });
-  await page.clock.pauseAt(new Date('2026-10-31T15:05:00Z'));
+  await pauseClockAt(page, new Date('2026-10-31T15:05:00Z'));
   const state = {
     payload: { updated_at: 'unchanged-timestamp', teams: [], matches: [match('live-one', 'A', 'B'), match('live-two', 'C', 'D')] },
     counts: {}, fail: false, hold: false, pending: null
@@ -115,7 +115,8 @@ test('slow requests do not overlap and hidden pages pause polling until visible 
   await page.clock.fastForward(10000);
   await expect.poll(() => Boolean(state.pending)).toBe(true);
   const count = state.counts['tauron.json'];
-  await page.clock.fastForward(30000);
+  // Check non-overlap while this request is still within its 15s deadline.
+  await page.clock.fastForward(5000);
   expect(state.counts['tauron.json']).toBe(count);
   state.hold = false;
   await state.pending.fulfill({ json: state.payload });
@@ -137,3 +138,21 @@ test('slow requests do not overlap and hidden pages pause polling until visible 
   await expect(card(page, 'live-one')).toContainText('23:19');
 });
 
+
+
+test('a stalled league times out, retains scores and recovers on the next poll', async ({ page }) => {
+  const state = await setup(page);
+  state.hold = true;
+  await page.clock.fastForward(10000);
+  await expect.poll(() => Boolean(state.pending)).toBe(true);
+  const count = state.counts['tauron.json'];
+  await page.clock.fastForward(15001);
+  await expect(page.locator('[data-route="matches"]').getByRole('alert')).toBeVisible();
+  await expect(card(page, 'live-one')).toContainText('20:19');
+  state.hold = false;
+  state.payload.matches[0].current_points = '23:19';
+  await page.clock.fastForward(10000);
+  await expect(card(page, 'live-one')).toContainText('23:19');
+  await expect(page.locator('[data-route="matches"]').getByRole('alert')).toHaveCount(0);
+  expect(state.counts['tauron.json']).toBeGreaterThan(count);
+});

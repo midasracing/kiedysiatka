@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { STANDINGS_ROW_HEIGHT, STANDINGS_TOP_INSET, standingsScrollBounds, standingsWarpScale, standingsWarpSourceY } from './standingsWarpMath.js';
+import { STANDINGS_ROW_HEIGHT, STANDINGS_TOP_INSET, standingsScrollBounds, standingsWarpScale, standingsWarpSourceY, standingsWarpStrips } from '../src/components/standingsWarpMath.js';
 
 test('first and last league row can each be centered, regardless of viewport height', () => {
   for (const height of [380, 420, 620, 680]) {
@@ -38,5 +38,25 @@ test('vertical depth is symmetric, continuous and monotonic at every screen size
       assert.ok(Math.abs(sourceY + standingsWarpSourceY(h-y, h) - h) < 1e-9);
       previous = sourceY;
     }
+  }
+});
+
+
+test('cached projection preserves every original strip, including partial bottom strips', () => {
+  for (const width of [320, 390, 768]) for (const height of [379, 620, 843]) {
+    const strips = standingsWarpStrips(width, height);
+    assert.equal(strips.length, Math.ceil(height / 2));
+    for (const strip of strips) {
+      const { screenY, step } = strip;
+      const midY = screenY + step / 2;
+      const expectedWidth = width * standingsWarpScale(midY, height);
+      assert.equal(strip.targetWidth, expectedWidth);
+      assert.equal(strip.targetX, (width - expectedWidth) / 2 + Math.sin((midY - height / 2) / (height / 2) * Math.PI) * width * 0.014);
+      for (const offset of [-300, 0, 123.45, 890]) {
+        assert.equal(strip.sourceStart + offset - STANDINGS_TOP_INSET, standingsWarpSourceY(screenY, height) + offset - STANDINGS_TOP_INSET);
+        assert.equal(strip.sourceEnd + offset - STANDINGS_TOP_INSET, standingsWarpSourceY(screenY + step, height) + offset - STANDINGS_TOP_INSET);
+      }
+    }
+    assert.equal(strips.at(-1).screenY + strips.at(-1).step, height);
   }
 });

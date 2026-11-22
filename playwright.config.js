@@ -6,7 +6,9 @@ export default defineConfig({
   expect: { timeout: 15000 },
   retries: process.env.CI ? 1 : 0,
   reporter: 'list',
-  use: { baseURL: 'http://127.0.0.1:5173', trace: 'retain-on-failure' },
+  // Routes in the live-data tests must intercept every request. A registered
+  // production worker can otherwise serve real feeds behind Playwright's routes.
+  use: { baseURL: 'http://127.0.0.1:5173', trace: 'retain-on-failure', serviceWorkers: 'block' },
   projects: [
     { name: 'mobile-chromium', use: { ...devices['iPhone 13'], browserName: 'chromium' } },
     { name: 'mobile-webkit', use: { ...devices['iPhone 13'], browserName: 'webkit' } }

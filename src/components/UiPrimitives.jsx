@@ -28,6 +28,3 @@ export function LoadingCards() {
 export function PageHeader({ title, subtitle, actions }) {
   return <div className="vh-page-head im-top"><div className="vh-header-actions">{actions}</div><h1>{title}</h1>{subtitle && <p>{subtitle}</p>}</div>;
 }
-export function IconButton({ Icon, label, onClick, active = false }) {
-  return <button type="button" className={'im-round vh-icon-button ' + (active ? 'is-active' : '')} aria-label={label} title={label} onClick={onClick}><Icon size={21} strokeWidth={1.9} /></button>;
-}

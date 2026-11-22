@@ -77,3 +77,16 @@ test('every poll reaches the source while identical snapshots avoid parsing and 
   assert.equal(calls.length, 3);
   assert.ok(calls.every(call => call.options.cache === 'no-store'));
 });
+
+test('a malformed snapshot cannot replace the last verified cached league', async t => {
+  let text = JSON.stringify(fixture());
+  const league = { id: 'format-audit', file: 'format-audit.json' };
+  t.mock.method(globalThis, 'fetch', async () => new Response(text));
+  const previous = await fetchLeague(league);
+  for (const malformed of ['[]', 'null', 'bad json', '42']) {
+    text = malformed;
+    await assert.rejects(fetchLeague(league));
+  }
+  text = JSON.stringify(fixture());
+  assert.equal(await fetchLeague(league), previous);
+});

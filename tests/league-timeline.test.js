@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { leagueTimeline } from './leagueTimeline.js';
+import { leagueTimeline } from '../src/leagueTimeline.js';
 
 const match = (leagueId, date, time, status, group) => ({ leagueId, date, time, status, group });
 

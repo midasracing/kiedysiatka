@@ -3,7 +3,7 @@ import { Trophy } from 'lucide-react';
 import { normalizeName } from '../data.js';
 import TeamLogo from './TeamLogo.jsx';
 import { EmptyState } from './UiPrimitives.jsx';
-import { STANDINGS_ROW_HEIGHT, STANDINGS_TOP_INSET, standingsScrollBounds, standingsWarpScale, standingsWarpSourceY } from './standingsWarpMath.js';
+import { STANDINGS_ROW_HEIGHT, STANDINGS_TOP_INSET, standingsScrollBounds, standingsWarpStrips } from './standingsWarpMath.js';
 import './StandingsWarp.css';
 
 const ROW_HEIGHT = STANDINGS_ROW_HEIGHT;
@@ -82,6 +82,7 @@ function WarpTable({ rows, logos }) {
     let drawingFrame = 0;
     let momentumFrame = 0;
     let sourceRows = [];
+    let strips = [];
     let dragging = false;
     let pointerId = null;
     let previousY = 0;
@@ -98,7 +99,6 @@ function WarpTable({ rows, logos }) {
     const render = () => {
       drawingFrame = 0;
       if (!width || !height) return;
-      context.clearRect(0, 0, width, height);
       context.fillStyle = '#000';
       context.fillRect(0, 0, width, height);
       context.imageSmoothingEnabled = true;
@@ -108,23 +108,14 @@ function WarpTable({ rows, logos }) {
       // spacing at the edges and avoids discontinuities between team names.
       // Two-pixel destination strips keep the curved lettering smooth on iOS.
       const rasterScale = 2;
-      const stripStep = 2;
       const totalSourceHeight = rows.length * ROW_HEIGHT;
       context.imageSmoothingQuality = 'high';
-      for (let screenY = 0; screenY < height; screenY += stripStep) {
-        const step = Math.min(stripStep, height - screenY);
-        const sourceStart = standingsWarpSourceY(screenY, height) + offset - STANDINGS_TOP_INSET;
-        const sourceEnd = standingsWarpSourceY(screenY + step, height) + offset - STANDINGS_TOP_INSET;
+      for (const strip of strips) {
+        const { screenY, step, targetWidth, targetX } = strip;
+        const sourceStart = strip.sourceStart + offset - STANDINGS_TOP_INSET;
+        const sourceEnd = strip.sourceEnd + offset - STANDINGS_TOP_INSET;
         if (sourceEnd <= 0 || sourceStart >= totalSourceHeight) continue;
 
-        const midY = screenY + step / 2;
-        const normalized = (midY - height / 2) / (height / 2);
-        const scale = standingsWarpScale(midY, height);
-        const targetWidth = width * scale;
-        // Small opposing drifts at the two ends create a lens-like curvature;
-        // the centre remains perfectly aligned with the natural table width.
-        const shift = Math.sin(normalized * Math.PI) * width * 0.014;
-        const targetX = (width - targetWidth) / 2 + shift;
         const sourceSpan = sourceEnd - sourceStart;
         let cursor = Math.max(0, sourceStart);
         const visibleEnd = Math.min(totalSourceHeight, sourceEnd);
@@ -178,6 +169,7 @@ function WarpTable({ rows, logos }) {
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      strips = standingsWarpStrips(width, height);
       sourceRows = rows.map((row, index) => drawRowSource(row, index, width));
       setOffset(offset);
       queueRender();

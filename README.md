@@ -58,3 +58,6 @@ React · Vite · JavaScript · CSS · Rive · PWA · GitHub Pages
 ---
 
 <sub>Projekt niezależny, niezwiązany z organizatorami rozgrywek. Wykorzystany komponent React Bits ma osobną <a href="src/components/react-bits/LICENSE.md">informację o licencji i autorze</a>.</sub>
+
+Układ kodu, odpowiedzialności importerów i pomiary wydajności opisuje
+[architektura projektu](docs/architecture.md).

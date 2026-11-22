@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { leagueNameLines, pickerIndexFromScroll, pickerScrollForIndex, PICKER_ROW_HEIGHT } from './leaguePickerMath.js';
 import './LeaguePicker.css';
 
@@ -10,6 +10,7 @@ const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_INDEX, onSelectionChange, onOpen }) {
   const scrollerRef = useRef(null);
   const animationRef = useRef(0);
+  const measuredSize = useRef('');
   const programmaticTarget = useRef(null);
   const selectedRef = useRef(clamp(initialIndex, 0, leagues.length - 1));
   const [selected, setSelected] = useState(() => clamp(initialIndex, 0, leagues.length - 1));
@@ -18,6 +19,10 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
     animationRef.current = 0;
     const scroller = scrollerRef.current;
     if (!scroller || !leagues.length || !active) return;
+    const width = scroller.clientWidth;
+    // Native scroll anchoring may fire before ResizeObserver when CSS or the
+    // viewport changes. Do not treat that provisional offset as a new choice.
+    if (measuredSize.current !== scroller.clientHeight + ':' + width) return;
     const position = scroller.scrollTop;
     const target = programmaticTarget.current;
     // Keep the selected option stable while native smooth-scroll passes over
@@ -40,14 +45,16 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
     // The video has a curved, stepped indentation in X, NOT warped letter
     // shapes. Transform only six text spans; native touch momentum stays intact.
     const options = scroller.querySelectorAll('.vh-league-picker__label');
+    // Complete layout reads before writing any transforms.
+    const widths = Array.from(options, option => option.offsetWidth);
+    const pad = width <= 390 ? 48 : 52;
     for (let i = 0; i < options.length; i += 1) {
       const distance = Math.abs(i * PICKER_ROW_HEIGHT - position);
       const ratio = distance / (PICKER_ROW_HEIGHT * 1.25);
       const desiredIndent = Math.round(54 * Math.exp(-ratio * ratio));
-      const pad = scroller.clientWidth <= 390 ? 48 : 52;
-      const naturalWidth = options[i].offsetWidth;
+      const naturalWidth = widths[i];
       // Keep full two-line titles readable on narrow phones without reducing font size.
-      const available = Math.max(1, scroller.clientWidth - pad - 12 - desiredIndent);
+      const available = Math.max(1, width - pad - 12 - desiredIndent);
       const fit = naturalWidth ? Math.min(1, available / naturalWidth) : 1;
       options[i].style.transform = `translate3d(${desiredIndent}px,0,0) scaleX(${fit})`;
     }
@@ -67,21 +74,27 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
       const size = height + ':' + scroller.clientWidth;
       if (!height || size === previousSize) return;
       previousSize = size;
+      measuredSize.current = size;
       scroller.style.setProperty('--picker-spacer', `${Math.max(0, (height - PICKER_ROW_HEIGHT) / 2)}px`);
-      scroller.scrollTop = pickerScrollForIndex(
-        clamp(selectedRef.current, 0, leagues.length - 1)
-      );
+      const destination = clamp(selectedRef.current, 0, leagues.length - 1);
+      // WebKit can report the unstyled height before CSS finishes loading.
+      // That first scroll is clamped to zero. Preserve the intended selection
+      // until the next resize can center it, just as during choose().
+      programmaticTarget.current = destination;
+      scroller.scrollTop = pickerScrollForIndex(destination);
       queueUpdate();
     };
     resize();
     const observer = new ResizeObserver(resize);
     observer.observe(scroller);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      // StrictMode mounts this effect again after its cleanup. A cancelled
+      // frame ID must not block the next mount's scroll updates forever.
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+      animationRef.current = 0;
+    };
   }, [active, leagues.length, queueUpdate]);
-
-  useEffect(() => () => {
-    if (animationRef.current) cancelAnimationFrame(animationRef.current);
-  }, []);
 
   const choose = useCallback(index => {
     const scroller = scrollerRef.current;

@@ -4,6 +4,8 @@ on:
     paths:
       - .github/workflows/volleystation-importer.yml
       - scripts/update_volleystation.py
+      - scripts/feed_io.py
+      - tests/test_feed_io.py
       - requirements-local-scraper.txt
       - data/2liga.json
       - data/pomorska3liga.json
@@ -12,6 +14,8 @@ on:
     paths:
       - .github/workflows/volleystation-importer.yml
       - scripts/update_volleystation.py
+      - scripts/feed_io.py
+      - tests/test_feed_io.py
       - requirements-local-scraper.txt
       - data/2liga.json
       - data/pomorska3liga.json
@@ -27,6 +31,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install beautifulsoup4 filelock psutil
+      - name: Validate atomic snapshot publishing
+        run: python -m unittest tests.test_feed_io -v
       - name: Validate the production scraper
         run: |
           python -m py_compile scripts/update_volleystation.py

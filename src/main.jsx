@@ -15,9 +15,7 @@ import HomePage from './pages/HomePage.jsx';
 import MatchesPage from './pages/MatchesPage.jsx';
 import CompetitionsPage from './pages/CompetitionsPage.jsx';
 import FavoritesPage from './pages/FavoritesPage.jsx';
-import '../matches-ios.css';
-import './app.css';
-import './theme.css';
+import './styles/index.css';
 
 function App() {
   const route = () => { const hash = window.location.hash.replace(/^#\/?/, ''); return ROUTES.includes(hash) ? hash : 'home'; };

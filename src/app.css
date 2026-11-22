@@ -12,8 +12,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex="0"]:focus-vi
 .vh-page-head h1{margin:8px 0 7px;font-size:clamp(38px,8vw,48px);line-height:1.04;letter-spacing:-.045em;font-weight:800}
 .vh-page-head p{margin:0;color:var(--muted);font-size:16px;line-height:1.5}
 .vh-page-head .vh-header-actions:empty{display:none}
-.vh-section-heading,.vh-day-heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:32px 0 15px}
-.vh-section-heading h2,.vh-day-heading h2{font-size:25px;font-weight:750;line-height:1.2;letter-spacing:-.022em;margin:5px 0 0}
+.vh-section-heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:32px 0 15px}
+.vh-section-heading h2{font-size:25px;font-weight:750;line-height:1.2;letter-spacing:-.022em;margin:5px 0 0}
 .vh-eyebrow{font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--blue)}
 .vh-text-action{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;background:none;border:0;color:#9db9ff;font-size:14px;font-weight:700;padding:8px 2px}
 .vh-text-action:hover{color:#d0ddff}
@@ -25,18 +25,14 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 .vh-league-tile:active{transform:scale(.99)}
 .vh-league-number{display:grid;place-items:center;flex:0 0 48px;height:48px;border:1px solid rgba(171,195,255,.15);border-radius:16px;background:rgba(132,166,255,.1);color:#b1c6ff;font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
 .vh-league-tile>span:nth-child(2),.vh-league-main>span:nth-child(2){flex:1;min-width:0}
-.vh-league-tile strong,.vh-favorites-teaser strong{display:block;font-size:17px;line-height:1.25;font-weight:700}
-.vh-league-tile small,.vh-favorites-teaser small{display:block;font-size:13px;color:#a5afc0;margin-top:5px;line-height:1.35}
+.vh-league-tile strong{display:block;font-size:17px;line-height:1.25;font-weight:700}
+.vh-league-tile small{display:block;font-size:13px;color:#a5afc0;margin-top:5px;line-height:1.35}
 .vh-league-tile>svg{color:#96a4bf}
 .vh-league-select{padding:8px 9px 8px 10px}
 .vh-league-main{border:0;background:transparent;color:inherit;text-align:left;display:flex;align-items:center;gap:14px;min-height:64px;min-width:0;flex:1;padding:6px 0}
 .vh-league-main>svg{color:#9daac2}
 .vh-star-button{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:#a5b1c6}
-.vh-star-button.is-favorite,.vh-favorite-color,.vh-team-tile button.is-favorite{color:#ffc866}
-.vh-favorites-teaser{width:100%;border:1px solid rgba(255,255,255,.09);border-radius:23px;padding:17px;display:flex;align-items:center;gap:14px;background:#1d2430;color:#fff;text-align:left}
-.vh-favorites-teaser>span:nth-child(2){flex:1}
-.vh-heart-icon{flex:0 0 52px;height:52px;display:grid;place-items:center;border-radius:16px;color:#ff8997;background:rgba(255,106,126,.14)}
-.vh-favorites-teaser>svg{color:#a8b1c4}
+.vh-star-button.is-favorite,.vh-team-tile button.is-favorite{color:#ffc866}
 /* Animate just four stable grid tracks. The WebGL lens receives one final
    destination per tab change rather than chasing every flex layout frame. */
 /* Content fades in lightly. No second page is mounted while switching tabs. */
@@ -73,13 +69,10 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 #ios-matches .im-strip{padding-top:4px;padding-bottom:17px;border-color:#303744;scroll-padding:0 50%;background:none}
 #ios-matches .im-day{cursor:pointer}
 #ios-matches .im-day.is-sel{background:linear-gradient(170deg,#aabfff,#617ccb)!important;box-shadow:0 8px 23px rgba(87,125,223,.25);border-radius:17px}
-#ios-matches .im-day.is-sel b,#ios-matches .im-day.is-sel span,#ios-matches .im-day.is-sel .im-month{color:#0f2047;text-shadow:none}
+#ios-matches .im-day.is-sel b,#ios-matches .im-day.is-sel span{color:#0f2047;text-shadow:none}
 #ios-matches .im-day.is-sel b{font-weight:800}
-#ios-matches .im-day .im-month{color:#91b1ff}
 #ios-matches .im-day span{color:#9fabbd}
 #ios-matches .im-day.is-today:not(.is-sel) span{color:#a7bdff}
-.vh-icon-button.im-round{width:44px;height:44px;background:#252c3a;box-shadow:0 0 0 3px rgba(255,255,255,.04),0 7px 20px rgba(0,0,0,.17);border:1px solid rgba(255,255,255,.09);color:#e8eeff}
-.vh-icon-button.im-round.is-active{background:#cfdefe;color:#182b54}
 .vh-page-head .vh-header-actions:not(:empty){min-height:44px}
 .vh-controls{display:flex;overflow-x:auto;scrollbar-width:none;gap:8px;padding:18px 0 8px;margin:0 -2px}
 .vh-controls::-webkit-scrollbar{display:none}
@@ -87,7 +80,6 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 .vh-filter-chip:hover{background:#303a4b}
 .vh-filter-chip.chosen{background:#dce6ff;color:#1e3258;border-color:#dce6ff}
 .vh-secondary-filters{padding-top:3px}
-.vh-refresh{width:38px;height:38px;border-radius:13px;border:1px solid rgba(255,255,255,.1);color:#bccdf3;background:#242b38;display:grid;place-items:center}
 .vh-source-note{color:#8996ab;font-size:13px;line-height:1.55;margin:22px 3px}
 .vh-empty{padding:34px 21px;margin:14px 0 20px;border:1px dashed #3b4555;border-radius:25px;background:rgba(255,255,255,.025);text-align:center}
 .vh-empty-icon{margin:0 auto 12px;width:54px;height:54px;border-radius:17px;display:grid;place-items:center;background:#252e40;color:#9eb9ff}
@@ -129,14 +121,6 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 .vh-mini-league{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:#293750;color:#b2c6ff}
 .vh-picker-check{display:grid;place-items:center;width:32px;height:32px;border:1px solid #4b5870;border-radius:11px;color:#9caac3}
 .vh-picker-check.selected{color:#202c46;background:#bcd0ff;border-color:#bcd0ff}
-.vh-search-overlay{position:fixed;inset:0;z-index:200;background:rgba(3,6,13,.84);display:flex;justify-content:center;align-items:flex-start;padding:calc(40px + env(safe-area-inset-top)) 13px 18px}
-.vh-search-sheet{width:min(100%,560px);max-height:calc(100dvh - 80px);overflow-y:auto;background:#171d29;color:white;border:1px solid #38445a;border-radius:30px;padding:23px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
-.vh-sheet-header{display:flex;align-items:center;justify-content:space-between}
-.vh-sheet-header h2{font-size:30px;margin:0}
-.vh-close{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:0;background:#30394b;color:#fff}
-.vh-search-results{padding-top:5px}
-.vh-search-results h3{font-size:12px;color:#8eafe8;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin:19px 4px 10px}
-.vh-visually-hidden-date{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
 
@@ -163,32 +147,8 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 .vh-brand-signature img{
   display:block;width:100%;height:auto;object-fit:contain;pointer-events:none;
 }
-.vh-floating-actions{position:relative;display:flex;align-items:center;flex:0 0 auto}
-.vh-search-bubble{
-  position:relative;display:grid;place-items:center;isolation:isolate;
-  width:50px;height:50px;flex:none;border-radius:999px;
-  border:1px solid rgba(204,219,255,.28);
-  background:rgba(30,40,58,.35);
-  color:#F4F7FF;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 9px 28px rgba(0,0,0,.20);
-  -webkit-tap-highlight-color:transparent;
-  transition:transform .2s cubic-bezier(.2,.8,.2,1),border-color .2s,background .2s;
-}
-.vh-search-bubble:hover{border-color:rgba(196,216,255,.52)}
-.vh-search-bubble>svg{position:relative;z-index:2;pointer-events:none}
-.vh-search-glass{position:absolute;inset:0;z-index:1;overflow:hidden;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(145deg,rgba(183,208,255,.25),rgba(72,103,170,.14) 60%,rgba(170,201,252,.15));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.23),inset 0 -1px 0 rgba(255,255,255,.07)}
-.vh-search-bubble:active{transform:scale(.94)}
-.vh-search-bubble:focus-visible{outline:3px solid #A3BAFF;outline-offset:4px}
 @media(max-width:390px){
   .vh-floating-head{gap:12px;padding-top:calc(10px + env(safe-area-inset-top))}
-  .vh-search-bubble{width:47px;height:47px}
-}
-@media(prefers-reduced-motion:reduce){
-  .vh-search-bubble{transition:none}
-}
-@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
-  .vh-search-bubble{background:#263451}
 }
 
 /* The selected indicator is the single React Bits GlassSurface; search is static CSS. */

@@ -24,15 +24,12 @@
 html, body.ios-matches, #root, #ios-matches { background-color: #000000; }
 body.ios-matches { background: #000000; color: var(--ink); }
 .vh-bottom { font-family: var(--font-ui); }
-button:focus-visible, a:focus-visible, input:focus-visible,
-[tabindex="0"]:focus-visible,
-#ios-matches button:focus-visible, .im-search:focus-visible,
-.vh-search-bubble:focus-visible { outline-color: var(--accent-text); }
+button:focus-visible, a:focus-visible, input:focus-visible, [tabindex="0"]:focus-visible, #ios-matches button:focus-visible { outline-color: var(--accent-text); }
 
 /* Playfair Display SemiBold gives stronger editorial headings without changing spacing; data stays in DM Sans. */
 .vh-page-head h1,
-.vh-section-heading h2, .vh-day-heading h2,
-.vh-sheet-header h2, .vh-empty h3 {
+.vh-section-heading h2,
+.vh-empty h3 {
   font-family: var(--font-editorial);
   font-weight: 600;
   font-style: normal;
@@ -42,21 +39,15 @@ button:focus-visible, a:focus-visible, input:focus-visible,
 .vh-team-logo .team-mark, .im-logo .team-mark { font-family: var(--font-ui); }
 .vh-match .im-pts, .vh-match .im-time { font-style: normal; font-variant-numeric: tabular-nums; }
 
-.vh-text-action, .vh-back, .vh-eyebrow,
-.vh-search-results h3 { color: var(--accent-text); }
+.vh-text-action, .vh-back, .vh-eyebrow { color: var(--accent-text); }
 .vh-text-action:hover { color: #ff696a; }
 .vh-button-soft { background: var(--ink); color: #131211; }
 .vh-league-tile { background: var(--surface); border-color: var(--line); }
 button.vh-league-tile:hover, .vh-league-select:hover { background: var(--surface-hover); border-color: #62514e; }
 .vh-league-number { background: #2b1514; border-color: #65302b; color: var(--accent-text); }
-.vh-league-tile small, .vh-favorites-teaser small,
-.vh-league-tile > svg, .vh-league-main > svg,
-.vh-favorites-teaser > svg { color: var(--muted); }
+.vh-league-tile small, .vh-league-tile > svg, .vh-league-main > svg { color: var(--muted); }
 .vh-star-button, .vh-team-tile button { background: #302d29; color: #c7c1ba; }
-.vh-star-button.is-favorite, .vh-favorite-color,
-.vh-team-tile button.is-favorite { color: var(--accent-text); }
-.vh-favorites-teaser { background: var(--surface); color: var(--ink); border-color: var(--line); }
-.vh-heart-icon { background: #351414; color: var(--accent-text); }
+.vh-star-button.is-favorite, .vh-team-tile button.is-favorite { color: var(--accent-text); }
 .vh-match-groups .im-league { color: var(--ink); }
 .vh-count { background: #312d29; color: var(--ink); }
 
@@ -86,17 +77,12 @@ button.vh-league-tile:hover, .vh-league-select:hover { background: var(--surface
 #ios-matches .im-strip { border-color: var(--line); }
 #ios-matches .im-day.is-sel { background: #fc0001 !important; box-shadow: 0 8px 23px rgba(252,0,1,.18); }
 #ios-matches .im-day.is-sel b,
-#ios-matches .im-day.is-sel span,
-#ios-matches .im-day.is-sel .im-month { color: #080808; }
-#ios-matches .im-day .im-month,
+#ios-matches .im-day.is-sel span { color: #080808; }
 #ios-matches .im-day.is-today:not(.is-sel) span { color: var(--accent-text); }
 #ios-matches .im-day span { color: var(--muted); }
-.vh-icon-button.im-round { background: #272320; color: var(--ink); }
-.vh-icon-button.im-round.is-active { background: #fc0001; color: #080808; }
 .vh-filter-chip { background: #211f20; border-color: #4a3032; color: #ccc7c8; }
 .vh-filter-chip:hover { background: #322124; }
 .vh-filter-chip.chosen { background: #fc0001; border-color: #fc0001; color: #080808; }
-.vh-refresh { background: #272320; color: var(--ink); }
 .vh-source-note { color: #aaa39b; }
 .vh-empty { border-color: #51463e; background: #121110; }
 .vh-empty-icon { background: #301715; color: var(--accent-text); }
@@ -119,12 +105,6 @@ button.vh-league-tile:hover, .vh-league-select:hover { background: var(--surface
 .vh-mini-league { background: #351715; color: var(--accent-text); }
 .vh-picker-check { border-color: #6b5b4e; color: #c0b4a7; }
 .vh-picker-check.selected { background: #fc0001; border-color: #fc0001; color: #080808; }
-.vh-search-overlay { background: rgba(0,0,0,.84); }
-.vh-search-sheet { background: #171412; color: var(--ink); border-color: #51453c; }
-.vh-close { background: #352d27; color: var(--ink); }
-.vh-search-bubble { background: #201c19; color: var(--ink); border-color: #6a5c51; }
-.vh-search-bubble:hover { border-color: var(--accent-text); }
-.vh-search-glass { background: linear-gradient(145deg,rgba(245,242,237,.16),rgba(245,242,237,.04) 60%,rgba(252,0,1,.10)); }
 
 /* Preserve the existing single spring and transparent active button. */
 .vh-bottom { background: rgba(18,15,16,.96); border-color: #602024; color: #ccc6c7; }
@@ -136,5 +116,5 @@ button.vh-league-tile:hover, .vh-league-select:hover { background: var(--surface
 .vh-nav-lens .glass-surface--static { background: #fc0001; border-color: #fc0001; }
 
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-  .vh-bottom, .vh-search-bubble { background: #171412; }
+  .vh-bottom { background: #171412; }
 }

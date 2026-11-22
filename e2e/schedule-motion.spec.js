@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { pauseClockAt } from './helpers/clock.js';
 
 async function setup(page) {
   const now = new Date('2026-11-04T12:00:00Z');
-  await page.clock.install({ time: now });
-  await page.clock.pauseAt(now);
+  await pauseClockAt(page, now);
   await page.route('**/data/*.json', route => route.fulfill({ json: route.request().url().includes('/tauron.json') ? {
     teams: [], matches: [4, 5].map(day => ({
       id: `day-${day}`, date: `0${day}.11.2026`, time: '17:30',

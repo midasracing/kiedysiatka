@@ -1,4 +1,4 @@
-import { shareFeedValue } from './feedUpdates.js';
+export { fetchLeague, flattenFeed } from './services/leagueFeeds.js';
 
 export const LEAGUES = [
   { id: 'men', name: 'TAURON Liga Mężczyzn', short: 'TAURON Liga', category: 'Polska', description: 'Najwyższa klasa rozgrywkowa mężczyzn', file: 'tauron.json' },
@@ -38,15 +38,6 @@ export function isLive(match) {
 }
 export function isFinished(match) {
   return match?.status === 'finished';
-}
-export function flattenFeed(data, id) {
-  if (id !== 'second') return { ...data, matches: Array.isArray(data.matches) ? data.matches : [], teams: Array.isArray(data.teams) ? data.teams : [] };
-  const groups = Array.isArray(data.groups) ? data.groups : [];
-  return {
-    ...data,
-    matches: groups.flatMap(group => (group.matches || []).map(match => ({ ...match, group: match.group || group.name }))),
-    teams: groups.flatMap(group => group.teams || [])
-  };
 }
 const matchMeta = new WeakMap();
 const matchViews = new WeakMap();
@@ -102,23 +93,6 @@ export function matchesFromFeeds(feeds, selectedLeague = null) {
     }
     return byLeague.get(league.id);
   }).sort(compareMatches);
-}
-// Requests stay fresh; identical bodies skip parsing and changed bodies retain
-// references for unchanged teams and matches. Four bounded league snapshots.
-const feedCache = new Map();
-export async function fetchLeague(league, signal) {
-  const path = (import.meta.env?.BASE_URL ?? './') + 'data/' + league.file;
-  const response = await fetch(path, { signal, cache: 'no-store' });
-  if (!response.ok) throw new Error('HTTP ' + response.status);
-  const text = await response.text();
-  const key = league.id + ':' + path;
-  const cached = feedCache.get(key);
-  if (cached?.text === text) return cached.data;
-  const json = JSON.parse(text);
-  if (!json || typeof json !== 'object') throw new Error('Nieprawidłowy format danych');
-  const data = shareFeedValue(cached?.data, flattenFeed(json, league.id));
-  feedCache.set(key, { text, data });
-  return data;
 }
 export function readFavorites() {
   try {
