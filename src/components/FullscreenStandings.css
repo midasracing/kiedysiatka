@@ -243,14 +243,9 @@
   0% { opacity: 1; }
   12%, 100% { opacity: 0; }
 }
-/* Original Tabela tab is an ordinary button again, with no disappearing
-   duplicate or cross-screen motion. Once the sheet descends, the inactive
-   tab is already in the correct place. */
-.vh-competition-detail.is-liquid-table-open .vh-table-tab {
-  background: transparent;
-  color: #c3bcb4;
-  box-shadow: none;
-}
+/* Do not override the Tabela tab's selected capsule: it must respond
+   exactly like Mecze / Drużyny on the click, before the black sheet slides
+   over the menu. The regular segmented-control styling handles selection. */
 .vh-competition-detail .vh-league-view-tabs .vh-segmented .vh-table-tab__label {
   display: inline-block;
   margin: 0;

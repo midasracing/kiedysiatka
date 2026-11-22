@@ -18,8 +18,21 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
   // animation is still in its entry phase while WebKit reads its keyframes.
   await pauseClockAt(page, new Date('2026-11-04T12:00:00Z'));
   const trigger = page.getByRole('tab', { name: 'Tabela' });
+  const otherSelected = page.getByRole('tab', { name: 'Mecze' });
+  const selectedStyles = await otherSelected.evaluate(node => {
+    const style = getComputedStyle(node);
+    return { background: style.backgroundColor, color: style.color, radius: style.borderRadius };
+  });
   const triggerFont = await trigger.evaluate(node => getComputedStyle(node).fontFamily);
   await trigger.click();
+
+  // Clicking Tabela must activate the SAME light capsule as the other tabs.
+  // The sheet covers this selected tab naturally as it slides in from below.
+  await expect(trigger).toHaveAttribute('aria-selected', 'true');
+  await expect(trigger).toHaveClass(/selected/);
+  await expect(trigger).toHaveCSS('background-color', selectedStyles.background);
+  await expect(trigger).toHaveCSS('color', selectedStyles.color);
+  await expect(trigger).toHaveCSS('border-radius', selectedStyles.radius);
 
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
