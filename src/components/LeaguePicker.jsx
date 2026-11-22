@@ -40,14 +40,17 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
     // The video has a curved, stepped indentation in X, NOT warped letter
     // shapes. Transform only six text spans; native touch momentum stays intact.
     const options = scroller.querySelectorAll('.vh-league-picker__label');
+    // Complete layout reads before writing any transforms.
+    const width = scroller.clientWidth;
+    const widths = Array.from(options, option => option.offsetWidth);
+    const pad = width <= 390 ? 48 : 52;
     for (let i = 0; i < options.length; i += 1) {
       const distance = Math.abs(i * PICKER_ROW_HEIGHT - position);
       const ratio = distance / (PICKER_ROW_HEIGHT * 1.25);
       const desiredIndent = Math.round(54 * Math.exp(-ratio * ratio));
-      const pad = scroller.clientWidth <= 390 ? 48 : 52;
-      const naturalWidth = options[i].offsetWidth;
+      const naturalWidth = widths[i];
       // Keep full two-line titles readable on narrow phones without reducing font size.
-      const available = Math.max(1, scroller.clientWidth - pad - 12 - desiredIndent);
+      const available = Math.max(1, width - pad - 12 - desiredIndent);
       const fit = naturalWidth ? Math.min(1, available / naturalWidth) : 1;
       options[i].style.transform = `translate3d(${desiredIndent}px,0,0) scaleX(${fit})`;
     }
@@ -68,9 +71,12 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
       if (!height || size === previousSize) return;
       previousSize = size;
       scroller.style.setProperty('--picker-spacer', `${Math.max(0, (height - PICKER_ROW_HEIGHT) / 2)}px`);
-      scroller.scrollTop = pickerScrollForIndex(
-        clamp(selectedRef.current, 0, leagues.length - 1)
-      );
+      const destination = clamp(selectedRef.current, 0, leagues.length - 1);
+      // WebKit can report the unstyled height before CSS finishes loading.
+      // That first scroll is clamped to zero. Preserve the intended selection
+      // until the next resize can center it, just as during choose().
+      programmaticTarget.current = destination;
+      scroller.scrollTop = pickerScrollForIndex(destination);
       queueUpdate();
     };
     resize();

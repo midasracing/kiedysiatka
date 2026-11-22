@@ -28,6 +28,11 @@ from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
 
+if __package__:
+    from .feed_io import atomic_json
+else:  # python scripts/<importer>.py
+    from feed_io import atomic_json
+
 HEADERS = {
     "User-Agent": "VolleyHub/1.0 (+https://github.com/midasracing/Volley-hub)",
     "Accept-Language": "pl-PL,pl;q=0.9,en;q=0.8",
@@ -1308,8 +1313,7 @@ def run_league(key, cfg, full_details=False, full_rosters=False):
         "competition": cfg["competition"],
     }
 
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    atomic_json(out, payload)
     print(f"[{key}] Updated {len(matches)} matches and {len(standings)} standings rows -> {out}")
 
 

@@ -33,7 +33,11 @@ test('league selector opens league details with a reversible split transition', 
   await expect(page.locator('[data-route="competitions"] .vh-league-stack')).toHaveCount(0);
   await picker.focus();
   const scroller = picker;
-  await scroller.evaluate(node => { node.scrollTop = 4 * 116; });
+  await scroller.evaluate(node => {
+    // A real swipe/wheel cancels any programmatic centering in progress.
+    node.dispatchEvent(new WheelEvent('wheel', { bubbles: true }));
+    node.scrollTop = 4 * 116;
+  });
   await expect(picker.getByRole('option', { name: 'SuperLega Credem Banca' }))
     .toHaveAttribute('aria-selected', 'true');
   await page.keyboard.press('End');
@@ -124,22 +128,24 @@ test('stacked SVG wordmark stays proportional to the page title', async ({ page 
   for (const width of [320, 375, 430, 768]) {
     await page.setViewportSize({ width, height: 780 });
     await page.goto('/#favorites');
-    const { brand, image, heading, header } = await page.evaluate(() => {
+    const { brand, image } = await page.evaluate(() => {
       const box = element => {
         const { x, y, width, height } = element.getBoundingClientRect();
         return { x, y, width, height };
       };
       return {
         brand: box(document.querySelector('.vh-brand-signature')),
-        image: box(document.querySelector('.vh-brand-signature img')),
-        heading: box(document.querySelector('#main-content h1')),
-        header: box(document.querySelector('.vh-floating-head'))
+        image: box(document.querySelector('.vh-brand-signature img'))
       };
     });
     expect(brand.width).toBeLessThanOrEqual(197);
     expect(image.height).toBeLessThanOrEqual(110);
     expect(image.x + image.width).toBeLessThanOrEqual(width);
-    expect(heading.y - (header.y + header.height)).toBeLessThan(35);
+    await expect.poll(() => page.evaluate(() => {
+      const heading = document.querySelector('#main-content h1').getBoundingClientRect();
+      const header = document.querySelector('.vh-floating-head').getBoundingClientRect();
+      return heading.top - header.bottom;
+    })).toBeLessThan(35);
   }
 });
 
@@ -458,6 +464,10 @@ test('cached inactive tabs stay out of focus, accessibility and document scrolli
   await nav.getByRole('button', { name: 'Rozgrywki' }).click();
   await expect(page.getByRole('heading', { name: 'Rozgrywki', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Dodaj drużyny' })).toHaveCount(0);
+  // Measure hidden-panel overflow after the intentional 3px route entrance.
+  await page.evaluate(() => Promise.all(document.getAnimations()
+    .filter(animation => animation.id === 'vh-route-transition')
+    .map(animation => animation.finished.catch(() => {}))));
   const metrics = await page.evaluate(() => {
     const active = document.querySelector('.vh-tab-panel:not([hidden])');
     const hidden = [...document.querySelectorAll('.vh-tab-panel[hidden]')];

@@ -11,3 +11,10 @@ python diagnostics/probe_international_api.py
 Produkcyjny importer II i Pomorskiej III ligi oraz jego instrukcja znajdują się
 w [`scripts/update_volleystation.py`](../scripts/update_volleystation.py) i
 [instrukcji](../docs/volleystation.md).
+
+## Audyt strony
+
+`profile-site.mjs` mierzy wersję produkcyjną w Chromium i zapisuje lokalne
+wyniki w ignorowanym `artifacts/performance/`. Uruchomienie i warunki pomiaru:
+[architektura](../docs/architecture.md). Wyniki i zakres zmian:
+[audyt wydajności](../docs/performance-audit.md).

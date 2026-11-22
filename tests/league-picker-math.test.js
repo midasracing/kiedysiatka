@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { PICKER_ROW_HEIGHT, leagueNameLines, pickerIndexFromScroll, pickerScrollForIndex } from './leaguePickerMath.js';
+import { PICKER_ROW_HEIGHT, leagueNameLines, pickerIndexFromScroll, pickerScrollForIndex } from '../src/components/leaguePickerMath.js';
 
 test('native picker scroll positions each of six leagues in the centre', () => {
   for (let i = 0; i < 6; i++) {

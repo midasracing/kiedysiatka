@@ -7,16 +7,19 @@ Only public HTTP; 403/errors fail cleanly and preserve the last good JSON.
 import argparse
 from datetime import datetime, timezone
 import json
-import os
 from pathlib import Path
 import re
-import tempfile
 import time
 from urllib.parse import urljoin
 from zoneinfo import ZoneInfo
 
 import requests
 from bs4 import BeautifulSoup
+
+if __package__:
+    from .feed_io import atomic_json
+else:  # python scripts/<importer>.py
+    from feed_io import atomic_json
 
 try:
     from scripts.international_names import romanize_team
@@ -646,17 +649,7 @@ def write_feed(path, feed):
         if old_body == new_body:
             print(f"{path}: no changes")
             return False
-    temporary = None
-    try:
-        with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent,
-                                         prefix=f".{path.name}.", delete=False) as stream:
-            temporary = Path(stream.name)
-            json.dump(feed, stream, ensure_ascii=False, indent=2)
-            stream.write("\n")
-        os.replace(temporary, path)
-    finally:
-        if temporary:
-            temporary.unlink(missing_ok=True)
+    atomic_json(path, feed)
     print(f"{path}: wrote {len(feed['matches'])} matches / {len(feed['teams'])} teams")
     return True
 

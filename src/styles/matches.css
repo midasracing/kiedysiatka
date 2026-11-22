@@ -17,18 +17,10 @@ body.ios-matches .app{max-width:560px;padding:0 16px 132px;--edge:max(16px,calc(
 }
 #ios-matches *{box-sizing:border-box}
 :where(#ios-matches) :where(button){font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#ios-matches button:focus-visible,.im-search:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+#ios-matches button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 
 /* ---------- 3. Góra: przyciski + tytuł ---------- */
 .im-top{padding-top:calc(env(safe-area-inset-top,0px) + 10px)}
-.im-actions{display:flex;justify-content:flex-end;gap:12px;height:48px}
-.im-round{
-  width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
-  background:#e9e9ec;color:#2c2f38;
-  box-shadow:0 0 0 5px rgba(255,255,255,.92),0 8px 26px rgba(20,24,40,.10);
-  transition:background .15s,transform .15s;
-}
-.im-round:active{transform:scale(.94)}
 
 .im-top h1{font-size:40px;line-height:1;font-weight:800;letter-spacing:-.6px;margin:18px 0 20px}
 
@@ -47,21 +39,16 @@ body.ios-matches .app{max-width:560px;padding:0 16px 132px;--edge:max(16px,calc(
   padding:2px 0 6px;scroll-snap-align:center;scroll-snap-stop:normal;
   border-radius:18px;transition:opacity .18s ease,color .18s ease;
 }
-.im-month{height:14px;font-size:11px;line-height:14px;font-style:normal;font-weight:700;letter-spacing:.35px;color:var(--blue);text-transform:uppercase}
-.im-month.is-empty{visibility:hidden}
 .im-day b{font-size:30px;line-height:1;font-weight:500;font-variant-numeric:tabular-nums;transition:font-weight .18s ease,color .18s ease}
 .im-day span{font-size:15px;font-weight:500;color:var(--muted);letter-spacing:.2px;transition:color .18s ease,font-weight .18s ease}
 .im-day.is-sel b{font-weight:800;color:#fff;text-shadow:0 1px 12px rgba(255,255,255,.14)}
 .im-day.is-sel span{color:var(--ink);font-weight:700}
-.im-day.is-sel .im-month{color:#c8d6ff}
 .im-day.is-today:not(.is-sel) span{color:var(--blue);font-weight:600}
 @media (prefers-reduced-motion:reduce){
   .im-day,.im-day b,.im-day span{transition:none}
 }
 
 /* ---------- 5. Ligi i karty meczów ---------- */
-.im-chip{display:inline-flex;align-items:center;gap:10px;margin:16px 0 0 2px;padding:7px 8px 7px 14px;border-radius:999px;background:#eceef3;color:#20232b;font-size:15px;font-weight:600}
-.im-chip button{width:24px;height:24px;border-radius:50%;background:#d9dde6;font-size:12px;display:grid;place-items:center}
 .im-league{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:700;letter-spacing:-.2px;margin:28px 0 14px 4px}
 .im-flag{font-size:22px;line-height:1}
 .im-card{
@@ -96,21 +83,13 @@ body.ios-matches .app{max-width:560px;padding:0 16px 132px;--edge:max(16px,calc(
 }
 .im-pts{flex:none;min-width:30px;text-align:right;font-size:27px;font-weight:700;font-style:italic;font-variant-numeric:tabular-nums}
 .im-pts.lose{color:#9aa3b2}
-.im-foot{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:14px;line-height:1.4;color:var(--muted)}
-.im-foot.live{color:var(--red);font-weight:600}
 
 /* ---------- 6. Stany: ładowanie, pusto, błąd ---------- */
-.im-state{text-align:center;padding:60px 24px 40px;color:var(--muted)}
-.im-state b{display:block;margin-bottom:6px;font-size:21px;font-weight:700;color:var(--ink)}
-.im-state p{max-width:300px;margin:0 auto 18px;font-size:15px;line-height:1.5}
-.im-btn{padding:12px 22px;border-radius:999px;background:var(--ink);color:#fff;font-size:15px;font-weight:600}
 .im-skel{height:160px;margin:16px 0;border-radius:26px;background:linear-gradient(90deg,#17191f,#22252d,#17191f);background-size:200% 100%;animation:imShimmer 1.2s linear infinite}
-.im-note{margin:6px 4px 0;font-size:13px;line-height:1.5;color:#8a94a4}
 
 /* ---------- 7. Dolna nawigacja ---------- */
 /* Na stronie Mecze korzystamy z tych samych reguł .bottom i .nav co na pozostałych stronach. */
 /* Dodatkowy przycisk wyszukiwania nie może zmieniać szerokości ani położenia paska nawigacji. */
-body.ios-matches .im-search{display:none!important}
 
 /* Wyszukiwarka w jasnym wydaniu */
 body.ios-matches .search{border-bottom:0;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
@@ -118,7 +97,6 @@ body.ios-matches .search input{background:#fff;border:1px solid #dde1e8;color:#0
 body.ios-matches .search-result{background:#fff;border-color:#dde1e8;color:#0b0c10}
 
 /* Ukryty kalendarz (otwierany przyciskiem u góry) */
-.im-date{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 
 /* ---------- 8. Animacje ---------- */
 @keyframes imPulse{0%{box-shadow:0 0 0 0 rgba(229,51,63,.55)}70%{box-shadow:0 0 0 10px rgba(229,51,63,0)}100%{box-shadow:0 0 0 0 rgba(229,51,63,0)}}

@@ -1,0 +1,4 @@
+/* Keep the cascade explicit: match base, app layout, then the current theme. */
+@import './matches.css';
+@import '../app.css';
+@import '../theme.css';

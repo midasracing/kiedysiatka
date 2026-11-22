@@ -7,6 +7,7 @@ on:
     branches: [main]
     paths:
       - "scripts/refresh_tauron.py"
+      - "scripts/feed_io.py"
       - ".github/workflows/refresh-tauron.yml"
   schedule:
     # Match hours (UTC covers both summer and winter time in Poland): every 5 minutes.
