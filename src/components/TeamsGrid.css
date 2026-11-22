@@ -1,95 +1,88 @@
-/* Kiedy Siatka? — CLUB WALL / POSTER INDEX
-   Oversized competition-selector typography meets restrained printmaking.
-   Crest postage-stamps solve low-contrast club artwork without halos, while
-   the black paper and crimson rules continue the established site language.
-   No scroll listeners, filter animations or per-crest gradients. */
+/* Kiedy Siatka? / Club Wall
+   One typographic system shared with the league selector and team profiles.
+   Logo, name, favourite. No paper tiles, halos, gradients, or decorative cuts.
+   All scroll movement stays native on mobile. */
 .vh-club-wall {
-  --club-stamp: clamp(88px, 23vw, 108px);
-  --club-ink: #e8e0d7;
-  --club-rule: #533036;
+  --club-crest: clamp(78px, 22vw, 105px);
+  --club-ink: #f0eae5;
+  --club-rule: #46282e;
   --club-accent: var(--accent, #fc0001);
-  position: relative;
   width: calc(100% + 40px);
-  margin: 14px -20px 0;
+  margin: 16px -20px 0;
   padding: 0 0 calc(128px + env(safe-area-inset-bottom, 0px));
   background: #000;
 }
 .vh-club-wall__row {
   position: relative;
-  min-height: 138px;
+  min-height: 126px;
   border-bottom: 1px solid var(--club-rule);
-  background: #000;
+  background: transparent;
 }
 .vh-club-wall__open {
   display: grid;
-  grid-template-columns: var(--club-stamp) minmax(0, 1fr);
+  grid-template-columns: var(--club-crest) minmax(0, 1fr);
   align-items: center;
-  column-gap: 17px;
+  column-gap: 19px;
   width: 100%;
-  min-height: 138px;
+  min-height: 126px;
   margin: 0;
-  padding: 21px 49px 21px 18px;
+  padding: 17px 49px 17px 20px;
   border: 0;
   border-radius: 0;
   background: transparent;
   color: var(--club-ink);
-  text-align: left;
   text-decoration: none;
+  text-align: left;
   cursor: default;
   -webkit-tap-highlight-color: transparent;
 }
 button.vh-club-wall__open { cursor: pointer; }
-/* A physical-looking, flat paper stamp is a predictable contrast surface
-   for every official crest. It is not a glowing tile or a full-height stripe. */
-.vh-club-wall__crest {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: var(--club-stamp);
-  height: var(--club-stamp);
-  background: #9e958b;
-  flex: 0 0 auto;
-}
+.vh-club-wall__crest,
 .vh-club-wall__crest > .vh-team-logo,
 .vh-club-wall__crest > .vh-team-logo .team-mark {
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 100%;
+  width: var(--club-crest);
+  height: var(--club-crest);
   flex: 0 0 auto;
   background: transparent;
 }
 .vh-club-wall__crest > .vh-team-logo img {
   display: block;
-  width: 86%;
-  height: 86%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   filter: none;
 }
+/* One-colour alternative only for near-black artwork. The real crest asset
+   is unchanged; this is a CSS contrast treatment, not an invented logo. */
+.vh-club-wall__crest.is-dark-crest > .vh-team-logo img {
+  filter: grayscale(1) brightness(0) invert(.88);
+}
 .vh-club-wall__crest > .vh-team-logo .team-mark {
-  color: #191315;
-  border: none;
+  border: 0;
   border-radius: 0;
-  font: 900 28px/1 Impact, 'Arial Narrow', sans-serif;
+  color: var(--club-ink);
+  font: 900 27px/1 Impact, 'Arial Narrow', sans-serif;
 }
 .vh-club-wall__name {
   display: block;
   min-width: 0;
   margin: 0;
   color: var(--club-ink);
-  font: 900 clamp(32px, 9.4vw, 49px)/.94 Impact, 'Arial Narrow', 'Arial Black', sans-serif;
-  letter-spacing: -.013em;
-  text-transform: uppercase;
+  font: 900 clamp(32px, 9.7vw, 51px)/.94 Impact, 'Arial Narrow', 'Arial Black', sans-serif;
+  letter-spacing: -.014em;
   text-wrap: balance;
+  text-transform: uppercase;
   overflow-wrap: break-word;
   transform-origin: left center;
-  transition: color 170ms ease, transform 220ms cubic-bezier(.22,1,.36,1);
+  transition: color 150ms ease, transform 200ms cubic-bezier(.22, 1, .36, 1);
 }
 .vh-club-wall__star {
   position: absolute;
   z-index: 2;
-  right: 9px;
   top: 50%;
+  right: 9px;
   transform: translateY(-50%);
   display: grid;
   place-items: center;
@@ -99,14 +92,14 @@ button.vh-club-wall__open { cursor: pointer; }
   padding: 0;
   border: 0;
   background: transparent;
-  color: #c5bab5;
+  color: #c4b9b6;
   -webkit-tap-highlight-color: transparent;
 }
 .vh-club-wall__star.is-favorite { color: #fc0001; }
 .vh-club-wall__star:active { opacity: .66; }
 .vh-club-wall__star:focus-visible,
 .vh-club-wall__open:focus-visible {
-  outline: 2px solid #fc0001;
+  outline: 2px solid var(--club-accent);
   outline-offset: -3px;
 }
 button.vh-club-wall__open:active .vh-club-wall__name,
@@ -122,19 +115,17 @@ button.vh-club-wall__open:focus-visible .vh-club-wall__name {
 }
 @media (max-width: 390px) {
   .vh-club-wall {
-    --club-stamp: 88px;
+    --club-crest: 80px;
     width: calc(100% + 28px);
     margin-left: -14px;
     margin-right: -14px;
   }
-  .vh-club-wall__row,
-  .vh-club-wall__open { min-height: 132px; }
+  .vh-club-wall__row, .vh-club-wall__open { min-height: 122px; }
   .vh-club-wall__open {
-    grid-template-columns: var(--club-stamp) minmax(0, 1fr);
-    column-gap: 14px;
-    padding: 18px 44px 18px 14px;
+    column-gap: 15px;
+    padding: 16px 44px 16px 15px;
   }
-  .vh-club-wall__name { font-size: clamp(31px, 9.15vw, 37px); }
+  .vh-club-wall__name { font-size: clamp(30px, 9.3vw, 38px); }
   .vh-club-wall__star { right: 3px; }
 }
 @media (prefers-reduced-motion: reduce) {
