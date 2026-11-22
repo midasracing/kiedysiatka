@@ -14,7 +14,8 @@ async function setup(page) {
   } : { teams: [], matches: [], groups: [] } }));
   await page.goto('/#matches');
   // No skip button. Advance the frozen clock through the intro handoff.
-  await page.clock.runFor(2350);
+  await page.clock.runFor(3100);
+  await expect(page.locator('.vh-startup-intro')).toHaveCount(0);
   await expect(page.locator('[data-route="matches"] [data-match-id="day-4"]')).toBeVisible();
 }
 

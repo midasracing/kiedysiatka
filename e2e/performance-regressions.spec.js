@@ -16,11 +16,33 @@ test('a provisional unstyled picker layout cannot erase the selected league', as
   // Let the provisional resize and its queued frame run before CSS settles.
   await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   await page.locator('#provisional-picker-layout').evaluate(style => style.remove());
-  const selected = page.getByRole('option', { name: 'II Liga Mężczyzn', exact: true });
-  await expect(selected).toHaveAttribute('aria-selected', 'true');
+  const first = picker.getByRole('option', { name: 'TAURON Liga Mężczyzn', exact: true });
+  await expect(first).toHaveAttribute('aria-selected', 'true');
   await expect.poll(() => picker.evaluate(node => node.scrollTop)).toBe(0);
+
+  // The initial option is now the first league. Also exercise a nonzero
+  // selection so a clamped provisional offset cannot silently reset it.
+  await picker.press('ArrowDown');
+  await picker.press('ArrowDown');
+  const selected = picker.getByRole('option', { name: 'II Liga Mężczyzn', exact: true });
+  await expect(selected).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(() => picker.evaluate(node => node.scrollTop)).toBe(232);
+  await page.evaluate(async () => {
+    const style = document.createElement('style');
+    style.textContent = '.vh-league-picker__scroll { height:112px !important; bottom:auto !important; padding:0 !important } .vh-league-picker__option { display:none !important }';
+    document.head.append(style);
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    style.remove();
+  });
+  await expect.poll(() => picker.evaluate(node => node.scrollTop)).toBe(232);
+  await expect(selected).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(() => selected.evaluate(option => {
+    const host = option.closest('.vh-league-picker__scroll').getBoundingClientRect();
+    const row = option.getBoundingClientRect();
+    return Math.abs(row.top + row.height / 2 - host.top - host.height / 2);
+  })).toBeLessThan(2);
   await selected.click();
-  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'II Liga Mężczyzn', exact: true })).toBeVisible();
 });
 
 test('a fast failing logo keeps its initials and a new logo can load after refresh', async ({ page }) => {

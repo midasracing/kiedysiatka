@@ -31,14 +31,20 @@ export default function StartupEntrance({ enabled, onComplete }) {
       const target = brand?.querySelector('img')?.getBoundingClientRect();
       const start = logo?.getBoundingClientRect();
       const page = document.querySelector('.vh-tab-panel:not([hidden])');
-      // Read geometry before freezing the logo's layout and starting effects.
+      // Stop measuring cards once the four animated rows are known. Longer
+      // schedules should not add layout reads to the start of the logo flight.
+      const visibleCards = [];
+      const viewportBottom = window.innerHeight + 40;
+      for (const card of page?.querySelectorAll('.vh-match') || []) {
+        const box = card.getBoundingClientRect();
+        if (box.top < viewportBottom && box.bottom > 0) visibleCards.push(card);
+        if (visibleCards.length === 4) break;
+      }
+      // Complete geometry reads before starting any animation.
       const elements = [
         page?.querySelector('.vh-section-heading, .vh-page-head'),
         page?.querySelector('.im-league'),
-        ...Array.from(page?.querySelectorAll('.vh-match') || []).filter(card => {
-          const box = card.getBoundingClientRect();
-          return box.top < window.innerHeight + 40 && box.bottom > 0;
-        }).slice(0, 4),
+        ...visibleCards,
       ].filter(Boolean);
       setRevealing(true);
       if (logo && target?.width > 0 && start?.width > 0) {
