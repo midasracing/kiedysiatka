@@ -11,13 +11,19 @@ test('league selector replaces categories and cards without opening league detai
   await expect(picker.locator('.vh-league-picker__scroll')).toHaveCSS('overflow-y', 'auto');
   await expect(picker.getByRole('option').first()).toHaveCSS('color', 'rgb(252, 0, 1)');
   await expect(picker.getByRole('option')).toHaveCount(6);
+  await expect(picker.locator('.vh-league-picker__line')).toHaveCount(12);
+  const first = picker.getByRole('option', { name: 'TAURON Liga Mężczyzn' });
+  await expect(first.locator('.vh-league-picker__line').first()).toHaveText('TAURON Liga');
+  await expect(first.locator('.vh-league-picker__line').last()).toHaveText('Mężczyzn');
+  await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
   await expect(picker.getByRole('option', { name: 'II Liga Mężczyzn' })).toHaveAttribute('aria-selected', 'true');
   await expect(page.getByRole('tablist', { name: 'Region rozgrywek' })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Dostępne ligi' })).toHaveCount(0);
   await expect(page.locator('[data-route="competitions"] .vh-league-stack')).toHaveCount(0);
   await picker.focus();
   const scroller = picker.locator('.vh-league-picker__scroll');
-  await scroller.evaluate(node => { node.scrollTop = 4 * 64; });
+  await scroller.evaluate(node => { node.scrollTop = 4 * 116; });
   await expect(picker.getByRole('option', { name: 'SuperLega Credem Banca' }))
     .toHaveAttribute('aria-selected', 'true');
   await page.keyboard.press('End');
@@ -487,4 +493,31 @@ test('fast tab changes keep dock visible without snapshot overlays', async ({ pa
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await nav.getByRole('button', { name:'Kalendarz' }).click();
   expect(await host.evaluate(el => el.getAnimations().length)).toBe(0);
+});
+
+test('all two-line league labels fit narrow mobile screens with unchanged font-size', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.goto('/#competitions');
+  const scroller = page.locator('.vh-league-picker__scroll');
+  await expect(scroller).toBeVisible();
+  const options = scroller.getByRole('option');
+  for (let i = 0; i < 6; i += 1) {
+    await scroller.evaluate((node, index) => { node.scrollTop = index * 116; }, i);
+    await expect(options.nth(i)).toHaveAttribute('aria-selected', 'true');
+    const result = await options.nth(i).evaluate(option => {
+      const host = option.closest('.vh-league-picker__scroll').getBoundingClientRect();
+      const label = option.querySelector('.vh-league-picker__label');
+      const bounding = label.getBoundingClientRect();
+      return {
+        lines: label.querySelectorAll('.vh-league-picker__line').length,
+        fontSize: parseFloat(getComputedStyle(label).fontSize),
+        fits: bounding.right <= host.right + 1,
+        startsInside: bounding.left >= host.left - 1,
+      };
+    });
+    expect(result.lines).toBe(2);
+    expect(result.fontSize).toBeGreaterThanOrEqual(33);
+    expect(result.fits).toBe(true);
+    expect(result.startsInside).toBe(true);
+  }
 });

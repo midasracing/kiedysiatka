@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { pickerIndexFromScroll, pickerScrollForIndex, PICKER_ROW_HEIGHT } from './leaguePickerMath.js';
+import { leagueNameLines, pickerIndexFromScroll, pickerScrollForIndex, PICKER_ROW_HEIGHT } from './leaguePickerMath.js';
 import './LeaguePicker.css';
 
 // The reference uses a native vertical list with a fixed selection marker.
@@ -29,8 +29,13 @@ export default function LeaguePicker({ leagues, active }) {
     for (let i = 0; i < options.length; i += 1) {
       const distance = Math.abs(i * PICKER_ROW_HEIGHT - position);
       const ratio = distance / (PICKER_ROW_HEIGHT * 1.25);
-      const indent = Math.round(54 * Math.exp(-ratio * ratio));
-      options[i].style.transform = `translate3d(${indent}px,0,0)`;
+      const desiredIndent = Math.round(54 * Math.exp(-ratio * ratio));
+      const pad = scroller.clientWidth <= 390 ? 48 : 52;
+      const naturalWidth = options[i].offsetWidth;
+      // Keep full two-line titles readable on narrow phones without reducing font size.
+      const available = Math.max(1, scroller.clientWidth - pad - 12 - desiredIndent);
+      const fit = naturalWidth ? Math.min(1, available / naturalWidth) : 1;
+      options[i].style.transform = `translate3d(${desiredIndent}px,0,0) scaleX(${fit})`;
     }
   }, [active, leagues.length]);
 
@@ -42,11 +47,12 @@ export default function LeaguePicker({ leagues, active }) {
     if (!active || !leagues.length) return undefined;
     const scroller = scrollerRef.current;
     if (!scroller) return undefined;
-    let previousHeight = -1;
+    let previousSize = '';
     const resize = () => {
       const height = scroller.clientHeight;
-      if (!height || height === previousHeight) return;
-      previousHeight = height;
+      const size = height + ':' + scroller.clientWidth;
+      if (!height || size === previousSize) return;
+      previousSize = size;
       scroller.style.setProperty('--picker-spacer', `${Math.max(0, (height - PICKER_ROW_HEIGHT) / 2)}px`);
       scroller.scrollTop = pickerScrollForIndex(
         clamp(selectedRef.current, 0, leagues.length - 1)
@@ -116,7 +122,11 @@ export default function LeaguePicker({ leagues, active }) {
           tabIndex={-1}
           onClick={() => choose(index)}
         >
-          <span className="vh-league-picker__label">{league.name}</span>
+          <span className="vh-league-picker__label">
+            {leagueNameLines(league).map((line, i) =>
+              <span className="vh-league-picker__line" key={i}>{line}</span>
+            )}
+          </span>
         </button>
       )}
     </div>

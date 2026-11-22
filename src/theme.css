@@ -5,7 +5,7 @@
 #ios-matches {
   --font-ui: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-editorial: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --bg: #080808;
+  --bg: #000000;
   --ink: #f5f2ed;
   --muted: #b8b5b5;
   --line: #49151c;
@@ -21,7 +21,8 @@
   color-scheme: dark;
 }
 
-body.ios-matches { background: var(--bg); color: var(--ink); }
+html, body.ios-matches, #root, #ios-matches { background-color: #000000; }
+body.ios-matches { background: #000000; color: var(--ink); }
 .vh-bottom { font-family: var(--font-ui); }
 button:focus-visible, a:focus-visible, input:focus-visible,
 [tabindex="0"]:focus-visible,
