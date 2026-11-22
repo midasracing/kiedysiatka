@@ -19,8 +19,11 @@ export default function TeamsGrid({
         const favorite = favorites.teams.some(name => sameName(name, team.name));
         const logo = team.logo || logos.get(normalizeName(team.name));
         const returnTarget = morphTeam && sameName(team.name, morphTeam);
+        // Bogdanka's almost-black emblem needs a dark-background print variant.
+        // A solid one-colour rendering is cleaner than a glow or grey tile.
+        const darkCrest = /bogdanka/i.test(team.name);
         const identity = <>
-          <span className="vh-club-wall__crest"
+          <span className={'vh-club-wall__crest' + (darkCrest ? ' is-dark-crest' : '')}
             style={returnTarget ? { viewTransitionName: 'vh-club-logo' } : undefined}>
             <TeamLogo name={team.name} logo={logo} className="vh-club-wall__logo" />
           </span>
