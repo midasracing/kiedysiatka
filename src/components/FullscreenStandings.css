@@ -212,6 +212,11 @@
   background: #000;
   transform: translate3d(0,0,0);
   backface-visibility: hidden;
+  contain: layout paint;
+}
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface,
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__surface {
+  will-change: transform;
 }
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface {
   animation: vh-standings-slide-up 620ms cubic-bezier(.22,.82,.25,1) both;

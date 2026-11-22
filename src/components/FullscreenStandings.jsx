@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft } from 'lucide-react';
 import Standings from './Standings.jsx';
@@ -37,9 +37,11 @@ export default function FullscreenStandings({
 
   useEffect(() => {
     if (reducedMotion) return undefined;
+    // Finish from animationend; a busy first paint must not cut the swipe.
+    // The timer only recovers from an interrupted animation.
     const timer = window.setTimeout(() => {
       setPhase(current => current === 'enter' ? 'active' : current);
-    }, SLIDE_ENTER_MS);
+    }, SLIDE_ENTER_MS + 1000);
     return () => window.clearTimeout(timer);
   }, [reducedMotion]);
 
@@ -47,7 +49,7 @@ export default function FullscreenStandings({
 
   // The league heading stays stationary while the sheet moves underneath it.
   // It never scales, moves or gets clipped by the black unfolding surface.
-  useEffect(() => {
+  useLayoutEffect(() => {
     const body = document.body;
     const root = document.getElementById('root');
     const previousFocus = document.activeElement;
@@ -111,7 +113,11 @@ export default function FullscreenStandings({
         '--vh-title-height': `${sourceTitle?.height ?? 48}px`,
       }}
       aria-label={`Tabela ligowa — ${leagueName}`}>
-      <div className="vh-standings-fullscreen__surface">
+      <div className="vh-standings-fullscreen__surface" onAnimationEnd={event => {
+        if (event.target === event.currentTarget && event.animationName === 'vh-standings-slide-up') {
+          setPhase(current => current === 'enter' ? 'active' : current);
+        }
+      }}>
       <Standings key={selectedGroup || leagueName} rows={rows} logos={logos} />
       <div className="vh-standings-fullscreen__fade" aria-hidden="true" />
       <header className="vh-standings-fullscreen__header">

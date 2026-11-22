@@ -24,6 +24,9 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
     return { background: style.backgroundColor, color: style.color, radius: style.borderRadius };
   });
   const triggerFont = await trigger.evaluate(node => getComputedStyle(node).fontFamily);
+  const pausedSheet = await page.addStyleTag({ content:
+    '.vh-standings-fullscreen__surface { animation-play-state: paused !important; }'
+  });
   await trigger.click();
 
   // Clicking Tabela must activate the SAME light capsule as the other tabs.
@@ -67,6 +70,9 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
   expect(scene.dialogZ).toBeGreaterThan(100);
 
   await page.clock.runFor(750);
+  // A delayed compositor must not be snapped to its destination by a timer.
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
+  await pausedSheet.evaluate(node => node.remove());
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
   await expect(dialog.getByRole('button', { name: 'Zamknij tabelę' })).toBeVisible();
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('transform', 'none');
