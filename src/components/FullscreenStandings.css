@@ -60,7 +60,7 @@
   flex: 0 0 auto;
   color: #fc0001;
   font: 600 clamp(36px, 10vw, 52px)/1.05 var(--font-editorial, 'Playfair Display', Georgia, serif);
-  text-transform: uppercase;
+  text-transform: none;
   letter-spacing: -.012em;
   white-space: nowrap;
 }

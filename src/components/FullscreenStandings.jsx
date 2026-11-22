@@ -96,7 +96,7 @@ export default function FullscreenStandings({
             <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
             <span>Wstecz</span>
           </button>
-          <span className="vh-standings-fullscreen__section-title">TABELA</span>
+          <span className="vh-standings-fullscreen__section-title">Tabela</span>
         </div>
         <div className="vh-standings-fullscreen__identity">
           <h2 ref={leagueTitleRef}>{leagueName.toLocaleUpperCase('pl-PL')}</h2>
