@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { dateKey, normalizeName } from '../data.js';
 import { NOW } from '../dateUtils.js';
@@ -63,6 +63,7 @@ const TeamProfile = React.memo(function TeamProfile({
   league, team, matches, logos, favorites, toggleFavorite, onBack,
 }) {
   const [showHistory, setShowHistory] = useState(false);
+  const nameRef = useRef(null);
   const profile = useMemo(
     () => teamProfileSummary(matches, league.id, team.name, dateKey(NOW())),
     [matches, league.id, team.name]);
@@ -72,6 +73,35 @@ const TeamProfile = React.memo(function TeamProfile({
   const crest = team.logo || logos.get(normalizeName(team.name));
   const past = showHistory ? profile.recent : profile.recent.slice(0, 4);
   const next = profile.upcoming.slice(0, 2);
+  // Keep the league-picker font on exactly two lines, fitting to available width.
+  useLayoutEffect(() => {
+    const title = nameRef.current;
+    const container = title?.parentElement;
+    if (!title || !container) return undefined;
+    let frame = 0;
+    let disposed = false;
+    const fit = () => {
+      frame = 0;
+      if (disposed) return;
+      const baseSize = 40;
+      title.style.fontSize = `${baseSize}px`;
+      const widest = Math.max(1, ...Array.from(title.children, line => line.scrollWidth));
+      const available = Math.max(1, container.clientWidth - 2);
+      title.style.fontSize = `${Math.min(baseSize, Math.max(14, baseSize * available / widest))}px`;
+    };
+    const onResize = () => {
+      if (!frame) frame = requestAnimationFrame(fit);
+    };
+    fit();
+    const observer = new ResizeObserver(onResize);
+    observer.observe(container);
+    document.fonts?.ready?.then(onResize);
+    return () => {
+      disposed = true;
+      observer.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [team.name]);
 
   return <section className="vh-team-profile" aria-label={`Profil drużyny: ${team.name}`}>
     <div className="vh-team-profile__toolbar">
@@ -87,17 +117,15 @@ const TeamProfile = React.memo(function TeamProfile({
     </div>
 
     <header className="vh-team-profile__hero">
-      <p className="vh-team-profile__eyebrow">{league.short} <span>·</span> Drużyna</p>
       <div className="vh-team-profile__identity">
         <div className="vh-team-profile__crest">
           <TeamLogo name={team.name} logo={crest} />
         </div>
         <div className="vh-team-profile__identity-copy">
-          <h1 title={team.name}>
+          <h1 ref={nameRef} title={team.name}>
             <span>{nameLineOne}</span>
             {nameLineTwo && <span>{nameLineTwo}</span>}
           </h1>
-          <span className="vh-team-profile__country">Polska <span aria-hidden="true">🇵🇱</span></span>
         </div>
       </div>
     </header>
