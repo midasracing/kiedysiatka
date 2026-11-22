@@ -5,8 +5,18 @@ test('league selector replaces categories and cards without opening league detai
   page.on('pageerror', error => failures.push(error.message));
   await page.goto('/#competitions');
   await expect(page.getByRole('heading', { name: 'Rozgrywki' })).toBeVisible();
+  await expect(page.locator('[data-route="competitions"] .vh-competitions-topfade')).toBeVisible();
+  await expect(page.locator('#ios-matches .vh-floating-head')).toHaveCount(0);
+  await expect(page.getByText('Przesuń palcem i wybierz ligę.')).toHaveCount(0);
   const picker = page.getByRole('listbox', { name: /Wybierz ligę/ });
   await expect(picker).toBeVisible();
+  const frame = await picker.evaluate(node => ({
+    height: node.getBoundingClientRect().height,
+    viewport: window.innerHeight,
+    top: node.getBoundingClientRect().top,
+  }));
+  expect(frame.height).toBeGreaterThanOrEqual(frame.viewport - 2);
+  expect(frame.top).toBeLessThanOrEqual(2);
   await expect(picker.locator('canvas')).toHaveCount(0);
   await expect(picker.locator('.vh-league-picker__scroll')).toHaveCSS('overflow-y', 'auto');
   await expect(picker.getByRole('option').first()).toHaveCSS('color', 'rgb(252, 0, 1)');

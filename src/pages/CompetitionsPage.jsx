@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ChevronLeft, Star, WifiOff } from 'lucide-react';
 import { LEAGUES } from '../data.js';
 import { leagueTimeline } from '../leagueTimeline.js';
-import { EmptyState, FeedWarning, LoadingCards, PageHeader } from '../components/UiPrimitives.jsx';
+import { EmptyState, FeedWarning, LoadingCards } from '../components/UiPrimitives.jsx';
 import { MatchGroups } from '../components/MatchCards.jsx';
 import FullscreenStandings from '../components/FullscreenStandings.jsx';
 import TeamsGrid from '../components/TeamsGrid.jsx';
@@ -69,10 +69,12 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       </>}
       {data?.updated_at && <p className="vh-source-note">Aktualizacja źródła: {new Date(data.updated_at).toLocaleString('pl-PL')}</p>}
       {view === 'table' && (league.id === 'second' ? groupChoices : [data]).some(item => Object.keys(item?.source_table_discrepancies || {}).length > 0) && <p className="vh-source-note" role="status">Wyniki i tabela VolleyStation są publikowane osobno. Pokazujemy tabelę dokładnie według źródła.</p>}
-    </> : <>
-      <PageHeader title="Rozgrywki" subtitle="Przesuń palcem i wybierz ligę." />
+    </> : <section className="vh-competitions-screen">
+      <header className="vh-competitions-topfade">
+        <h1>Rozgrywki</h1>
+      </header>
       <LeaguePicker leagues={LEAGUES} active={active} />
-    </>}
+    </section>}
   </>;
 });
 export default CompetitionsPage;

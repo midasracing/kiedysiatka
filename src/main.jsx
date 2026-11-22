@@ -135,11 +135,12 @@ function App() {
     if (id === 'favorites') return <FavoritesPage teams={teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} onOpenLeague={openLeague} />;
     return null;
   }
-  return <MotionEnabled.Provider value={!reducedMotion}><div className="vh-app" id="ios-matches" data-page={page}>
-    <div className="vh-floating-head" aria-label="Nagłówek Kiedy Siatka?">
+  return <MotionEnabled.Provider value={!reducedMotion}><div className="vh-app" id="ios-matches" data-page={page}
+    data-competition-picker={page === 'competitions' && !selectedLeague ? 'true' : undefined}>
+    {page !== 'competitions' && <div className="vh-floating-head" aria-label="Nagłówek Kiedy Siatka?">
       <BrandSignature />
       {page === 'home' && <h2 className="vh-home-heading">{matches.some(match => feedDateKey(match.date) === dateKey(NOW())) ? 'Dzisiaj' : 'Najbliższe mecze'}</h2>}
-    </div>
+    </div>}
     <PageStage page={page} direction={direction} reducedMotion={reducedMotion}>
       {visitedPages.map(id => <div key={id} className="vh-tab-panel" data-route={id} hidden={page !== id} inert={page !== id}>
         {renderPage(id)}
