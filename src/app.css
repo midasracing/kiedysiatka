@@ -245,3 +245,17 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 .vh-match-information dd { margin: 0; overflow-wrap: anywhere; }
 .vh-match-information a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .vh-match-information a:hover { text-decoration-thickness: 2px; }
+
+/* Competition detail: no large red cover, only a compact league identity. */
+[data-route="competitions"] .vh-back{margin:8px 0 14px}
+.vh-competition-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:0 0 18px}
+.vh-competition-heading__copy{min-width:0}
+.vh-competition-heading h1{margin:9px 0 0;font-family:var(--font-editorial,Georgia,serif);font-size:clamp(32px,8vw,44px);font-weight:600;line-height:1.08;letter-spacing:0;color:var(--ink);overflow-wrap:break-word}
+.vh-competition-favorite{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--muted)}
+.vh-competition-favorite.is-favorite{color:var(--accent-text)}
+[data-route="competitions"] .vh-competition-heading + .vh-segmented{margin:16px 0 14px}
+.vh-match-date-heading{margin:24px 0 12px;color:var(--muted);font-size:12px;font-weight:750;line-height:1.4;letter-spacing:.055em;text-transform:uppercase}
+.vh-match-groups section>.vh-match-date-heading:first-child{margin-top:12px}
+.vh-match-more{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;min-height:50px;margin:20px 0 4px;padding:12px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);font-size:14px;font-weight:700}
+.vh-match-more:hover{border-color:var(--accent-text)}
+.vh-match-more span{color:var(--muted);font-size:12px;font-weight:500}

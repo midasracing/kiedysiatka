@@ -1,6 +1,6 @@
 import React, { useId, useState } from 'react';
 import { ArrowRight, ChevronRight, Clock3 } from 'lucide-react';
-import { LEAGUES, dateKey, feedDateKey, isFinished, isLive, normalizeName } from '../data.js';
+import { LEAGUES, dateKey, feedDateKey, fromKey, isFinished, isLive, normalizeName } from '../data.js';
 import { NOW } from '../dateUtils.js';
 import { broadcastLinks } from '../broadcasts.js';
 import { AnimatedSets } from './ScheduleMotion.jsx';
@@ -67,11 +67,20 @@ const MatchCard = React.memo(function MatchCard({ match, logos, compact = false 
   </article>;
 });
 
-export function MatchGroups({ matches, logos, emptyMessage, compact = false }) {
+const formatMatchDate = value => {
+  const parsed = fromKey(feedDateKey(value));
+  return parsed ? parsed.toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : value;
+};
+
+export function MatchGroups({ matches, logos, emptyMessage, compact = false, showLeagueHeading = true, showDates = false }) {
   if (!matches.length) return <EmptyState title="Brak meczów" message={emptyMessage || 'Na razie nie ma spotkań spełniających te kryteria.'} />;
   const groups = LEAGUES.map(league => ({ league, matches: matches.filter(match => match.leagueId === league.id) })).filter(group => group.matches.length);
   return <div className="vh-match-groups">{groups.map(group => <section key={group.league.id}>
-    <h3 className="im-league"><span className="im-flag">{group.league.flag || '🇵🇱'}</span>{group.league.short}<span className="vh-count">{group.matches.length}</span></h3>
-    {group.matches.map(match => <MatchCard key={group.league.id + ':' + (match.id ?? [match.date, match.time || '', match.home, match.away].join('|'))} match={match} logos={logos} compact={compact} />)}
+    {showLeagueHeading && <h3 className="im-league"><span className="im-flag">{group.league.flag || '🇵🇱'}</span>{group.league.short}<span className="vh-count">{group.matches.length}</span></h3>}
+    {group.matches.map((match, index) => <React.Fragment key={group.league.id + ':' + (match.id ?? [match.date, match.time || '', match.home, match.away].join('|'))}>
+      {showDates && (index === 0 || match.date !== group.matches[index - 1].date) &&
+        <h3 className="vh-match-date-heading" data-match-date={feedDateKey(match.date)}>{formatMatchDate(match.date)}</h3>}
+      <MatchCard match={match} logos={logos} compact={compact} />
+    </React.Fragment>)}
   </section>)}</div>;
 }
