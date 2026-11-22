@@ -86,37 +86,71 @@ test('Liquid Dive respects reduced motion and preserves the teams tab on return'
 });
 
 
-test('ink expands as a black background beneath the content; the surfaced Tabela is a button', async ({ page }) => {
+test('one slow black portal reveals the table and the same selected Tabela pill resurfaces', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openLeague(page);
   const original = page.getByRole('tab', { name: 'Tabela' });
+  const originBox = await original.boundingBox();
   await original.click();
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toBeVisible();
 
-  const structure = await dialog.evaluate(root => {
-    const ink = root.querySelector('.vh-standings-fullscreen__liquid');
-    const content = root.querySelector('.vh-standings-fullscreen__surface');
+  // The black backdrop AND its table are a single clipping element.
+  // An independent liquid mask or delayed opacity curtain caused the old jump.
+  const scene = await dialog.evaluate(root => {
+    const surface = root.querySelector('.vh-standings-fullscreen__surface');
+    const css = getComputedStyle(surface);
+    const flying = root.querySelector('.vh-standings-fullscreen__flying-pill');
     return {
-      inkColor: ink && getComputedStyle(ink).backgroundColor,
-      contentColor: content && getComputedStyle(content).backgroundColor,
-      inkLayer: ink && Number(getComputedStyle(ink).zIndex),
-      contentLayer: content && Number(getComputedStyle(content).zIndex),
-      inkAnimation: ink?.getAnimations().map(a => a.animationName) || [],
-      contentAnimation: content?.getAnimations().map(a => a.animationName) || [],
+      background: css.backgroundColor,
+      inkLayers: root.querySelectorAll('.vh-standings-fullscreen__liquid').length,
+      tableInsidePortal: surface.contains(root.querySelector('.vh-standings-warp')),
+      headingInsidePortal: surface.contains(root.querySelector('.vh-standings-fullscreen__identity h2')),
+      circleKeyframes: Array.from(document.styleSheets).some(sheet => {
+        try {
+          return Array.from(sheet.cssRules).some(rule =>
+            rule.name === 'vh-liquid-open' && rule.cssText.includes('circle('));
+        } catch { return false; }
+      }),
+      hasFlight: !!flying,
+      radius: parseFloat(getComputedStyle(root).getPropertyValue('--vh-liquid-radius')),
     };
   });
-  expect(structure.inkColor).toBe('rgb(0, 0, 0)');
-  expect(structure.contentColor).toBe('rgba(0, 0, 0, 0)');
-  expect(structure.inkLayer).toBeLessThan(structure.contentLayer);
-  expect(structure.inkAnimation).toContain('vh-liquid-wipe-in');
-  expect(structure.contentAnimation).toContain('vh-liquid-wipe-in');
+  expect(scene.background).toBe('rgb(0, 0, 0)');
+  expect(scene.inkLayers).toBe(0);
+  expect(scene.tableInsidePortal).toBe(true);
+  expect(scene.headingInsidePortal).toBe(true);
+  expect(scene.circleKeyframes).toBe(true);
+  expect(scene.radius).toBeGreaterThan(400);
 
-  const surfaced = dialog.getByRole('button', { name: 'Zamknij tabelę' });
-  await expect(surfaced).toHaveText('Tabela');
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  await expect(dialog.locator('.vh-standings-fullscreen__flying-pill')).toHaveCount(0);
+  const surfaced = dialog.getByRole('button', { name: 'Zamknij tabelę' });
+  const design = await surfaced.evaluate(node => {
+    const css = getComputedStyle(node);
+    const box = node.getBoundingClientRect();
+    return {
+      background: css.backgroundColor, color: css.color,
+      borderRadius: css.borderRadius, fontSize: css.fontSize,
+      x: box.left, y: box.top, width: box.width, height: box.height,
+    };
+  });
+  const sourceStyle = await original.evaluate(node => {
+    const css = getComputedStyle(node);
+    return { background: css.backgroundColor, color: css.color,
+      borderRadius: css.borderRadius, fontSize: css.fontSize };
+  });
+  expect(design.background).toBe(sourceStyle.background);
+  expect(design.color).toBe(sourceStyle.color);
+  expect(design.borderRadius).toBe(sourceStyle.borderRadius);
+  expect(design.fontSize).toBe(sourceStyle.fontSize);
+  expect(Math.abs(design.width - originBox.width)).toBeLessThanOrEqual(1);
+  expect(Math.abs(design.height - originBox.height)).toBeLessThanOrEqual(1);
+  expect(design.x).toBeGreaterThan(originBox.x);
+  expect(design.y).toBeLessThan(originBox.y);
+
   await surfaced.click();
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
-  await expect(dialog).toHaveCount(0, { timeout: 3000 });
+  await expect(dialog).toHaveCount(0, { timeout: 3500 });
   await expect(original).toBeVisible();
 });

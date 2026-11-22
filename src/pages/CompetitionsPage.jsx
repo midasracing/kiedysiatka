@@ -77,6 +77,10 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     // Capture the ACTUAL tab position before the portal locks document scroll.
     // No DOM measurement or interpolation of the large standings Canvas.
     setTableOrigin({
+      left: rect.left,
+      top: rect.top,
+      width: rect.width,
+      height: rect.height,
       x: rect.left + rect.width / 2,
       y: rect.top + rect.height / 2,
     });

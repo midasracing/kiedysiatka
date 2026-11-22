@@ -4,8 +4,8 @@ import { ChevronLeft } from 'lucide-react';
 import Standings from './Standings.jsx';
 import './FullscreenStandings.css';
 
-const LIQUID_ENTER_MS = 720;
-const LIQUID_EXIT_MS = 570;
+const LIQUID_ENTER_MS = 1120;
+const LIQUID_EXIT_MS = 880;
 
 /**
  * Fixed portal keeps the animated table outside PageStage's layout and outside
@@ -18,6 +18,8 @@ export default function FullscreenStandings({
 }) {
   const backRef = useRef(null);
   const leagueTitleRef = useRef(null);
+  const pillRef = useRef(null);
+  const portalRef = useRef(null);
   const exitTimer = useRef(null);
   const exiting = useRef(false);
   const reducedMotion = useRef(
@@ -46,6 +48,24 @@ export default function FullscreenStandings({
   }, [reducedMotion]);
 
   useEffect(() => () => window.clearTimeout(exitTimer.current), []);
+
+  // One visual pill moves between the *real* segmented-button rectangle and
+  // its final header slot. No letter scaling and no animation on the table.
+  // Layout is measured before paint, so the flight starts without a jump.
+  useLayoutEffect(() => {
+    if (reducedMotion || !portalRef.current || !pillRef.current) return;
+    const target = pillRef.current.getBoundingClientRect();
+    const sourceLeft = Number.isFinite(origin?.left) ? origin.left : target.left;
+    const sourceTop = Number.isFinite(origin?.top) ? origin.top : target.top;
+    const dx = target.left - sourceLeft;
+    const dy = target.top - sourceTop;
+    portalRef.current.style.setProperty('--vh-flight-dx', `${dx}px`);
+    portalRef.current.style.setProperty('--vh-flight-dy', `${dy}px`);
+    portalRef.current.style.setProperty('--vh-flight-x30', `${dx * .30}px`);
+    portalRef.current.style.setProperty('--vh-flight-y30', `${dy * .30 + 16}px`);
+    portalRef.current.style.setProperty('--vh-flight-x75', `${dx * .75}px`);
+    portalRef.current.style.setProperty('--vh-flight-y75', `${dy * .75 + 12}px`);
+  }, [origin, reducedMotion]);
 
   // Use the same Impact letterforms as the red team names in the warped table.
   // Fit long league names uniformly into the available width, without scaleX.
@@ -119,14 +139,32 @@ export default function FullscreenStandings({
 
   const originX = Number.isFinite(origin?.x) ? origin.x : window.innerWidth / 2;
   const originY = Number.isFinite(origin?.y) ? origin.y : window.innerHeight / 2;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  // The final circle ends precisely beyond the furthest viewport corner;
+  // 160vmax made the old version visually complete far too early.
+  const radius = Math.max(
+    Math.hypot(originX, originY), Math.hypot(vw - originX, originY),
+    Math.hypot(originX, vh - originY), Math.hypot(vw - originX, vh - originY),
+  ) + 12;
+  const pillWidth = Number.isFinite(origin?.width) ? Math.max(80, origin.width) : 112;
+  const pillHeight = Number.isFinite(origin?.height) ? Math.max(40, origin.height) : 43;
+  const sourceLeft = Number.isFinite(origin?.left) ? origin.left : (vw - pillWidth) / 2;
+  const sourceTop = Number.isFinite(origin?.top) ? origin.top : vh / 2;
 
   return createPortal(
-    <section className="vh-standings-fullscreen" role="dialog" aria-modal="true"
+    <section ref={portalRef} className="vh-standings-fullscreen" role="dialog" aria-modal="true"
       data-liquid-phase={phase}
-      style={{ '--vh-liquid-x': `${originX}px`, '--vh-liquid-y': `${originY}px` }}
+      style={{
+        '--vh-liquid-x': `${originX}px`,
+        '--vh-liquid-y': `${originY}px`,
+        '--vh-liquid-radius': `${radius}px`,
+        '--vh-pill-width': `${pillWidth}px`,
+        '--vh-pill-height': `${pillHeight}px`,
+        '--vh-pill-left': `${sourceLeft}px`,
+        '--vh-pill-top': `${sourceTop}px`,
+      }}
       aria-label={`Tabela ligowa — ${leagueName}`}>
-      {!reducedMotion && phase !== 'active' &&
-        <div className="vh-standings-fullscreen__liquid" aria-hidden="true" />}
       <div className="vh-standings-fullscreen__surface">
       <Standings key={selectedGroup || leagueName} rows={rows} logos={logos} />
       <div className="vh-standings-fullscreen__fade" aria-hidden="true" />
@@ -138,7 +176,7 @@ export default function FullscreenStandings({
             <span>Wstecz</span>
           </button>
           <span className="vh-standings-fullscreen__section-title-wrap">
-            <button type="button" className="vh-standings-fullscreen__section-title"
+            <button ref={pillRef} type="button" className="vh-standings-fullscreen__section-title"
               onClick={exitTable} aria-disabled={phase === 'exit'}
               aria-label="Zamknij tabelę">Tabela</button>
           </span>
@@ -156,6 +194,8 @@ export default function FullscreenStandings({
         </div>}
       </header>
       </div>
+      {!reducedMotion && phase !== 'active' &&
+        <span className="vh-standings-fullscreen__flying-pill" aria-hidden="true">Tabela</span>}
     </section>,
     document.body
   );
