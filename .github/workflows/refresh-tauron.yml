@@ -44,6 +44,9 @@ jobs:
       - name: Install dependencies
         run: pip install beautifulsoup4
 
+      - name: Verify TAURON matchweek parsing
+        run: python -m unittest discover -s tests -p 'test_refresh_tauron_rounds.py' -v
+
       - name: Refresh data (TAURON Liga + TAURON 1. Liga, men)
         run: |
           if [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.full_details }}" = "true" ]; then

@@ -665,12 +665,34 @@ def build_official_fixture_teams(matches, previous):
     return sorted(teams.values(), key=lambda x: x["name"])
 
 
+def fixture_round(card):
+    """PLS data-term is the matchweek; data-round is the round of play.
+
+    Both official sites use data-round=1 across the regular season. Prefer
+    the card's own term container so a missing/changed heading cannot make it
+    inherit the previous matchweek. Keep the heading fallback for older pages.
+    """
+    container = card if card.has_attr("data-term") else card.find_parent(attrs={"data-term": True})
+    if container is not None:
+        if norm(container.get("data-phase") or "RS").upper() != "RS":
+            return None
+        value = norm(container.get("data-term"))
+        return int(value) if re.fullmatch(r"[1-9]\d*", value) else None
+    heading = card.find_previous(
+        lambda tag: getattr(tag, "name", None) in ("h2", "h3", "h4", "h5", "h6")
+        and re.match(r"^Kolejka\s*:?\s*[1-9]\d*\b", norm(tag.get_text(" ", strip=True)), re.I)
+    )
+    if heading is None:
+        return None
+    return int(re.match(r"^Kolejka\s*:?\s*([1-9]\d*)\b", norm(heading.get_text(" ", strip=True)), re.I).group(1))
+
+
 def parse_full_season(soup, key, base, previous=None):
     """Read all official round-grouped fixture cards, including future games.
 
     The featured match carousel is not the season schedule: using its team
     images alone yields only about 25 matches. Every fixture has an official
-    data-game-id under a data-round container in the complete list.
+    data-game-id under a data-term container in the complete list.
     """
     previous = previous or {}
     old_by_id = {
@@ -679,13 +701,8 @@ def parse_full_season(soup, key, base, previous=None):
     }
     parsed = {}
     for card in soup.select("section[data-game-id]"):
-        # A PLS round wrapper can contain later rounds in the parsed DOM.
-        # The nearest preceding heading determines the actual fixture round.
-        heading = card.find_previous(
-            lambda tag: getattr(tag, "name", None) in ("h2", "h3", "h4", "h5", "h6")
-            and re.search(r"^Kolejka\s*:\s*\d+", norm(tag.get_text(" ", strip=True)), re.I)
-        )
-        if heading is None:
+        round_number = fixture_round(card)
+        if round_number is None:
             continue
         game_id = str(card.get("data-game-id", "")).strip()
         if not game_id:
@@ -718,11 +735,6 @@ def parse_full_season(soup, key, base, previous=None):
             image_url = image.get("src") or image.get("data-src") if image else ""
             logos.append(urljoin(base, image_url) if image_url and not image_url.startswith("data:") else "")
 
-        round_value = re.search(r"Kolejka\s*:\s*(\d+)", heading.get_text(" ", strip=True), re.I).group(1)
-        try:
-            round_number = int(round_value)
-        except (ValueError, TypeError):
-            round_number = None
         previous_game = old_by_id.get(game_id, {})
         set_scores = previous_game.get("set_scores", []) if (
             previous_game.get("home") == home and previous_game.get("away") == away
