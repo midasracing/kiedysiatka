@@ -1,32 +1,27 @@
-/* Club Wall — a typographic team selector, not another card grid.
-   Scope it to the competition view; Favorites retain the existing tiles. */
+/* Club Wall — one continuous matte crest strip next to black editorial type.
+   The Favorites screen keeps the independent compact team cards. */
 .vh-club-wall {
+  --vh-club-stripe: clamp(110px, 29vw, 140px);
   position: relative;
   width: calc(100% + 40px);
   margin: 12px -20px 0;
   padding: 0 0 calc(128px + env(safe-area-inset-bottom, 0px));
   background: #000;
 }
-.vh-club-wall__row {
-  position: relative;
-  isolation: isolate;
-  min-height: 140px;
-  border-bottom: 1px solid rgba(252, 0, 1, .22);
-  background: #000;
-}
-.vh-club-wall__row::after {
+/* A single stripe behind the entire list, not separate logo tiles. */
+.vh-club-wall::before {
   content: '';
   position: absolute;
-  z-index: -1;
-  inset: 0;
-  opacity: 0;
+  inset: 0 auto calc(128px + env(safe-area-inset-bottom, 0px)) 0;
+  width: var(--vh-club-stripe);
+  background: #92908b;
   pointer-events: none;
-  background: radial-gradient(ellipse at 82% 55%, rgba(110, 9, 15, .35), transparent 62%);
-  transition: opacity 230ms ease;
 }
-.vh-club-wall__row:has(.vh-club-wall__open:active)::after,
-.vh-club-wall__row:has(.vh-club-wall__open:focus-visible)::after {
-  opacity: 1;
+.vh-club-wall__row {
+  position: relative;
+  min-height: 140px;
+  border-bottom: 1px solid rgba(252, 0, 1, .28);
+  background: transparent;
 }
 .vh-club-wall__open {
   display: grid;
@@ -73,29 +68,6 @@ button.vh-club-wall__open { cursor: pointer; }
 }
 .vh-club-wall__crest {
   position: relative;
-  isolation: isolate;
-}
-/* Wide feathered backlight, NOT a luminous disc. Its low-intensity
-   stops merge into black well beyond the crest with no visible edge;
-   original club colours remain untouched. Pure gradients stay cheap
-   while the native scrolling list moves on iOS Safari. */
-.vh-club-wall__crest::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: -35px -40px;
-  border-radius: 0;
-  background: radial-gradient(
-    ellipse 72% 69% at 50% 50%,
-    rgba(244, 240, 234, .25) 0%,
-    rgba(244, 240, 234, .21) 17%,
-    rgba(244, 240, 234, .15) 34%,
-    rgba(244, 240, 234, .085) 50%,
-    rgba(244, 240, 234, .035) 65%,
-    rgba(244, 240, 234, .008) 78%,
-    rgba(244, 240, 234, 0) 93%
-  );
-  pointer-events: none;
 }
 .vh-club-wall__crest > .vh-team-logo {
   position: relative;
@@ -106,8 +78,7 @@ button.vh-club-wall__open { cursor: pointer; }
   width: 100%;
   height: 100%;
   object-fit: contain;
-  /* Tiny contour lift for black artwork, with no halo around the whole badge. */
-  filter: drop-shadow(0 0 1px rgba(255, 250, 241, .38));
+  filter: none;
 }
 .vh-club-wall__crest > .vh-team-logo .team-mark {
   color: #f5f2ed;
@@ -146,11 +117,18 @@ button.vh-club-wall__open:focus-visible .vh-club-wall__name {
   transform: translate3d(5px, 0, 0);
 }
 @media (hover: hover) and (pointer: fine) {
-  .vh-club-wall__row:hover::after { opacity: 1; }
-  .vh-club-wall__open:hover .vh-club-wall__name { color: #ff3b32; transform: translate3d(6px, 0, 0); }
+  .vh-club-wall__open:hover .vh-club-wall__name {
+    color: #ff3b32;
+    transform: translate3d(6px, 0, 0);
+  }
 }
 @media (max-width: 390px) {
-  .vh-club-wall { width: calc(100% + 28px); margin-left: -14px; margin-right: -14px; }
+  .vh-club-wall {
+    --vh-club-stripe: 104px;
+    width: calc(100% + 28px);
+    margin-left: -14px;
+    margin-right: -14px;
+  }
   .vh-club-wall__open {
     grid-template-columns: 82px minmax(0, 1fr);
     column-gap: 7px;
@@ -165,5 +143,5 @@ button.vh-club-wall__open:focus-visible .vh-club-wall__name {
   .vh-club-wall__star { right: 3px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .vh-club-wall__row::after, .vh-club-wall__name { transition: none; }
+  .vh-club-wall__name { transition: none; }
 }
