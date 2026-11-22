@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft } from 'lucide-react';
 import Standings from './Standings.jsx';
@@ -13,6 +13,31 @@ export default function FullscreenStandings({
   leagueName, rows, logos, groups = [], selectedGroup, onSelectGroup, onBack,
 }) {
   const backRef = useRef(null);
+  const leagueTitleRef = useRef(null);
+
+  // Use the same Impact letterforms as the red team names in the warped table.
+  // Fit long league names uniformly into the available width, without scaleX.
+  useLayoutEffect(() => {
+    const title = leagueTitleRef.current;
+    const wrapper = title?.parentElement;
+    if (!title || !wrapper) return undefined;
+    let cancelled = false;
+    const fitTitle = () => {
+      if (cancelled) return;
+      const maxSize = 112;
+      title.style.fontSize = `${maxSize}px`;
+      const measuredWidth = title.getBoundingClientRect().width;
+      const available = Math.max(1, wrapper.clientWidth - 2);
+      if (measuredWidth > 0) {
+        title.style.fontSize = `${Math.min(maxSize, maxSize * available / measuredWidth)}px`;
+      }
+    };
+    fitTitle();
+    const observer = new ResizeObserver(fitTitle);
+    observer.observe(wrapper);
+    document.fonts?.ready?.then(fitTitle);
+    return () => { cancelled = true; observer.disconnect(); };
+  }, [leagueName]);
 
   useEffect(() => {
     const body = document.body;
@@ -65,14 +90,16 @@ export default function FullscreenStandings({
       <Standings key={selectedGroup || leagueName} rows={rows} logos={logos} />
       <div className="vh-standings-fullscreen__fade" aria-hidden="true" />
       <header className="vh-standings-fullscreen__header">
-        <button ref={backRef} className="vh-standings-fullscreen__back"
-          type="button" onClick={onBack}>
-          <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
-          <span>Wstecz</span>
-        </button>
+        <div className="vh-standings-fullscreen__topline">
+          <button ref={backRef} className="vh-standings-fullscreen__back"
+            type="button" onClick={onBack}>
+            <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
+            <span>Wstecz</span>
+          </button>
+          <span className="vh-standings-fullscreen__section-title">TABELA</span>
+        </div>
         <div className="vh-standings-fullscreen__identity">
-          <span className="vh-standings-fullscreen__eyebrow">TABELA LIGOWA</span>
-          <h2>{leagueName}</h2>
+          <h2 ref={leagueTitleRef}>{leagueName.toLocaleUpperCase('pl-PL')}</h2>
         </div>
         {groups.length > 0 && <div className="vh-standings-fullscreen__groups"
           role="group" aria-label="Wybierz grupę ligi">
