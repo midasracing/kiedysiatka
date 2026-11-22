@@ -200,7 +200,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     />}
     {league && selectedTeam ? <TeamProfile
       key={league.id + ':' + selectedTeam.name}
-      league={league} team={selectedTeam} matches={matches}
+      league={league} team={selectedTeam} matches={matches} standings={data?.table}
       logos={logos} favorites={favorites} toggleFavorite={toggleFavorite}
       onBack={closeTeamProfile}
     /> : league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '') + (view === 'table' ? ' is-liquid-table-open' : '')}>
