@@ -136,6 +136,34 @@
   max-width: none;
   white-space: nowrap;
 }
+/* Match the one selected crest and title in Club Wall during navigation.
+   No ongoing scroll animation, and no animated font-width scaling. */
+.vh-team-profile__crest { view-transition-name: vh-club-logo; }
+.vh-team-profile__hero h1 { view-transition-name: vh-club-name; }
+@supports (view-transition-name: none) {
+  .vh-team-profile { animation: none; }
+}
+::view-transition-old(vh-club-name),
+::view-transition-new(vh-club-name),
+::view-transition-old(vh-club-logo),
+::view-transition-new(vh-club-logo) {
+  animation-duration: 350ms;
+  animation-timing-function: cubic-bezier(.22, 1, .36, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(vh-club-name),
+  ::view-transition-new(vh-club-name),
+  ::view-transition-old(vh-club-logo),
+  ::view-transition-new(vh-club-logo),
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+}
+
 /* The team's identity card defines the entire profile design system.
    Impact handles display copy, DM Sans handles smaller supporting metadata. */
 .vh-team-profile__section { margin: 28px 0 32px; }
