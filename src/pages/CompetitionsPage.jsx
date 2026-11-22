@@ -8,6 +8,8 @@ import { EmptyState, FeedWarning, LoadingCards } from '../components/UiPrimitive
 import { MatchGroups } from '../components/MatchCards.jsx';
 import FullscreenStandings from '../components/FullscreenStandings.jsx';
 import TeamsGrid from '../components/TeamsGrid.jsx';
+import TeamProfile from './TeamProfile.jsx';
+import { sameName } from '../nameUtils.js';
 import LeaguePicker from '../components/LeaguePicker.jsx';
 import LeagueSplitTransition from '../components/LeagueSplitTransition.jsx';
 
@@ -17,6 +19,9 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const [roundOverride, setRoundOverride] = useState(null);
   const [tableGroup, setTableGroup] = useState(null);
   const [tableOrigin, setTableOrigin] = useState(null);
+  const [selectedTeamName, setSelectedTeamName] = useState(null);
+  const teamListScroll = useRef(0);
+  const restoreTeamScroll = useRef(false);
   const [visibleCount, setVisibleCount] = useState(30);
   const previousView = useRef('matches');
   const [pickerIndex, setPickerIndex] = useState(0);
@@ -35,6 +40,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     setGroup('all');
     setRoundOverride(null);
     setTableGroup(null);
+    setSelectedTeamName(null);
     setVisibleCount(30);
     window.scrollTo({ top: 0, behavior: 'instant' });
     setSelectedLeague(item.id);
@@ -43,6 +49,7 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
 
   const returnToPicker = useCallback(() => {
     if (transitionBusy.current) return;
+    setSelectedTeamName(null);
     const captured = splitSnapshot.current;
     const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (!captured || captured.id !== selectedLeague || !active || reduced) {
@@ -68,6 +75,27 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   }, [setSelectedLeague]);
   const league = LEAGUES.find(item => item.id === selectedLeague);
   const data = league ? feeds[league.id] : null;
+  const supportsTeamProfiles = league?.id === 'men' || league?.id === 'first';
+  const selectedTeam = supportsTeamProfiles && selectedTeamName
+    ? data?.teams?.find(team => sameName(team.name, selectedTeamName)) : null;
+  const openTeamProfile = useCallback(team => {
+    if (!team?.name) return;
+    teamListScroll.current = window.scrollY;
+    restoreTeamScroll.current = false;
+    setSelectedTeamName(team.name);
+  }, []);
+  const closeTeamProfile = useCallback(() => {
+    restoreTeamScroll.current = true;
+    setSelectedTeamName(null);
+  }, []);
+  useLayoutEffect(() => {
+    if (selectedTeamName) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    } else if (restoreTeamScroll.current) {
+      restoreTeamScroll.current = false;
+      window.scrollTo({ top: teamListScroll.current, behavior: 'instant' });
+    }
+  }, [selectedTeamName]);
   const grouped = league?.id === 'second' ? (data?.groups || []) : [];
   const groupChoices = group === 'all' ? grouped : grouped.filter(item => item.name === group);
   const openTable = () => {
@@ -154,12 +182,12 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       observer.disconnect();
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [selectedLeague]);
+  }, [selectedLeague, selectedTeamName]);
   return <>
     {active && split && <LeagueSplitTransition
       phase={split.phase} snapshot={split.snapshot} onComplete={finishSplit}
     />}
-    {active && league && view === 'table' && <FullscreenStandings
+    {active && league && view === 'table' && !selectedTeamName && <FullscreenStandings
       key={league.id}
       leagueName={league.name}
       rows={tableRows}
@@ -170,7 +198,12 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       onBack={closeTable}
       origin={tableOrigin}
     />}
-    {league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '') + (view === 'table' ? ' is-liquid-table-open' : '')}>
+    {league && selectedTeam ? <TeamProfile
+      key={league.id + ':' + selectedTeam.name}
+      league={league} team={selectedTeam} matches={matches}
+      logos={logos} favorites={favorites} toggleFavorite={toggleFavorite}
+      onBack={closeTeamProfile}
+    /> : league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '') + (view === 'table' ? ' is-liquid-table-open' : '')}>
       <div className="vh-competition-toolbar">
         <button className="vh-back" type="button" onClick={returnToPicker}>
           <ChevronLeft size={23} strokeWidth={2.1} aria-hidden="true" />
@@ -237,7 +270,11 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
             Pokaż starsze mecze <span>{Math.min(30, timeline.length - visibleCount)} z {timeline.length - visibleCount}</span>
           </button>}
         </>}
-        {underlayView === 'teams' && <TeamsGrid teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} />}
+        {underlayView === 'teams' && <TeamsGrid
+          teams={league.id === 'second' ? groupChoices.flatMap(item => item.teams || []) : data.teams}
+          logos={logos} favorites={favorites} toggleFavorite={toggleFavorite}
+          onOpenTeam={supportsTeamProfiles ? openTeamProfile : undefined}
+        />}
       </>}
       {data?.updated_at && <p className="vh-source-note">Aktualizacja źródła: {new Date(data.updated_at).toLocaleString('pl-PL')}</p>}
       {view === 'table' && (league.id === 'second' ? groupChoices : [data]).some(item => Object.keys(item?.source_table_discrepancies || {}).length > 0) && <p className="vh-source-note" role="status">Wyniki i tabela VolleyStation są publikowane osobno. Pokazujemy tabelę dokładnie według źródła.</p>}

@@ -461,3 +461,38 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
     padding-right: 14px;
   }
 }
+
+/* TAURON and 1. Liga: a team tile is a true navigation target, while its
+   separate favorite star remains independently clickable. Other leagues
+   retain the original non-interactive team cards. */
+.vh-team-tile.is-openable {
+  border-color:#4b2229;
+  background:linear-gradient(150deg,#211013,#100c0d);
+  transition:background 160ms ease,border-color 160ms ease;
+}
+.vh-team-tile.is-openable:has(.vh-team-tile__open:hover),
+.vh-team-tile.is-openable:has(.vh-team-tile__open:focus-visible) {
+  background:#2c1017;border-color:#a12b36;
+}
+.vh-team-tile .vh-team-tile__open {
+  position:relative;inset:auto;right:auto;top:auto;
+  display:flex;flex:1 1 auto;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;width:100%;height:auto;min-height:132px;
+  padding:5px 2px 0;margin:0;border:0;border-radius:14px;
+  background:transparent;color:inherit;text-align:center;
+  -webkit-tap-highlight-color:transparent;
+}
+.vh-team-tile .vh-team-tile__open > .vh-team-logo,
+.vh-team-tile .vh-team-tile__open > .vh-team-logo .team-mark {
+  width:54px;height:54px;flex:0 0 54px;
+}
+.vh-team-tile .vh-team-tile__open > strong {
+  color:#f5f2ed;font:700 14px/1.22 var(--font-ui);
+  overflow-wrap:anywhere;
+}
+.vh-team-tile__hint {
+  display:inline-flex;align-items:center;gap:3px;
+  color:#eb7179;font:700 11px/1 var(--font-ui);
+}
+.vh-team-tile .vh-team-tile__open:active {opacity:.78;}
+.vh-team-tile.is-openable > button:not(.vh-team-tile__open) {z-index:2;}

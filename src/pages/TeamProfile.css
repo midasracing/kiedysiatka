@@ -1,0 +1,147 @@
+.vh-team-profile {
+  --profile-red: #fc0001;
+  padding: calc(14px + env(safe-area-inset-top, 0px)) 0 70px;
+  color: var(--ink);
+  background: #000;
+  min-height: 100svh;
+  animation: vh-profile-enter 280ms cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes vh-profile-enter {
+  from { opacity: 0; transform: translate3d(0, 11px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.vh-team-profile__toolbar { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:49px; }
+.vh-team-profile__back {
+  display:inline-flex; align-items:center; gap:5px;
+  border:0; background:transparent; color:var(--ink);
+  font:700 14px/1 var(--font-ui); padding:10px 1px;
+}
+.vh-team-profile__favorite {
+  display:grid;place-items:center; width:46px;height:46px; flex:none;
+  border-radius:15px; border:1px solid #492629; background:#1a1111; color:#d5c7c5;
+}
+.vh-team-profile__favorite.is-favorite { color:var(--profile-red);border-color:#7b2226; }
+.vh-team-profile__hero {
+  position:relative; isolation:isolate; overflow:hidden;
+  margin:22px 0 30px; padding:26px 22px 29px;
+  border:1px solid #421d20; border-radius:27px;
+  background:linear-gradient(148deg,#2d080d 0%,#150609 49%,#050505 100%);
+}
+.vh-team-profile__hero::after {
+  content:'';position:absolute;inset:auto -35% -80% 5%;height:165%;
+  border-radius:50%;background:radial-gradient(ellipse,rgba(252,0,1,.17),transparent 66%);
+  pointer-events:none;z-index:-1;
+}
+.vh-team-profile__eyebrow {
+  display:flex;align-items:center;gap:8px;margin:0 0 27px;
+  color:#f07079;font:800 11px/1.3 var(--font-ui);
+  letter-spacing:.13em;text-transform:uppercase;
+}
+.vh-team-profile__eyebrow span {color:#936166}
+.vh-team-profile__crest {
+  display:grid;place-items:center;width:108px;height:108px;
+  margin-bottom:21px;border:1px solid #744348;border-radius:27px;
+  background:rgba(255,255,255,.045);
+}
+.vh-team-profile__crest .vh-team-logo,
+.vh-team-profile__crest .vh-team-logo .team-mark { width:80px;height:80px;flex-basis:80px; }
+.vh-team-profile__crest .vh-team-logo img {width:100%;height:100%;object-fit:contain;}
+.vh-team-profile__crest .vh-team-logo .team-mark {border-radius:16px;font-size:27px;}
+.vh-team-profile__hero h1 {
+  margin:0 0 16px;max-width:510px;
+  font:600 clamp(31px,8.6vw,54px)/1.08 var(--font-editorial,Georgia,serif);
+  letter-spacing:-.012em;overflow-wrap:anywhere;color:#f5f2ed;
+}
+.vh-team-profile__country {
+  display:inline-flex;align-items:center;gap:7px;
+  color:#b8a5a7;font:600 12px/1.2 var(--font-ui);
+}
+.vh-team-profile__section {margin:27px 0 32px;}
+.vh-team-profile__section-heading {
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;margin:0 0 15px;
+}
+.vh-team-profile__section-heading h2 {
+  margin:0;color:#f5f2ed;
+  font:600 clamp(24px,6.5vw,32px)/1.15 var(--font-editorial,Georgia,serif);
+}
+.vh-team-profile__section-heading > span {
+  color:#a99999;font:500 11px/1.35 var(--font-ui);
+  text-align:right;
+}
+.vh-team-profile__stats {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+}
+.vh-profile-stat {
+  display:flex;flex-direction:column;justify-content:center;
+  min-width:0;min-height:108px;padding:16px 12px;
+  border:1px solid #472225;border-radius:18px;
+  background:linear-gradient(160deg,#241013,#10090b);text-align:center;
+}
+.vh-profile-stat strong {
+  color:#f5f2ed;font:800 clamp(28px,8vw,40px)/1 var(--font-ui);
+  font-variant-numeric:tabular-nums;
+}
+.vh-profile-stat:nth-child(2) strong {color:var(--profile-red);}
+.vh-profile-stat span {
+  margin-top:12px;color:#bea5a8;
+  font:700 10px/1.25 var(--font-ui);text-transform:uppercase;letter-spacing:.075em;
+}
+.vh-team-profile .vh-match-groups {margin:0;}
+.vh-team-profile .vh-match-groups > section {margin:0;}
+.vh-team-profile .vh-match-date-heading {
+  margin:17px 0 12px;color:#baa9ab;font-size:11px;
+}
+.vh-team-profile .vh-match.im-card { margin-bottom:11px;}
+.vh-team-profile__empty {
+  margin:0;padding:18px 17px;color:#b8a7aa;
+  border:1px solid #2a1b1d;border-radius:17px;
+  font:500 13px/1.45 var(--font-ui);
+}
+.vh-team-profile__more {
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;min-height:46px;margin:8px 0 0;padding:10px 15px;
+  border:1px solid #513137;border-radius:14px;
+  background:#180d10;color:#f5f2ed;font:700 13px/1.25 var(--font-ui);
+}
+.vh-team-profile__more svg {color:var(--profile-red);}
+.vh-profile-players {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.vh-profile-player {
+  min-width:0;overflow:hidden;border:1px solid #3e1b1f;
+  border-radius:19px;background:#150a0d;
+}
+.vh-profile-player__visual {
+  position:relative;display:flex;align-items:flex-end;justify-content:center;
+  height:clamp(138px,45vw,235px);overflow:hidden;
+  background:radial-gradient(ellipse at 50% 65%,#43121c,#160b0e 70%);
+}
+.vh-profile-player__visual img {
+  display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;
+}
+.vh-profile-player__placeholder {
+  display:grid;place-items:center;width:100%;height:100%;
+  color:#66383a;font:800 70px/1 var(--font-editorial,serif);
+}
+.vh-profile-player__number {
+  position:absolute;top:10px;left:11px;
+  color:#fff;font:800 22px/1 var(--font-ui);text-shadow:0 2px 10px #000;
+  font-variant-numeric:tabular-nums;
+}
+.vh-profile-player__copy {display:flex;flex-direction:column;gap:5px;min-height:116px;padding:13px 12px 15px;}
+.vh-profile-player__copy strong {color:#f7f0ec;font:700 15px/1.22 var(--font-ui);overflow-wrap:anywhere;}
+.vh-profile-player__copy > span {color:#ea6672;font:600 12px/1.35 var(--font-ui);}
+.vh-profile-player__details {display:flex;flex-wrap:wrap;gap:4px 10px;margin:5px 0 0;}
+.vh-profile-player__details small {color:#ada1a0;font:500 11px/1.3 var(--font-ui);}
+.vh-profile-player__copy a {
+  display:inline-flex;align-items:center;gap:3px;align-self:flex-start;
+  margin-top:auto;padding-top:11px;color:#f1c6c8;
+  font:600 11px/1.2 var(--font-ui);text-decoration:none;
+}
+.vh-profile-player__copy a:hover {color:#fff;}
+@media(max-width:390px) {
+  .vh-team-profile__hero {padding:23px 19px;}
+  .vh-profile-stat {padding:15px 8px;}
+}
+@media(min-width:760px) {.vh-profile-player__visual {height:230px;}}
+@media(prefers-reduced-motion: reduce) {.vh-team-profile {animation:none;}}
