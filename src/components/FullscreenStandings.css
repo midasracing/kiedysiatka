@@ -361,7 +361,7 @@
   animation: vh-liquid-pill-arrive 1120ms cubic-bezier(.22,.75,.28,1) both;
 }
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__flying-pill {
-  animation: vh-liquid-pill-return 760ms linear both;
+  animation: vh-liquid-pill-return 760ms cubic-bezier(.26,.63,.22,1) both;
 }
 @keyframes vh-liquid-pill-arrive {
   0%, 61% {
@@ -378,9 +378,9 @@
     transform: translate3d(var(--vh-flight-dx, 0px),var(--vh-flight-dy, 0px),0);
   }
 }
-/* The white Tabela pill travels in ONE continuous flight back to its slot.
-   The old animation vanished for ~45% of the return, then flashed near the
-   source button. Keep it visible until it lands and fade only its fill. */
+/* Reverse flight: Tabela travels toward its original tab and dissolves
+   progressively, without blinking off or reappearing as a white button.
+   The real inactive tab fades in only when the flying copy is almost gone. */
 @keyframes vh-liquid-pill-return {
   0% {
     opacity: 1;
@@ -388,30 +388,14 @@
     background: #f5f2ed;
     color: #211b17;
     box-shadow: 0 0 0 5px #24211e, 0 4px 12px rgba(0,0,0,.13);
-    animation-timing-function: cubic-bezier(.24,.64,.27,1);
   }
-  64% {
-    opacity: 1;
-    transform: translate3d(var(--vh-flight-x30, 0px),var(--vh-flight-y30, 0px),0);
-    background: #f5f2ed;
-    color: #211b17;
-    box-shadow: 0 0 0 5px #24211e, 0 4px 12px rgba(0,0,0,.13);
-    animation-timing-function: cubic-bezier(.15,.72,.18,1);
-  }
-  86% {
-    opacity: 1;
-    transform: translate3d(0,0,0);
-    background: #f5f2ed;
-    color: #211b17;
-    box-shadow: 0 0 0 5px #24211e, 0 4px 12px rgba(0,0,0,.13);
-  }
+  /* Opacity fades over its own interval; transform interpolates smoothly
+     across the entire 0–100% duration with NO intermediate stop or jerk. */
+  52% { opacity: 1; }
+  80% { opacity: 0; }
   100% {
-    opacity: 1;
+    opacity: 0;
     transform: translate3d(0,0,0);
-    /* Hand off the landing frame to the real inactive Tabela label. */
-    background: transparent;
-    color: #c3bcb4;
-    box-shadow: none;
   }
 }
 
@@ -443,10 +427,15 @@
   animation: vh-liquid-tab-submerge 240ms cubic-bezier(.36,0,.72,.42) both;
 }
 .vh-competition-detail.is-liquid-table-open.is-liquid-table-returning .vh-table-tab {
-  opacity: 0;
-  /* Prepare the empty slot for the already-darkening returning button. */
+  /* The source button is NOT another white pill. It only fades in as an
+     inactive label after the flying copy has dissolved near its destination. */
   background: transparent;
   color: #c3bcb4;
+  animation: vh-liquid-tab-reappear 760ms linear both;
+}
+@keyframes vh-liquid-tab-reappear {
+  0%, 65% { opacity: 0; }
+  95%, 100% { opacity: 1; }
 }
 @keyframes vh-liquid-tab-submerge {
   from { opacity: 1; transform: translate3d(0,0,0); }

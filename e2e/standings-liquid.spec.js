@@ -260,10 +260,20 @@ test('return closes as a rounded pill with no red table ghosts or vanishing butt
   expect(motion.title.name).toBe('vh-liquid-league-return');
   expect(motion.title.frames.some(frame => frame.offset === 0.55 && /#fc0001|rgb\(252,\s*0,\s*1\)/i.test(frame.color || ''))).toBe(true);
   expect(motion.pill.name).toBe('vh-liquid-pill-return');
-  // Unlike the old 23-68% invisible gap, the pill stays fully visible
-  // throughout its continuous travel back to the original tab.
-  expect(motion.pill.frames.every(frame => frame.opacity === '1')).toBe(true);
-  expect(motion.pill.frames.some(frame => frame.offset === 0.64)).toBe(true);
+  // The copy must MOVE towards its original slot and fade there, never
+  // blink off early or stay visible until the portal is removed.
+  expect(motion.pill.frames[0].opacity).toBe('1');
+  expect(motion.pill.frames.some(frame => frame.offset === 0.52 && frame.opacity === '1')).toBe(true);
+  expect(motion.pill.frames.some(frame => frame.offset === 0.8 && frame.opacity === '0')).toBe(true);
+  expect(motion.pill.frames.filter(frame => frame.transform != null).length).toBe(2);
+  expect(motion.pill.frames.at(-1).opacity).toBe('0');
+  const tabReturn = await page.locator('.vh-competition-detail .vh-table-tab').evaluate(node => ({
+    name: getComputedStyle(node).animationName,
+    frames: node.getAnimations().flatMap(animation => animation.effect?.getKeyframes?.() || []),
+  }));
+  expect(tabReturn.name).toContain('vh-liquid-tab-reappear');
+  expect(tabReturn.frames.some(frame => frame.offset === 0.65 && frame.opacity === '0')).toBe(true);
+  expect(tabReturn.frames.at(-1).opacity).toBe('1');
 
   await expect(dialog).toHaveCount(0, { timeout: 3500 });
   await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
