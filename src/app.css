@@ -238,7 +238,8 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   background: linear-gradient(180deg, #000 0%, rgba(0,0,0,.98) 30%, rgba(0,0,0,.88) 53%, rgba(0,0,0,.45) 77%, transparent 100%);
   pointer-events: none;
 }
-.vh-competitions-topfade h1 {
+.vh-competitions-topfade h1,
+.vh-favorites-heading h1 {
   margin: 0;
   color: var(--ink);
   font: 600 clamp(44px, 10vw, 60px)/1.06 var(--font-editorial, Georgia, serif);
@@ -434,4 +435,26 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 @media (prefers-reduced-motion: reduce) {
   [data-route="competitions"] .vh-round-selector__number { animation: none; }
   [data-route="competitions"] .vh-round-selector__arrows button { transition: none; }
+}
+
+/* Favorites: same serif heading rhythm as the full-screen Rozgrywki picker.
+   Only the category selector remains beneath it; the rest is empty black. */
+.vh-favorites-screen {
+  position: relative;
+  width: calc(100% + 40px);
+  min-height: calc(100dvh - 136px);
+  margin: 0 -20px;
+  padding: calc(32px + env(safe-area-inset-top, 0px)) 20px 0;
+  background: #000;
+}
+.vh-favorites-heading { margin: 0; }
+.vh-favorites-tabs { margin: 28px 0 0; }
+@media (max-width: 390px) {
+  .vh-favorites-screen {
+    width: calc(100% + 28px);
+    margin-left: -14px;
+    margin-right: -14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
 }

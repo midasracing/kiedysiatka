@@ -116,11 +116,6 @@ function App() {
       navigator.serviceWorker.register(import.meta.env.BASE_URL + 'sw.js').catch(() => {});
     }
   }, []);
-  const openLeague = useCallback(id => {
-    if (!id) return;
-    setSelectedLeague(id);
-    navigate('competitions');
-  }, [navigate]);
   const toggleFavorite = useCallback((type, name) => {
     setFavorites(current => {
       const exists = current[type].some(value => sameName(value, name));
@@ -131,12 +126,12 @@ function App() {
     if (id === 'home') return <HomePage feeds={feeds} matches={matches} loading={loading} errors={errors} refresh={refresh} logos={logos} />;
     if (id === 'matches') return <MatchesPage feeds={feeds} matches={matches} loading={loading} errors={errors} refresh={refresh} logos={logos} selectedDate={selectedDate} setSelectedDate={setSelectedDate} leagueFilter={leagueFilter} setLeagueFilter={setLeagueFilter} />;
     if (id === 'competitions') return <CompetitionsPage active={page === 'competitions'} feeds={feeds} matches={matches} loading={loading} errors={errors} refresh={refresh} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} selectedLeague={selectedLeague} setSelectedLeague={setSelectedLeague} />;
-    if (id === 'favorites') return <FavoritesPage teams={teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} onOpenLeague={openLeague} />;
+    if (id === 'favorites') return <FavoritesPage favorites={favorites} />;
     return null;
   }
   return <MotionEnabled.Provider value={!reducedMotion && !startup}><div className="vh-app" id="ios-matches" data-page={page}
     data-competition-picker={page === 'competitions' && !selectedLeague ? 'true' : undefined}>
-    {page !== 'competitions' && <div className="vh-floating-head" aria-label="Nagłówek Kiedy Siatka?">
+    {page !== 'competitions' && page !== 'favorites' && <div className="vh-floating-head" aria-label="Nagłówek Kiedy Siatka?">
       <BrandSignature />
       {page === 'home' && <h2 className="vh-home-heading">{matches.some(match => feedDateKey(match.date) === dateKey(NOW())) ? 'Dzisiaj' : 'Najbliższe mecze'}</h2>}
     </div>}

@@ -90,13 +90,22 @@ test('home starts with match list, without the marked intro and hero banner', as
 
 });
 
-test('favorites persist after reload', async ({ page }) => {
+test('favorites keep their saved counts after reload, without extra content', async ({ page }) => {
   await page.goto('/#favorites');
-  await page.getByRole('tab', { name: /Rozgrywki/ }).click();
-  await page.locator('.vh-picker-row').filter({ hasText: 'TAURON Liga Mężczyzn' }).click();
+  await page.evaluate(() => localStorage.setItem('vh-favs', JSON.stringify({
+    teams: ['Przykładowa drużyna'],
+    leagues: ['TAURON Liga Mężczyzn'],
+  })));
   await page.reload();
-  await page.getByRole('tab', { name: /Rozgrywki/ }).click();
-  await expect(page.locator('.vh-tab-panel:not([hidden]) .vh-league-stack').getByText('TAURON Liga Mężczyzn')).toBeVisible();
+
+  const screen = page.locator('[data-route="favorites"] .vh-favorites-screen');
+  const tabs = screen.getByRole('tablist', { name: 'Rodzaj ulubionych' });
+  await expect(tabs.getByRole('tab', { name: /Drużyny\s+1/ })).toHaveAttribute('aria-selected', 'true');
+  await tabs.getByRole('tab', { name: /Rozgrywki\s+1/ }).click();
+  await expect(tabs.getByRole('tab', { name: /Rozgrywki\s+1/ })).toHaveAttribute('aria-selected', 'true');
+  await expect(screen.locator('.vh-picker-row, .vh-league-stack, .vh-team-grid, .vh-empty, .vh-search-input')).toHaveCount(0);
+  await page.reload();
+  await expect(tabs.getByRole('tab', { name: /Rozgrywki\s+1/ })).toBeVisible();
 });
 
 test('Kiedy Siatka SVG loads without an animated or hidden logo', async ({ page }) => {
@@ -129,28 +138,36 @@ test('Kiedy Siatka wordmark stays static in reduced motion', async ({ page }) =>
   await expect(page.locator('.vh-brand-signature canvas')).toHaveCount(0);
 });
 
-test('stacked SVG wordmark stays proportional to the page title', async ({ page }) => {
+test('favorites has no logo and its heading matches Rozgrywki typography', async ({ page }) => {
   for (const width of [320, 375, 430, 768]) {
     await page.setViewportSize({ width, height: 780 });
-    await page.goto('/#favorites');
-    const { brand, image } = await page.evaluate(() => {
-      const box = element => {
-        const { x, y, width, height } = element.getBoundingClientRect();
-        return { x, y, width, height };
-      };
-      return {
-        brand: box(document.querySelector('.vh-brand-signature')),
-        image: box(document.querySelector('.vh-brand-signature img'))
-      };
+    await page.goto('/#competitions');
+    const competition = page.locator('.vh-competitions-topfade h1');
+    await expect(competition).toBeVisible();
+    const typography = await competition.evaluate(el => {
+      const css = getComputedStyle(el);
+      return { family: css.fontFamily, size: css.fontSize, weight: css.fontWeight, lineHeight: css.lineHeight };
     });
-    expect(brand.width).toBeLessThanOrEqual(197);
-    expect(image.height).toBeLessThanOrEqual(110);
-    expect(image.x + image.width).toBeLessThanOrEqual(width);
-    await expect.poll(() => page.evaluate(() => {
-      const heading = document.querySelector('#main-content h1').getBoundingClientRect();
-      const header = document.querySelector('.vh-floating-head').getBoundingClientRect();
-      return heading.top - header.bottom;
-    })).toBeLessThan(35);
+
+    await page.goto('/#favorites');
+    await expect(page.locator('#ios-matches .vh-floating-head, #ios-matches .vh-brand-signature')).toHaveCount(0);
+    const favorites = page.locator('[data-route="favorites"]');
+    const heading = favorites.getByRole('heading', { name: 'Ulubione', exact: true });
+    await expect(heading).toBeVisible();
+    const style = await heading.evaluate(el => {
+      const css = getComputedStyle(el);
+      return { family: css.fontFamily, size: css.fontSize, weight: css.fontWeight, lineHeight: css.lineHeight };
+    });
+    expect(style).toEqual(typography);
+    const tabs = favorites.getByRole('tablist', { name: 'Rodzaj ulubionych' });
+    await expect(tabs).toBeVisible();
+    const positions = await page.evaluate(() => ({
+      headingBottom: document.querySelector('[data-route="favorites"] .vh-favorites-heading').getBoundingClientRect().bottom,
+      tabsTop: document.querySelector('[data-route="favorites"] .vh-favorites-tabs').getBoundingClientRect().top,
+    }));
+    expect(positions.tabsTop).toBeGreaterThan(positions.headingBottom);
+    await expect(favorites.getByText('Twoje drużyny i ligi. Zawsze pod ręką.')).toHaveCount(0);
+    await expect(favorites.locator('.vh-favorites-screen').locator('input, .vh-empty, .vh-picker-list, .vh-team-grid, .vh-league-stack')).toHaveCount(0);
   }
 });
 
@@ -376,9 +393,12 @@ test('mobile navigation, date strip and saved favorites survive the cleanup', as
   await nav.getByRole('button', { name: 'Rozgrywki' }).click();
   await expect(page.getByRole('listbox', { name: /Wybierz ligę/ })).toBeVisible();
   await nav.getByRole('button', { name: 'Ulubione' }).click();
-  await page.getByRole('tab', { name: /Rozgrywki/ }).click();
-  await page.locator('.vh-picker-row').filter({ hasText: 'TAURON Liga Mężczyzn' }).click();
-  await expect(page.locator('.vh-tab-panel:not([hidden])').getByText('TAURON Liga Mężczyzn').first()).toBeVisible();
+  const favorites = page.locator('[data-route="favorites"]');
+  await expect(favorites.getByRole('heading', { name: 'Ulubione' })).toBeVisible();
+  const selector = favorites.getByRole('tablist', { name: 'Rodzaj ulubionych' });
+  await selector.getByRole('tab', { name: /Rozgrywki/ }).click();
+  await expect(selector.getByRole('tab', { name: /Rozgrywki/ })).toHaveAttribute('aria-selected', 'true');
+  await expect(favorites.locator('.vh-picker-row, .vh-empty, .vh-search-input, .vh-league-stack')).toHaveCount(0);
 });
 
 test('tabs reveal immediately with native motion and no extra icon animations', async ({ page }) => {
@@ -466,13 +486,13 @@ test('cached inactive tabs stay out of focus, accessibility and document scrolli
   await page.goto('/');
   await expect(page.locator('.vh-tab-panel')).toHaveCount(4);
   const nav = page.getByRole('navigation', { name: 'Główna nawigacja' });
-  // Give the longest page a real layout before hiding it again.
+  // Open the intentionally minimal favorites page before testing cached panels.
   await nav.getByRole('button', { name: 'Ulubione' }).click();
-  await expect(page.getByRole('heading', { name: 'Dodaj drużyny' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Ulubione' })).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
   await nav.getByRole('button', { name: 'Rozgrywki' }).click();
   await expect(page.getByRole('heading', { name: 'Rozgrywki', exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Dodaj drużyny' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Ulubione' })).toHaveCount(0);
   // Measure hidden-panel overflow after the intentional 3px route entrance.
   await page.evaluate(() => Promise.all(document.getAnimations()
     .filter(animation => animation.id === 'vh-route-transition')
