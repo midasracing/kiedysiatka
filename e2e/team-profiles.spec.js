@@ -37,11 +37,18 @@ for (const [leagueName, secondOption] of [
     const crestBox = await crest.boundingBox();
     const nameBox = await name.boundingBox();
     expect(crestBox.x + crestBox.width).toBeLessThanOrEqual(nameBox.x);
-    // One continuous matte stripe carries every crest; no individual glow.
-    const matte = await grid.evaluate(el => getComputedStyle(el, '::before').backgroundColor);
-    expect(matte).toBe('rgb(146, 144, 139)');
+    // One uninterrupted warm-paper stripe, red seam and no individual halo.
+    const paper = await grid.evaluate(el => ({
+      background: getComputedStyle(el, '::before').backgroundColor,
+      seam: getComputedStyle(el, '::before').borderRightColor,
+    }));
+    expect(paper).toEqual({ background: 'rgb(190, 184, 172)', seam: 'rgb(252, 0, 1)' });
+    const cut = await tile.evaluate(el => getComputedStyle(el, '::before').clipPath);
+    expect(cut).toContain('polygon(');
     const glow = await crest.evaluate(el => getComputedStyle(el, '::before').backgroundImage);
     expect(glow).toBe('none');
+    const nameGap = nameBox.x - (crestBox.x + crestBox.width);
+    expect(nameGap).toBeGreaterThanOrEqual(12);
     await expect(grid.locator('.vh-team-tile')).toHaveCount(0);
     await expect(tile.getByText('Profil', { exact: true })).toHaveCount(0);
     const star = tile.getByRole('button', { name: 'Dodaj do ulubionych: ' + teamName });
