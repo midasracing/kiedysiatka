@@ -361,25 +361,6 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   border-radius: 6px;
 }
 
-/* A separate fixed layer OUTSIDE the scrolling league detail.
-   iOS Safari can treat a fixed ::before inside the long page as scroll-bound.
-   This layer stays at viewport y=0, covering the status bar as well. */
-[data-route="competitions"] .vh-competition-fixed-fade {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: calc(clamp(220px, 36dvh, 360px) + env(safe-area-inset-top, 0px));
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(180deg,
-    #000 0%,
-    rgba(0, 0, 0, .98) 24%,
-    rgba(0, 0, 0, .82) 48%,
-    rgba(0, 0, 0, .40) 75%,
-    rgba(0, 0, 0, 0) 100%);
-}
 [data-route="competitions"] .vh-competition-detail .vh-competition-heading {
   position: relative;
   z-index: 2;
@@ -388,7 +369,7 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   display: block;
   margin: 15px 0 25px;
 }
-/* Keep the league's switcher crisp above the black fade, not dimmed by it. */
+/* Keep the league switcher layered above adjacent content. */
 [data-route="competitions"] .vh-competition-detail > .vh-segmented {
   position: relative;
   z-index: 2;

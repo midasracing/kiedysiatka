@@ -114,9 +114,6 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
     return () => observer.disconnect();
   }, [selectedLeague]);
   return <>
-    {/* The viewport-fixed fade must be a sibling of the scrolling league page.
-        A fixed ::before on the long page scrolled with its contents in iOS Safari. */}
-    {active && league && <div className="vh-competition-fixed-fade" aria-hidden="true" />}
     {active && split && <LeagueSplitTransition
       phase={split.phase} snapshot={split.snapshot} onComplete={finishSplit}
     />}

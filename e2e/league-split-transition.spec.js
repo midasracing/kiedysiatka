@@ -92,18 +92,14 @@ test('reduced motion opens and closes a league immediately', async ({ page }) =>
   await expect(page.locator('.vh-league-split')).toHaveCount(0);
 });
 
-test('league gradient stays pinned to the very top while scrolling', async ({ page }) => {
+test('selected league detail has no fixed black gradient while selector keeps its own fade', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#competitions');
+  await expect(page.locator('.vh-competitions-topfade')).toBeVisible();
   await page.getByRole('option', { name: 'II Liga Mężczyzn' }).click();
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
-  const fade = page.locator('.vh-competition-fixed-fade');
-  await expect(fade).toBeVisible();
-  await expect(fade).toHaveCSS('position', 'fixed');
-  await expect(fade).toHaveCSS('pointer-events', 'none');
-  await page.evaluate(() => window.scrollTo(0, 600));
-  await expect.poll(async () => fade.evaluate(el => Math.round(el.getBoundingClientRect().top))).toBe(0);
-  await expect(fade).toHaveCSS('background-image', /linear-gradient/);
+  await expect(page.locator('.vh-competition-fixed-fade')).toHaveCount(0);
+  await expect(page.locator('.vh-competition-detail')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
   await expect(page.getByRole('button', { name: 'Wstecz' })).toHaveCount(1);
 });
 
