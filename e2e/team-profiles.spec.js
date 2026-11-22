@@ -113,6 +113,8 @@ test('team overview and roster reflect official feed values, not mock numbers', 
   await expect(profile).toContainText('Waga 78 kg');
   // Players with no reported weight have no placeholder or invented value.
   await expect(profile.locator('.vh-profile-player').first()).not.toContainText('Waga');
-  await expect(profile.getByRole('heading', { name: 'Najbliższe mecze' })).toBeVisible();
-  await expect(profile.getByRole('heading', { name: 'Ostatnie wyniki' })).toBeVisible();
+  // Only the concise previous/next fixture preview remains in the overview.
+  await expect(profile.getByRole('heading', { name: 'Najbliższe mecze' })).toHaveCount(0);
+  await expect(profile.getByRole('heading', { name: 'Ostatnie wyniki' })).toHaveCount(0);
+  await expect(profile.locator('.vh-team-snapshot__fixture')).toHaveCount(2);
 });
