@@ -35,6 +35,7 @@ test('Tabela carries the whole league selector upwards, without a separate corne
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'prepare');
   await expect(dialog.locator('.vh-standings-fullscreen__surface')).toHaveCSS('animation-name', 'none');
+  await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('opacity', '0');
   await page.clock.runFor(16);
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'prepare');
   const hasPaintedRows = await dialog.locator('canvas').evaluate(canvas => {
@@ -54,6 +55,7 @@ test('Tabela carries the whole league selector upwards, without a separate corne
   await expect(trigger).toHaveCSS('border-radius', selectedStyles.radius);
 
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
+  await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('animation-name', 'vh-table-content-in');
   await expect(dialog.locator('.vh-standings-fullscreen__flying-pill')).toHaveCount(0);
   await expect(dialog.locator('.vh-standings-fullscreen__section-title')).toHaveCount(0);
   const scene = await dialog.evaluate(root => {
@@ -93,6 +95,7 @@ test('Tabela carries the whole league selector upwards, without a separate corne
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
   await pausedSheet.evaluate(node => node.remove());
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('opacity', '1');
   const settled = await dialog.locator('.vh-standings-fullscreen__surface').boundingBox();
   expect(Math.abs(settled.y)).toBeLessThan(1);
   expect(Math.abs(settled.height - 844)).toBeLessThan(2);
@@ -119,6 +122,7 @@ test('The Mecze tab slides the sheet down and restores the league and dock', asy
   await pauseClockAt(page, new Date('2026-11-04T14:00:00Z'));
   await dialog.getByRole('tab', { name: 'Mecze' }).click();
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
+  await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('animation-name', 'vh-table-content-out');
   const exit = await dialog.evaluate(root => {
     const sheet = root.querySelector('.vh-standings-fullscreen__surface');
     const header = root.querySelector('.vh-standings-fullscreen__header');
@@ -202,6 +206,7 @@ test('reduced motion and previous Teams selection return instantly', async ({ pa
   const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active');
   await expect(dialog.locator('.vh-standings-fullscreen__surface')).toHaveCSS('animation-name', 'none');
+  await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('opacity', '1');
   await dialog.getByRole('tab', { name: 'Drużyny' }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('tab', { name: 'Drużyny' })).toHaveAttribute('aria-selected', 'true');
