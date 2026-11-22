@@ -143,20 +143,25 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           <h1 ref={leagueTitleRef}>{league.name}</h1>
         </div>
       </header>
-      <div className="vh-segmented" role="tablist" aria-label="Widok rozgrywek">{[['matches','Mecze'], ['table','Tabela'], ['teams','Drużyny']].map(([id,label]) => <button key={id} role="tab" aria-selected={view === id} className={view === id ? 'selected' : ''} onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}</div>
-      {view === 'matches' && monthKeys.length > 0 && (
-        <div className="vh-controls vh-league-months" role="group" aria-label="Miesiąc spotkań">
-          <button type="button" className={'vh-filter-chip' + (selectedMonth === 'all' ? ' chosen' : '')}
-            aria-pressed={selectedMonth === 'all'} onClick={() => setSelectedMonth('all')}>
-            Wszystkie
-          </button>
-          {monthKeys.map(month => <button key={month} type="button" data-month={month}
-            className={'vh-filter-chip' + (selectedMonth === month ? ' chosen' : '')}
-            aria-pressed={selectedMonth === month} onClick={() => setSelectedMonth(month)}>
-            {leagueMonthLabel(month)}
-          </button>)}
-        </div>
-      )}
+      <div className={'vh-league-tabs-with-months' + (split?.phase === 'open' ? ' is-opening' : '')}>
+        <div className="vh-segmented" role="tablist" aria-label="Widok rozgrywek">{[['matches','Mecze'], ['table','Tabela'], ['teams','Drużyny']].map(([id,label]) => <button key={id} role="tab" aria-selected={view === id} className={view === id ? 'selected' : ''} onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}</div>
+        {view === 'matches' && monthKeys.length > 0 && (
+          <div className="vh-month-flow">
+            <span className="vh-month-flow__neck" aria-hidden="true" />
+            <div className="vh-league-months" role="group" aria-label="Miesiąc spotkań">
+              <button type="button" className={'vh-filter-chip vh-month-flow__option' + (selectedMonth === 'all' ? ' chosen' : '')}
+                aria-pressed={selectedMonth === 'all'} onClick={() => setSelectedMonth('all')}>
+                Wszystkie
+              </button>
+              {monthKeys.map(month => <button key={month} type="button" data-month={month}
+                className={'vh-filter-chip vh-month-flow__option' + (selectedMonth === month ? ' chosen' : '')}
+                aria-pressed={selectedMonth === month} onClick={() => setSelectedMonth(month)}>
+                {leagueMonthLabel(month)}
+              </button>)}
+            </div>
+          </div>
+        )}
+      </div>
       {grouped.length > 0 && <div className="vh-controls"><button type="button" className={'vh-filter-chip ' + (group === 'all' ? 'chosen' : '')} onClick={() => { setGroup('all'); setSelectedMonth('all'); }}>Wszystkie grupy</button>{grouped.map(item => <button key={item.name} type="button" className={'vh-filter-chip ' + (group === item.name ? 'chosen' : '')} onClick={() => { setGroup(item.name); setSelectedMonth('all'); }}>{item.name}</button>)}</div>}
       <FeedWarning errors={league && errors[league.id] ? { [league.id]: errors[league.id] } : {}} refresh={refresh} />
       {!data && loading ? <LoadingCards /> : !data ? <EmptyState icon={WifiOff} title="Nie udało się pobrać ligi" message="Sprawdź połączenie i spróbuj ponownie." action="Odśwież dane" onAction={refresh} /> : <>

@@ -114,6 +114,12 @@ test('league month chips use the existing filter style and restrict match dates'
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
   const months = page.getByRole('group', { name: 'Miesiąc spotkań' });
   await expect(months).toBeVisible({ timeout: 10000 });
+  // The filter is a single narrow ribbon connected to the selected Mecze tab.
+  const tabs = page.locator('.vh-league-tabs-with-months');
+  await expect(tabs.locator('.vh-month-flow__neck')).toHaveCount(1);
+  await expect(months).toHaveCSS('overflow-x', 'auto');
+  await expect(months).toHaveCSS('border-top-color', 'rgb(252, 0, 1)');
+  await expect(months.locator('.vh-month-flow__option').first()).toHaveCSS('border-radius', '9px');
   const all = months.getByRole('button', { name: 'Wszystkie' });
   await expect(all).toHaveAttribute('aria-pressed', 'true');
 
