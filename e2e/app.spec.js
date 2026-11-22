@@ -248,7 +248,9 @@ test('liquid lens moves with one interruptible spring, not a CSS lens transition
     trackProperties: getComputedStyle(root.querySelector('.vh-nav-items')).transitionProperty
   }));
   expect(computed.lensTransition).toBe('0s');
-  expect(computed.tabTransition).not.toBe('0s');
+  // The button never animates layout/color; only its small glyph and the
+  // red lens use compositor transforms, avoiding content flashes.
+  expect(computed.tabTransition).toBe('0s');
   expect(computed.trackProperties).not.toContain('grid-template-columns');
 
   const left = async () => lens.evaluate(el =>
