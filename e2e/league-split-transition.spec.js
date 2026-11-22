@@ -161,7 +161,7 @@ test('REDLINE WARP joins the league to the lens and reverses cleanly on return',
   const failures = [];
   page.on('pageerror', error => failures.push(error.message));
   await page.goto('/#competitions');
-  await page.getByRole('option', { name: 'TAURON Liga Mężczyzn' }).click();
+  await page.getByRole('option', { name: 'II Liga Mężczyzn' }).click();
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
   const cards = page.locator('.vh-competition-detail .vh-match');
   await expect(cards.first()).toBeVisible();
@@ -174,7 +174,7 @@ test('REDLINE WARP joins the league to the lens and reverses cleanly on return',
   await expect(page.locator('.vh-competition-detail.is-redline-source')).toHaveCount(1);
   await expect(dialog).toHaveAttribute('data-redline-phase', 'active', { timeout: 4500 });
   await expect(dialog.locator('.vh-redline-canvas')).toHaveCount(0);
-  await expect(dialog.getByRole('heading', { name: 'TAURON LIGA MĘŻCZYZN' })).toBeVisible();
+  await expect(dialog.getByRole('heading', { name: 'II LIGA MĘŻCZYZN' })).toBeVisible();
 
   await dialog.getByRole('button', { name: 'Wstecz' }).click();
   await expect(dialog).toHaveAttribute('data-redline-phase', 'exit');

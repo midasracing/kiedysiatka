@@ -49,30 +49,20 @@ export default function FullscreenStandings({
 
   useEffect(() => () => window.clearTimeout(exitTimer.current), []);
 
-  // The title itself travels from the live red league header into the white
-  // table heading (and reverses on back) using a measured FLIP transform.
-  // Keep original cards in the DOM, and flatten only their visual layer.
+  // Sample the outgoing match-card positions once. Never animate, stretch or
+  // measure the Impact title through a CSS transform: that causes a resize
+  // feedback loop on Safari and makes long league headings overflow the screen.
   useLayoutEffect(() => {
     if (reducedMotion) return undefined;
     const source = document.querySelector('[data-route="competitions"] .vh-competition-detail');
-    const title = leagueTitleRef.current;
-    const original = source?.querySelector('.vh-competition-heading h1');
-    if (!source || !title || !original) return undefined;
+    if (!source) return undefined;
     sourceRef.current = source;
-    const sourceBox = original.getBoundingClientRect();
-    const targetBox = title.getBoundingClientRect();
-    if (targetBox.width > 0) {
-      const scale = sourceBox.width / targetBox.width;
-      title.style.setProperty('--redline-title-x', (sourceBox.left - targetBox.left) + 'px');
-      title.style.setProperty('--redline-title-y', (sourceBox.top - targetBox.top) + 'px');
-      title.style.setProperty('--redline-title-scale', String(Math.max(.25, Math.min(3, scale))));
-    }
     sourceYsRef.current = Array.from(
       source.querySelectorAll('.vh-match, .vh-team-tile')
     ).map(node => {
       const rect = node.getBoundingClientRect();
       return rect.top + rect.height / 2;
-    }).filter(y => y > -60 && y < window.innerHeight + 80).slice(0, 12);
+    }).filter(y => y > -80 && y < window.innerHeight + 100).slice(0, 10);
     source.classList.add('is-redline-source');
     const frame = requestAnimationFrame(() => {
       if (!exitStarted.current) source.classList.add('is-redline-hidden');
@@ -95,7 +85,8 @@ export default function FullscreenStandings({
       if (cancelled) return;
       const maxSize = 112;
       title.style.fontSize = `${maxSize}px`;
-      const measuredWidth = title.getBoundingClientRect().width;
+      // offsetWidth excludes animation transforms, unlike getBoundingClientRect.
+      const measuredWidth = title.offsetWidth;
       const available = Math.max(1, wrapper.clientWidth - 2);
       if (measuredWidth > 0) {
         title.style.fontSize = `${Math.min(maxSize, maxSize * available / measuredWidth)}px`;
