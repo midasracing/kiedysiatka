@@ -458,12 +458,12 @@
 }
 .vh-profile-player__top {
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr) 21px;
+  grid-template-columns: 122px minmax(0, 1fr) 19px;
   align-items: center;
-  gap: 13px;
+  gap: 12px;
   width: 100%;
-  min-height: 108px;
-  padding: 12px 17px 7px;
+  min-height: 138px;
+  padding: 9px 16px 5px;
   color: var(--profile-ink);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
@@ -474,35 +474,79 @@ a.vh-profile-player__top:focus-visible {
   outline-offset: -3px;
   border-radius: 3px;
 }
+/* Adapted from editorial football poster construction: one dominant
+   portrait and a narrow offset repeat. Both fragments use the same feed
+   photo, not invented imagery. Static clipping keeps mobile scrolling cheap. */
 .vh-profile-player__visual {
   position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  align-self: end;
-  width: 84px;
-  height: 91px;
-  overflow: hidden;
-  border-radius: 2px;
-  background: #75645e;
-}
-.vh-profile-player__visual img {
+  isolation: isolate;
   display: block;
-  width: 100%;
-  height: 100%;
+  align-self: end;
+  width: 122px;
+  height: 130px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #24191c;
+}
+.vh-profile-player__visual::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  width: 3px;
+  height: 70%;
+  background: #653238;
+  pointer-events: none;
+}
+.vh-profile-player__print-number {
+  position: absolute;
+  z-index: 0;
+  top: -11px;
+  right: -3px;
+  color: rgba(237, 216, 207, .13);
+  font: 900 80px/.88 var(--profile-display);
+  letter-spacing: -.065em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.vh-profile-player__portrait {
+  position: absolute;
+  display: block;
+  height: 128px;
   object-fit: cover;
-  /* Large head-and-chest portrait: lower the face without hiding the shoulders. */
   object-position: center 4%;
-  transform: translate3d(0, 8px, 0) scale(1.1);
-  transform-origin: center 25%;
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+.vh-profile-player__portrait--echo {
+  z-index: 1;
+  right: -11px;
+  bottom: -5px;
+  width: 96px;
+  opacity: .28;
+  filter: grayscale(1) brightness(.72) contrast(1.15);
+  transform: translate3d(0, 4px, 0) scale(1.08);
+  clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+}
+.vh-profile-player__portrait--lead {
+  z-index: 2;
+  left: -5px;
+  bottom: -5px;
+  width: 104px;
+  filter: saturate(.88) contrast(1.07) brightness(.9);
+  transform: translate3d(0, 5px, 0) scale(1.04);
+  clip-path: polygon(0 0, 94% 0, 84% 100%, 0 100%);
 }
 .vh-profile-player__placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 100%;
   color: var(--profile-muted);
-  font: 900 38px/1 var(--profile-display);
+  font: 900 48px/1 var(--profile-display);
 }
 .vh-profile-player__copy {
   display: flex;
@@ -586,12 +630,16 @@ a.vh-profile-player__top:focus-visible {
 }
 @media(max-width:390px) {
   .vh-profile-player__top {
-    grid-template-columns: 74px minmax(0, 1fr) 19px;
-    gap: 10px;
-    min-height: 100px;
-    padding: 10px 13px 6px;
+    grid-template-columns: 106px minmax(0, 1fr) 16px;
+    gap: 9px;
+    min-height: 127px;
+    padding: 7px 13px 4px;
   }
-  .vh-profile-player__visual { width: 74px; height: 84px; border-radius: 2px; }
+  .vh-profile-player__visual { width: 106px; height: 118px; }
+  .vh-profile-player__portrait { height: 117px; }
+  .vh-profile-player__portrait--echo { width: 84px; right: -8px; }
+  .vh-profile-player__portrait--lead { width: 92px; }
+  .vh-profile-player__print-number { font-size: 72px; }
   .vh-profile-player__copy > strong { font-size: clamp(18px, 5vw, 21px); }
   .vh-profile-player__identity-meta { gap: 5px; font-size: 11px; }
   .vh-profile-player__stats { margin: 0; padding: 12px 12px 13px; }
