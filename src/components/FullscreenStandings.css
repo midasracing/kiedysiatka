@@ -239,32 +239,61 @@
   pointer-events: none;
   will-change: transform, opacity;
 }
+/* The original selected tab makes the dive; this lightweight visual copy
+   travels while hidden, then resurfaces only at the header. Its movement and
+   the existing black portal have separate layers, so neither restarts the other. */
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__flying-pill {
-  animation: vh-liquid-pill-flight 1120ms cubic-bezier(.35,.1,.3,1) both;
+  animation: vh-liquid-pill-arrive 1120ms cubic-bezier(.22,.75,.28,1) both;
 }
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__flying-pill {
-  animation: vh-liquid-pill-flight 880ms cubic-bezier(.35,.1,.3,1) reverse both;
+  animation: vh-liquid-pill-return 880ms cubic-bezier(.22,.75,.28,1) both;
 }
-@keyframes vh-liquid-pill-flight {
-  0% {
-    opacity: 1;
-    transform: translate3d(0,0,0);
-  }
-  15% {
-    opacity: 1;
-    transform: translate3d(0,8px,0);
-  }
-  35% {
+@keyframes vh-liquid-pill-arrive {
+  0%, 61% {
     opacity: 0;
-    transform: translate3d(var(--vh-flight-x30, 0px),var(--vh-flight-y30, 15px),0);
+    transform: translate3d(0, 12px, 0);
   }
-  54% {
+  70% {
     opacity: 0;
-    transform: translate3d(var(--vh-flight-x75, 0px),var(--vh-flight-y75, 10px),0);
+    transform: translate3d(var(--vh-flight-dx, 0px),
+      calc(var(--vh-flight-dy, 0px) + 14px), 0);
   }
-  85%,100% {
+  90%, 100% {
     opacity: 1;
     transform: translate3d(var(--vh-flight-dx, 0px),var(--vh-flight-dy, 0px),0);
+  }
+}
+@keyframes vh-liquid-pill-return {
+  0% {
+    opacity: 1;
+    transform: translate3d(var(--vh-flight-dx, 0px),var(--vh-flight-dy, 0px),0);
+    background: #f5f2ed;
+    color: #211b17;
+    box-shadow: 0 0 0 5px #24211e, 0 4px 12px rgba(0,0,0,.13);
+  }
+  23% {
+    opacity: 0;
+    transform: translate3d(var(--vh-flight-dx, 0px),
+      calc(var(--vh-flight-dy, 0px) + 14px),0);
+  }
+  68% {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  83% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    background: #f5f2ed;
+    color: #211b17;
+    box-shadow: 0 0 0 5px #24211e, 0 4px 12px rgba(0,0,0,.13);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    /* Merge into the inactive tab exactly as Mecze/Drużyny becomes selected. */
+    background: transparent;
+    color: #c3bcb4;
+    box-shadow: none;
   }
 }
 
@@ -289,10 +318,32 @@
   font: inherit;
   line-height: inherit;
 }
-/* The whole selected button is temporarily lifted out of the segmented
-   control. Leaving its empty white plate behind breaks the illusion. */
-.vh-competition-detail.is-liquid-table-open .vh-table-tab {
+/* The REAL white tab sinks before its copy can appear in the top-right.
+   On close, the returning copy floats above the ink and blends into the
+   inactive tab, avoiding the previous abrupt double-button flash. */
+.vh-competition-detail.is-liquid-table-open:not(.is-liquid-table-returning) .vh-table-tab {
+  animation: vh-liquid-tab-submerge 240ms cubic-bezier(.36,0,.72,.42) both;
+}
+.vh-competition-detail.is-liquid-table-open.is-liquid-table-returning .vh-table-tab {
   opacity: 0;
+  /* Prepare the empty slot for the already-darkening returning button. */
+  background: transparent;
+  color: #c3bcb4;
+}
+@keyframes vh-liquid-tab-submerge {
+  from { opacity: 1; transform: translate3d(0,0,0); }
+  to { opacity: 0; transform: translate3d(0,12px,0); }
+}
+/* Smoothly shift the selected surface back to Mecze or Drużyny after landing,
+   without touching the original pill typography or the black reveal. */
+.vh-competition-detail .vh-league-view-tabs .vh-segmented button {
+  transition: background-color 180ms ease, color 180ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vh-competition-detail.is-liquid-table-open .vh-table-tab {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 /* The name remains full-width, fixed and unscaled, with a soft red-to-white

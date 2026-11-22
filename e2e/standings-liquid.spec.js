@@ -157,3 +157,37 @@ test('one slow black portal reveals the table and the same selected Tabela pill 
   await expect(dialog).toHaveCount(0, { timeout: 3500 });
   await expect(original).toBeVisible();
 });
+
+test('selected Tabela button dives from menu and rejoins the inactive tab on return', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openLeague(page);
+  const source = page.locator('.vh-competition-detail .vh-table-tab');
+  await source.click();
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
+  const entering = await dialog.evaluate(root => ({
+    source: getComputedStyle(document.querySelector('.vh-table-tab')).animationName,
+    pill: getComputedStyle(root.querySelector('.vh-standings-fullscreen__flying-pill')).animationName,
+  }));
+  expect(entering.source).toContain('vh-liquid-tab-submerge');
+  expect(entering.pill).toContain('vh-liquid-pill-arrive');
+
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  await dialog.getByRole('button', { name: 'Zamknij tabelę' }).click();
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
+  const returning = await dialog.evaluate(root => {
+    const sourceStyle = getComputedStyle(document.querySelector('.vh-table-tab'));
+    const pillStyle = getComputedStyle(root.querySelector('.vh-standings-fullscreen__flying-pill'));
+    return {
+      animation: pillStyle.animationName,
+      sourceOpacity: sourceStyle.opacity,
+      sourceBackground: sourceStyle.backgroundColor,
+    };
+  });
+  expect(returning.animation).toContain('vh-liquid-pill-return');
+  expect(returning.sourceOpacity).toBe('0');
+  expect(returning.sourceBackground).toBe('rgba(0, 0, 0, 0)');
+  await expect(dialog).toHaveCount(0, { timeout: 3500 });
+  await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
+  await expect(source).toHaveCSS('opacity', '1');
+});
