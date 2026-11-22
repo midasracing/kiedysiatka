@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { pauseClockAt } from './helpers/clock.js';
 
 async function openLeague(page) {
   await page.goto('/#favorites');
@@ -9,6 +10,9 @@ async function openLeague(page) {
 }
 
 test('Liquid Dive opens from the actual Tabela tab without stretching standings', async ({ page }) => {
+  // Keep the entry phase alive while reading its animation tracks. Slow
+  // WebKit workers can otherwise finish the 1120ms transition mid-assertion.
+  await pauseClockAt(page, new Date('2026-11-04T12:00:00Z'));
   await page.setViewportSize({ width: 390, height: 844 });
   const pageErrors = [];
   page.on('pageerror', error => pageErrors.push(error.message));
@@ -58,6 +62,7 @@ test('Liquid Dive opens from the actual Tabela tab without stretching standings'
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('animation-name', 'vh-liquid-rows-appear');
   await expect(dialog.locator('.vh-standings-fullscreen__header')).toHaveCSS('animation-name', 'vh-liquid-header-appear');
 
+  await page.clock.runFor(1200);
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
   await expect(dialog.locator('.vh-standings-fullscreen__liquid')).toHaveCount(0);
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('transform', 'none');
@@ -69,6 +74,7 @@ test('Liquid Dive opens from the actual Tabela tab without stretching standings'
 
   await dialog.getByRole('button', { name: 'Wstecz' }).click();
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
+  await page.clock.runFor(1000);
   await expect(dialog).toHaveCount(0, { timeout: 3000 });
   await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
   await expect(trigger).toBeVisible();
