@@ -75,20 +75,26 @@ button.vh-club-wall__open { cursor: pointer; }
   position: relative;
   isolation: isolate;
 }
-/* Soft warm-white illumination behind transparent original crests.
-   It reveals almost-black badges without recoloring any official logo
-   or introducing a visible square/circle frame. */
+/* Wide feathered backlight, NOT a luminous disc. Its low-intensity
+   stops merge into black well beyond the crest with no visible edge;
+   original club colours remain untouched. Pure gradients stay cheap
+   while the native scrolling list moves on iOS Safari. */
 .vh-club-wall__crest::before {
   content: '';
   position: absolute;
   z-index: -1;
-  inset: -9px;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    rgba(249, 244, 235, .76) 0%,
-    rgba(249, 244, 235, .55) 32%,
-    rgba(249, 244, 235, .23) 57%,
-    rgba(249, 244, 235, 0) 80%);
+  inset: -35px -40px;
+  border-radius: 0;
+  background: radial-gradient(
+    ellipse 72% 69% at 50% 50%,
+    rgba(244, 240, 234, .25) 0%,
+    rgba(244, 240, 234, .21) 17%,
+    rgba(244, 240, 234, .15) 34%,
+    rgba(244, 240, 234, .085) 50%,
+    rgba(244, 240, 234, .035) 65%,
+    rgba(244, 240, 234, .008) 78%,
+    rgba(244, 240, 234, 0) 93%
+  );
   pointer-events: none;
 }
 .vh-club-wall__crest > .vh-team-logo {
@@ -100,7 +106,8 @@ button.vh-club-wall__open { cursor: pointer; }
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .45));
+  /* Tiny contour lift for black artwork, with no halo around the whole badge. */
+  filter: drop-shadow(0 0 1px rgba(255, 250, 241, .38));
 }
 .vh-club-wall__crest > .vh-team-logo .team-mark {
   color: #f5f2ed;
