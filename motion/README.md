@@ -48,3 +48,5 @@ The date strip keeps its range stable during nearby selections. A single red
 indicator slides between the retained day nodes while native smooth scrolling
 centers the selected date. Resize callbacks do not interrupt selection scrolling;
 the range extends near its edges after the scroll settles.
+
+Intro odtwarza geometrię `entrance/scene.rml` natywnie w SVG/CSS, bez uruchamiania Rive/WASM. Runtime Rive pozostaje dla efektów aktualizacji wyników.

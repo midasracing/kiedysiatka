@@ -7,15 +7,12 @@ const LOGO = import.meta.env.BASE_URL + 'kiedy-siatka-logo.svg?v=5';
 // One unchanged SVG travels from the opening composition into the real header.
 // Only transforms and opacity animate; feed loading never gates the entrance.
 export default function StartupEntrance({ enabled, onComplete }) {
-  const canvas = useRef(null);
   const copy = useRef(null);
-  const [rivePlaying, setRivePlaying] = useState(false);
   const [revealing, setRevealing] = useState(false);
   useEffect(() => {
     if (!enabled || document.hidden) { onComplete(); return undefined; }
-    let disposed = false, rive;
+    let disposed = false;
     const timers = [], animations = [];
-    const started = performance.now();
     const brand = document.querySelector('.vh-brand-signature');
     const originalOpacity = brand?.style.opacity || '';
     if (brand) brand.style.opacity = '0';
@@ -28,14 +25,6 @@ export default function StartupEntrance({ enabled, onComplete }) {
       animations.push(animation);
       return animation;
     };
-    import('../motionRuntime.js').then(({ createEntrance }) => {
-      if (disposed || performance.now() - started >= 700) return;
-      rive = createEntrance(canvas.current, () => {
-        if (disposed || performance.now() - started >= 800) return;
-        rive.play();
-        setRivePlaying(true);
-      }, () => {});
-    }).catch(() => { /* Logo choreography also works without the backdrop. */ });
     later(() => {
       if (disposed) return;
       const logo = copy.current;
@@ -62,7 +51,7 @@ export default function StartupEntrance({ enabled, onComplete }) {
         const flight = animate(logo, [
           { transform: 'translate3d(0,0,0) scale(1)' },
           { transform: `translate3d(${target.left - start.left}px,${target.top - start.top}px,0) scale(${target.width / start.width})` },
-        ], { duration: 720, easing: 'cubic-bezier(.76,0,.24,1)' });
+        ], { duration: 900, easing: 'cubic-bezier(.76,0,.24,1)' });
         if (flight) flight.finished.then(() => {
           if (disposed) return;
           restoreBrand();
@@ -78,10 +67,8 @@ export default function StartupEntrance({ enabled, onComplete }) {
         { opacity: 1, transform: 'translate3d(0,0,0)' },
       ], { duration: 550, delay: 100 + index * 55 }));
       animate(document.querySelector('.vh-bottom'), [{ opacity: 0 }, { opacity: 1 }], { duration: 480, delay: 180 });
-    }, 980);
-    // The backdrop is fully transparent after its 650ms fade.
-    later(() => rive?.pause(), 1630);
-    later(finish, 2250);
+    }, 1100);
+    later(finish, 2500);
     const onVisibility = () => { if (document.hidden) finish(); };
     const viewportWidth = window.innerWidth;
     const onResize = () => { if (window.innerWidth !== viewportWidth) finish(); };
@@ -92,7 +79,6 @@ export default function StartupEntrance({ enabled, onComplete }) {
       disposed = true;
       timers.forEach(window.clearTimeout);
       animations.forEach(animation => animation.cancel());
-      rive?.cleanup();
       restoreBrand();
       document.removeEventListener('visibilitychange', onVisibility);
       document.removeEventListener('keydown', finish);
@@ -100,8 +86,18 @@ export default function StartupEntrance({ enabled, onComplete }) {
     };
   }, [enabled, onComplete]);
   if (!enabled) return null;
-  return createPortal(<div className={'vh-startup-intro' + (rivePlaying ? ' has-rive' : '') + (revealing ? ' is-revealing' : '')}>
-    <div className="vh-startup-backdrop" aria-hidden="true"><canvas className="vh-startup-rive" ref={canvas} /></div>
+  return createPortal(<div className={'vh-startup-intro' + (revealing ? ' is-revealing' : '')}>
+    <div className="vh-startup-backdrop" aria-hidden="true">
+      {/* Geometry and tracks match motion/entrance/scene.rml, without a JS renderer. */}
+      <svg className="vh-startup-planes" viewBox="0 0 600 1000" preserveAspectRatio="none" focusable="false">
+        <g className="vh-startup-plane vh-startup-plane--deep">
+          <rect x="-260" y="-750" width="520" height="1500" transform="rotate(-13.750987083)" fill="#750001" />
+        </g>
+        <g className="vh-startup-plane vh-startup-plane--red">
+          <rect x="-190" y="-750" width="380" height="1500" transform="rotate(-13.750987083)" fill="#fc0001" />
+        </g>
+      </svg>
+    </div>
     <div ref={copy} className="vh-startup-copy" aria-hidden="true">
       <img className="vh-startup-logo" src={LOGO} width="1180" height="655" alt="" draggable={false} fetchPriority="high" />
     </div>

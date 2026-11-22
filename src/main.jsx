@@ -25,8 +25,12 @@ function App() {
   const [reducedMotion, setReducedMotion] = useState(() =>
     window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true
   );
+  const startupPage = useRef(page);
+  const [startup, setStartup] = useState(() =>
+    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches !== true);
+  const finishStartup = useCallback(() => setStartup(false), []);
   useEffect(() => {
-    if (reducedMotion) return undefined;
+    if (reducedMotion || startup) return undefined;
     const warm = () => import('./motionRuntime.js').catch(() => {});
     if (window.requestIdleCallback) {
       const task = window.requestIdleCallback(warm, { timeout: 2500 });
@@ -34,11 +38,7 @@ function App() {
     }
     const task = window.setTimeout(warm, 1500);
     return () => window.clearTimeout(task);
-  }, [reducedMotion]);
-  const startupPage = useRef(page);
-  const [startup, setStartup] = useState(() =>
-    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches !== true);
-  const finishStartup = useCallback(() => setStartup(false), []);
+  }, [reducedMotion, startup]);
   useEffect(() => {
     if (page !== startupPage.current || reducedMotion) finishStartup();
   }, [page, reducedMotion, finishStartup]);

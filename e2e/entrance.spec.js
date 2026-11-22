@@ -42,13 +42,20 @@ test('home entrance uses the original logo, has no skip button and never replays
   await expect(intro).toHaveCount(0);
 });
 
-test('entrance finishes on schedule even if the Rive asset is unavailable', async ({ page }) => {
+test('entrance finishes on schedule without loading the Rive renderer', async ({ page }) => {
   const now = new Date('2026-11-04T12:00:00Z');
   await pauseClockAt(page, now);
-  await page.route('**/motion/entrance.riv*', route => route.abort());
+  const rendererRequests = [];
+  page.on('request', request => {
+    if (/\.wasm(?:[?#]|$)|motionRuntime|motion\/entrance\.riv/.test(request.url())) rendererRequests.push(request.url());
+  });
   await page.goto('/');
   await expect(page.locator('.vh-startup-intro')).toHaveCount(1);
-  await page.clock.fastForward(3100);
+  await expect(page.locator('.vh-startup-planes rect')).toHaveCount(2);
+  await page.clock.fastForward(1900);
+  await expect(page.locator('.vh-startup-intro')).toHaveCount(1);
+  expect(rendererRequests).toEqual([]);
+  await page.clock.fastForward(1200);
   await expect(page.locator('.vh-startup-intro')).toHaveCount(0);
   await expect(page.locator('.vh-brand-signature')).toHaveCSS('opacity', '1');
   await expect(page.getByRole('heading', { name: /^(Dzisiaj|Najbliższe mecze)$/ })).toBeVisible();

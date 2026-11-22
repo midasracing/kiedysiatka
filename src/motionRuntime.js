@@ -19,18 +19,3 @@ export function createImpact(canvas, onReady, onDone) {
   });
   return animation;
 }
-
-// Broad red shapes frame the logo handoff; the SVG itself stays unchanged.
-export function createEntrance(canvas, onReady, onFail) {
-  const animation = new Rive({
-    canvas,
-    src: import.meta.env.BASE_URL + 'motion/entrance.riv?v=4',
-    artboard: 'Entrance',
-    stateMachine: 'Entrance',
-    autoplay: false,
-    layout: new Layout({ fit: Fit.Fill, alignment: Alignment.Center }),
-    onLoad: () => { animation.resizeDrawingSurfaceToCanvas(1); onReady(); },
-    onLoadError: onFail,
-  });
-  return animation;
-}
