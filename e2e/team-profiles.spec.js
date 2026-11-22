@@ -29,6 +29,17 @@ for (const [leagueName, secondOption] of [
     const tile = grid.locator('.vh-club-wall__row.is-openable').first();
     await expect(tile).toBeVisible();
     const teamName = (await tile.locator('.vh-club-wall__name').textContent()).trim();
+    const name = tile.locator('.vh-club-wall__name');
+    const crest = tile.locator('.vh-club-wall__crest');
+    await expect(name).toHaveCSS('color', 'rgb(245, 242, 237)');
+    await expect(crest).toBeVisible();
+    // In the editorial wall the crest is always left of the white team name.
+    const crestBox = await crest.boundingBox();
+    const nameBox = await name.boundingBox();
+    expect(crestBox.x + crestBox.width).toBeLessThanOrEqual(nameBox.x);
+    // A soft light halo restores contrast for near-black crests without altering the image.
+    expect(await crest.evaluate(el =>
+      getComputedStyle(el, '::before').backgroundImage)).toContain('radial-gradient');
     await expect(grid.locator('.vh-team-tile')).toHaveCount(0);
     await expect(tile.getByText('Profil', { exact: true })).toHaveCount(0);
     const star = tile.getByRole('button', { name: 'Dodaj do ulubionych: ' + teamName });
