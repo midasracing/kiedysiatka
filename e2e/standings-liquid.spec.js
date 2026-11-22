@@ -2,10 +2,8 @@ import { test, expect } from '@playwright/test';
 import { pauseClockAt } from './helpers/clock.js';
 
 async function openLeague(page) {
-  await page.goto('/#favorites');
-  await page.getByRole('tab', { name: /Rozgrywki/ }).click();
-  await page.locator('.vh-picker-row').filter({ hasText: 'TAURON Liga Mężczyzn' }).click();
-  await page.locator('.vh-league-stack .vh-league-main').filter({ hasText: 'TAURON Liga Mężczyzn' }).click();
+  await page.goto('/#competitions');
+  await page.getByRole('option', { name: 'TAURON Liga Mężczyzn', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
 }
 

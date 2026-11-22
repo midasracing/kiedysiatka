@@ -57,8 +57,11 @@ test('a fast failing logo keeps its initials and a new logo can load after refre
   await page.route('**/audit-logo-ok.svg', route => route.fulfill({
     contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="red"/></svg>'
   }));
-  await page.goto('/#favorites');
-  const row = page.locator('.vh-picker-row').filter({ hasText: 'Audit Team' });
+  await page.goto('/#competitions');
+  await page.getByRole('option', { name: 'TAURON Liga Mężczyzn', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
+  await page.getByRole('tab', { name: 'Drużyny', exact: true }).click();
+  const row = page.locator('.vh-team-tile').filter({ hasText: 'Audit Team' });
   await row.scrollIntoViewIfNeeded();
   await expect(row.locator('.team-mark')).toHaveText('AT');
   await expect(row.locator('img')).toHaveCount(0);
