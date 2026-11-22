@@ -14,6 +14,18 @@ test('touching the centred league splits two full-width lines and reverse restor
   await expect(split.locator('.vh-league-split__gradient')).toHaveCSS('background-image', /linear-gradient/);
   await expect(split.locator('[data-league-row="2"]').first()).toHaveText('II Liga');
   await expect(split.locator('[data-league-row="2"]').last()).toHaveText('Mężczyzn');
+  const openFrames = await split.locator('[data-league-row="2"]').first().evaluate(el =>
+    el.getAnimations().flatMap(animation =>
+      animation.effect?.getKeyframes().map(frame => ({
+        offset: frame.offset,
+        transform: frame.transform,
+        filter: frame.filter,
+      })) || []
+    ));
+  expect(openFrames.map(frame => frame.offset)).toEqual([0, .09, .17, .55, .61, 1]);
+  expect(openFrames[1].filter).toBe('brightness(1.36)');
+  expect(openFrames[3].transform).toBe(openFrames[4].transform);
+  expect(openFrames[3].transform).not.toBe(openFrames[0].transform);
   await expect(split.locator('[data-league-row="0"]')).toHaveCount(2);
   await expect(split.locator('[data-league-row="5"]')).toHaveCount(2);
   await expect(page.getByRole('heading', { name: 'II Liga Mężczyzn' })).toBeVisible();

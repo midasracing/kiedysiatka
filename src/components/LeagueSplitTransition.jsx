@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './LeagueSplitTransition.css';
 
+// A responsive three-beat entrance; preserve the existing 660 ms return.
+const OPEN_DURATION = 860;
 const DURATION = 660;
 const EASING = 'cubic-bezier(.54,.04,.28,1)';
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -12,10 +14,9 @@ const reverseFrames = frames => frames.slice().reverse().map(frame => ({
 }));
 
 /**
- * The full league list is the curtain, not just the selected word.
- * Rows above the selection exit upwards, rows below exit downwards.
- * The two selected lines expand across the screen and split apart.
- * Reversing ALL keyframes reconstructs the complete list together.
+ * Opening: touch pulse -> BOTH selected lines grow to screen width -> the
+ * entire list splits like curtains. Closing retains the previously approved
+ * inverse timeline and its exact gradient choreography.
  */
 export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
   const lineRefs = useRef([]);
@@ -50,11 +51,17 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    const animate = (node, forward, easing = EASING) => {
+    // The return remains the previously approved animation. Only the
+    // opening gains a different timeline, with precisely timed stages.
+    const animate = (node, forward, easing = EASING, opening = forward) => {
       if (!node) return;
       animations.push(node.animate(
-        phase === 'open' ? forward : reverseFrames(forward),
-        { duration: DURATION, easing, fill: 'both' },
+        phase === 'open' ? opening : reverseFrames(forward),
+        {
+          duration: phase === 'open' ? OPEN_DURATION : DURATION,
+          easing: phase === 'open' ? 'linear' : easing,
+          fill: 'both',
+        },
       ));
     };
 
@@ -97,7 +104,44 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
           { offset: 1, transform: position(line.left, targetY, baseX, baseY) },
         ];
       }
-      animate(lineRefs.current[index], frames);
+      let opening;
+      if (line.rowIndex === snapshot.index) {
+        // 0–17%: tactile response (small press/brightness pulse).
+        // 17–55%: two lines expand TOGETHER to the viewport width.
+        // 55–100%: the first line exits above, second below.
+        const width = vw * 1.06;
+        const bigScaleX = width / naturalWidth;
+        const bigScaleY = clamp(Math.sqrt(bigScaleX) * 1.24, 1.2, 2.7);
+        const expandedHeight = naturalHeight * bigScaleY;
+        const wideX = (vw - width) / 2;
+        const stackY = (line.partIndex === 0
+          ? vh * .5 - expandedHeight * 1.03
+          : vh * .5 + expandedHeight * .03);
+        const fullWidth = position(wideX, stackY, bigScaleX, bigScaleY);
+        const pressed = position(
+          line.left - line.width * .024,
+          line.top - line.height * .024,
+          baseX * 1.048,
+          baseY * 1.048,
+        );
+        opening = [
+          { offset: 0, transform: start, filter: 'brightness(1)', easing: 'ease-out' },
+          { offset: .09, transform: pressed, filter: 'brightness(1.36)', easing: 'ease-in-out' },
+          { offset: .17, transform: start, filter: 'brightness(1)', easing: 'cubic-bezier(.55,0,.16,1)' },
+          { offset: .55, transform: fullWidth, filter: 'brightness(1)' },
+          { offset: .61, transform: fullWidth, filter: 'brightness(1)', easing: 'cubic-bezier(.7,0,.26,1)' },
+          { offset: 1, transform: position(wideX, targetY, bigScaleX, bigScaleY), filter: 'brightness(1)' },
+        ];
+      } else {
+        // Other names wait for the enlargement to finish, then peel away
+        // as one coherent upper/lower curtain rather than leaving early.
+        opening = [
+          { offset: 0, transform: start },
+          { offset: .52, transform: start, easing: 'cubic-bezier(.66,0,.24,1)' },
+          { offset: 1, transform: position(line.left, targetY, baseX, baseY) },
+        ];
+      }
+      animate(lineRefs.current[index], frames, EASING, opening);
     });
 
     // Keep the league details visible until the returning names actually
@@ -108,7 +152,13 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       { offset: .58, opacity: .45 },
       { offset: .92, opacity: 0 },
       { offset: 1, opacity: 0 },
-    ], 'linear');
+    ], 'linear', [
+      { offset: 0, opacity: 1 },
+      { offset: .52, opacity: 1 },
+      { offset: .76, opacity: .40 },
+      { offset: .95, opacity: 0 },
+      { offset: 1, opacity: 0 },
+    ]);
 
     // Match the actual selector's top gradient throughout both directions.
     // On return it builds gradually while the entire list converges,
@@ -119,20 +169,35 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       { offset: .50, opacity: .48 },
       { offset: .85, opacity: .08 },
       { offset: 1, opacity: 0 },
-    ], 'linear');
+    ], 'linear', [
+      { offset: 0, opacity: 1 },
+      { offset: .38, opacity: 1 },
+      { offset: .77, opacity: .1 },
+      { offset: 1, opacity: 0 },
+    ]);
 
     animate(headingRef.current, [
       { offset: 0, opacity: 1 },
       { offset: .32, opacity: .92 },
       { offset: .76, opacity: 0 },
       { offset: 1, opacity: 0 },
-    ], 'linear');
+    ], 'linear', [
+      { offset: 0, opacity: 1 },
+      { offset: .28, opacity: 1 },
+      { offset: .69, opacity: 0 },
+      { offset: 1, opacity: 0 },
+    ]);
 
     animate(pointerRef.current, [
       { offset: 0, opacity: 1 },
       { offset: .30, opacity: 0 },
       { offset: 1, opacity: 0 },
-    ], 'linear');
+    ], 'linear', [
+      { offset: 0, opacity: 1 },
+      { offset: .14, opacity: 1 },
+      { offset: .47, opacity: 0 },
+      { offset: 1, opacity: 0 },
+    ]);
 
     let cancelled = false;
     Promise.all(animations.map(animation => animation.finished.catch(() => null)))
