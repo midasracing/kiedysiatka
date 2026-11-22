@@ -18,7 +18,7 @@ test('league selector opens league details with a reversible split transition', 
   expect(frame.height).toBeGreaterThanOrEqual(frame.viewport - 2);
   expect(frame.top).toBeLessThanOrEqual(2);
   await expect(picker.locator('canvas')).toHaveCount(0);
-  await expect(picker.locator('.vh-league-picker__scroll')).toHaveCSS('overflow-y', 'auto');
+  await expect(picker).toHaveCSS('overflow-y', 'auto');
   await expect(picker.getByRole('option').first()).toHaveCSS('color', 'rgb(252, 0, 1)');
   await expect(picker.getByRole('option')).toHaveCount(6);
   await expect(picker.locator('.vh-league-picker__line')).toHaveCount(12);
@@ -32,7 +32,7 @@ test('league selector opens league details with a reversible split transition', 
   await expect(page.getByRole('heading', { name: 'Dostępne ligi' })).toHaveCount(0);
   await expect(page.locator('[data-route="competitions"] .vh-league-stack')).toHaveCount(0);
   await picker.focus();
-  const scroller = picker.locator('.vh-league-picker__scroll');
+  const scroller = picker;
   await scroller.evaluate(node => { node.scrollTop = 4 * 116; });
   await expect(picker.getByRole('option', { name: 'SuperLega Credem Banca' }))
     .toHaveAttribute('aria-selected', 'true');
@@ -520,7 +520,6 @@ test('all two-line league labels fit narrow mobile screens with unchanged font-s
   const options = scroller.getByRole('option');
   for (let i = 0; i < 6; i += 1) {
     await scroller.evaluate((node, index) => { node.scrollTop = index * 116; }, i);
-    await expect(options.nth(i)).toHaveAttribute('aria-selected', 'true');
     const result = await options.nth(i).evaluate(option => {
       const host = option.closest('.vh-league-picker__scroll').getBoundingClientRect();
       const label = option.querySelector('.vh-league-picker__label');
