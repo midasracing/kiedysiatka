@@ -1,0 +1,52 @@
+.vh-standings-warp {
+  position: relative;
+  isolation: isolate;
+  width: calc(100% + 40px);
+  height: clamp(420px, 72dvh, 680px);
+  margin: 18px -20px 24px;
+  overflow: hidden;
+  background: #000;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline-offset: 4px;
+}
+
+.vh-standings-warp__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+
+.vh-standings-warp:active .vh-standings-warp__canvas { cursor: grabbing; }
+
+.vh-standings-warp__hint {
+  position: absolute;
+  z-index: 1;
+  right: 13px;
+  bottom: 14px;
+  color: rgba(252, 0, 1, .72);
+  font: 800 10px/1.2 var(--font-ui, sans-serif);
+  letter-spacing: .11em;
+  pointer-events: none;
+}
+
+.vh-standings-warp__accessible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .vh-standings-warp { height: min(68dvh, 570px); min-height: 380px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vh-standings-warp { touch-action: auto; }
+}
