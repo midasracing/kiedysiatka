@@ -7,7 +7,7 @@ async function openLeague(page) {
   await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
 }
 
-test('Tabela slides up as a full black sheet, without pill morph or moving corner button', async ({ page, browserName }) => {
+test('Tabela carries the whole league selector upwards, without a separate corner button', async ({ page, browserName }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   if (browserName === 'chromium') {
     const session = await page.context().newCDPSession(page);
@@ -19,8 +19,10 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
   // Freeze only after the league-opening curtain has completed, so the swipe
   // animation is still in its entry phase while WebKit reads its keyframes.
   await pauseClockAt(page, new Date('2026-11-04T12:00:00Z'));
-  const trigger = page.getByRole('tab', { name: 'Tabela' });
-  const otherSelected = page.getByRole('tab', { name: 'Mecze' });
+  const sourceTabs = page.locator('.vh-competition-detail .vh-league-view-tabs');
+  const trigger = sourceTabs.getByRole('tab', { name: 'Tabela' });
+  const otherSelected = sourceTabs.getByRole('tab', { name: 'Mecze' });
+  const sourceMenuTop = await sourceTabs.locator('.vh-segmented').evaluate(node => node.getBoundingClientRect().top);
   const selectedStyles = await otherSelected.evaluate(node => {
     const style = getComputedStyle(node);
     return { background: style.backgroundColor, color: style.color, radius: style.borderRadius };
@@ -43,8 +45,8 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
   expect(hasPaintedRows).toBe(true);
   await page.clock.runFor(32);
 
-  // Clicking Tabela must activate the SAME light capsule as the other tabs.
-  // The sheet covers this selected tab naturally as it slides in from below.
+  // Clicking Tabela still selects the source capsule. Its visual duplicate
+  // rides with the solid surface instead of leaving a second, stationary menu.
   await expect(trigger).toHaveAttribute('aria-selected', 'true');
   await expect(trigger).toHaveClass(/selected/);
   await expect(trigger).toHaveCSS('background-color', selectedStyles.background);
@@ -53,9 +55,10 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
 
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'enter');
   await expect(dialog.locator('.vh-standings-fullscreen__flying-pill')).toHaveCount(0);
+  await expect(dialog.locator('.vh-standings-fullscreen__section-title')).toHaveCount(0);
   const scene = await dialog.evaluate(root => {
     const sheet = root.querySelector('.vh-standings-fullscreen__surface');
-    const button = root.querySelector('.vh-standings-fullscreen__section-title');
+    const menu = root.querySelector('.vh-standings-fullscreen__travel-menu');
     const header = root.querySelector('.vh-standings-fullscreen__header');
     return {
       panelColor: getComputedStyle(sheet).backgroundColor,
@@ -64,9 +67,11 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
       frameValues: sheet.getAnimations().flatMap(animation =>
         animation.effect?.getKeyframes?.() || []).map(frame => frame.transform).filter(Boolean),
       noClip: getComputedStyle(sheet).clipPath,
-      buttonAnimation: getComputedStyle(button).animationName,
+      menuAnimation: getComputedStyle(menu).animationName,
       headerAnimation: getComputedStyle(header).animationName,
-      buttonFont: getComputedStyle(button).fontFamily,
+      menuFont: getComputedStyle(menu.querySelector('button')).fontFamily,
+      menuTop: menu.getBoundingClientRect().top,
+      originOffset: getComputedStyle(root).getPropertyValue('--vh-sheet-origin-offset').trim(),
       dialogZ: Number(getComputedStyle(root).zIndex),
     };
   });
@@ -74,12 +79,13 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
   expect(scene.canvasInside).toBe(true);
   expect(scene.sheetAnimation).toBe('vh-standings-slide-up');
   expect(scene.frameValues).toHaveLength(2);
-  expect(scene.frameValues[0]).toContain('100%');
-  expect(scene.frameValues[1]).not.toContain('100%');
+  expect(scene.frameValues[0]).toContain('var(--vh-sheet-origin-offset');
+  expect(scene.frameValues[1]).toContain('0px');
   expect(scene.noClip).toBe('none');
-  expect(scene.buttonAnimation).toBe('none');
+  expect(scene.menuAnimation).toBe('vh-travel-menu-in');
   expect(scene.headerAnimation).toBe('vh-slide-header-in');
-  expect(scene.buttonFont).toBe(triggerFont);
+  expect(scene.menuFont).toBe(triggerFont);
+  expect(scene.originOffset).toContain(String(Math.round(sourceMenuTop)).slice(0, 2));
   expect(scene.dialogZ).toBeGreaterThan(100);
 
   await page.clock.runFor(750);
@@ -90,7 +96,13 @@ test('Tabela slides up as a full black sheet, without pill morph or moving corne
   const settled = await dialog.locator('.vh-standings-fullscreen__surface').boundingBox();
   expect(Math.abs(settled.y)).toBeLessThan(1);
   expect(Math.abs(settled.height - 844)).toBeLessThan(2);
-  await expect(dialog.getByRole('button', { name: 'Zamknij tabelę' })).toBeVisible();
+  await expect(dialog.getByRole('button', { name: 'Zamknij tabelę' })).toHaveCount(0);
+  const raisedMenu = dialog.getByRole('tablist', { name: 'Widok rozgrywek' });
+  await expect(raisedMenu).toBeVisible();
+  await expect(raisedMenu.getByRole('tab', { name: 'Tabela' })).toHaveAttribute('aria-selected', 'true');
+  const menuBounds = await raisedMenu.boundingBox();
+  expect(menuBounds.y).toBeGreaterThan(35);
+  expect(menuBounds.y).toBeLessThan(165);
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('transform', 'none');
   await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('clip-path', 'none');
   expect(errors).toEqual([]);
@@ -122,7 +134,7 @@ test('Wstecz slides the whole sheet down and restores the league and dock', asyn
   expect(exit.duration).toBe('0.54s');
   expect(exit.values).toHaveLength(2);
   expect(exit.values[0]).not.toContain('100%');
-  expect(exit.values[1]).toContain('100%');
+  expect(exit.values[1]).toContain('var(--vh-sheet-origin-offset');
   expect(exit.header).toBe('vh-slide-header-out');
   expect(exit.flyers).toBe(0);
   await page.clock.runFor(650);
