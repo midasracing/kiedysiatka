@@ -10,6 +10,7 @@ const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_INDEX, onSelectionChange, onOpen }) {
   const scrollerRef = useRef(null);
   const animationRef = useRef(0);
+  const programmaticTarget = useRef(null);
   const selectedRef = useRef(clamp(initialIndex, 0, leagues.length - 1));
   const [selected, setSelected] = useState(() => clamp(initialIndex, 0, leagues.length - 1));
 
@@ -18,7 +19,19 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
     const scroller = scrollerRef.current;
     if (!scroller || !leagues.length || !active) return;
     const position = scroller.scrollTop;
-    const index = pickerIndexFromScroll(position, leagues.length);
+    const target = programmaticTarget.current;
+    // Keep the selected option stable while native smooth-scroll passes over
+    // intermediate rows. Real finger/wheel scrolling clears the target.
+    if (target !== null) {
+      if (Math.abs(position - pickerScrollForIndex(target)) < 1.5) {
+        programmaticTarget.current = null;
+      } else {
+        // Still update label indentation on each frame below.
+      }
+    }
+    const index = programmaticTarget.current !== null
+      ? programmaticTarget.current
+      : pickerIndexFromScroll(position, leagues.length);
     if (index !== selectedRef.current) {
       selectedRef.current = index;
       setSelected(index);
@@ -74,6 +87,7 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
     const scroller = scrollerRef.current;
     if (!scroller || !leagues.length) return;
     const destination = clamp(index, 0, leagues.length - 1);
+    programmaticTarget.current = destination;
     selectedRef.current = destination;
     setSelected(destination);
     onSelectionChange?.(destination);
@@ -91,6 +105,12 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
       return;
     }
     if (!onOpen || !option || !active) return;
+    if (programmaticTarget.current !== null && scrollerRef.current) {
+      const scroller = scrollerRef.current;
+      scroller.scrollTo({ top: pickerScrollForIndex(index), behavior: 'instant' });
+      programmaticTarget.current = null;
+      updateFromScroll();
+    }
     const lines = [...option.querySelectorAll('.vh-league-picker__line')].map(line => {
       const bounds = line.getBoundingClientRect();
       const style = window.getComputedStyle(line);
@@ -137,6 +157,9 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
       aria-activedescendant={leagues[selected] ? `league-choice-${leagues[selected].id}` : undefined}
       tabIndex={active ? 0 : -1}
       onScroll={queueUpdate}
+      onPointerDown={() => { programmaticTarget.current = null; }}
+      onTouchStart={() => { programmaticTarget.current = null; }}
+      onWheel={() => { programmaticTarget.current = null; }}
       onKeyDown={onKeyDown}
     >
       {leagues.map((league, index) =>
