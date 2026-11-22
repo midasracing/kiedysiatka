@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { teamMatchHistory, teamProfileSummary, sortedRoster, teamStanding, teamOpponentPreview } from '../src/teamProfileData.js';
+import { teamMatchHistory, teamProfileSummary, sortedRoster, rosterByPosition, teamStanding, teamOpponentPreview } from '../src/teamProfileData.js';
 
 const fixture = [
   { leagueId: 'men', home: 'Klub A', away: 'Klub B', date: '17.11.2026', time: '18:00', status: 'finished', home_sets: 3, away_sets: 1 },
@@ -77,4 +77,23 @@ test('team snapshot shows the opponent and correct result for home and away game
   assert.equal(scheduled.won, null);
   assert.equal(teamOpponentPreview(away, 'Klub D'), null);
   assert.equal(teamOpponentPreview(null, 'Klub A'), null);
+});
+
+test('roster groups by official player position without changing shirt order or source', () => {
+  const players = [
+    { id: 'A', number: 15, position: 'Rozgrywający' },
+    { id: 'B', number: 12, position: 'Atakujący' },
+    { id: 'C', number: 2, position: 'Rozgrywający' },
+    { id: 'D', number: 7, position: 'Środkowy' },
+    { id: 'E', number: 1, position: null },
+  ];
+  const groups = rosterByPosition(players);
+  assert.deepEqual(groups.map(group => group.position), [
+    'Atakujący', 'Rozgrywający', 'Środkowy', 'Pozostali',
+  ]);
+  assert.deepEqual(groups.flatMap(group => group.players.map(player => player.id)), [
+    'B', 'C', 'A', 'D', 'E',
+  ]);
+  assert.deepEqual(players.map(player => player.id), ['A', 'B', 'C', 'D', 'E']);
+  assert.deepEqual(rosterByPosition(null), []);
 });
