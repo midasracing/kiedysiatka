@@ -412,10 +412,9 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 }
 
 
-/* The month timeline pours out of the active "Mecze" segment.
-   A tapered red neck joins the white active tab to a slim, continuous
-   burgundy ribbon; compact month choices live INSIDE the ribbon rather
-   than forming a competing row of large capsules. */
+/* The selected white Mecze tab grows into ONE continuous cream month panel.
+   A full-width, edge-to-edge lower surface flows from the bottom of the
+   selected tab: no separate burgundy ribbon, triangle, borders or gaps. */
 [data-route="competitions"] .vh-competition-detail .vh-league-tabs-with-months {
   position: relative;
   z-index: 2;
@@ -423,60 +422,66 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
 [data-route="competitions"] .vh-league-tabs-with-months > .vh-segmented {
   position: relative;
   z-index: 2;
-  margin: 16px 0 0;
+  margin: 16px 0 14px;
+}
+[data-route="competitions"] .vh-league-tabs-with-months.has-months > .vh-segmented {
+  margin-bottom: 0;
+}
+[data-route="competitions"] .vh-league-tabs-with-months.has-months > .vh-segmented button.selected {
+  /* Square off the bottom of the selected tab to flow into the same surface. */
+  border-radius: 13px 13px 4px 4px;
 }
 [data-route="competitions"] .vh-month-flow {
   position: relative;
-  padding: 17px 0 10px;
-  isolation: isolate;
+  z-index: 3;
+  margin-top: -2px;
+  padding-bottom: 12px;
 }
-[data-route="competitions"] .vh-month-flow__neck {
+[data-route="competitions"] .vh-month-flow::before {
+  content: "";
   position: absolute;
   z-index: 0;
-  top: -3px;
-  left: calc(16.666% - 12px);
-  width: 24px;
-  height: 23px;
-  border-radius: 0 0 5px 5px;
-  background: linear-gradient(180deg, #f5f2ed 0%, #fc0001 82%);
-  clip-path: polygon(37% 0, 63% 0, 100% 100%, 0 100%);
-  transform-origin: top center;
-  animation: vh-month-neck-flow 280ms cubic-bezier(.17,.75,.27,1) both;
   pointer-events: none;
+  top: -19px;
+  left: 5px;
+  width: calc((100% - 16px) / 3);
+  height: 23px;
+  background: #f5f2ed;
+  border-radius: 0 0 4px 4px;
+  transform-origin: top center;
+  animation: vh-month-spill-stem 200ms cubic-bezier(.2,.8,.25,1) both;
 }
 [data-route="competitions"] .vh-league-months {
   position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   width: 100%;
   min-height: 54px;
+  padding: 7px 8px;
   margin: 0;
-  padding: 6px 7px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
-  scroll-padding-inline: 7px;
+  scroll-padding-inline: 8px;
   scrollbar-width: none;
-  border: 1px solid #5d2024;
-  border-top: 2px solid #fc0001;
-  border-radius: 14px;
-  background: linear-gradient(100deg, #361013 0%, #220c0f 48%, #160e0f 100%);
-  box-shadow: 0 6px 20px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.05);
-  transform-origin: 16.666% top;
-  animation: vh-month-ribbon-flow 360ms cubic-bezier(.2,.85,.25,1) 65ms both;
+  border: 0;
+  border-radius: 16px 16px 18px 18px;
+  background: #f5f2ed;
+  box-shadow: 0 7px 20px rgba(0,0,0,.16);
+  animation: vh-month-spill-surface 360ms cubic-bezier(.2,.85,.25,1) 60ms both;
 }
 [data-route="competitions"] .vh-league-months::-webkit-scrollbar { display: none; }
 [data-route="competitions"] .vh-league-months > .vh-month-flow__option {
   flex: 0 0 auto;
   min-height: 38px;
-  padding: 8px 12px;
-  border: 1px solid transparent;
-  border-radius: 9px;
+  padding: 8px 13px;
+  border: 0;
+  border-radius: 10px;
   background: transparent;
-  color: #c9b4b6;
+  color: #514b4b;
   font: 700 12px/1.2 var(--font-ui, -apple-system, sans-serif);
   white-space: nowrap;
   scroll-snap-align: center;
@@ -484,39 +489,35 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   -webkit-tap-highlight-color: transparent;
 }
 [data-route="competitions"] .vh-league-months > .vh-month-flow__option:hover {
-  color: #f5f2ed;
-  background: rgba(252,0,1,.14);
+  background: rgba(252,0,1,.09);
+  color: #080808;
 }
 [data-route="competitions"] .vh-league-months > .vh-month-flow__option.chosen,
 [data-route="competitions"] .vh-league-months > .vh-month-flow__option.chosen:hover {
   color: #080808;
   background: #fc0001;
-  border-color: #fc0001;
 }
 [data-route="competitions"] .vh-league-months > .vh-month-flow__option:focus-visible {
-  outline: 2px solid #f5f2ed;
+  outline: 2px solid #fc0001;
   outline-offset: -2px;
 }
-[data-route="competitions"] .vh-league-tabs-with-months.is-opening .vh-month-flow__neck {
+[data-route="competitions"] .vh-league-tabs-with-months.is-opening .vh-month-flow::before {
   animation-delay: 720ms;
 }
 [data-route="competitions"] .vh-league-tabs-with-months.is-opening .vh-league-months {
-  animation-delay: 785ms;
+  animation-delay: 760ms;
 }
-@keyframes vh-month-neck-flow {
+@keyframes vh-month-spill-stem {
   from { opacity: 0; transform: scaleY(0); }
   to { opacity: 1; transform: scaleY(1); }
 }
-@keyframes vh-month-ribbon-flow {
-  from { opacity: .1; clip-path: inset(0 100% 0 0 round 14px); }
-  to { opacity: 1; clip-path: inset(0 0 0 0 round 14px); }
+@keyframes vh-month-spill-surface {
+  0% { opacity: 0; clip-path: inset(0 67% 98% 0 round 16px); }
+  38% { opacity: 1; clip-path: inset(0 42% 35% 0 round 16px); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0 round 16px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-route="competitions"] .vh-month-flow__neck,
-  [data-route="competitions"] .vh-league-months {
-    animation: none;
-  }
-  [data-route="competitions"] .vh-league-months > .vh-month-flow__option {
-    transition: none;
-  }
+  [data-route="competitions"] .vh-month-flow::before,
+  [data-route="competitions"] .vh-league-months { animation: none; }
+  [data-route="competitions"] .vh-league-months > .vh-month-flow__option { transition: none; }
 }

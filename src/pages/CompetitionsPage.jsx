@@ -143,11 +143,10 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
           <h1 ref={leagueTitleRef}>{league.name}</h1>
         </div>
       </header>
-      <div className={'vh-league-tabs-with-months' + (split?.phase === 'open' ? ' is-opening' : '')}>
+      <div className={'vh-league-tabs-with-months' + (view === 'matches' && monthKeys.length > 0 ? ' has-months' : '') + (split?.phase === 'open' ? ' is-opening' : '')}>
         <div className="vh-segmented" role="tablist" aria-label="Widok rozgrywek">{[['matches','Mecze'], ['table','Tabela'], ['teams','Drużyny']].map(([id,label]) => <button key={id} role="tab" aria-selected={view === id} className={view === id ? 'selected' : ''} onClick={() => id === 'table' ? openTable() : setView(id)}>{label}</button>)}</div>
         {view === 'matches' && monthKeys.length > 0 && (
           <div className="vh-month-flow">
-            <span className="vh-month-flow__neck" aria-hidden="true" />
             <div className="vh-league-months" role="group" aria-label="Miesiąc spotkań">
               <button type="button" className={'vh-filter-chip vh-month-flow__option' + (selectedMonth === 'all' ? ' chosen' : '')}
                 aria-pressed={selectedMonth === 'all'} onClick={() => setSelectedMonth('all')}>
