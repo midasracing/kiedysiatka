@@ -42,15 +42,11 @@ export default function StartupEntrance({ enabled, onComplete }) {
       ].filter(Boolean);
       setRevealing(true);
       if (logo && target?.width > 0 && start?.width > 0) {
-        // Freeze layout once, then let the compositor fly the actual logo into
-        // the exact header bounds. The real header remains hidden until landing.
-        logo.style.left = start.left + 'px';
-        logo.style.top = start.top + 'px';
-        logo.style.width = start.width + 'px';
-        logo.style.transform = 'none';
+        // Preserve the centered layout and fly with transforms alone. Changing
+        // left/top/width here forces layout exactly when the flight starts.
         const flight = animate(logo, [
-          { transform: 'translate3d(0,0,0) scale(1)' },
-          { transform: `translate3d(${target.left - start.left}px,${target.top - start.top}px,0) scale(${target.width / start.width})` },
+          { transform: 'translate3d(-50%,-60%,0) translate3d(0,0,0) scale(1)' },
+          { transform: `translate3d(-50%,-60%,0) translate3d(${target.left - start.left}px,${target.top - start.top}px,0) scale(${target.width / start.width})` },
         ], { duration: 900, easing: 'cubic-bezier(.76,0,.24,1)' });
         if (flight) flight.finished.then(() => {
           if (disposed) return;

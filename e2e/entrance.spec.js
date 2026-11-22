@@ -55,6 +55,9 @@ test('entrance finishes on schedule without loading the Rive renderer', async ({
   await page.clock.fastForward(1900);
   await expect(page.locator('.vh-startup-intro')).toHaveCount(1);
   expect(rendererRequests).toEqual([]);
+  const layoutOverrides = await page.locator('.vh-startup-copy').evaluate(element =>
+    [element.style.left, element.style.top, element.style.width]);
+  expect(layoutOverrides).toEqual(['', '', '']);
   await page.clock.fastForward(1200);
   await expect(page.locator('.vh-startup-intro')).toHaveCount(0);
   await expect(page.locator('.vh-brand-signature')).toHaveCSS('opacity', '1');

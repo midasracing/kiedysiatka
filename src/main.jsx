@@ -134,7 +134,7 @@ function App() {
     if (id === 'favorites') return <FavoritesPage teams={teams} logos={logos} favorites={favorites} toggleFavorite={toggleFavorite} onOpenLeague={openLeague} />;
     return null;
   }
-  return <MotionEnabled.Provider value={!reducedMotion}><div className="vh-app" id="ios-matches" data-page={page}
+  return <MotionEnabled.Provider value={!reducedMotion && !startup}><div className="vh-app" id="ios-matches" data-page={page}
     data-competition-picker={page === 'competitions' && !selectedLeague ? 'true' : undefined}>
     {page !== 'competitions' && <div className="vh-floating-head" aria-label="Nagłówek Kiedy Siatka?">
       <BrandSignature />

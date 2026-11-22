@@ -23,16 +23,18 @@ score load or on unchanged polling data; retained hidden panels do not animate.
 
 ## Startup entrance
 
-`entrance/scene.rml` exports the 501-byte `public/motion/entrance.riv` background:
-two broad red planes, without scripts or external assets. Build and inspect it
-with the same commands above, replacing `impact` with `entrance`.
+The startup reproduces `entrance/scene.rml` with two SVG/CSS red planes,
+without loading the optional Rive JavaScript/WASM renderer during the intro.
+The original Rive source and export remain available for reference.
 
 The unchanged logo SVG enters at the center, then travels to the measured bounds
 of the real header logo. The header copy remains transparent during that flight
 and is restored on landing, skipping, navigation or interruption. There is no
 line, progress bar or caption. A short backdrop fade reveals the current page and
-on-screen cards. Rive is optional and its canvas is capped to CSS pixel resolution;
-the logo handoff also works offline. Only transforms and opacity are animated.
+on-screen cards. The centered logo's layout stays intact during the handoff;
+left/top/width are not rewritten when the flight starts. The intro also works
+offline. Only transforms and opacity are animated; score effects stay disabled
+until the intro finishes, without delaying the live data itself.
 The entrance respects reduced motion and never replays on ordinary navigation.
 
 ## Calendar and set results
