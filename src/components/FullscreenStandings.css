@@ -23,8 +23,8 @@
   border-radius: 0;
 }
 
-/* A graduated top veil keeps back navigation legible without boxing in the
-   typography — the actual distorted table fills the entire screen. */
+/* A graduated top veil keeps the floating league heading readable without
+   boxing in the typography — the warped table still fills the viewport. */
 .vh-standings-fullscreen__fade {
   position: absolute;
   z-index: 1;
@@ -40,50 +40,14 @@
     rgba(0,0,0,0) 100%);
 }
 
+/* Secondary group filters sit below the stationary league heading.
+   There is no navigation row or blank spacer above the moving menu. */
 .vh-standings-fullscreen__header {
   position: absolute;
   z-index: 2;
-  inset: 0 0 auto;
-  padding: calc(env(safe-area-inset-top, 0px) + 12px) 20px 0;
+  inset: calc(var(--vh-title-top, 135px) + var(--vh-title-height, 48px) + 12px) 0 auto;
+  padding: 0 20px;
   pointer-events: none;
-}
-
-.vh-standings-fullscreen__topline {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-  min-height: 57px;
-}
-
-.vh-standings-fullscreen__back {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 5px;
-  min-height: 46px;
-  padding: 0 13px 0 0;
-  border: 0;
-  background: transparent;
-  color: #fff;
-  font: 700 16px/1.1 var(--font-ui, -apple-system, sans-serif);
-  letter-spacing: -.01em;
-  pointer-events: auto;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.vh-standings-fullscreen__back:active { opacity: .72; }
-.vh-standings-fullscreen__back:focus-visible {
-  outline: 2px solid #fc0001;
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-/* Keep the group controls in their usual layout without duplicating the
-   league name. Only the floating heading below is rendered visually. */
-.vh-standings-fullscreen__identity-spacer {
-  height: var(--vh-title-height, 48px);
-  margin-top: 23px;
 }
 /* One fixed league title stays on top of the black reveal at the exact
    source h1 coordinates, with identical font metrics and no resize. */
@@ -184,12 +148,12 @@
   backface-visibility: hidden;
   contain: layout paint;
 }
-/* The traveling segmented selector takes the place of the removed corner
-   button. It stays under Wstecz at the top after the sheet settles. */
+/* The only top navigation is the moving segmented selector. It ends at the
+   safe-area edge, without a separate back or top-right button. */
 .vh-standings-fullscreen__travel-menu {
   position: absolute;
   z-index: 4;
-  top: var(--vh-menu-target-top, calc(env(safe-area-inset-top, 0px) + 82px));
+  top: var(--vh-menu-target-top, calc(env(safe-area-inset-top, 0px) + 12px));
   left: var(--vh-menu-left, 20px);
   box-sizing: border-box;
   display: flex;
@@ -272,7 +236,7 @@
   from { transform: translate3d(0,0,0); }
   to { transform: translate3d(0,var(--vh-sheet-origin-offset,100dvh),0); }
 }
-/* Back navigation fades in after the rising menu clears its original place. */
+/* Group filters appear after the moving selector reaches the top. */
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__header {
   animation: vh-slide-header-in 500ms linear both;
 }
