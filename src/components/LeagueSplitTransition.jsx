@@ -108,10 +108,9 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
       }
       let opening;
       if (line.rowIndex === snapshot.index) {
-        // 0–17%: tactile pulse.
-        // 17–55%: uniform zoom, never horizontal text stretching.
-        // Each line reaches both screen edges at its own proportional scale.
-        // 55–100%: the two lines form the upper/lower curtains.
+        // Immediate tactile feedback, directly flowing into the zoom:
+        // no pause or bounce back to the original size after pressing.
+        // The approved full-width zoom and curtain timing remain unchanged.
         const zoom = vw / naturalWidth;
         const expandedHeight = naturalHeight * zoom;
         const wideX = 0;
@@ -120,15 +119,21 @@ export default function LeagueSplitTransition({ phase, snapshot, onComplete }) {
           : vh * .5 + expandedHeight * .03);
         const fullWidth = position(wideX, stackY, zoom, zoom);
         const pressed = position(
-          line.left - line.width * .024,
-          line.top - line.height * .024,
-          baseX * 1.048,
-          baseY * 1.048,
+          line.left - line.width * .02,
+          line.top - line.height * .02,
+          baseX * 1.04,
+          baseY * 1.04,
+        );
+        const zoomStarted = position(
+          line.left - line.width * .065,
+          line.top - line.height * .065,
+          baseX * 1.13,
+          baseY * 1.13,
         );
         opening = [
           { offset: 0, transform: start, filter: 'brightness(1)', easing: 'ease-out' },
-          { offset: .09, transform: pressed, filter: 'brightness(1.36)', easing: 'ease-in-out' },
-          { offset: .17, transform: start, filter: 'brightness(1)', easing: 'cubic-bezier(.55,0,.16,1)' },
+          { offset: .04, transform: pressed, filter: 'brightness(1.36)', easing: 'ease-out' },
+          { offset: .12, transform: zoomStarted, filter: 'brightness(1.12)', easing: 'cubic-bezier(.55,0,.16,1)' },
           { offset: .55, transform: fullWidth, filter: 'brightness(1)' },
           { offset: .61, transform: fullWidth, filter: 'brightness(1)', easing: 'cubic-bezier(.7,0,.26,1)' },
           { offset: 1, transform: position(wideX, targetY, zoom, zoom), filter: 'brightness(1)' },

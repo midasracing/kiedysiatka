@@ -41,7 +41,9 @@ test('touching the centred league splits two full-width lines and reverse restor
         filter: frame.filter,
       })) || []
     ));
-  expect(openFrames.map(frame => frame.offset)).toEqual([0, .09, .17, .55, .61, 1]);
+  expect(openFrames.map(frame => frame.offset)).toEqual([0, .04, .12, .55, .61, 1]);
+  // Touch response begins in the first 35 ms, without retracting again.
+  expect(openFrames[2].transform).not.toBe(openFrames[0].transform);
   expect(openFrames[1].filter).toBe('brightness(1.36)');
   expect(openFrames[3].transform).toBe(openFrames[4].transform);
   expect(openFrames[3].transform).not.toBe(openFrames[0].transform);

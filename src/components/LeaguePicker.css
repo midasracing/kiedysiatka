@@ -64,7 +64,11 @@
 .vh-league-picker__line { display: inline-block; flex: none; white-space: nowrap; }
 /* Immediate finger-down feedback, before the opening WAAPI animation starts. */
 .vh-league-picker__option[aria-selected="true"]:active .vh-league-picker__label {
-  filter: brightness(1.28);
+  filter: brightness(1.36);
+}
+.vh-league-picker__option[aria-selected="true"]:active .vh-league-picker__line {
+  transform: scale(1.04);
+  transform-origin: left center;
 }
 .vh-league-picker__option:focus-visible {
   outline: 2px solid #fc0001;
