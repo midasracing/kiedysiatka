@@ -80,3 +80,23 @@ export function sortedRoster(players) {
       String(b.full_name || b.name || ''), 'pl');
   });
 }
+
+const POSITION_ORDER = ['Atakujący', 'Rozgrywający', 'Środkowy', 'Przyjmujący', 'Libero'];
+
+// Group players for the roster layout, retaining shirt-number order within
+// each position. Never mutate the official feed's player array.
+export function rosterByPosition(players) {
+  const groups = new Map();
+  for (const player of sortedRoster(players)) {
+    const position = String(player.position || 'Pozostali').trim() || 'Pozostali';
+    if (!groups.has(position)) groups.set(position, []);
+    groups.get(position).push(player);
+  }
+  const order = name => {
+    const index = POSITION_ORDER.indexOf(name);
+    return index < 0 ? POSITION_ORDER.length : index;
+  };
+  return Array.from(groups, ([position, items]) => ({ position, players: items }))
+    .sort((a, b) => order(a.position) - order(b.position)
+      || a.position.localeCompare(b.position, 'pl'));
+}
