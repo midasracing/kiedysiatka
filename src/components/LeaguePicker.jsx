@@ -121,6 +121,5 @@ export default function LeaguePicker({ leagues, active }) {
       )}
     </div>
     <span className="vh-league-picker__pointer" aria-hidden="true" />
-    <span className="vh-league-picker__hint" aria-hidden="true">PRZESUŃ PALCEM ↑↓</span>
   </div>;
 }

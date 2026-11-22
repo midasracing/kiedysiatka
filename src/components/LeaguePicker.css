@@ -10,7 +10,7 @@
   background: #000;
 }
 .vh-league-picker__scroll {
-  --picker-row-height: 78px;
+  --picker-row-height: 64px;
   --picker-spacer: 190px;
   position: absolute;
   inset: 0;
@@ -51,7 +51,7 @@
   flex: 0 0 auto;
   white-space: nowrap;
   text-transform: uppercase;
-  font: 900 clamp(33px, 10vw, 49px)/.98 Impact, 'Arial Narrow', 'Arial Black', sans-serif;
+  font: 900 clamp(33px, 10.5vw, 52px)/.98 Impact, 'Arial Narrow', 'Arial Black', sans-serif;
   letter-spacing: -.012em;
   color: #fc0001;
   will-change: transform;
@@ -70,15 +70,6 @@
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
   border-left: 8px solid #fc0001;
-  pointer-events: none;
-}
-.vh-league-picker__hint {
-  position: absolute;
-  right: 17px;
-  bottom: 100px;
-  font: 800 10px/1.2 var(--font-ui, sans-serif);
-  letter-spacing: .13em;
-  color: rgba(252, 0, 1, .6);
   pointer-events: none;
 }
 @media(max-width: 390px) {

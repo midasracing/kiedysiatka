@@ -1,6 +1,6 @@
 // Pixel geometry for the native-scrolling selector. The top/bottom scroll
 // spacers center the first and last options without distorting their text.
-export const PICKER_ROW_HEIGHT = 78;
+export const PICKER_ROW_HEIGHT = 64;
 
 export function pickerScrollForIndex(index) {
   return Math.max(0, index) * PICKER_ROW_HEIGHT;

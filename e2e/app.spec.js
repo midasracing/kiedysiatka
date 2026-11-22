@@ -17,7 +17,7 @@ test('league selector replaces categories and cards without opening league detai
   await expect(page.locator('[data-route="competitions"] .vh-league-stack')).toHaveCount(0);
   await picker.focus();
   const scroller = picker.locator('.vh-league-picker__scroll');
-  await scroller.evaluate(node => { node.scrollTop = 4 * 78; });
+  await scroller.evaluate(node => { node.scrollTop = 4 * 64; });
   await expect(picker.getByRole('option', { name: 'SuperLega Credem Banca' }))
     .toHaveAttribute('aria-selected', 'true');
   await page.keyboard.press('End');
