@@ -41,6 +41,24 @@ function PlayerCard({ player }) {
   </article>;
 }
 
+// Balance the official team name across the two lines beside its crest.
+function splitTeamName(name) {
+  const words = String(name || '').trim().split(/\s+/).filter(Boolean);
+  if (words.length < 2) return [words.join(' '), ''];
+  let split = 1;
+  let difference = Infinity;
+  for (let i = 1; i < words.length; i += 1) {
+    const first = words.slice(0, i).join(' ');
+    const second = words.slice(i).join(' ');
+    const score = Math.abs(first.length - second.length);
+    if (score < difference) {
+      difference = score;
+      split = i;
+    }
+  }
+  return [words.slice(0, split).join(' '), words.slice(split).join(' ')];
+}
+
 const TeamProfile = React.memo(function TeamProfile({
   league, team, matches, logos, favorites, toggleFavorite, onBack,
 }) {
@@ -49,6 +67,7 @@ const TeamProfile = React.memo(function TeamProfile({
     () => teamProfileSummary(matches, league.id, team.name, dateKey(NOW())),
     [matches, league.id, team.name]);
   const roster = useMemo(() => sortedRoster(team.players), [team.players]);
+  const [nameLineOne, nameLineTwo] = useMemo(() => splitTeamName(team.name), [team.name]);
   const isFavorite = favorites.teams.some(name => normalizeName(name) === normalizeName(team.name));
   const crest = team.logo || logos.get(normalizeName(team.name));
   const past = showHistory ? profile.recent : profile.recent.slice(0, 4);
@@ -69,11 +88,18 @@ const TeamProfile = React.memo(function TeamProfile({
 
     <header className="vh-team-profile__hero">
       <p className="vh-team-profile__eyebrow">{league.short} <span>·</span> Drużyna</p>
-      <div className="vh-team-profile__crest">
-        <TeamLogo name={team.name} logo={crest} />
+      <div className="vh-team-profile__identity">
+        <div className="vh-team-profile__crest">
+          <TeamLogo name={team.name} logo={crest} />
+        </div>
+        <div className="vh-team-profile__identity-copy">
+          <h1 title={team.name}>
+            <span>{nameLineOne}</span>
+            {nameLineTwo && <span>{nameLineTwo}</span>}
+          </h1>
+          <span className="vh-team-profile__country">Polska <span aria-hidden="true">🇵🇱</span></span>
+        </div>
       </div>
-      <h1>{team.name}</h1>
-      <span className="vh-team-profile__country">Polska <span aria-hidden="true">🇵🇱</span></span>
     </header>
 
     <section className="vh-team-profile__section" aria-label="Bilans spotkań">
