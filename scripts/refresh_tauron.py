@@ -18,6 +18,9 @@ import html
 import json
 import re
 import sys
+import time
+import threading
+from urllib.error import HTTPError
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
@@ -222,6 +225,121 @@ def extract_team_logos(base, aliases, previous, *soups):
         row["logo"] = old.get("logo", "")
     return sorted(current.values(), key=lambda row: row["name"])
 
+
+
+def parse_team_roster(soup, team, team_url):
+    """Use the season roster, never career tables or match participants."""
+    cards = {}
+    for a in soup.select('a[href*="/players/id/"]'):
+        if a.select_one('h3'):
+            cards[urljoin(team_url, a['href'])] = a
+    players = []
+    for row in soup.select('#playerslist tbody tr'):
+        a = row.select_one('a[href*="/players/id/"]')
+        cells = row.find_all('td', recursive=False)
+        if not a or len(cells) < 3:
+            continue
+        url = urljoin(team_url, a['href'])
+        found = re.search(r'/players/id/(\d+)/tour/(\d+)\.html', url)
+        if not found or urlparse(url).hostname != urlparse(team_url).hostname:
+            continue
+        full_name = norm(a.get_text(' ', strip=True))
+        first, _, last = full_name.partition(' ')
+        image = cards[url].select_one('img[src]') if url in cards else None
+        number = norm(cells[0].get_text())
+        players.append(dict(
+            id=found[1], season_id=found[2], team_id=str(team['id']),
+            first_name=first, last_name=last or None, full_name=full_name,
+            name_split_method='first_space',
+            photo=urljoin(team_url, image['src']) if image and 'empty_player' not in image['src'] else None,
+            number=int(number) if number.isdigit() else None,
+            position=norm(cells[2].get_text(' ', strip=True)) or None,
+            height_cm=None, weight_kg=None, spike_reach_cm=None,
+            block_reach_cm=None, standing_reach_cm=None,
+            source_url=url, roster_source_url=team_url, profile_checked_at=None,
+        ))
+    if not players or len({p['id'] for p in players}) != len(players):
+        raise RuntimeError('Empty or duplicate official roster: ' + team_url)
+    return players
+
+
+def parse_player_profile(soup, player):
+    heading = next((h for h in soup.select('h1') if norm(h.get_text(' ', strip=True)).casefold() == player['full_name'].casefold()), None)
+    if not heading or norm(heading.get_text(' ', strip=True)).casefold() != player['full_name'].casefold():
+        raise RuntimeError('Player identity differs: ' + player['source_url'])
+    team_ids = {m[1] for a in soup.select('h2 a[href]')
+                if (m := re.search(r'/teams/id/(\d+)', a['href']))}
+    if str(player['team_id']) not in team_ids:
+        raise RuntimeError('Player profile belongs to another team')
+    result = {}
+    labels = {'Wzrost': 'height_cm', 'Waga': 'weight_kg',
+              'Zasięg z wyskoku do ataku': 'spike_reach_cm',
+              'Zasięg z wyskoku do bloku': 'block_reach_cm',
+              'Zasięg w bloku': 'block_reach_cm',
+              'Zasięg stojąc': 'standing_reach_cm'}
+    for box in soup.select('div.number'):
+        value = box.select_one('h3')
+        if not value:
+            continue
+        label = norm(' '.join(str(t) for t in box.find_all(string=True, recursive=False))).rstrip(':').strip()
+        field = labels.get(label)
+        if field:
+            raw = norm(value.get_text()).replace(',', '.')
+            result[field] = float(raw) if re.fullmatch(r'\d+(?:\.\d+)?', raw) and float(raw) > 0 else None
+    result['profile_checked_at'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    return result
+
+
+def refresh_team_rosters(teams, base, previous, force=False):
+    """Daily team discovery, weekly season-specific profile refresh, four requests at once."""
+    now = datetime.datetime.now(datetime.timezone.utc)
+    old_teams = {str(t.get('id')): t for t in previous.get('teams', [])}
+    def recent(raw, days):
+        try:
+            stamp = datetime.datetime.fromisoformat(raw)
+            return 0 <= (now - stamp).total_seconds() < days * 86400
+        except (ValueError, TypeError):
+            return False
+    request_lock = threading.Lock()
+    last_request = [0.0]
+    def roster_get(url):
+        with request_lock:
+            time.sleep(max(0, 0.5 - (time.monotonic() - last_request[0])))
+            last_request[0] = time.monotonic()
+        try:
+            return get(url, base)
+        except HTTPError as exc:
+            if exc.code not in (429, 503):
+                raise
+            delay = exc.headers.get('Retry-After', '')
+            time.sleep(int(delay) if delay.isdigit() else 5)
+            return get(url, base)
+    def refresh(team):
+        old = old_teams.get(str(team['id']), {})
+        if not force and old.get('players') and recent(old.get('roster_checked_at'), 1):
+            return dict(team, players=old['players'], roster_source_url=old['roster_source_url'], roster_checked_at=old['roster_checked_at'])
+        url = base.rstrip('/') + '/teams/id/' + str(team['id']) + '.html'
+        try:
+            players = parse_team_roster(BeautifulSoup(roster_get(url), 'html.parser'), team, url)
+        except Exception as exc:
+            print(f"WARNING: roster unavailable for {team['name']}: {exc}", file=sys.stderr)
+            return dict(team, players=old.get('players', []), roster_source_url=old.get('roster_source_url', url), roster_checked_at=old.get('roster_checked_at'))
+        old_players = {p['source_url']: p for p in old.get('players', [])}
+        for player in players:
+            cached = old_players.get(player['source_url'], {})
+            fields = ('height_cm', 'weight_kg', 'spike_reach_cm', 'block_reach_cm', 'standing_reach_cm', 'profile_checked_at')
+            if not force and recent(cached.get('profile_checked_at'), 7):
+                player.update({k: cached.get(k) for k in fields})
+                continue
+            try:
+                player.update(parse_player_profile(BeautifulSoup(roster_get(player['source_url']), 'html.parser'), player))
+            except Exception as exc:
+                player.update({k: cached.get(k) for k in fields})
+                print(f"WARNING: player profile unavailable {player['source_url']}: {exc}", file=sys.stderr)
+        return dict(team, players=players, roster_source_url=url,
+                    roster_checked_at=now.isoformat())
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        return list(pool.map(refresh, teams))
 
 def season_year(month):
     """Year of a calendar month inside the current season (July - June)."""
@@ -872,7 +990,7 @@ def apply_point_scores(match, scores, active=None):
     match["current_points"] = active
 
 
-def run_league(key, cfg, full_details=False):
+def run_league(key, cfg, full_details=False, full_rosters=False):
     base = cfg["base"]
     out = Path(cfg["out"])
     previous = load_previous(out)
@@ -1167,7 +1285,7 @@ def run_league(key, cfg, full_details=False):
 
     payload = {
         "league": key,
-        "teams": build_official_fixture_teams(matches, previous),
+        "teams": refresh_team_rosters(build_official_fixture_teams(matches, previous), base, previous, full_rosters),
         "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "matches": matches,
         "table": standings,
@@ -1187,13 +1305,14 @@ def main():
         "--full-details", action="store_true",
         help="Check official detailed pages for every match (one-time backfill/audit).",
     )
+    parser.add_argument("--full-rosters", action="store_true", help="Refresh all official team rosters and player profiles.")
     args = parser.parse_args()
 
     keys = list(LEAGUES) if args.league == "all" else [args.league]
     updated = 0
     for key in keys:
         try:
-            run_league(key, LEAGUES[key], full_details=args.full_details)
+            run_league(key, LEAGUES[key], full_details=args.full_details, full_rosters=args.full_rosters)
             updated += 1
         except Exception as exc:  # one broken league must not block the others
             print(f"WARNING [{key}]: not updated: {exc}", file=sys.stderr)

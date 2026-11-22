@@ -5,7 +5,7 @@ import unittest
 
 from bs4 import BeautifulSoup
 
-from scripts.refresh_tauron import parse_table, rank_standings, validate_standings
+from scripts.refresh_tauron import parse_table, rank_standings, validate_standings, parse_player_profile, parse_team_roster
 
 
 def standings_row(rank, team, points, played, wins, losses,
@@ -88,6 +88,27 @@ class PlsTableTests(unittest.TestCase):
         table[1]["rank"] = 1
         with self.assertRaises(RuntimeError):
             validate_standings(table, feed["matches"], 14)
+
+
+class PlayerProfileTests(unittest.TestCase):
+    def test_profile_ignores_navigation_heading_and_preserves_missing_ranges(self):
+        soup = BeautifulSoup('<h1>Zawodnicy</h1><h1>Jan Kowalski</h1><h2><a href="/teams/id/2/tour/53.html">Klub</a></h2><div class="number">Wzrost: <span><h3>201</h3></span></div><div class="number">Waga: <span><h3>0</h3></span></div>', 'html.parser')
+        result = parse_player_profile(soup, dict(full_name='Jan Kowalski', team_id='2', source_url='https://www.tauronliga.pl/players/id/1/tour/53.html'))
+        self.assertEqual(result['height_cm'], 201)
+        self.assertIsNone(result['weight_kg'])
+        self.assertNotIn('block_reach_cm', result)
+        with self.assertRaises(RuntimeError):
+            parse_player_profile(soup, dict(full_name='Jan Kowalski', team_id='9', source_url='x'))
+
+    def test_roster_uses_season_list_not_career_or_match_names(self):
+        soup = BeautifulSoup('<a href="/players/id/99/tour/1.html">Historyczny zawodnik</a><div id="playerslist"><table><tbody><tr><td>7</td><td><a href="/players/id/1/tour/53.html">Miguel Tavares Rodrigues</a></td><td>Rozgrywający</td></tr></tbody></table></div>', 'html.parser')
+        players = parse_team_roster(soup, {'id': '2'}, 'https://www.tauronliga.pl/teams/id/2.html')
+        self.assertEqual(len(players), 1)
+        self.assertEqual(players[0]['last_name'], 'Tavares Rodrigues')
+        self.assertEqual(players[0]['season_id'], '53')
+        self.assertEqual(players[0]['number'], 7)
+        self.assertIsNone(players[0]['photo'])
+        self.assertIsNone(players[0]['block_reach_cm'])
 
 
 if __name__ == "__main__":
