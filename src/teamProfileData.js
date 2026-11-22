@@ -41,6 +41,35 @@ export function teamProfileSummary(matches, leagueId, teamName, todayKey) {
   };
 }
 
+// Position and points come exclusively from the official standings source.
+export function teamStanding(rows, teamName) {
+  if (!Array.isArray(rows)) return null;
+  const index = rows.findIndex(row => row?.team && sameName(row.team, teamName));
+  if (index < 0) return null;
+  const row = rows[index];
+  return { position: row.rank ?? index + 1, points: row.points ?? null };
+}
+
+// Keep match scores from the selected team's perspective (including away games).
+export function teamOpponentPreview(match, teamName) {
+  if (!match) return null;
+  const home = sameName(match.home, teamName);
+  const away = sameName(match.away, teamName);
+  if (!home && !away) return null;
+  const own = home ? match.home_sets : match.away_sets;
+  const rival = home ? match.away_sets : match.home_sets;
+  const final = isFinished(match) && own != null && rival != null
+    && Number.isFinite(Number(own)) && Number.isFinite(Number(rival))
+    && Number(own) !== Number(rival);
+  return {
+    opponent: home ? match.away : match.home,
+    opponentLogo: home ? match.away_logo : match.home_logo,
+    ourSets: final ? Number(own) : null,
+    theirSets: final ? Number(rival) : null,
+    won: final ? Number(own) > Number(rival) : null,
+  };
+}
+
 export function sortedRoster(players) {
   return (Array.isArray(players) ? players : []).slice().sort((a, b) => {
     const aNumber = Number(a.number);
