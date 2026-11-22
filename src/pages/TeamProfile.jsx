@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useMemo, useRef } from 'react';
-import { ArrowUpRight, ChevronLeft, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { dateKey, feedDateKey, fromKey, isLive, normalizeName } from '../data.js';
 import { NOW } from '../dateUtils.js';
-import { teamProfileSummary, sortedRoster, teamStanding, teamOpponentPreview } from '../teamProfileData.js';
+import { teamProfileSummary, rosterByPosition, teamStanding, teamOpponentPreview } from '../teamProfileData.js';
 import TeamLogo from '../components/TeamLogo.jsx';
 import './TeamProfile.css';
 
@@ -45,30 +45,48 @@ function FixtureSnapshot({ title, match, opponent, logos, upcoming = false }) {
   </div>;
 }
 
-function PlayerCard({ player }) {
+function PlayerCard({ player, teamName, teamLogo }) {
   const name = player.full_name || [player.first_name, player.last_name].filter(Boolean).join(' ') || 'Zawodnik';
-  const source = /^https:\/\/www\.tauron(?:1)?liga\.pl\/players\/id\/\d+\//.test(player.source_url || '')
+  const officialProfile = /^https:\/\/www\.tauron(?:1)?liga\.pl\/players\/id\/\d+\//.test(player.source_url || '')
     ? player.source_url : null;
-  return <article className="vh-profile-player">
+  // The league feeds currently provide height, weight and spike reach.
+  // Block reach is shown only when it actually exists in a future feed.
+  const stats = [
+    { label: 'Wzrost', value: player.height_cm, unit: 'cm' },
+    { label: 'Waga', value: player.weight_kg, unit: 'kg' },
+    { label: 'Zasięg bloku', value: player.block_reach_cm, unit: 'cm' },
+    { label: 'Zasięg ataku', value: player.spike_reach_cm, unit: 'cm' },
+  ].filter(stat => stat.value != null && stat.value !== '');
+
+  const identity = <>
     <div className="vh-profile-player__visual">
       {player.photo
         ? <img src={player.photo} alt="" loading="lazy" decoding="async" />
         : <div className="vh-profile-player__placeholder" aria-hidden="true">{String(name).slice(0, 1)}</div>}
-      <span className="vh-profile-player__number">{player.number ?? '—'}</span>
     </div>
     <div className="vh-profile-player__copy">
       <strong>{name}</strong>
-      {player.position && <span>{player.position}</span>}
-      <div className="vh-profile-player__details">
-        {player.height_cm != null && <small>{player.height_cm} cm</small>}
-        {player.weight_kg != null && <small>Waga {player.weight_kg} kg</small>}
-        {player.spike_reach_cm != null && <small>Atak {player.spike_reach_cm} cm</small>}
+      <div className="vh-profile-player__identity-meta">
+        <TeamLogo name={teamName} logo={teamLogo} />
+        <span>{player.number != null ? '#' + player.number : '—'}{player.position ? ' · ' + player.position : ''}</span>
       </div>
-      {source && <a href={source} target="_blank" rel="noopener noreferrer"
-        aria-label={`Oficjalny profil zawodnika: ${name}`}>
-        Profil PLS <ArrowUpRight size={14} aria-hidden="true" />
-      </a>}
     </div>
+    {officialProfile && <ChevronRight className="vh-profile-player__chevron" size={21} strokeWidth={2.1} aria-hidden="true" />}
+  </>;
+
+  return <article className="vh-profile-player">
+    {officialProfile ? <a className="vh-profile-player__top" href={officialProfile}
+      target="_blank" rel="noopener noreferrer"
+      aria-label={'Otwórz oficjalny profil zawodnika: ' + name}>
+      {identity}
+    </a> : <div className="vh-profile-player__top">{identity}</div>}
+    {stats.length > 0 && <div className="vh-profile-player__stats"
+      style={{ gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))` }}>
+      {stats.map(stat => <div className="vh-profile-player__stat" key={stat.label}>
+        <strong>{stat.value}</strong>
+        <span>{stat.label} <small>{stat.unit}</small></span>
+      </div>)}
+    </div>}
   </article>;
 }
 
@@ -97,7 +115,8 @@ const TeamProfile = React.memo(function TeamProfile({
   const profile = useMemo(
     () => teamProfileSummary(matches, league.id, team.name, dateKey(NOW())),
     [matches, league.id, team.name]);
-  const roster = useMemo(() => sortedRoster(team.players), [team.players]);
+  const rosterGroups = useMemo(() => rosterByPosition(team.players), [team.players]);
+  const rosterCount = rosterGroups.reduce((count, group) => count + group.players.length, 0);
   const [nameLineOne, nameLineTwo] = useMemo(() => splitTeamName(team.name), [team.name]);
   const isFavorite = favorites.teams.some(name => normalizeName(name) === normalizeName(team.name));
   const crest = team.logo || logos.get(normalizeName(team.name));
@@ -183,12 +202,19 @@ const TeamProfile = React.memo(function TeamProfile({
 
     <section className="vh-team-profile__section vh-team-profile__roster">
       <div className="vh-team-profile__section-heading">
-        <h2>Skład drużyny</h2><span>{roster.length} zawodników</span>
+        <h2>Skład drużyny</h2><span>{rosterCount} zawodników</span>
       </div>
-      {roster.length > 0
-        ? <div className="vh-profile-players">
-          {roster.map((player, index) =>
-            <PlayerCard key={player.id ? `${player.id}-${index}` : index} player={player} />)}
+      {rosterGroups.length > 0
+        ? <div className="vh-profile-roster-groups">
+          {rosterGroups.map(group => <section className="vh-profile-position" key={group.position}
+            aria-label={group.position}>
+            <h3>{group.position}</h3>
+            <div className="vh-profile-players">
+              {group.players.map((player, index) =>
+                <PlayerCard key={player.id ? `${player.id}-${index}` : index}
+                  player={player} teamName={team.name} teamLogo={crest} />)}
+            </div>
+          </section>)}
         </div>
         : <p className="vh-team-profile__empty">Skład drużyny nie został jeszcze udostępniony w danych ligi.</p>}
     </section>
