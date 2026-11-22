@@ -84,3 +84,39 @@ test('Liquid Dive respects reduced motion and preserves the teams tab on return'
   await expect(page.getByRole('tab', { name: 'Drużyny' })).toHaveAttribute('aria-selected', 'true');
   expect(await page.locator('#root').evaluate(node => node.inert)).toBe(false);
 });
+
+
+test('ink expands as a black background beneath the content; the surfaced Tabela is a button', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openLeague(page);
+  const original = page.getByRole('tab', { name: 'Tabela' });
+  await original.click();
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  await expect(dialog).toBeVisible();
+
+  const structure = await dialog.evaluate(root => {
+    const ink = root.querySelector('.vh-standings-fullscreen__liquid');
+    const content = root.querySelector('.vh-standings-fullscreen__surface');
+    return {
+      inkColor: ink && getComputedStyle(ink).backgroundColor,
+      contentColor: content && getComputedStyle(content).backgroundColor,
+      inkLayer: ink && Number(getComputedStyle(ink).zIndex),
+      contentLayer: content && Number(getComputedStyle(content).zIndex),
+      inkAnimation: ink?.getAnimations().map(a => a.animationName) || [],
+      contentAnimation: content?.getAnimations().map(a => a.animationName) || [],
+    };
+  });
+  expect(structure.inkColor).toBe('rgb(0, 0, 0)');
+  expect(structure.contentColor).toBe('rgba(0, 0, 0, 0)');
+  expect(structure.inkLayer).toBeLessThan(structure.contentLayer);
+  expect(structure.inkAnimation).toContain('vh-liquid-wipe-in');
+  expect(structure.contentAnimation).toContain('vh-liquid-wipe-in');
+
+  const surfaced = dialog.getByRole('button', { name: 'Zamknij tabelę' });
+  await expect(surfaced).toHaveText('Tabela');
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  await surfaced.click();
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
+  await expect(dialog).toHaveCount(0, { timeout: 3000 });
+  await expect(original).toBeVisible();
+});

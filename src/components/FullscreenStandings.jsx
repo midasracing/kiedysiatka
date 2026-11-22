@@ -4,8 +4,8 @@ import { ChevronLeft } from 'lucide-react';
 import Standings from './Standings.jsx';
 import './FullscreenStandings.css';
 
-const LIQUID_ENTER_MS = 620;
-const LIQUID_EXIT_MS = 500;
+const LIQUID_ENTER_MS = 720;
+const LIQUID_EXIT_MS = 570;
 
 /**
  * Fixed portal keeps the animated table outside PageStage's layout and outside
@@ -138,7 +138,9 @@ export default function FullscreenStandings({
             <span>Wstecz</span>
           </button>
           <span className="vh-standings-fullscreen__section-title-wrap">
-            <span className="vh-standings-fullscreen__section-title">Tabela</span>
+            <button type="button" className="vh-standings-fullscreen__section-title"
+              onClick={exitTable} aria-disabled={phase === 'exit'}
+              aria-label="Zamknij tabelę">Tabela</button>
           </span>
         </div>
         <div className="vh-standings-fullscreen__identity">

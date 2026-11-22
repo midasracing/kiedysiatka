@@ -65,8 +65,15 @@
 }
 .vh-standings-fullscreen__section-title {
   display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: #fc0001;
-  /* Exactly the DM Sans face/weight used by the league's Tabela tab. */
+  pointer-events: auto;
+  cursor: pointer;
+  text-align: right;
+  -webkit-tap-highlight-color: transparent;
+  /* The heading remains a REAL button, with the tab's exact DM Sans weight. */
   font: 750 clamp(36px, 10vw, 52px)/1.05 var(--font-ui, 'DM Sans', sans-serif);
   text-transform: none;
   letter-spacing: -.025em;
@@ -172,9 +179,15 @@
   }
 }
 
-/* LIQUID DIVE — animation lives on a flat cover, never the standings Canvas.
-   The Tabela tab sinks at the source; a separate large label rises at top-right.
-   No FLIP transform, image stretch or geometry feedback. */
+/* LIQUID DIVE 2 — the spreading ink is the actual BLACK BACKGROUND,
+   strictly behind the team rows, league mark and interactive heading.
+   Both layers have an identical reveal mask (no scale, no motion, no filter
+   applied to the standings Canvas itself). */
+.vh-standings-fullscreen__section-title:focus-visible {
+  outline: 2px solid #fc0001;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
 .vh-standings-fullscreen[data-liquid-phase="enter"],
 .vh-standings-fullscreen[data-liquid-phase="exit"] {
   background: transparent;
@@ -186,69 +199,60 @@
 }
 .vh-standings-fullscreen__liquid {
   z-index: 0;
+  background: #000;
   pointer-events: none;
-  background: radial-gradient(circle 300px at var(--vh-liquid-x) var(--vh-liquid-y),
-    #34030a 0%, #140105 36%, #000 82%);
-  will-change: clip-path;
 }
 .vh-standings-fullscreen__surface {
   z-index: 1;
-  background: #000;
+  background: transparent;
+  contain: layout;
 }
 
-/* A black ink portal blooms from the REAL tab position and subsequently
-   reveals the untouched full-screen table. The opening layer is cheap to
-   rasterize, unlike a clipped full-resolution Canvas. */
-.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__liquid {
-  animation: vh-liquid-bloom 620ms cubic-bezier(.2,.72,.2,1) both;
-}
-.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__liquid {
-  animation: vh-liquid-recede 500ms cubic-bezier(.5,0,.65,.38) both;
-}
-@keyframes vh-liquid-bloom {
-  0%   { clip-path: circle(0px at var(--vh-liquid-x) var(--vh-liquid-y)); }
-  18%  { clip-path: circle(30px at var(--vh-liquid-x) var(--vh-liquid-y)); }
-  45%  { clip-path: circle(190px at var(--vh-liquid-x) var(--vh-liquid-y)); }
-  68%, 100% { clip-path: circle(150vmax at var(--vh-liquid-x) var(--vh-liquid-y)); }
-}
-@keyframes vh-liquid-recede {
-  0%, 32% { clip-path: circle(150vmax at var(--vh-liquid-x) var(--vh-liquid-y)); }
-  71% { clip-path: circle(175px at var(--vh-liquid-x) var(--vh-liquid-y)); }
-  100% { clip-path: circle(0px at var(--vh-liquid-x) var(--vh-liquid-y)); }
-}
-
-/* The table is never transformed or masked. It only fades on once the flat
-   liquid cover has reached every edge of the screen. */
+/* One continuous radius curve: no 190px -> 150vmax jump and NO maroon disc.
+   The portal and all its content share the same travelling boundary,
+   so the ink cannot cover the lettering or hide the final table. */
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__liquid,
 .vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface {
-  animation: vh-liquid-content-enter 620ms linear both;
+  animation: vh-liquid-wipe-in 720ms cubic-bezier(.24,.50,.38,1) both;
+}
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__liquid,
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__surface {
+  animation: vh-liquid-wipe-out 570ms cubic-bezier(.48,0,.78,.42) both;
+}
+@keyframes vh-liquid-wipe-in {
+  from { clip-path: circle(0px at var(--vh-liquid-x) var(--vh-liquid-y)); }
+  to { clip-path: circle(160vmax at var(--vh-liquid-x) var(--vh-liquid-y)); }
+}
+@keyframes vh-liquid-wipe-out {
+  from { clip-path: circle(160vmax at var(--vh-liquid-x) var(--vh-liquid-y)); }
+  to { clip-path: circle(0px at var(--vh-liquid-x) var(--vh-liquid-y)); }
+}
+
+/* Rows and header are revealed as the background reaches them.
+   This is a mild opacity hand-off, not a secondary opaque curtain. */
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__surface {
+  animation-name: vh-liquid-wipe-in, vh-liquid-content-in;
+  animation-duration: 720ms, 720ms;
+  animation-timing-function: cubic-bezier(.24,.50,.38,1), ease-out;
 }
 .vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__surface {
-  animation: vh-liquid-content-exit 500ms linear both;
+  animation-name: vh-liquid-wipe-out, vh-liquid-content-out;
+  animation-duration: 570ms, 570ms;
+  animation-timing-function: cubic-bezier(.48,0,.78,.42), ease-in;
 }
-@keyframes vh-liquid-content-enter {
-  0%, 68% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes vh-liquid-content-in {
+  0%, 14% { opacity: 0; }
+  45% { opacity: .78; }
+  78%, 100% { opacity: 1; }
 }
-@keyframes vh-liquid-content-exit {
-  0%, 10% { opacity: 1; }
-  32%, 100% { opacity: 0; }
-}
-.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__section-title {
-  animation: vh-liquid-title-emerge 620ms cubic-bezier(.2,.75,.25,1) both;
-}
-.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__section-title {
-  animation: vh-liquid-title-dive 500ms ease-in both;
-}
-@keyframes vh-liquid-title-emerge {
-  0%, 62% { opacity: 0; transform: translate3d(0, 110%, 0); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-@keyframes vh-liquid-title-dive {
-  0% { opacity: 1; transform: translate3d(0, 0, 0); }
-  30%, 100% { opacity: 0; transform: translate3d(0, 110%, 0); }
+@keyframes vh-liquid-content-out {
+  0%, 26% { opacity: 1; }
+  68% { opacity: .28; }
+  100% { opacity: 0; }
 }
 
-/* The source text disappears into the tab, not across the viewport. */
+/* The Tabela button dives beneath the tab's clipped baseline and resurfaces
+   as the SAME semantic action at top-right. Reverse follows the same rhythm. */
 .vh-competition-detail .vh-league-view-tabs .vh-segmented .vh-table-tab__label {
   display: inline-block;
   margin: 0;
@@ -260,28 +264,58 @@
   overflow: hidden;
 }
 .vh-competition-detail.is-liquid-table-open .vh-table-tab__label {
-  animation: vh-liquid-tab-dive 185ms cubic-bezier(.5,0,.85,.5) both;
+  animation: vh-liquid-tab-dive 185ms cubic-bezier(.42,0,.9,.46) both;
 }
 .vh-competition-detail.is-liquid-table-open.is-liquid-table-returning .vh-table-tab__label {
-  animation: vh-liquid-tab-emerge 500ms ease-out both;
+  animation: vh-liquid-tab-rise 570ms ease-out both;
 }
 @keyframes vh-liquid-tab-dive {
-  0% { opacity: 1; transform: translate3d(0,0,0); }
-  100% { opacity: 0; transform: translate3d(0, 17px, 0); }
+  from { opacity: 1; transform: translate3d(0,0,0); }
+  to { opacity: 0; transform: translate3d(0,18px,0); }
 }
-@keyframes vh-liquid-tab-emerge {
-  0%, 76% { opacity: 0; transform: translate3d(0, 17px, 0); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+@keyframes vh-liquid-tab-rise {
+  0%, 73% { opacity: 0; transform: translate3d(0,18px,0); }
+  100% { opacity: 1; transform: translate3d(0,0,0); }
 }
 
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__section-title {
+  animation: vh-liquid-heading-rise 720ms cubic-bezier(.19,.79,.23,1) both;
+}
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__section-title {
+  animation: vh-liquid-heading-dive 570ms cubic-bezier(.52,0,.84,.43) both;
+}
+@keyframes vh-liquid-heading-rise {
+  0%, 39% { opacity: 0; transform: translate3d(0, 110%, 0); }
+  75%, 100% { opacity: 1; transform: translate3d(0,0,0); }
+}
+@keyframes vh-liquid-heading-dive {
+  0% { opacity: 1; transform: translate3d(0,0,0); }
+  43%, 100% { opacity: 0; transform: translate3d(0,110%,0); }
+}
+
+/* The existing league name stays fixed in place and changes from red to
+   white only. Nothing measures the text while an animated transform runs. */
+.vh-standings-fullscreen[data-liquid-phase="enter"] .vh-standings-fullscreen__identity h2 {
+  animation: vh-liquid-league-in 720ms ease-out both;
+}
+.vh-standings-fullscreen[data-liquid-phase="exit"] .vh-standings-fullscreen__identity h2 {
+  animation: vh-liquid-league-out 570ms ease-in both;
+}
+@keyframes vh-liquid-league-in {
+  0%, 26% { color: #fc0001; }
+  83%, 100% { color: #fff; }
+}
+@keyframes vh-liquid-league-out {
+  0%, 22% { color: #fff; }
+  86%, 100% { color: #fc0001; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .vh-competition-detail.is-liquid-table-open .vh-table-tab__label {
+  .vh-competition-detail.is-liquid-table-open .vh-table-tab__label,
+  .vh-standings-fullscreen__surface,
+  .vh-standings-fullscreen__section-title,
+  .vh-standings-fullscreen__identity h2 {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
-  }
-  .vh-standings-fullscreen__surface,
-  .vh-standings-fullscreen__section-title {
-    animation: none !important;
   }
 }
