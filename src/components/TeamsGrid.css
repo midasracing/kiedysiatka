@@ -4,8 +4,8 @@
    All scroll movement stays native on mobile. */
 .vh-club-wall {
   --club-crest: clamp(78px, 22vw, 105px);
-  --club-ink: #f0eae5;
-  --club-rule: #46282e;
+  --club-ink: var(--ink, #f5f2ed);
+  --club-rule: var(--line, #49151c);
   --club-accent: var(--accent, #fc0001);
   width: calc(100% + 40px);
   margin: 16px -20px 0;
@@ -14,7 +14,7 @@
 }
 .vh-club-wall__row {
   position: relative;
-  min-height: 126px;
+  min-height: 128px;
   border-bottom: 1px solid var(--club-rule);
   background: transparent;
 }
@@ -24,9 +24,9 @@
   align-items: center;
   column-gap: 19px;
   width: 100%;
-  min-height: 126px;
+  min-height: 128px;
   margin: 0;
-  padding: 17px 49px 17px 20px;
+  padding: 18px 49px 18px 20px;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -92,10 +92,10 @@ button.vh-club-wall__open { cursor: pointer; }
   padding: 0;
   border: 0;
   background: transparent;
-  color: #c4b9b6;
+  color: var(--muted, #b8b5b5);
   -webkit-tap-highlight-color: transparent;
 }
-.vh-club-wall__star.is-favorite { color: #fc0001; }
+.vh-club-wall__star.is-favorite { color: var(--club-accent); }
 .vh-club-wall__star:active { opacity: .66; }
 .vh-club-wall__star:focus-visible,
 .vh-club-wall__open:focus-visible {
