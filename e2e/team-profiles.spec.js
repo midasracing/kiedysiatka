@@ -103,6 +103,9 @@ test('team profile stats and roster reflect official feed values, not mock numbe
   await expect(profile.locator('.vh-profile-player')).toHaveCount(2);
   await expect(profile.locator('.vh-profile-player').first()).toContainText('Kacper Próba');
   await expect(profile).toContainText('Atak 323 cm');
+  await expect(profile).toContainText('Waga 78 kg');
+  // Players with no reported weight have no placeholder or invented value.
+  await expect(profile.locator('.vh-profile-player').first()).not.toContainText('Waga');
   await expect(profile.getByRole('heading', { name: 'Najbliższe mecze' })).toBeVisible();
   await expect(profile.getByRole('heading', { name: 'Ostatnie wyniki' })).toBeVisible();
 });

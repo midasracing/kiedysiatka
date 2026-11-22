@@ -30,6 +30,7 @@ function PlayerCard({ player }) {
       {player.position && <span>{player.position}</span>}
       <div className="vh-profile-player__details">
         {player.height_cm != null && <small>{player.height_cm} cm</small>}
+        {player.weight_kg != null && <small>Waga {player.weight_kg} kg</small>}
         {player.spike_reach_cm != null && <small>Atak {player.spike_reach_cm} cm</small>}
       </div>
       {source && <a href={source} target="_blank" rel="noopener noreferrer"
