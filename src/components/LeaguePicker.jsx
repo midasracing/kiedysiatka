@@ -4,12 +4,13 @@ import { PICKER_ROW_HEIGHT, pickerBounds, pickerIndexForOffset, pickerOffsetForI
 import './LeaguePicker.css';
 
 const RED = '#fc0001';
+const INITIAL_INDEX = 2; // Centre the opening frame on the list, not empty space.
 const IVORY = '#f5f2ed';
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
 // The same per-strip lens used by the standings. Render rows to offscreen
 // canvases once, rather than re-laying-out fonts during finger movement.
-function createTextSource(league, width, color) {
+function createTextSource(league, width, color, index) {
   const dpr = 2;
   const canvas = document.createElement('canvas');
   canvas.width = Math.round(width * dpr);
@@ -25,7 +26,8 @@ function createTextSource(league, width, color) {
   ctx.font = `900 ${fontSize}px Impact, 'Arial Black', 'Helvetica Neue', sans-serif`;
   const words = league.name.toLocaleUpperCase('pl-PL').split(/\s+/);
   const lines = [];
-  const usableWidth = Math.max(160, width - 62);
+  const indent = [0, 14, 26, 10, 22, 15][index % 6];
+  const usableWidth = Math.max(140, width - 62 - indent);
   for (const word of words) {
     const last = lines.length - 1;
     const candidate = last >= 0 ? lines[last] + ' ' + word : word;
@@ -42,7 +44,7 @@ function createTextSource(league, width, color) {
   const lineHeight = fontSize * 1.02;
   const startY = PICKER_ROW_HEIGHT / 2 - (lines.length - 1) * lineHeight / 2;
   for (let i = 0; i < lines.length; i += 1) {
-    ctx.fillText(lines[i], 43, startY + i * lineHeight, usableWidth);
+    ctx.fillText(lines[i], 43 + indent, startY + i * lineHeight, usableWidth);
   }
   return canvas;
 }
@@ -50,8 +52,8 @@ function createTextSource(league, width, color) {
 export default function LeaguePicker({ leagues, active }) {
   const hostRef = useRef(null);
   const canvasRef = useRef(null);
-  const [selected, setSelected] = useState(0);
-  const selectedRef = useRef(0);
+  const [selected, setSelected] = useState(INITIAL_INDEX);
+  const selectedRef = useRef(INITIAL_INDEX);
   const [reducedMotion, setReducedMotion] = useState(() =>
     window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true);
   const id = useId();
@@ -182,9 +184,9 @@ export default function LeaguePicker({ leagues, active }) {
       canvas.width = Math.round(width * scale);
       canvas.height = Math.round(height * scale);
       ctx.setTransform(scale, 0, 0, scale, 0, 0);
-      sources = leagues.map(league => [
-        createTextSource(league, width, RED),
-        createTextSource(league, width, IVORY),
+      sources = leagues.map((league, index) => [
+        createTextSource(league, width, RED, index),
+        createTextSource(league, width, IVORY, index),
       ]);
       setOffset(pickerOffsetForIndex(selectedRef.current, height));
       requestPaint();

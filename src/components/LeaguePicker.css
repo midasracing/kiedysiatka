@@ -34,7 +34,7 @@
 }
 .vh-league-picker__instruction {
   position: absolute;
-  bottom: 18px;
+  bottom: 128px;
   right: 22px;
   color: rgba(252,0,1,.72);
   font: 800 10px/1.2 var(--font-ui, sans-serif);

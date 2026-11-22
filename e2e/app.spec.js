@@ -9,7 +9,7 @@ test('league selector replaces categories and cards without opening league detai
   await expect(picker).toBeVisible();
   await expect(picker.locator('canvas')).toBeVisible();
   await expect(picker.getByRole('option')).toHaveCount(6);
-  await expect(picker.getByRole('option', { name: 'TAURON Liga Mężczyzn' })).toHaveAttribute('aria-selected', 'true');
+  await expect(picker.getByRole('option', { name: 'II Liga Mężczyzn' })).toHaveAttribute('aria-selected', 'true');
   await expect(page.getByRole('tablist', { name: 'Region rozgrywek' })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Dostępne ligi' })).toHaveCount(0);
   await expect(page.locator('[data-route="competitions"] .vh-league-stack')).toHaveCount(0);
