@@ -255,7 +255,6 @@ def parse_team_roster(soup, team, team_url):
             number=int(number) if number.isdigit() else None,
             position=norm(cells[2].get_text(' ', strip=True)) or None,
             height_cm=None, weight_kg=None, spike_reach_cm=None,
-            block_reach_cm=None, standing_reach_cm=None,
             source_url=url, roster_source_url=team_url, profile_checked_at=None,
         ))
     if not players or len({p['id'] for p in players}) != len(players):
@@ -273,10 +272,7 @@ def parse_player_profile(soup, player):
         raise RuntimeError('Player profile belongs to another team')
     result = {}
     labels = {'Wzrost': 'height_cm', 'Waga': 'weight_kg',
-              'Zasięg z wyskoku do ataku': 'spike_reach_cm',
-              'Zasięg z wyskoku do bloku': 'block_reach_cm',
-              'Zasięg w bloku': 'block_reach_cm',
-              'Zasięg stojąc': 'standing_reach_cm'}
+              'Zasięg z wyskoku do ataku': 'spike_reach_cm'}
     for box in soup.select('div.number'):
         value = box.select_one('h3')
         if not value:
@@ -293,7 +289,14 @@ def parse_player_profile(soup, player):
 def refresh_team_rosters(teams, base, previous, force=False):
     """Daily team discovery, weekly season-specific profile refresh, four requests at once."""
     now = datetime.datetime.now(datetime.timezone.utc)
-    old_teams = {str(t.get('id')): t for t in previous.get('teams', [])}
+    # Sanitize cached and fallback rosters too: these fields were never published
+    # by either source and must not survive through a cached team response.
+    old_teams = {
+        str(t.get('id')): dict(t, players=[
+            {k: v for k, v in p.items() if k not in ('block_reach_cm', 'standing_reach_cm')}
+            for p in t.get('players', [])
+        ]) for t in previous.get('teams', [])
+    }
     def recent(raw, days):
         try:
             stamp = datetime.datetime.fromisoformat(raw)
@@ -327,7 +330,7 @@ def refresh_team_rosters(teams, base, previous, force=False):
         old_players = {p['source_url']: p for p in old.get('players', [])}
         for player in players:
             cached = old_players.get(player['source_url'], {})
-            fields = ('height_cm', 'weight_kg', 'spike_reach_cm', 'block_reach_cm', 'standing_reach_cm', 'profile_checked_at')
+            fields = ('height_cm', 'weight_kg', 'spike_reach_cm', 'profile_checked_at')
             if not force and recent(cached.get('profile_checked_at'), 7):
                 player.update({k: cached.get(k) for k in fields})
                 continue

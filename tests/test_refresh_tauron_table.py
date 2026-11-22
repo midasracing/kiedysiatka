@@ -2,10 +2,12 @@
 import json
 from pathlib import Path
 import unittest
+from unittest.mock import patch
+import datetime
 
 from bs4 import BeautifulSoup
 
-from scripts.refresh_tauron import parse_table, rank_standings, validate_standings, parse_player_profile, parse_team_roster
+from scripts.refresh_tauron import parse_table, rank_standings, validate_standings, parse_player_profile, parse_team_roster, refresh_team_rosters
 
 
 def standings_row(rank, team, points, played, wins, losses,
@@ -108,7 +110,49 @@ class PlayerProfileTests(unittest.TestCase):
         self.assertEqual(players[0]['season_id'], '53')
         self.assertEqual(players[0]['number'], 7)
         self.assertIsNone(players[0]['photo'])
-        self.assertIsNone(players[0]['block_reach_cm'])
+        self.assertNotIn('block_reach_cm', players[0])
+        self.assertNotIn('standing_reach_cm', players[0])
+
+
+    def test_cached_and_failed_rosters_drop_unpublished_fields_without_mutating_input(self):
+        now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        player = dict(id='1', source_url='https://www.tauronliga.pl/players/id/1/tour/53.html',
+                      height_cm=201, block_reach_cm=None, standing_reach_cm=None)
+        team = dict(id='2', name='Klub')
+        for stamp in (now, None):
+            with self.subTest(cached=stamp is not None):
+                previous = {'teams': [dict(team, players=[player], roster_checked_at=stamp,
+                                          roster_source_url='https://www.tauronliga.pl/teams/id/2.html')]}
+                with patch('scripts.refresh_tauron.get', side_effect=RuntimeError('offline')) as get:
+                    result = refresh_team_rosters([team], 'https://www.tauronliga.pl', previous)
+                self.assertEqual(get.call_count, int(stamp is None))
+                saved = result[0]['players'][0]
+                self.assertEqual(saved['height_cm'], 201)
+                self.assertNotIn('block_reach_cm', saved)
+                self.assertNotIn('standing_reach_cm', saved)
+                self.assertIn('block_reach_cm', player)
+
+    def test_fresh_roster_reuses_weekly_profile_and_preserves_it_on_failure(self):
+        url = 'https://www.tauronliga.pl/players/id/1/tour/53.html'
+        page = '<div id="playerslist"><table><tbody><tr><td>8</td><td><a href="/players/id/1/tour/53.html">Jan Kowalski</a></td><td>Atakujący</td></tr></tbody></table></div>'
+        now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        team = dict(id='2', name='Klub')
+        for stamp in (now, '2020-01-01T00:00:00+00:00'):
+            with self.subTest(cached=stamp == now):
+                player = dict(source_url=url, height_cm=201, weight_kg=None,
+                              spike_reach_cm=340, profile_checked_at=stamp,
+                              block_reach_cm=None, standing_reach_cm=None)
+                previous = {'teams': [dict(team, players=[player])]}
+                with patch('scripts.refresh_tauron.get', side_effect=[page, RuntimeError('offline')]) as get, patch('scripts.refresh_tauron.time.sleep'):
+                    result = refresh_team_rosters([team], 'https://www.tauronliga.pl', previous)
+                self.assertEqual(get.call_count, 1 if stamp == now else 2)
+                saved = result[0]['players'][0]
+                self.assertEqual(saved['number'], 8)
+                self.assertEqual(saved['height_cm'], 201)
+                self.assertEqual(saved['spike_reach_cm'], 340)
+                self.assertEqual(saved['profile_checked_at'], stamp)
+                self.assertNotIn('block_reach_cm', saved)
+                self.assertNotIn('standing_reach_cm', saved)
 
 
 if __name__ == "__main__":
