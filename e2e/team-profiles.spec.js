@@ -28,7 +28,7 @@ for (const [leagueName, secondOption] of [
     await expect(grid).toBeVisible();
     const tile = grid.locator('.vh-club-wall__row.is-openable').first();
     await expect(tile).toBeVisible();
-    const teamName = await tile.locator('.vh-club-wall__name').innerText();
+    const teamName = (await tile.locator('.vh-club-wall__name').textContent()).trim();
     await expect(grid.locator('.vh-team-tile')).toHaveCount(0);
     await expect(tile.getByText('Profil', { exact: true })).toHaveCount(0);
     const star = tile.getByRole('button', { name: 'Dodaj do ulubionych: ' + teamName });
