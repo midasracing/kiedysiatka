@@ -1,5 +1,16 @@
 import { test, expect } from '@playwright/test';
 
+async function selectSecondLeague(page) {
+  const picker = page.getByRole('listbox', { name: /Wybierz ligę/ });
+  await picker.focus();
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('ArrowDown');
+  const option = page.getByRole('option', { name: 'II Liga Mężczyzn' });
+  await expect(option).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(async () => picker.evaluate(element => Math.round(element.scrollTop))).toBe(232);
+  return option;
+}
+
 test('touching the centred league splits two full-width lines and reverse restores the selector', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   // Freeze only this short overlay while inspecting its full keyframe list.
@@ -13,8 +24,7 @@ test('touching the centred league splits two full-width lines and reverse restor
     };
   });
   await page.goto('/#competitions');
-  const option = page.getByRole('option', { name: 'II Liga Mężczyzn' });
-  await expect(option).toHaveAttribute('aria-selected', 'true');
+  const option = await selectSecondLeague(page);
   await option.click();
 
   const split = page.locator('.vh-league-split');
@@ -96,7 +106,7 @@ test('touching the centred league splits two full-width lines and reverse restor
 test('reduced motion opens and closes a league immediately', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#competitions');
-  await page.getByRole('option', { name: 'II Liga Mężczyzn' }).click();
+  await (await selectSecondLeague(page)).click();
   await expect(page.getByRole('heading', { name: 'II Liga Mężczyzn' })).toBeVisible();
   await expect(page.locator('.vh-league-split')).toHaveCount(0);
   await page.getByRole('button', { name: 'Wstecz' }).click();
@@ -108,7 +118,7 @@ test('selected league detail has no fixed black gradient while selector keeps it
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#competitions');
   await expect(page.locator('.vh-competitions-topfade')).toBeVisible();
-  await page.getByRole('option', { name: 'II Liga Mężczyzn' }).click();
+  await (await selectSecondLeague(page)).click();
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
   await expect(page.locator('.vh-competition-fixed-fade')).toHaveCount(0);
   await expect(page.locator('.vh-competition-detail')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
@@ -157,7 +167,7 @@ test('matchweek arrows navigate genuine source rounds in chronological fixture o
 test('II liga cannot invent a matchweek when source labels all fixtures round one', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#competitions');
-  await page.getByRole('option', { name: 'II Liga Mężczyzn' }).click();
+  await (await selectSecondLeague(page)).click();
   await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
   const rounds = page.getByRole('group', { name: 'Nawigacja po kolejkach' });
   await expect(rounds).toBeVisible({ timeout: 10000 });

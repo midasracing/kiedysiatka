@@ -27,7 +27,12 @@ test('league selector opens league details with a reversible split transition', 
   await expect(first.locator('.vh-league-picker__line').last()).toHaveText('Mężczyzn');
   await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
   await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
-  await expect(picker.getByRole('option', { name: 'II Liga Mężczyzn' })).toHaveAttribute('aria-selected', 'true');
+  await expect(first).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(async () => first.evaluate(element => {
+    const option = element.getBoundingClientRect();
+    const viewport = element.parentElement.getBoundingClientRect();
+    return Math.abs((option.top + option.height / 2) - (viewport.top + viewport.height / 2));
+  })).toBeLessThan(2);
   await expect(page.getByRole('tablist', { name: 'Region rozgrywek' })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Dostępne ligi' })).toHaveCount(0);
   await expect(page.locator('[data-route="competitions"] .vh-league-stack')).toHaveCount(0);

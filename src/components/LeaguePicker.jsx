@@ -4,7 +4,7 @@ import './LeaguePicker.css';
 
 // The reference uses a native vertical list with a fixed selection marker.
 // Only its heavy, blood-red typography comes from our standings; no lens warp.
-const INITIAL_INDEX = 2;
+const INITIAL_INDEX = 0;
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
 export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_INDEX, onSelectionChange, onOpen }) {

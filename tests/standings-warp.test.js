@@ -60,3 +60,11 @@ test('cached projection preserves every original strip, including partial bottom
     assert.equal(strips.at(-1).screenY + strips.at(-1).step, height);
   }
 });
+
+test('first position is the opening warp center at iPhone viewport heights', () => {
+  for (const height of [568, 667, 844, 932]) {
+    const initialOffset = standingsScrollBounds(16, height).min;
+    const firstCenter = STANDINGS_TOP_INSET + STANDINGS_ROW_HEIGHT / 2;
+    assert.equal(firstCenter - initialOffset, height / 2);
+  }
+});

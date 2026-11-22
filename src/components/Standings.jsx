@@ -78,6 +78,7 @@ function WarpTable({ rows, logos }) {
     let width = 0;
     let height = 0;
     let offset = 0;
+    let hasMeasuredViewport = false;
     let speed = 0;
     let drawingFrame = 0;
     let momentumFrame = 0;
@@ -163,6 +164,7 @@ function WarpTable({ rows, logos }) {
       const nextHeight = Math.round(rect.height);
       if (nextWidth < 1 || nextHeight < 1) return;
       if (nextWidth === width && nextHeight === height) return;
+      const oldHeight = height;
       width = nextWidth;
       height = nextHeight;
       const dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -171,7 +173,14 @@ function WarpTable({ rows, logos }) {
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       strips = standingsWarpStrips(width, height);
       sourceRows = rows.map((row, index) => drawRowSource(row, index, width));
-      setOffset(offset);
+      if (!hasMeasuredViewport) {
+        // The first ranked team appears in the center from the first frame.
+        setOffset(bounds().min);
+        hasMeasuredViewport = true;
+      } else {
+        // Preserve the same center position after rotation / viewport resize.
+        setOffset(offset + (oldHeight - height) / 2);
+      }
       queueRender();
     };
 
