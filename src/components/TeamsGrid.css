@@ -1,0 +1,135 @@
+/* Club Wall — a typographic team selector, not another card grid.
+   Scope it to the competition view; Favorites retain the existing tiles. */
+.vh-club-wall {
+  position: relative;
+  width: calc(100% + 40px);
+  margin: 12px -20px 0;
+  padding: 0 0 calc(128px + env(safe-area-inset-bottom, 0px));
+  background: #000;
+}
+.vh-club-wall__row {
+  position: relative;
+  isolation: isolate;
+  min-height: 140px;
+  border-bottom: 1px solid rgba(252, 0, 1, .22);
+  background: #000;
+}
+.vh-club-wall__row::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 82% 55%, rgba(110, 9, 15, .35), transparent 62%);
+  transition: opacity 230ms ease;
+}
+.vh-club-wall__row:has(.vh-club-wall__open:active)::after,
+.vh-club-wall__row:has(.vh-club-wall__open:focus-visible)::after {
+  opacity: 1;
+}
+.vh-club-wall__open {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(72px, 21vw, 100px);
+  align-items: center;
+  column-gap: 10px;
+  width: 100%;
+  min-height: 140px;
+  margin: 0;
+  padding: 22px 48px 22px 20px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #f32e25;
+  text-align: left;
+  text-decoration: none;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+button.vh-club-wall__open { cursor: pointer; }
+.vh-club-wall__name {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  color: #f32e25;
+  font: 900 clamp(34px, 10vw, 52px)/.94 Impact, 'Arial Narrow', 'Arial Black', sans-serif;
+  letter-spacing: -.015em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  transition: color 160ms ease, transform 210ms cubic-bezier(.2,.8,.2,1);
+  transform-origin: left center;
+}
+.vh-club-wall__open > .vh-team-logo,
+.vh-club-wall__open > .vh-team-logo .team-mark {
+  display: grid;
+  place-items: center;
+  width: clamp(72px, 21vw, 100px);
+  height: clamp(72px, 21vw, 100px);
+  flex: 0 0 auto;
+  background: transparent;
+}
+.vh-club-wall__open > .vh-team-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.vh-club-wall__open > .vh-team-logo .team-mark {
+  color: #f5f2ed;
+  border: none;
+  border-radius: 0;
+  font: 900 26px/1 Impact, 'Arial Narrow', sans-serif;
+}
+.vh-club-wall__star {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 11px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #ddd3d2;
+  -webkit-tap-highlight-color: transparent;
+}
+.vh-club-wall__star.is-favorite { color: #fc0001; }
+.vh-club-wall__star:active { opacity: .65; }
+.vh-club-wall__star:focus-visible,
+.vh-club-wall__open:focus-visible {
+  outline: 2px solid #fc0001;
+  outline-offset: -3px;
+}
+button.vh-club-wall__open:active .vh-club-wall__name,
+button.vh-club-wall__open:focus-visible .vh-club-wall__name {
+  color: #f5f2ed;
+  transform: translate3d(5px, 0, 0);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vh-club-wall__row:hover::after { opacity: 1; }
+  .vh-club-wall__open:hover .vh-club-wall__name { color: #fff1ee; transform: translate3d(6px, 0, 0); }
+}
+@media (max-width: 390px) {
+  .vh-club-wall { width: calc(100% + 28px); margin-left: -14px; margin-right: -14px; }
+  .vh-club-wall__open {
+    grid-template-columns: minmax(0, 1fr) 72px;
+    column-gap: 7px;
+    padding: 20px 43px 20px 14px;
+    min-height: 132px;
+  }
+  .vh-club-wall__row { min-height: 132px; }
+  .vh-club-wall__name { font-size: clamp(31px, 9.6vw, 39px); }
+  .vh-club-wall__open > .vh-team-logo,
+  .vh-club-wall__open > .vh-team-logo .team-mark { width: 72px; height: 72px; }
+  .vh-club-wall__star { right: 3px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vh-club-wall__row::after, .vh-club-wall__name { transition: none; }
+}
