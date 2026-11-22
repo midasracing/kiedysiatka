@@ -414,7 +414,6 @@
   .vh-team-profile__crest,
   .vh-team-profile__crest .vh-team-logo,
   .vh-team-profile__crest .vh-team-logo .team-mark { width: 68px; height: 68px; flex-basis: 68px; }
-  .vh-profile-stat { padding: 15px 8px; }
 }
 @media(min-width:760px) {.vh-profile-player__visual {height:230px;}}
 @media(prefers-reduced-motion: reduce) {.vh-team-profile {animation:none;}}
