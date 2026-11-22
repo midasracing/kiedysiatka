@@ -1,0 +1,32 @@
+.vh-league-split {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: transparent;
+  isolation: isolate;
+  pointer-events: auto;
+  touch-action: none;
+  overflow: hidden;
+  contain: layout paint;
+}
+.vh-league-split__veil {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: #000;
+  pointer-events: none;
+}
+.vh-league-split__line {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  width: max-content;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  transform-origin: 0 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  -webkit-font-smoothing: antialiased;
+}

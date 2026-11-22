@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('league selector replaces categories and cards without opening league details', async ({ page }) => {
+test('league selector opens league details with a reversible split transition', async ({ page }) => {
   const failures = [];
   page.on('pageerror', error => failures.push(error.message));
   await page.goto('/#competitions');
@@ -41,7 +41,14 @@ test('league selector replaces categories and cards without opening league detai
   await page.keyboard.press('Home');
   await expect(picker.getByRole('option', { name: 'TAURON Liga Mężczyzn' })).toHaveAttribute('aria-selected', 'true');
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('tablist', { name: 'Widok rozgrywek' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'TAURON Liga Mężczyzn' })).toBeVisible();
+  await expect(page.getByRole('tablist', { name: 'Widok rozgrywek' })).toBeVisible();
+  await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
+  await page.getByRole('button', { name: 'Wszystkie rozgrywki' }).click();
+  await expect(picker).toBeVisible();
+  await expect(picker.getByRole('option', { name: 'TAURON Liga Mężczyzn' }))
+    .toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('.vh-league-split')).toHaveCount(0, { timeout: 5000 });
   expect(failures).toEqual([]);
 });
 

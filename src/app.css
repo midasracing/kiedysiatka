@@ -297,3 +297,21 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   }
   .vh-competitions-topfade { padding-left: 14px; padding-right: 14px; }
 }
+
+/* League details reveal beneath the two diverging name lines. */
+.vh-competition-detail {
+  position: relative;
+  min-height: 100dvh;
+  background: #000;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 10px);
+}
+.vh-competition-detail.is-entering {
+  animation: vh-league-content-reveal 650ms cubic-bezier(.2,.75,.22,1) both;
+}
+@keyframes vh-league-content-reveal {
+  0%, 25% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vh-competition-detail.is-entering { animation: none; }
+}

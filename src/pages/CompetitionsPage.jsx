@@ -7,6 +7,7 @@ import { MatchGroups } from '../components/MatchCards.jsx';
 import FullscreenStandings from '../components/FullscreenStandings.jsx';
 import TeamsGrid from '../components/TeamsGrid.jsx';
 import LeaguePicker from '../components/LeaguePicker.jsx';
+import LeagueSplitTransition from '../components/LeagueSplitTransition.jsx';
 
 const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, matches, loading, errors, refresh, logos, favorites, toggleFavorite, selectedLeague, setSelectedLeague }) {
   const [view, setView] = useState('matches');
@@ -14,6 +15,51 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const [tableGroup, setTableGroup] = useState(null);
   const [visibleCount, setVisibleCount] = useState(30);
   const previousView = useRef('matches');
+  const [pickerIndex, setPickerIndex] = useState(2);
+  const [split, setSplit] = useState(null);
+  const splitSnapshot = useRef(null);
+  const transitionBusy = useRef(false);
+
+  const openFromPicker = useCallback((item, snapshot) => {
+    if (!active || transitionBusy.current || !snapshot || !item) return;
+    transitionBusy.current = true;
+    const captured = { ...snapshot, id: item.id };
+    splitSnapshot.current = captured;
+    setPickerIndex(snapshot.index);
+    setView('matches');
+    setGroup('all');
+    setTableGroup(null);
+    setVisibleCount(30);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setSelectedLeague(item.id);
+    setSplit({ phase: 'open', snapshot: captured });
+  }, [active, setSelectedLeague]);
+
+  const returnToPicker = useCallback(() => {
+    if (transitionBusy.current) return;
+    const captured = splitSnapshot.current;
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (!captured || captured.id !== selectedLeague || !active || reduced) {
+      const index = LEAGUES.findIndex(item => item.id === selectedLeague);
+      if (index >= 0) setPickerIndex(index);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      setSelectedLeague(null);
+      setView('matches');
+      return;
+    }
+    transitionBusy.current = true;
+    setSplit({ phase: 'close', snapshot: captured });
+  }, [active, selectedLeague, setSelectedLeague]);
+
+  const finishSplit = useCallback(phase => {
+    if (phase === 'close') {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      setSelectedLeague(null);
+      setView('matches');
+    }
+    transitionBusy.current = false;
+    setSplit(null);
+  }, [setSelectedLeague]);
   const league = LEAGUES.find(item => item.id === selectedLeague);
   const data = league ? feeds[league.id] : null;
   const grouped = league?.id === 'second' ? (data?.groups || []) : [];
@@ -31,6 +77,9 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   useEffect(() => setVisibleCount(30), [league?.id, group]);
   const pageMatches = timeline.slice(0, visibleCount);
   return <>
+    {active && split && <LeagueSplitTransition
+      phase={split.phase} snapshot={split.snapshot} onComplete={finishSplit}
+    />}
     {active && league && view === 'table' && <FullscreenStandings
       key={league.id}
       leagueName={league.name}
@@ -41,8 +90,8 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       onSelectGroup={setTableGroup}
       onBack={closeTable}
     />}
-    {league ? <>
-      <button className="vh-back" type="button" onClick={() => setSelectedLeague(null)}><ChevronLeft size={18} /> Wszystkie rozgrywki</button>
+    {league ? <section className={'vh-competition-detail' + (split?.phase === 'open' ? ' is-entering' : '')}>
+      <button className="vh-back" type="button" onClick={returnToPicker}><ChevronLeft size={18} /> Wszystkie rozgrywki</button>
       <header className="vh-competition-heading">
         <div className="vh-competition-heading__copy">
           <span className="vh-eyebrow">{league.flag || '🇵🇱'} {league.category === 'Europa' ? 'WŁOCHY' : league.category === 'Świat' ? 'JAPONIA' : 'POLSKA'} · MĘŻCZYŹNI</span>
@@ -69,11 +118,13 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
       </>}
       {data?.updated_at && <p className="vh-source-note">Aktualizacja źródła: {new Date(data.updated_at).toLocaleString('pl-PL')}</p>}
       {view === 'table' && (league.id === 'second' ? groupChoices : [data]).some(item => Object.keys(item?.source_table_discrepancies || {}).length > 0) && <p className="vh-source-note" role="status">Wyniki i tabela VolleyStation są publikowane osobno. Pokazujemy tabelę dokładnie według źródła.</p>}
-    </> : <section className="vh-competitions-screen">
+    </section> : <section className="vh-competitions-screen">
       <header className="vh-competitions-topfade">
         <h1>Rozgrywki</h1>
       </header>
-      <LeaguePicker leagues={LEAGUES} active={active} />
+      <LeaguePicker leagues={LEAGUES} active={active}
+        initialIndex={pickerIndex} onSelectionChange={setPickerIndex} onOpen={openFromPicker}
+      />
     </section>}
   </>;
 });

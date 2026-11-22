@@ -61,7 +61,7 @@
   color: #fc0001;
   will-change: transform;
 }
-.vh-league-picker__line { display: block; white-space: nowrap; }
+.vh-league-picker__line { display: inline-block; flex: none; white-space: nowrap; }
 .vh-league-picker__option:focus-visible {
   outline: 2px solid #fc0001;
   outline-offset: -5px;

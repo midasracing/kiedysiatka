@@ -7,11 +7,11 @@ import './LeaguePicker.css';
 const INITIAL_INDEX = 2;
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
-export default function LeaguePicker({ leagues, active }) {
+export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_INDEX, onSelectionChange, onOpen }) {
   const scrollerRef = useRef(null);
   const animationRef = useRef(0);
-  const selectedRef = useRef(INITIAL_INDEX);
-  const [selected, setSelected] = useState(INITIAL_INDEX);
+  const selectedRef = useRef(clamp(initialIndex, 0, leagues.length - 1));
+  const [selected, setSelected] = useState(() => clamp(initialIndex, 0, leagues.length - 1));
 
   const updateFromScroll = useCallback(() => {
     animationRef.current = 0;
@@ -22,6 +22,7 @@ export default function LeaguePicker({ leagues, active }) {
     if (index !== selectedRef.current) {
       selectedRef.current = index;
       setSelected(index);
+      onSelectionChange?.(index);
     }
     // The video has a curved, stepped indentation in X, NOT warped letter
     // shapes. Transform only six text spans; native touch momentum stays intact.
@@ -37,7 +38,7 @@ export default function LeaguePicker({ leagues, active }) {
       const fit = naturalWidth ? Math.min(1, available / naturalWidth) : 1;
       options[i].style.transform = `translate3d(${desiredIndent}px,0,0) scaleX(${fit})`;
     }
-  }, [active, leagues.length]);
+  }, [active, leagues.length, onSelectionChange]);
 
   const queueUpdate = useCallback(() => {
     if (!animationRef.current) animationRef.current = requestAnimationFrame(updateFromScroll);
@@ -75,13 +76,38 @@ export default function LeaguePicker({ leagues, active }) {
     const destination = clamp(index, 0, leagues.length - 1);
     selectedRef.current = destination;
     setSelected(destination);
+    onSelectionChange?.(destination);
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     scroller.scrollTo({
       top: pickerScrollForIndex(destination),
       behavior: reduceMotion ? 'instant' : 'smooth',
     });
     queueUpdate();
-  }, [leagues.length, queueUpdate]);
+  }, [leagues.length, queueUpdate, onSelectionChange]);
+
+  const openSelected = (index, option) => {
+    if (index !== selectedRef.current) {
+      choose(index);
+      return;
+    }
+    if (!onOpen || !option || !active) return;
+    const lines = [...option.querySelectorAll('.vh-league-picker__line')].map(line => {
+      const bounds = line.getBoundingClientRect();
+      const style = window.getComputedStyle(line);
+      return {
+        text: line.textContent,
+        left: bounds.left,
+        top: bounds.top,
+        width: bounds.width,
+        height: bounds.height,
+        naturalWidth: line.offsetWidth,
+        naturalHeight: line.offsetHeight,
+        font: style.font,
+        letterSpacing: style.letterSpacing,
+      };
+    });
+    if (lines.length === 2) onOpen(leagues[index], { index, lines });
+  };
 
   const onKeyDown = event => {
     const keys = {
@@ -95,8 +121,11 @@ export default function LeaguePicker({ leagues, active }) {
     if (Object.hasOwn(keys, event.key)) {
       event.preventDefault();
       choose(keys[event.key]);
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      const option = scrollerRef.current?.querySelectorAll('.vh-league-picker__option')[selectedRef.current];
+      if (option) openSelected(selectedRef.current, option);
     }
-    // Enter/Space intentionally do not open any league yet.
   };
 
   return <div className="vh-league-picker" role="group" aria-label="Selektor rozgrywek">
@@ -120,7 +149,7 @@ export default function LeaguePicker({ leagues, active }) {
           aria-selected={selected === index}
           aria-label={league.name}
           tabIndex={-1}
-          onClick={() => choose(index)}
+          onClick={event => openSelected(index, event.currentTarget)}
         >
           <span className="vh-league-picker__label">
             {leagueNameLines(league).map((line, i) =>
