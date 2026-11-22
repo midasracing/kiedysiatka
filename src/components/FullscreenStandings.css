@@ -1,0 +1,153 @@
+/* The standings live in a portal outside the normal league page layout. */
+.vh-standings-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: #000;
+  color: #f5f2ed;
+  font-family: var(--font-ui, -apple-system, BlinkMacSystemFont, sans-serif);
+  isolation: isolate;
+}
+
+.vh-standings-fullscreen .vh-standings-warp {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+/* A graduated top veil keeps back navigation legible without boxing in the
+   typography — the actual distorted table fills the entire screen. */
+.vh-standings-fullscreen__fade {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto;
+  height: clamp(215px, 29dvh, 330px);
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+    #000 0%,
+    rgba(0,0,0,.98) 18%,
+    rgba(0,0,0,.89) 35%,
+    rgba(0,0,0,.66) 53%,
+    rgba(0,0,0,.24) 76%,
+    rgba(0,0,0,0) 100%);
+}
+
+.vh-standings-fullscreen__header {
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) 20px 0;
+  pointer-events: none;
+}
+
+.vh-standings-fullscreen__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  min-height: 46px;
+  padding: 0 13px 0 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font: 700 16px/1.1 var(--font-ui, -apple-system, sans-serif);
+  letter-spacing: -.01em;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.vh-standings-fullscreen__back:active { opacity: .72; }
+.vh-standings-fullscreen__back:focus-visible {
+  outline: 2px solid #fc0001;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.vh-standings-fullscreen__identity {
+  max-width: 100%;
+  margin-top: 12px;
+}
+
+.vh-standings-fullscreen__eyebrow {
+  color: #fc0001;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+
+.vh-standings-fullscreen__identity h2 {
+  margin: 5px 0 0;
+  color: #f5f2ed;
+  font: italic 400 clamp(24px, 5.5vw, 34px)/1.15 var(--font-editorial, Georgia, serif);
+  letter-spacing: -.025em;
+}
+
+.vh-standings-fullscreen__groups {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 14px -20px 0;
+  padding: 0 20px 8px;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+  pointer-events: auto;
+}
+.vh-standings-fullscreen__groups::-webkit-scrollbar { display: none; }
+
+.vh-standings-fullscreen__chip {
+  flex: 0 0 auto;
+  border: 1px solid rgba(252,0,1,.48);
+  background: rgba(30, 7, 10, .9);
+  color: #e5c9cc;
+  border-radius: 999px;
+  min-height: 35px;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+.vh-standings-fullscreen__chip.is-selected {
+  background: #fc0001;
+  border-color: #fc0001;
+  color: #000;
+}
+
+.vh-standings-fullscreen .vh-standings-warp__hint {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+  right: 20px;
+}
+
+@media (max-width: 360px) {
+  .vh-standings-fullscreen .vh-standings-warp {
+    height: 100%;
+    min-height: 0;
+  }
+  .vh-standings-fullscreen__header {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .vh-standings-fullscreen__groups {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vh-standings-fullscreen { overflow-y: auto; }
+  .vh-standings-fullscreen .vh-table-scroll {
+    margin: calc(env(safe-area-inset-top, 0px) + 205px) 16px 24px;
+  }
+}
