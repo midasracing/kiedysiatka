@@ -201,6 +201,19 @@ export default function LeaguePicker({ leagues, active, initialIndex = INITIAL_I
           aria-selected={selected === index}
           aria-label={league.name}
           tabIndex={-1}
+          onPointerDown={event => {
+            if (index === selectedRef.current && event.pointerType !== 'mouse') {
+              event.currentTarget.classList.add('is-pressed');
+            }
+          }}
+          onPointerUp={event => event.currentTarget.classList.remove('is-pressed')}
+          onPointerCancel={event => event.currentTarget.classList.remove('is-pressed')}
+          onPointerLeave={event => event.currentTarget.classList.remove('is-pressed')}
+          onTouchStart={event => {
+            if (index === selectedRef.current) event.currentTarget.classList.add('is-pressed');
+          }}
+          onTouchEnd={event => event.currentTarget.classList.remove('is-pressed')}
+          onTouchCancel={event => event.currentTarget.classList.remove('is-pressed')}
           onClick={event => openSelected(index, event.currentTarget)}
         >
           <span className="vh-league-picker__label">
