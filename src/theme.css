@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;650;700;750;800&family=Playfair+Display:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;650;700;750;800&family=Playfair+Display:wght@600&display=swap');
 
 /* Colour and typography only. Layout, dimensions and motion stay unchanged. */
 :root,
@@ -28,12 +28,12 @@ button:focus-visible, a:focus-visible, input:focus-visible,
 #ios-matches button:focus-visible, .im-search:focus-visible,
 .vh-search-bubble:focus-visible { outline-color: var(--accent-text); }
 
-/* Playfair Display Medium gives slightly stronger editorial headings; data stays in DM Sans. */
+/* Playfair Display SemiBold gives stronger editorial headings without changing spacing; data stays in DM Sans. */
 .vh-page-head h1,
 .vh-section-heading h2, .vh-day-heading h2,
 .vh-league-cover h2, .vh-sheet-header h2, .vh-empty h3 {
   font-family: var(--font-editorial);
-  font-weight: 500;
+  font-weight: 600;
   font-style: normal;
   letter-spacing: 0;
 }
