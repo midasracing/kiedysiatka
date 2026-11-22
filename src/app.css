@@ -361,17 +361,17 @@ button.vh-league-tile:hover,.vh-league-select:hover{background:#272f3e;border-co
   border-radius: 6px;
 }
 
-/* Pure black gradient above league details, ready for future scroll behavior. */
-[data-route="competitions"] .vh-competition-detail::before {
-  content: "";
+/* A separate fixed layer OUTSIDE the scrolling league detail.
+   iOS Safari can treat a fixed ::before inside the long page as scroll-bound.
+   This layer stays at viewport y=0, covering the status bar as well. */
+[data-route="competitions"] .vh-competition-fixed-fade {
   position: fixed;
-  /* Include the iPhone status-bar / safe area in the black top fade. */
-  top: calc(-1 * env(safe-area-inset-top, 0px));
+  top: 0;
   left: 0;
   right: 0;
-  bottom: auto;
-  z-index: 1;
+  width: 100%;
   height: calc(clamp(220px, 36dvh, 360px) + env(safe-area-inset-top, 0px));
+  z-index: 1;
   pointer-events: none;
   background: linear-gradient(180deg,
     #000 0%,
