@@ -74,9 +74,27 @@ const CompetitionsPage = React.memo(function CompetitionsPage({ active, feeds, m
   const openTable = event => {
     if (view === 'table') return;
     const rect = event.currentTarget.getBoundingClientRect();
+    // Capture the league title before the fullscreen portal locks scrolling.
+    // Its overlay copy will keep EXACTLY the same coordinates and letterforms:
+    // one visible name, only the color morphs from red to white.
+    const titleNode = leagueTitleRef.current;
+    const titleRect = titleNode?.getBoundingClientRect();
+    const titleCss = titleNode && window.getComputedStyle(titleNode);
+    const title = titleRect && titleCss ? {
+      left: titleRect.left,
+      top: titleRect.top,
+      width: titleRect.width,
+      height: titleRect.height,
+      fontSize: titleCss.fontSize,
+      fontFamily: titleCss.fontFamily,
+      fontWeight: titleCss.fontWeight,
+      lineHeight: titleCss.lineHeight,
+      letterSpacing: titleCss.letterSpacing,
+    } : null;
     // Capture the ACTUAL tab position before the portal locks document scroll.
     // No DOM measurement or interpolation of the large standings Canvas.
     setTableOrigin({
+      title,
       left: rect.left,
       top: rect.top,
       width: rect.width,

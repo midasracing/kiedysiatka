@@ -44,6 +44,19 @@ test('Liquid Dive opens from the actual Tabela tab without stretching standings'
   expect(rectangle.radius).toBeGreaterThan(0);
   expect(rectangle.keyframes.some(value => value.includes('inset('))).toBe(true);
   expect(rectangle.keyframes.some(value => value.includes('circle('))).toBe(false);
+  expect(rectangle.keyframes.length).toBeGreaterThanOrEqual(5);
+  // Midflight opens horizontally first (not a tall, letter-slicing bar).
+  const masks = await dialog.evaluate(node => {
+    const css = getComputedStyle(node);
+    const value = name => Number.parseFloat(css.getPropertyValue(name));
+    return {
+      width: innerWidth - value('--vh-spill-wide-left') - value('--vh-spill-wide-right'),
+      height: innerHeight - value('--vh-spill-wide-top') - value('--vh-spill-wide-bottom'),
+    };
+  });
+  expect(masks.width).toBeGreaterThan(masks.height * 1.2);
+  await expect(dialog.locator('.vh-standings-warp')).toHaveCSS('animation-name', 'vh-liquid-rows-appear');
+  await expect(dialog.locator('.vh-standings-fullscreen__header')).toHaveCSS('animation-name', 'vh-liquid-header-appear');
 
   await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
   await expect(dialog.locator('.vh-standings-fullscreen__liquid')).toHaveCount(0);
@@ -119,7 +132,8 @@ test('one slow black portal reveals the table and the same selected Tabela pill 
       background: css.backgroundColor,
       inkLayers: root.querySelectorAll('.vh-standings-fullscreen__liquid').length,
       tableInsidePortal: surface.contains(root.querySelector('.vh-standings-warp')),
-      headingInsidePortal: surface.contains(root.querySelector('.vh-standings-fullscreen__identity h2')),
+      headingAbovePortal: !surface.contains(root.querySelector('.vh-standings-fullscreen__identity h2')) &&
+        !!root.querySelector(':scope > .vh-standings-fullscreen__identity h2'),
       pillKeyframes: Array.from(document.styleSheets).some(sheet => {
         try {
           return Array.from(sheet.cssRules).some(rule =>
@@ -134,7 +148,7 @@ test('one slow black portal reveals the table and the same selected Tabela pill 
   expect(scene.background).toBe('rgb(0, 0, 0)');
   expect(scene.inkLayers).toBe(0);
   expect(scene.tableInsidePortal).toBe(true);
-  expect(scene.headingInsidePortal).toBe(true);
+  expect(scene.headingAbovePortal).toBe(true);
   expect(scene.pillKeyframes).toBe(true);
   expect(scene.cornerRadius).toBeGreaterThan(0);
 
@@ -208,4 +222,34 @@ test('selected Tabela button dives from menu and rejoins the inactive tab on ret
   await expect(dialog).toHaveCount(0, { timeout: 3500 });
   await expect(page.getByRole('tab', { name: 'Mecze' })).toHaveAttribute('aria-selected', 'true');
   await expect(source).toHaveCSS('opacity', '1');
+});
+
+test('one league heading remains stationary above the unfold and changes only its ink', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openLeague(page);
+  const source = page.locator('.vh-competition-heading h1');
+  await page.evaluate(() => document.fonts.ready);
+  const originalRect = await source.boundingBox();
+  const originalFont = await source.evaluate(node => getComputedStyle(node).fontSize);
+  await page.getByRole('tab', { name: 'Tabela' }).click();
+  const dialog = page.getByRole('dialog', { name: /Tabela ligowa/ });
+  const title = dialog.locator('.vh-standings-fullscreen__identity h2');
+  await expect(title).toHaveCount(1);
+  await expect(source).toHaveCSS('visibility', 'hidden');
+  expect(await dialog.locator('.vh-standings-fullscreen__surface .vh-standings-fullscreen__identity h2').count()).toBe(0);
+  const overlayRect = await title.boundingBox();
+  expect(Math.abs(overlayRect.x - originalRect.x)).toBeLessThanOrEqual(1);
+  expect(Math.abs(overlayRect.y - originalRect.y)).toBeLessThanOrEqual(1);
+  expect(Math.abs(overlayRect.width - originalRect.width)).toBeLessThanOrEqual(2);
+  await expect(title).toHaveCSS('font-size', originalFont);
+  await expect(title).toHaveCSS('animation-name', 'vh-liquid-league-white');
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'active', { timeout: 5000 });
+  await expect(title).toHaveCSS('color', 'rgb(255, 255, 255)');
+  const atRestRect = await title.boundingBox();
+  expect(Math.abs(atRestRect.y - overlayRect.y)).toBeLessThanOrEqual(1);
+  await dialog.getByRole('button', { name: 'Wstecz' }).click();
+  await expect(dialog).toHaveAttribute('data-liquid-phase', 'exit');
+  await expect(dialog).toHaveCount(0, { timeout: 3500 });
+  await expect(source).toHaveCSS('visibility', 'visible');
+  await expect(source).toHaveCSS('color', 'rgb(252, 0, 1)');
 });

@@ -17,7 +17,6 @@ export default function FullscreenStandings({
   onExitStart, origin,
 }) {
   const backRef = useRef(null);
-  const leagueTitleRef = useRef(null);
   const pillRef = useRef(null);
   const portalRef = useRef(null);
   const exitTimer = useRef(null);
@@ -67,31 +66,8 @@ export default function FullscreenStandings({
     portalRef.current.style.setProperty('--vh-flight-y75', `${dy * .75 + 12}px`);
   }, [origin, reducedMotion]);
 
-  // Use the same Impact letterforms as the red team names in the warped table.
-  // Fit long league names uniformly into the available width, without scaleX.
-  useLayoutEffect(() => {
-    const title = leagueTitleRef.current;
-    const wrapper = title?.parentElement;
-    if (!title || !wrapper) return undefined;
-    let cancelled = false;
-    const fitTitle = () => {
-      if (cancelled) return;
-      const maxSize = 112;
-      title.style.fontSize = `${maxSize}px`;
-      // Layout width is independent of opacity and compositing animations.
-      const measuredWidth = title.offsetWidth;
-      const available = Math.max(1, wrapper.clientWidth - 2);
-      if (measuredWidth > 0) {
-        title.style.fontSize = `${Math.min(maxSize, maxSize * available / measuredWidth)}px`;
-      }
-    };
-    fitTitle();
-    const observer = new ResizeObserver(fitTitle);
-    observer.observe(wrapper);
-    document.fonts?.ready?.then(fitTitle);
-    return () => { cancelled = true; observer.disconnect(); };
-  }, [leagueName]);
-
+  // The heading is a single fixed overlay at the source title's coordinates.
+  // It never scales, moves or gets clipped by the black unfolding surface.
   useEffect(() => {
     const body = document.body;
     const root = document.getElementById('root');
@@ -151,11 +127,39 @@ export default function FullscreenStandings({
   const sourceBottom = Math.max(0, vh - sourceTop - pillHeight);
   const pillRadius = Number.isFinite(origin?.radius)
     ? Math.max(0, Math.min(origin.radius, pillHeight / 2, pillWidth / 2)) : 13;
+  // Progressively widen the rounded pill BEFORE opening vertically. Expanding
+  // all four inset edges at once created the tall black bar seen on iPhone.
+  const spillBounds = {
+    '--vh-spill-wide-top': `${Math.max(0, sourceTop * .90)}px`,
+    '--vh-spill-wide-right': `${sourceRight * .30}px`,
+    '--vh-spill-wide-bottom': `${sourceBottom * .90}px`,
+    '--vh-spill-wide-left': `${Math.max(0, sourceLeft * .30)}px`,
+    '--vh-spill-open-top': `${Math.max(0, sourceTop * .42)}px`,
+    '--vh-spill-open-right': `${sourceRight * .02}px`,
+    '--vh-spill-open-bottom': `${sourceBottom * .42}px`,
+    '--vh-spill-open-left': `${Math.max(0, sourceLeft * .02)}px`,
+    '--vh-spill-finish-top': `${Math.max(0, sourceTop * .055)}px`,
+    '--vh-spill-finish-bottom': `${sourceBottom * .055}px`,
+  };
+
+  const sourceTitle = origin?.title || null;
+  const titleTypography = sourceTitle ? {
+    fontSize: sourceTitle.fontSize,
+    fontFamily: sourceTitle.fontFamily,
+    fontWeight: sourceTitle.fontWeight,
+    lineHeight: sourceTitle.lineHeight,
+    letterSpacing: sourceTitle.letterSpacing,
+  } : {};
 
   return createPortal(
     <section ref={portalRef} className="vh-standings-fullscreen" role="dialog" aria-modal="true"
       data-liquid-phase={phase}
       style={{
+        ...spillBounds,
+        '--vh-title-left': `${sourceTitle?.left ?? 20}px`,
+        '--vh-title-top': `${sourceTitle?.top ?? 135}px`,
+        '--vh-title-width': `${sourceTitle?.width ?? Math.max(1, vw - 40)}px`,
+        '--vh-title-height': `${sourceTitle?.height ?? 48}px`,
         '--vh-liquid-top': `${Math.max(0, sourceTop)}px`,
         '--vh-liquid-right': `${sourceRight}px`,
         '--vh-liquid-bottom': `${sourceBottom}px`,
@@ -183,9 +187,7 @@ export default function FullscreenStandings({
               aria-label="Zamknij tabelę">Tabela</button>
           </span>
         </div>
-        <div className="vh-standings-fullscreen__identity">
-          <h2 ref={leagueTitleRef}>{leagueName.toLocaleUpperCase('pl-PL')}</h2>
-        </div>
+        <div className="vh-standings-fullscreen__identity-spacer" aria-hidden="true" />
         {groups.length > 0 && <div className="vh-standings-fullscreen__groups"
           role="group" aria-label="Wybierz grupę ligi">
           {groups.map(item =>
@@ -195,6 +197,9 @@ export default function FullscreenStandings({
               onClick={() => onSelectGroup(item.name)}>{item.name}</button>)}
         </div>}
       </header>
+      </div>
+      <div className="vh-standings-fullscreen__identity">
+        <h2 style={titleTypography}>{leagueName.toLocaleUpperCase('pl-PL')}</h2>
       </div>
       {!reducedMotion && phase !== 'active' &&
         <span className="vh-standings-fullscreen__flying-pill" aria-hidden="true">Tabela</span>}
