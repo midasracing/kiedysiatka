@@ -260,7 +260,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "Asseco Resovia Rzeszów",
@@ -539,7 +539,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "BOGDANKA LUK Lublin",
@@ -800,7 +800,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "Energa Indykpol AZS Olsztyn",
@@ -1115,7 +1115,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/24.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "Energa Trefl Gdańsk",
@@ -1412,7 +1412,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
-      "roster_checked_at": "2026-11-22T17:28:22.222817+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "GKS Katowice",
@@ -1673,7 +1673,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "Jastrzębie Barkom",
@@ -1934,7 +1934,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "NEONET Norwid Częstochowa",
@@ -2213,7 +2213,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "PGE GiEK SKRA Bełchatów",
@@ -2474,7 +2474,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "PGE Projekt Warszawa",
@@ -2771,7 +2771,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "Podziemia Kredowe ChKS Chełm",
@@ -3050,7 +3050,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "Stilon Gorzów",
@@ -3311,7 +3311,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "ZAKSA Kędzierzyn-Koźle",
@@ -3590,7 +3590,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     },
     {
       "name": "Ślepsk Malow Suwałki",
@@ -3851,10 +3851,10 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
-      "roster_checked_at": "2026-11-22T17:15:12.363874+00:00"
+      "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     }
   ],
-  "updated_at": "2026-11-23T00:21:18.175129+00:00",
+  "updated_at": "2026-11-23T18:29:55.836704+00:00",
   "matches": [
     {
       "id": "1104808",
