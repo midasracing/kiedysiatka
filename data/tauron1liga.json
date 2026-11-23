@@ -4520,7 +4520,7 @@
       "roster_checked_at": "2026-11-23T18:30:01.269748+00:00"
     }
   ],
-  "updated_at": "2026-11-23T18:30:18.711205+00:00",
+  "updated_at": "2026-11-23T23:36:56.616911+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -9470,7 +9470,7 @@
       "league": "first",
       "competition": "TAURON 1. Liga",
       "date": "28.11.2026",
-      "time": "18:00",
+      "time": "17:00",
       "date_iso": "2026-11-28",
       "round": 12,
       "round_source_label": "Kolejka",

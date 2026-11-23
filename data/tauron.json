@@ -3854,7 +3854,7 @@
       "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     }
   ],
-  "updated_at": "2026-11-23T18:29:55.836704+00:00",
+  "updated_at": "2026-11-23T23:36:51.070305+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -6737,15 +6737,32 @@
       "round": 8,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "finished",
       "home": "BOGDANKA LUK Lublin",
       "away": "Ślepsk Malow Suwałki",
-      "home_sets": 0,
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_scores": [
+        "25:18",
+        "25:22",
+        "25:22"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 18
+        },
+        {
+          "home": 25,
+          "away": 22
+        },
+        {
+          "home": 25,
+          "away": 22
+        }
+      ],
+      "home_points": 75,
+      "away_points": 62,
       "current_points": null,
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104861/nocookies/1.html",
       "home_team_id": "45",
@@ -11361,6 +11378,18 @@
   "table": [
     {
       "rank": 1,
+      "team": "BOGDANKA LUK Lublin",
+      "points": 24,
+      "played": 8,
+      "wins": 8,
+      "losses": 0,
+      "sets_for": 24,
+      "sets_against": 2,
+      "points_for": 650,
+      "points_against": 545
+    },
+    {
+      "rank": 2,
       "team": "Aluron CMC Warta Zawiercie",
       "points": 24,
       "played": 9,
@@ -11370,18 +11399,6 @@
       "sets_against": 6,
       "points_for": 745,
       "points_against": 628
-    },
-    {
-      "rank": 2,
-      "team": "BOGDANKA LUK Lublin",
-      "points": 21,
-      "played": 7,
-      "wins": 7,
-      "losses": 0,
-      "sets_for": 21,
-      "sets_against": 2,
-      "points_for": 575,
-      "points_against": 483
     },
     {
       "rank": 3,
@@ -11471,13 +11488,13 @@
       "rank": 10,
       "team": "Ślepsk Malow Suwałki",
       "points": 7,
-      "played": 7,
+      "played": 8,
       "wins": 1,
-      "losses": 6,
+      "losses": 7,
       "sets_for": 11,
-      "sets_against": 19,
-      "points_for": 630,
-      "points_against": 655
+      "sets_against": 22,
+      "points_for": 692,
+      "points_against": 730
     },
     {
       "rank": 11,
