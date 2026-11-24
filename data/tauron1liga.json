@@ -4520,7 +4520,7 @@
       "roster_checked_at": "2026-11-23T18:30:01.269748+00:00"
     }
   ],
-  "updated_at": "2026-11-23T23:36:56.616911+00:00",
+  "updated_at": "2026-11-24T17:57:48.768127+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -9351,6 +9351,9 @@
       "away_team_id": "57",
       "home_logo": "https://www.tauron1liga.pl/dl/725000/inline/scalecrop=100x100/6d9260/kps_plock.png",
       "away_logo": "https://www.tauron1liga.pl/dl/725744/inline/scalecrop=100x100/42a8a2/logo_fort_poznan.png",
+      "broadcast": [
+        "Polsat Sport Fight"
+      ],
       "venue": {
         "name": "CSR w Płocku",
         "address": "Aleja Jana Kilińskiego 12",
@@ -10003,6 +10006,9 @@
       "away_team_id": "16",
       "home_logo": "https://www.tauron1liga.pl/dl/724999/inline/scalecrop=100x100/051456/kks_mickiewicz.png",
       "away_logo": "https://www.tauron1liga.pl/dl/724996/inline/scalecrop=100x100/c0bbf6/bks_bydgoszcz.png",
+      "broadcast": [
+        "TV Polsat Sport 3"
+      ],
       "venue": {
         "name": "Hala OSiR",
         "address": "ul. Mickiewicza 10",

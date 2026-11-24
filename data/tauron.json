@@ -3854,7 +3854,7 @@
       "roster_checked_at": "2026-11-23T18:29:38.264215+00:00"
     }
   ],
-  "updated_at": "2026-11-23T23:36:51.070305+00:00",
+  "updated_at": "2026-11-24T17:57:44.446274+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -6791,16 +6791,23 @@
       "round": 8,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "live",
       "home": "Energa Trefl Gdańsk",
       "away": "NEONET Norwid Częstochowa",
-      "home_sets": 0,
+      "home_sets": 1,
       "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
-      "current_points": null,
+      "set_scores": [
+        "25:17"
+      ],
+      "set_points": [
+        {
+          "home": 25,
+          "away": 17
+        }
+      ],
+      "home_points": 25,
+      "away_points": 17,
+      "current_points": "22:22",
       "source_url": "https://www.tauronliga.pl/games/action/show/id/1104858/nocookies/1.html",
       "home_team_id": "78",
       "away_team_id": "71",
