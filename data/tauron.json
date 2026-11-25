@@ -3854,7 +3854,7 @@
       "roster_checked_at": "2026-11-24T22:05:56.091219+00:00"
     }
   ],
-  "updated_at": "2026-11-25T04:52:53.927959+00:00",
+  "updated_at": "2026-11-25T17:26:09.763366+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -6899,11 +6899,11 @@
       "round": 8,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "live",
       "home": "Energa Indykpol AZS Olsztyn",
       "away": "Asseco Resovia Rzeszów",
       "home_sets": 0,
-      "away_sets": 0,
+      "away_sets": 1,
       "set_scores": [],
       "set_points": [],
       "home_points": 0,
