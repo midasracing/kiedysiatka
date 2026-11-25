@@ -666,3 +666,24 @@ test('opaque dock hides page content and passing lens never overlays white inact
   });
   expect(misalignment).toBeLessThan(2);
 });
+
+test('iOS standalone chrome uses a solid black status bar matching the app background', async ({ page }) => {
+  await page.goto('/');
+  const appearance = await page.evaluate(() => ({
+    capable: document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content,
+    statusBar: document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.content,
+    themeColor: document.querySelector('meta[name="theme-color"]')?.content,
+    html: getComputedStyle(document.documentElement).backgroundColor,
+    body: getComputedStyle(document.body).backgroundColor,
+    root: getComputedStyle(document.getElementById('root')).backgroundColor,
+  }));
+  expect(appearance).toEqual({
+    capable: 'yes',
+    statusBar: 'black',
+    themeColor: '#000000',
+    html: 'rgb(0, 0, 0)',
+    body: 'rgb(0, 0, 0)',
+    root: 'rgb(0, 0, 0)',
+  });
+});
+
