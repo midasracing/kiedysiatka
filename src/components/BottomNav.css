@@ -1,13 +1,31 @@
-/* One opaque dock, one red moving lens; no legacy glass layers. */
+/* One opaque dock, one red moving lens; no legacy glass layers.
+   iOS Safari can incorrectly scroll a transformed fixed dock during momentum.
+   Pin a non-transformed viewport layer and absolutely center the pill within
+   it. No scroll listeners, JS repositioning or vertical transforms. */
+.vh-bottom-viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 100;
+  pointer-events: none;
+  isolation: isolate;
+}
 .vh-bottom,.vh-bottom * { box-sizing: border-box; }
 .vh-bottom {
-  position: fixed;
-  left: 50%;
-  bottom: calc(15px + env(safe-area-inset-bottom));
-  transform: translate3d(-50%,0,0);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+  margin-inline: auto;
+  transform: none;
   width: min(calc(100% - 32px),540px);
   height: 72px;
-  z-index: 100;
+  z-index: 1;
+  pointer-events: auto;
   isolation: isolate;
   overflow: hidden;
   border: 1px solid #602024;
