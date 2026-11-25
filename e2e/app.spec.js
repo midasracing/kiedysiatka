@@ -384,13 +384,44 @@ test('floating nav is a persistent portal, separate from route content', async (
   await page.goto('/');
   const nav = page.getByRole('navigation', { name: 'Główna nawigacja' });
   await expect(nav).toBeVisible();
-  expect(await nav.evaluate(el => el.parentElement === document.body)).toBe(true);
+  expect(await nav.evaluate(el => el.parentElement?.classList.contains('vh-bottom-viewport') &&
+      el.parentElement.parentElement === document.body)).toBe(true);
   for (const target of ['Kalendarz', 'Rozgrywki', 'Ulubione', 'Główna']) {
     await nav.getByRole('button', { name: target }).click();
     await expect(nav.getByRole('button', { name: target })).toHaveAttribute('aria-current', 'page');
     await expect(nav).toBeVisible();
-    expect(await nav.evaluate(el => el.parentElement === document.body)).toBe(true);
+    expect(await nav.evaluate(el => el.parentElement?.classList.contains('vh-bottom-viewport') &&
+      el.parentElement.parentElement === document.body)).toBe(true);
   }
+});
+
+test('bottom navigation stays pinned during long page scrolling on a mobile viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#home');
+  // Guarantee enough scroll distance independently from live feed availability.
+  await page.addStyleTag({ content: '#main-content { min-height: 3200px !important; }' });
+  const nav = page.getByRole('navigation', { name: 'Główna nawigacja' });
+  const viewportLayer = page.locator('.vh-bottom-viewport');
+  await expect(viewportLayer).toHaveCSS('position', 'fixed');
+  await expect(nav).toHaveCSS('position', 'absolute');
+  await expect(nav).toHaveCSS('transform', 'none');
+  await expect(nav).toBeVisible();
+
+  const initial = await nav.boundingBox();
+  expect(initial).not.toBeNull();
+  const expectedBottom = initial.y + initial.height;
+  for (const y of [350, 900, 1600, 100]) {
+    await page.evaluate(top => window.scrollTo({ top, behavior: 'instant' }), y);
+    await expect.poll(async () => {
+      const box = await nav.boundingBox();
+      return Math.abs(box.y + box.height - expectedBottom);
+    }).toBeLessThan(2);
+    await expect(nav.getByRole('button', { name: 'Główna' })).toBeVisible();
+  }
+  // The layer ignores touches in the rest of the viewport; the pill remains
+  // interactive without blocking list scrolling behind it.
+  await expect(viewportLayer).toHaveCSS('pointer-events', 'none');
+  await expect(nav).toHaveCSS('pointer-events', 'auto');
 });
 
 test('no legacy WebGL or glass layers remain under the dock', async ({ page }) => {
