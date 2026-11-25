@@ -147,7 +147,12 @@ function BottomNav({ active, onNavigate }) {
     };
   }, [snapLens]);
 
-  return <nav className="vh-bottom" aria-label="Główna nawigacja">
+  // Pin the dock inside an independent visual-viewport layer. On iOS Safari
+  // a transformed position:fixed pill can ride the scrolling document and
+  // snap back only after momentum ends. The outer layer has no transform;
+  // the pill is absolutely anchored to its bottom edge.
+  return <div className="vh-bottom-viewport">
+    <nav className="vh-bottom" aria-label="Główna nawigacja">
     <div ref={trackRef} className={'vh-nav-items' + (layout ? ' is-ready' : '')} data-active={active}>
       {layout && <div ref={lensRef} className="vh-nav-lens" aria-hidden="true"
         style={{ width: layout.lens.width }} />}
@@ -168,7 +173,8 @@ function BottomNav({ active, onNavigate }) {
         </button>;
       })}
     </div>
-  </nav>;
+    </nav>
+  </div>;
 }
 
 export default memo(BottomNav);
