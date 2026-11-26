@@ -4520,7 +4520,7 @@
       "roster_checked_at": "2026-11-26T03:42:12.949587+00:00"
     }
   ],
-  "updated_at": "2026-11-26T17:06:39.033441+00:00",
+  "updated_at": "2026-11-26T21:09:05.494695+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -9336,16 +9336,28 @@
       "round": 12,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "scheduled",
+      "status": "live",
       "home": "KPS Płock",
       "away": "FORT Poznań",
       "home_sets": 0,
-      "away_sets": 0,
-      "set_scores": [],
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
-      "current_points": null,
+      "away_sets": 2,
+      "set_scores": [
+        "23:25",
+        "20:25"
+      ],
+      "set_points": [
+        {
+          "home": 23,
+          "away": 25
+        },
+        {
+          "home": 20,
+          "away": 25
+        }
+      ],
+      "home_points": 43,
+      "away_points": 50,
+      "current_points": "22:17",
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105213/nocookies/1.html",
       "home_team_id": "94",
       "away_team_id": "57",
