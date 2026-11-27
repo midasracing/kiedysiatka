@@ -2,7 +2,7 @@
   "league": "italy",
   "competition": "SuperLega Credem Banca",
   "source": "https://ww2.legavolley.it/Calendario.asp",
-  "updated_at": "2026-11-22T21:45:13.901715+00:00",
+  "updated_at": "2026-11-27T00:33:47.761699+00:00",
   "teams": [
     {
       "name": "Acqua Sant'Anna Cuneo",
@@ -68,26 +68,26 @@
   "table": [
     {
       "team": "Sir Susa Scai Perugia",
-      "played": 7,
-      "wins": 7,
+      "played": 8,
+      "wins": 8,
       "losses": 0,
-      "points": 19,
-      "sets_for": 21,
+      "points": 22,
+      "sets_for": 24,
       "sets_against": 4,
-      "points_for": 603,
-      "points_against": 483,
+      "points_for": 678,
+      "points_against": 547,
       "rank": 1
     },
     {
       "team": "Cucine Lube Civitanova",
-      "played": 6,
+      "played": 7,
       "wins": 6,
-      "losses": 0,
+      "losses": 1,
       "points": 18,
       "sets_for": 18,
-      "sets_against": 2,
-      "points_for": 511,
-      "points_against": 428,
+      "sets_against": 5,
+      "points_for": 575,
+      "points_against": 503,
       "rank": 2
     },
     {
@@ -2238,7 +2238,7 @@
       "broadcast": []
     },
     {
-      "id": "it-2026-andata-55",
+      "id": "it-40339",
       "competition": "SuperLega Credem Banca",
       "group": "Kolejka 10",
       "date": "26.11.2026",
@@ -2247,30 +2247,47 @@
       "away": "Cucine Lube Civitanova",
       "home_team_id": "6865",
       "away_team_id": "6860",
-      "source_url": "https://ww2.legavolley.it/Calendario.asp",
+      "source_url": "https://ww2.legavolley.it/TabellinoGara.asp?IdGara=40339",
       "venue": {
         "name": "Pala Barton Energy",
-        "city": "Perugia (PG)"
+        "city": "Perugia"
       },
       "match_number": "55",
-      "status": "scheduled",
-      "home_sets": 0,
+      "status": "finished",
+      "home_sets": 3,
       "away_sets": 0,
-      "set_scores": [],
+      "set_scores": [
+        "25:20",
+        "25:23",
+        "25:21"
+      ],
       "current_points": null,
+      "details_checked_at": "2026-11-27T00:33:47.507602+00:00",
       "league": "italy",
       "date_iso": "2026-11-26",
       "phase": "Zasadnicza",
       "round": 10,
       "term_number": 10,
       "round_source_label": "Kolejka",
-      "set_points": [],
-      "home_points": 0,
-      "away_points": 0,
+      "set_points": [
+        {
+          "home": 25,
+          "away": 20
+        },
+        {
+          "home": 25,
+          "away": 23
+        },
+        {
+          "home": 25,
+          "away": 21
+        }
+      ],
+      "home_points": 75,
+      "away_points": 64,
       "home_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_PGA",
       "away_logo": "https://images.volleyballworld.com/image/upload/f_auto/t_clublogo/assets/club-logos/MITA2026/logo_CVA",
-      "broadcast": [],
-      "details_checked_at": null
+      "broadcast": []
     },
     {
       "id": "it-2026-andata-38",
