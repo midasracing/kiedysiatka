@@ -260,7 +260,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/2.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "Asseco Resovia Rzeszów",
@@ -539,7 +539,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/3.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "BOGDANKA LUK Lublin",
@@ -800,7 +800,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/45.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "Energa Indykpol AZS Olsztyn",
@@ -1412,7 +1412,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/78.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "GKS Katowice",
@@ -1673,7 +1673,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/18.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "Jastrzębie Barkom",
@@ -1934,7 +1934,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/8.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "NEONET Norwid Częstochowa",
@@ -2213,7 +2213,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/71.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "PGE GiEK SKRA Bełchatów",
@@ -2474,7 +2474,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/61.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "PGE Projekt Warszawa",
@@ -2771,7 +2771,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/62.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "Podziemia Kredowe ChKS Chełm",
@@ -2831,24 +2831,6 @@
           "source_url": "https://www.tauronliga.pl/players/id/823/tour/53.html",
           "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
           "profile_checked_at": "2026-11-22T17:16:22.507648+00:00"
-        },
-        {
-          "id": "2433",
-          "season_id": "53",
-          "team_id": "93",
-          "first_name": "Yacine",
-          "last_name": "Louati",
-          "full_name": "Yacine Louati",
-          "name_split_method": "first_space",
-          "photo": "https://www.tauronliga.pl/dl/735072/inline/crop=255x64x1698x2950,scalecrop=315x630/b6678a/4_Yacine_Louati.png",
-          "number": 4,
-          "position": "Przyjmujący",
-          "height_cm": 198.0,
-          "weight_kg": 98.0,
-          "spike_reach_cm": 345.0,
-          "source_url": "https://www.tauronliga.pl/players/id/2433/tour/53.html",
-          "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
-          "profile_checked_at": "2026-11-22T17:16:24.484432+00:00"
         },
         {
           "id": "1227",
@@ -3050,7 +3032,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/93.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "Stilon Gorzów",
@@ -3311,7 +3293,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/28.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "ZAKSA Kędzierzyn-Koźle",
@@ -3590,7 +3572,7 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/21.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     },
     {
       "name": "Ślepsk Malow Suwałki",
@@ -3851,10 +3833,10 @@
         }
       ],
       "roster_source_url": "https://www.tauronliga.pl/teams/id/56.html",
-      "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
+      "roster_checked_at": "2026-11-27T16:50:14.195127+00:00"
     }
   ],
-  "updated_at": "2026-11-27T03:38:45.618032+00:00",
+  "updated_at": "2026-11-27T16:50:35.759723+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -8323,7 +8305,7 @@
       "date_iso": "2026-12-27",
       "round": 13,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "GKS Katowice",
       "away": "Jastrzębie Barkom",
@@ -8357,7 +8339,7 @@
       "date_iso": "2026-12-27",
       "round": 13,
       "round_source_label": "Kolejka",
-      "phase": "Zasadnicza",
+      "phase": "Faza Zasadnicza",
       "status": "scheduled",
       "home": "NEONET Norwid Częstochowa",
       "away": "Stilon Gorzów",
