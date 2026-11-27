@@ -4520,7 +4520,7 @@
       "roster_checked_at": "2026-11-26T03:42:12.949587+00:00"
     }
   ],
-  "updated_at": "2026-11-26T21:09:05.494695+00:00",
+  "updated_at": "2026-11-27T03:38:52.230908+00:00",
   "matches": [
     {
       "id": "1105124",
@@ -9336,14 +9336,15 @@
       "round": 12,
       "round_source_label": "Kolejka",
       "phase": "Faza Zasadnicza",
-      "status": "live",
+      "status": "finished",
       "home": "KPS Płock",
       "away": "FORT Poznań",
       "home_sets": 0,
-      "away_sets": 2,
+      "away_sets": 3,
       "set_scores": [
         "23:25",
-        "20:25"
+        "20:25",
+        "25:27"
       ],
       "set_points": [
         {
@@ -9353,11 +9354,15 @@
         {
           "home": 20,
           "away": 25
+        },
+        {
+          "home": 25,
+          "away": 27
         }
       ],
-      "home_points": 43,
-      "away_points": 50,
-      "current_points": "22:17",
+      "home_points": 68,
+      "away_points": 77,
+      "current_points": null,
       "source_url": "https://www.tauron1liga.pl/games/action/show/id/1105213/nocookies/1.html",
       "home_team_id": "94",
       "away_team_id": "57",
@@ -14540,6 +14545,18 @@
     },
     {
       "rank": 2,
+      "team": "FORT Poznań",
+      "points": 24,
+      "played": 11,
+      "wins": 8,
+      "losses": 3,
+      "sets_for": 30,
+      "sets_against": 18,
+      "points_for": 1071,
+      "points_against": 1026
+    },
+    {
+      "rank": 3,
       "team": "CUK Anioły Toruń",
       "points": 23,
       "played": 10,
@@ -14551,7 +14568,7 @@
       "points_against": 871
     },
     {
-      "rank": 3,
+      "rank": 4,
       "team": "Nowak-Mosty MKS Będzin",
       "points": 22,
       "played": 11,
@@ -14561,18 +14578,6 @@
       "sets_against": 16,
       "points_for": 947,
       "points_against": 866
-    },
-    {
-      "rank": 4,
-      "team": "FORT Poznań",
-      "points": 21,
-      "played": 10,
-      "wins": 7,
-      "losses": 3,
-      "sets_for": 27,
-      "sets_against": 18,
-      "points_for": 994,
-      "points_against": 958
     },
     {
       "rank": 5,
@@ -14698,13 +14703,13 @@
       "rank": 15,
       "team": "KPS Płock",
       "points": 5,
-      "played": 10,
+      "played": 11,
       "wins": 1,
-      "losses": 9,
+      "losses": 10,
       "sets_for": 9,
-      "sets_against": 29,
-      "points_for": 809,
-      "points_against": 885
+      "sets_against": 32,
+      "points_for": 877,
+      "points_against": 962
     },
     {
       "rank": 16,

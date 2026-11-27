@@ -3854,7 +3854,7 @@
       "roster_checked_at": "2026-11-26T03:41:38.688145+00:00"
     }
   ],
-  "updated_at": "2026-11-26T21:08:58.320146+00:00",
+  "updated_at": "2026-11-27T03:38:45.618032+00:00",
   "matches": [
     {
       "id": "1104808",
@@ -8323,7 +8323,7 @@
       "date_iso": "2026-12-27",
       "round": 13,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "GKS Katowice",
       "away": "Jastrzębie Barkom",
@@ -8346,7 +8346,7 @@
       },
       "match_number": "085",
       "term_number": 13,
-      "details_checked_at": "2026-11-22T19:12:47.355508+00:00"
+      "details_checked_at": "2026-11-27T03:38:43.449841+00:00"
     },
     {
       "id": "1104894",
@@ -8357,7 +8357,7 @@
       "date_iso": "2026-12-27",
       "round": 13,
       "round_source_label": "Kolejka",
-      "phase": "Faza Zasadnicza",
+      "phase": "Zasadnicza",
       "status": "scheduled",
       "home": "NEONET Norwid Częstochowa",
       "away": "Stilon Gorzów",
@@ -8380,7 +8380,7 @@
       },
       "match_number": "087",
       "term_number": 13,
-      "details_checked_at": "2026-11-22T19:12:47.355508+00:00"
+      "details_checked_at": "2026-11-27T03:38:43.449841+00:00"
     },
     {
       "id": "1104900",
